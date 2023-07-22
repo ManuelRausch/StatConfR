@@ -1,0 +1,3 @@
+usefulltools.R
+^.*\.Rproj$
+^\.Rproj\.user$

@@ -1,0 +1,13 @@
+Package: statconfR
+Type: Package
+Title: What the package does (short line)
+Version: 1.0
+Date: 2023-07-19
+Author: Who wrote it
+Maintainer: Who to complain to <yourfault@somewhere.net>
+Description: More about what it does (maybe more than one line)
+License: What license is it under?
+RoxygenNote: 7.2.3
+Encoding: UTF-8
+Roxygen: list(old_usage = TRUE, markdown=TRUE)
+
