@@ -54,11 +54,11 @@ function(ratings, stimulus, correct, condition){
     while (i < nAttempts |  noFitYet){
       i <- i+1
       m <- try(optim(par =  inits[i,], 
-                     f = llSDTvarS, gr = NULL,
+                     fn = llSDTvarS, gr = NULL,
                      N_SA_RA = N_SA_RA,N_SA_RB = N_SA_RB, 
                      N_SB_RA = N_SB_RA,N_SB_RB = N_SB_RB, nRatings = nRatings, nCond = nCond, 
                      control = list(maxit = 10^6, reltol = 10^-8)))
-      if ((class(m) != "try-error")){
+      if (!inherits(m, "try-error")){
         inits <- rbind(inits, m$par)
         if (noFitYet) {
           fit <- m
@@ -70,7 +70,7 @@ function(ratings, stimulus, correct, condition){
     }
     
     res <-  data.frame(matrix(nrow=1, ncol=0))
-    if(class(fit) != "try-error"){
+    if(!inherits(fit, "try-error")){
       k <- length(fit$par)
       N <- length(ratings)
       for (i in 1:nCond){

@@ -14,7 +14,7 @@ Description: Provides functions to fit several different static models of
     decision confidence. Most models are explained in detail in 
     Rausch, Hellmann & Zehteleitner (2018; <https://doi.org/10.3758/s13414-017-1431-5>).
     Future version will also include functions for prediction and simulation. 
-License: GPL (>= 3)
+License: GPL-3 + file LICENSE
 URL: https://github.com/ManuelRausch/StatConfR
 BugReports: https://github.com/ManuelRausch/StatConfR
 Depends: 

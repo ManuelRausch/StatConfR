@@ -1,4 +1,4 @@
-#' Fitting several static confidence models to multiple participants
+#' Fit several static confidence models to multiple participants
 #'
 #' This function is a wrapper of the function \code{\link{fitConf}} (see
 #' there for more information). It calls the function for every possible combination
@@ -7,12 +7,16 @@
 #' described in full detail in Rausch et al. (2018).
 #'
 #' @param data  a `data.frame` where each row is one trial, containing following
-#' variables (column names can be changed by passing additional arguments of
-#' the form \code{condition="contrast"}):
-#' * \code{condition} (not necessary; for different levels of stimulus quality, will be transformed to a factor),
-#' * \code{rating} (discrete confidence judgments, should be given as integer vector; otherwise will be transformed to integer),
-#' * \code{stimulus} (encoding the stimulus category in a binary choice task),
-#' * \code{correct} (encoding whether the decision was correct; values in 0, 1)
+#' variables:
+#' * \code{condition} (not necessary; for different levels of stimulus quality,
+#'    should be a factor, otherwise it will be transformed to a factor with a
+#'    waring),
+#' * \code{rating} (discrete confidence judgments, should be given as factor;
+#'    otherwise will be transformed to factor with a warning),
+#' * \code{stimulus} (encoding the stimulus category in a binary choice task,
+#'    should be a factor with two levels, otherwise it will be transformed to
+#'    a factor with a warning),
+#' * \code{correct} (encoding whether the decision was correct; values in 0, 1),
 #' * \code{sbj} (giving the subject ID; the models given in the second argument are fitted for each
 #'   subject individually.
 #' @param models `character` vector of models to be fit for each participant.
@@ -88,10 +92,10 @@
 #'
 #' ### \strong{Post-decisional accumulation model (PDA)}
 #' PDA incorporates the idea of ongoing information accumulation after the
-#' initial choice. The parameter \eqn{b} indicates the time of additional
+#' initial choice. The parameter \eqn{a} indicates the time of additional
 #' accumulation. The confidence variable is normally distributed with mean
-#' \eqn{x+Sdb} and variance \eqn{b}.
-#' For this model the parameter \eqn{b} is fitted in addition to the common
+#' \eqn{x+Sda} and variance \eqn{a}.
+#' For this model the parameter \eqn{a} is fitted in addition to the common
 #' parameters.
 #'
 #' ### \strong{Two-channel model (2Chan)}
@@ -117,6 +121,7 @@
 #'
 #' @name fitConfModels
 #' @import parallel
+#' @importFrom stats dnorm pnorm optim integrate
 # @importFrom pracma integral
 #'
 #' @references Rausch, M., Hellmann, S. & Zehetleitner, M. (2018). Confidence in
@@ -141,10 +146,10 @@
 #' }
 #' data$response <- ifelse(data$response1<=4, -1, 1)
 #' data$correct <- as.numeric(data$response==data$stimulus)
-#' data$rating <- ifelse(data$response==-1, 5-data$response1, data$response1-4)
-#' data %>% group_by(participant, condition) %>%
-#'   summarise(acc=mean(correct))
-#'
+#' data$rating <- as.factor(ifelse(data$response==-1, 5-data$response1, data$response1-4))
+#' data$stimulus <- as.factor(data$stimulus)
+#' data$condition <- as.factor(data$condition)
+#' table(data[data$correct==1,c("participant", "condition")])/60
 #' head(data)
 #'
 #'
@@ -152,17 +157,16 @@
 #' \dontrun{
 #'   # Fitting takes very long to run and uses multiple cores with this
 #'   # call:
-#'   fitConfModels(data, models=c("SDT", "WEV", "Noisy),
+#'   fitConfModels(data, models=c("SDT", "WEV", "Noisy"),
 #'                 .parallel=TRUE)
 #' }
 #'
 #'
 
 #' @export
-#' @import parallel
 fitConfModels <- function(data, models="all", var="constant",
                              .parallel=FALSE, n.cores=NULL) {
-  if (models=="all") models <- c('WEV', 'SDT','2Chan','Noisy', 'PDA')
+  if (identical(models,"all")) models <- c('WEV', 'SDT','2Chan','Noisy', 'PDA')
   if (!all(models %in% c('WEV', 'SDT','2Chan','Noisy', 'PDA'))) {
     stop("At least one model in models argument is not implemented!")
   }
@@ -170,25 +174,37 @@ fitConfModels <- function(data, models="all", var="constant",
     warning("There were duplicate models, which are dropped")
     models <- unique(models)
   }
-
+  if (is.null(data$condition)) data$condition <- factor(1)
+  if (!is.factor(data$condition)) {
+    data$condition <- factor(data$condition)
+    warning("condition is transformed to a factor!")
+  }
+  if (!is.factor(data$stimulus)) {
+    data$stimulus <- factor(data$stimulus)
+    warning("stimulus is transformed to a factor!")
+  }
+  if (!is.factor(data$rating)) {
+    data$rating <- factor(data$rating)
+    warning("rating is transformed to a factor!")
+  }
+  nConds <- length(unique(data$condition))
+  nRatings <- length(unique(data$rating))
   ## Define common names for the output to rbind all parameter fits together
   ## ToDo: Namen anpassen
-  outnames <- c("model", "sbj", "negLogLik", "N", "k", "BIC", "AICc", "AIC", "fixed",
-                "t0", "st0",
-                paste("v", 1:nConds, sep=""),
-                paste("thetaLower", 1:(nRatings-1), sep=""),
-                paste("thetaUpper", 1:(nRatings-1), sep=""),
-                "wrt", "wint", "wx", "b", "a",
-                "z", "sz", "sv", "tau", "w", "svis", "sigvis", "lambda")
+  outnames <- c("model", "participant", "negLogLik", "N", "k", "BIC", "AICc", "AIC",
+                paste("d", 1:nConds, sep=""),
+                "theta", "w", "a", "sigma",
+                paste0("cA",1:(nRatings-1)),
+                paste0("cB",1:(nRatings-1)))
   # This function will be called for every participant and model combination
   call_fitfct <- function(X) {
     cur_model <- models[X[1]]
     cur_sbj <- X[2]
     participant <- NULL # to omit a note in R checks because of an unbound variable
     data_part <- subset(data, participant==cur_sbj)
-    res <- fitRespConf(data_part, model = cur_model)
+    res <- fitConf(data_part, model = cur_model, var)
     res$model <- cur_model
-    res$sbj <- cur_sbj
+    res$participant <- cur_sbj
     res[outnames[!(outnames %in% names(res))]] <- NA
     res <- res[,outnames]
     return(res)
@@ -206,7 +222,8 @@ fitConfModels <- function(data, models="all", var="constant",
     if (is.null(n.cores)) n.cores <- parallel::detectCores()-1
 
     cl <- makeCluster(type="SOCK", n.cores)
-    clusterExport(cl, c("data",  "models","outnames", "call_fitfct"), envir = environment())
+    clusterExport(cl, c("data",  "models","outnames", "call_fitfct", "var"),
+                  envir = environment())
     # Following line ensures that the cluster is stopped even in cases of user
     # interrupt or errors
     on.exit(try(stopCluster(cl), silent = TRUE))
