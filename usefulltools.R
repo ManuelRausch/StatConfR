@@ -24,5 +24,5 @@ rhub::check....
 # die du innerhalb des Pakets verwendest auch definiert sind, ob du alle Argumente
 # und deren Verwendung dokumentiert hast usw. gibt dir dann übersichtlich
 # NOTES und ERRORs aus.
-
+rhub::check_for_cran()
 

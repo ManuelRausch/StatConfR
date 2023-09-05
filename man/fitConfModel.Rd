@@ -149,6 +149,8 @@ data$response1 <- as.numeric(cut(data$x,breaks=thresholds, include.lowest = TRUE
 data$response <- ifelse(data$response1<=4, -1, 1)
 data$correct <- as.numeric(data$response==data$stimulus)
 data$rating <- ifelse(data$response==-1, 5-data$response1, data$response1-4)
+data$stimulus <- as.factor(data$stimulus)
+data$condition <- as.factor(data$condition)
 table(data[data$correct==1,c("condition")])/60
 head(data)
 

@@ -165,7 +165,9 @@ for (i in 1:2) { #for each participant
 }
 data$response <- ifelse(data$response1<=4, -1, 1)
 data$correct <- as.numeric(data$response==data$stimulus)
-data$rating <- ifelse(data$response==-1, 5-data$response1, data$response1-4)
+data$rating <- as.factor(ifelse(data$response==-1, 5-data$response1, data$response1-4))
+data$stimulus <- as.factor(data$stimulus)
+data$condition <- as.factor(data$condition)
 table(data[data$correct==1,c("participant", "condition")])/60
 head(data)
 
