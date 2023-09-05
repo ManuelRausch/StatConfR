@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' #ToDo
-fitRespConf <- function(data, model) {
+fitConf <- function(data, model) {
   if (model == "WEV") {
     fitting_fct <- fitCEV
   } else if (model=="SDT") {

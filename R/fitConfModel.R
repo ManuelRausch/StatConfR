@@ -11,7 +11,7 @@
 #' @examples
 #' #To-DO
 
-fitConfModel <- function(data, ){
+fitConfModel <- function(data ){
 
 
 

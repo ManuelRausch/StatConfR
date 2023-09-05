@@ -1,13 +1,31 @@
-Package: statconfR
+Package: statConfR
 Type: Package
-Title: What the package does (short line)
-Version: 1.0
-Date: 2023-07-19
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
-RoxygenNote: 7.2.3
+Title: Static Models for Decision Confidence
+Version: 0.1
+Date: 2023-09-05
+Authors@R: c(
+    person("Sebastian", "Hellmann", , "sebastian.hellmann@ku.de", role = c("aut", "ctb"),
+           comment = c(ORCID = "0000-0002-3621-6343")),
+    person("Manuel", "Rausch", , "manuel.rausch@hochschule-rhein-waal.de", role = c("aut","cre", "fnd"),
+           comment = c(ORCID = "0000-0002-5805-5544"))
+  )
+Maintainer: Manuel Rausch <manuel.rausch@hochschule-rhein-waal.de>
+Description: Provides functions to fit several different static models of 
+    decision confidence. Most models are explained in detail in 
+    Rausch, Hellmann & Zehteleitner (2018; <https://doi.org/10.3758/s13414-017-1431-5>).
+    Future version will also include functions for prediction and simulation. 
+License: GPL (>= 3)
+URL: https://github.com/ManuelRausch/StatConfR
+BugReports: https://github.com/ManuelRausch/StatConfR
+Depends: 
+    R (>= 4.0)
+Imports: 
+    parallel
+Date/Publication: 2023-09-10
 Encoding: UTF-8
+LazyData: true
+NeedsCompilation: no
+Packaged: 2023-09-10
+Repository: CRAN
 Roxygen: list(old_usage = TRUE, markdown=TRUE)
-
+RoxygenNote: 7.2.3
