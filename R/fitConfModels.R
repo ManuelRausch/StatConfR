@@ -164,14 +164,15 @@
 #'
 
 #' @export
-fitConfModels <- function(data, models="all", var="constant",
+fitConfModels <- function(data, models="all", #var="constant",
                              .parallel=FALSE, n.cores=NULL) {
-  if (identical(models,"all")) models <- c('WEV', 'SDT','2Chan','Noisy', 'PDA')
-  if (!all(models %in% c('WEV', 'SDT','2Chan','Noisy', 'PDA'))) {
-    stop("At least one model in models argument is not implemented!")
+  AllModels <- c('WEV', 'SDT','IG','ITGc', 'ITGcm', 'Noisy', 'PDA') # if you implement additional models, add them here!
+  if (identical(models,"all")) models <- AllModels
+  if (!all(models %in% AllModels)) {
+    stop(paste(paste(setdiff(models, AllModels),collapse = " and "), " not implemented!"))
   }
   if (length(unique(models))<length(models)) {
-    warning("There were duplicate models, which are dropped")
+    warning("Duplicate models are dropped")
     models <- unique(models)
   }
   if (is.null(data$condition)) data$condition <- factor(1)
@@ -193,10 +194,10 @@ fitConfModels <- function(data, models="all", var="constant",
   ## ToDo: Namen anpassen
   outnames <- c("model", "participant", "negLogLik", "N", "k", "BIC", "AICc", "AIC",
                 paste("d", 1:nConds, sep=""),
-                "theta", "w", "a", "sigma",
+                "theta", "w", "a", "sigma", "m_ratio",
                 paste0("cA",1:(nRatings-1)),
                 paste0("cB",1:(nRatings-1)))
-  # This function will be called for every participant and model combination
+  # This function will be called for every combination of participant and model
   call_fitfct <- function(X) {
     cur_model <- models[X[1]]
     cur_sbj <- X[2]

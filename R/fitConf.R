@@ -1,22 +1,21 @@
 #' Fit a static confidence model to data
 #'
 #' This function fits one model of decision confidence to a data set.
-#' It calls a respective fitting function for the selected model.All models are
-#' described in full detail in Rausch et al. (2018).
+#' It calls a corresponding fitting function for the selected model. For full details,
+#' see Rausch et al. (2018), Rausch et al. (2020) or Rausch et al. (2023).
 #'
 #' @param data  a `data.frame` where each row is one trial, containing following
 #' variables:
-#' * \code{condition} (not necessary; for different levels of stimulus quality,
-#'    should be a factor, otherwise it will be transformed to a factor with a
-#'    waring),
+#' * \code{condition} (optional; for different levels of stimulus quality,
+#'    should be a factor with levels ordered from hardest to easiest),
 #' * \code{rating} (discrete confidence judgments, should be given as factor;
 #'    otherwise will be transformed to factor with a warning),
 #' * \code{stimulus} (encoding the stimulus category in a binary choice task,
 #'    should be a factor with two levels, otherwise it will be transformed to
 #'    a factor with a warning),
-#' * \code{correct} (encoding whether the decision was correct; values in 0, 1)
+#' * \code{correct} (encoding whether the response was correct; values in 0, 1)
 #' @param model `character` of length 1.
-#' Implemented models: 'WEV', 'SDT', 'Noisy', 'PDA', and '2Chan'.
+#' Implemented models: 'WEV', 'SDT', 'Noisy', 'PDA', 'IG', 'ITGc' and *ITGcm'
 #' Alternatively, if `model="all"` (default), all implemented models will be fit.
 #' @param var `character`. One of "constant" (default), "increasing", or "free" (will be
 #' implemented), indicating how noise variances should be treated across conditions.
@@ -144,35 +143,39 @@
 #'
 
 #' @export
-fitConf <- function(data, model, var="constant") {
+fitConf <- function(data, model#, var="constant"
+) {
   if (is.null(data$condition)) data$condition <- 1
   if (!is.factor(data$condition)) {
     data$condition <- factor(data$condition)
-    warning("condition is transformed to a factor!")
+    warning("condition transformed to a factor!")
   }
   if (!is.factor(data$stimulus)) {
     data$stimulus <- factor(data$stimulus)
-    warning("stimulus is transformed to a factor!")
+    warning("stimulus transformed to a factor!")
   }
   if (!is.factor(data$rating)) {
     data$rating <- factor(data$rating)
-    warning("rating is transformed to a factor!")
+    warning("rating  transformed to a factor!")
   }
 
   if (model == "WEV") {
     fitting_fct <- fitCEV
-    if (var=="increasing") fitting_fct <- fitCEVvarS
+    #if (var=="increasing") fitting_fct <- fitCEVvarS
   } else if (model=="SDT") {
     fitting_fct <- fitSDT
-    if (var=="increasing") fitting_fct <- fitSDTvarS
-  } else if (model=="2Chan") {
+    #if (var=="increasing") fitting_fct <- fitSDTvarS
+  } else if (model=="IG") {
     fitting_fct <- fit2Chan
+  } else if (model=="ITGc") {
+    fitting_fct <- fitITGc
+  } else if (model=="ITGcm") {
+    fitting_fct <- fitITGcm
   } else if (model=="Noisy") {
     fitting_fct <- fitNoisy
   } else if (model=="PDA") {
     fitting_fct <- fitPDA
-  } else stop(paste0("Model: ", model, " not implemented!\n
-                                          Choose one of: 'WEV', 'SDT','2Chan','Noisy', or 'PDA'"))
+  } else stop(paste0("Model: ", model, " not implemented!\nChoose one of: 'WEV', 'SDT','IG', 'ITGc', 'ITGcm,'Noisy', or 'PDA'"))
 
   fit <- fitting_fct(data$rating, data$stimulus, data$correct, data$condition)
   return(fit)

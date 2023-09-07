@@ -1,5 +1,10 @@
+###   Functions to fit the Gaussian noise  model but slightly improved model fitting algorithm
+# rating criteria are enforced to be ordered, but there can be an overlap between rating criteria and type 1 criterion
+# use the best fitting set of parameters of the initial grid search
+# include arguenmts to set how many starting values should be tried and how often the fitting routine should be restarted
+
 fitNoisy <-
-function(ratings, stimulus, correct, condition){
+  function(ratings, stimulus, correct, condition, nInits = 5, nRestart = 4){
     if(!is.factor(condition)) stop ("condition should be a factor!")
     if(!is.factor(ratings)) stop ("ratings should be a factor!")
     if(!is.factor(stimulus )|| length(levels(stimulus)) != 2) {
@@ -21,44 +26,61 @@ function(ratings, stimulus, correct, condition){
     N_SB_RB <- table(condition[stimulus == B & correct == 1],
                      ratings[stimulus == B & correct == 1]) + 0.001
 
-    temp <- expand.grid(minD =c(0,.5),
-                        maxD =  seq(1,5,1),
+    # here is whhre the grid search works
+
+    temp <- expand.grid(maxD =  seq(1, 5, 1),
                         theta = seq(-1/2,1/2, 1/2),
-                        tauMin =  seq(.1,1,length.out=4),  # position of the most conservative confidence criterion related to stimulus A
-                        tauRange = seq(1,5,length.out=4),  # range of rating criteria stimulus B
-                        sigma = c(1/2, 1,2,4))   # additional noise variance for confidence variable
+                        tauMin =  c(.1, .3, 1),  # position of the most conservative confidence criteria with respect to theta
+                        tauRange = seq(1, 5, 1),  #  position of the most liberal confidence criterion with respect to theta
+                        sigma = c(.1, .3, 1, 3)) # noise parameter
+
+    # number of parameters:
+    # nCond -1 sensitivity parameters
+    # 1 type 1 bias parameter
+    # 2 * (nRatings -1) confidence criteria
+    # 1 confidence noise parameters
 
     inits <- data.frame(matrix(data=NA, nrow= nrow(temp), ncol = nCond + nRatings*2))
-    inits[,1:nCond] <- t(mapply(function(minD, maxD) seq(minD, maxD, length.out = nCond), temp$minD, temp$maxD))
+    if(nCond==1)  {
+      inits[,1] <-  log(temp$maxD)  }
+    else{
+      inits[,1:(nCond)] <-  log(t(mapply(function(maxD) diff(seq(0, maxD, length.out = nCond+1)), temp$maxD)))
+    }
     inits[,(nCond+1):(nCond+nRatings-2)] <-
-      log(t(mapply(function(tauRange) rep(tauRange/(nRatings-1), nRatings-2),
-                   temp$tauRange)))
-    inits[,nCond+(nRatings-1)] <- temp$tauMin
+      log(t(mapply(function(tauMin, tauRange) diff(seq(-tauRange-tauMin, -tauMin, length.out=nRatings-1)),
+                   temp$tauMin, temp$tauRange)))
+    inits[,nCond+(nRatings-1)] <- -temp$tauMin
     inits[,nCond+nRatings] <- temp$theta
     inits[,nCond+(nRatings+1)] <- temp$tauMin
     inits[,(nCond+nRatings+2):(nCond + nRatings*2-1)] <-
-      log(t(mapply(function(tauRange) rep(tauRange/(nRatings-1), nRatings-2),
-                   temp$tauRange)))
+      log(t(mapply(function(tauMin, tauRange) diff(seq(tauMin, tauMin+tauRange, length.out=nRatings-1)),
+                   temp$tauMin, temp$tauRange)))
+
     inits[,(nCond + nRatings*2)] <- log(temp$sigma)
 
     logL <- apply(inits, MARGIN = 1,
-                  function(p) try(llNoisy(p, N_SA_RA, N_SA_RB, N_SB_RA,N_SB_RB, nRatings, nCond), silent = TRUE))
+                  function(p) try(ll_Noisy(p, N_SA_RA, N_SA_RB, N_SB_RA,N_SB_RB, nRatings, nCond), silent = TRUE))
     logL <- as.numeric(logL)
     inits <- inits[order(logL),]
-    inits <- inits[1:5,]
+    inits <- inits[1:nInits,]
 
-    nAttempts <- 25
-    i <- 0
     noFitYet <- TRUE
-    while (i < nAttempts |  noFitYet){
-      i <- i+1
+    for (i in 1:nInits){
       m <- try(optim(par =  inits[i,],
-                     fn = llNoisy, gr = NULL,
+                     f = ll_Noisy, gr = NULL,
                      N_SA_RA = N_SA_RA,N_SA_RB = N_SA_RB,
                      N_SB_RA = N_SB_RA,N_SB_RB = N_SB_RB, nRatings = nRatings, nCond = nCond,
-                     control = list(maxit = 10^6, reltol = 10^-8)))
-      if (!inherits(m, "try-error")){
-        inits <- rbind(inits, m$par)
+                     control = list(maxit = 10^4, reltol = 10^-4)))
+
+      if ((class(m) == "list")){
+        for(j in 2:nRestart){
+          try(m <- optim(par = m$par,
+                         f = ll_Noisy, gr = NULL,
+                         N_SA_RA = N_SA_RA,N_SA_RB = N_SA_RB,
+                         N_SB_RA = N_SB_RA,N_SB_RB = N_SB_RB, nRatings = nRatings, nCond = nCond,
+                         control = list(maxit = 10^6, reltol = 10^-8)))
+
+        }
         if (noFitYet) {
           fit <- m
           noFitYet <- FALSE
@@ -69,21 +91,21 @@ function(ratings, stimulus, correct, condition){
     }
 
     res <-  data.frame(matrix(nrow=1, ncol=0))
-    if(!inherits(fit, "try-error")){
+    if(!inherits(m, "try-error")){
+
       k <- length(fit$par)
       N <- length(ratings)
-      for (i in 1:nCond){
-        res[paste("d",i, sep="")] <-  as.vector(fit$par[i])
-      }
+
+      res[paste("d",1:nCond, sep="")] <-  as.vector(cumsum(exp(fit$par[1:(nCond)])))
       res$theta <-  as.vector(fit$par[nCond+nRatings])
       res[,paste("cA",1:(nRatings-1), sep="")] <-
-        c(as.vector(fit$par[nCond+nRatings-1]) -
-           as.vector(rev(cumsum(c(exp(fit$par[(nCond+1):(nCond+nRatings-2)]))))),
+        c(as.vector(fit$par[nCond+nRatings-1] - rev(cumsum(c(exp(fit$par[(nCond+1):(nCond+nRatings-2)]))))),
           as.vector(fit$par[nCond+nRatings-1]))
       res[,paste("cB",1:(nRatings-1), sep="")] <-
         c(as.vector(fit$par[nCond+nRatings+1]),
           as.vector(fit$par[nCond+nRatings+1]) +
             as.vector(cumsum(c(exp(fit$par[(nCond+nRatings+2):(nCond + nRatings*2-1)])))))
+
 
       res$sigma <- exp(fit$par[nCond + nRatings*2])
 
