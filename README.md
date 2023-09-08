@@ -129,6 +129,13 @@ head(fitted_pars)
     ## 5 -1.7878067 -1.35670379  0.8875427 1.7188347 2.410818
     ## 6 -1.2341607 -0.07619421  0.2861275 1.2793275 2.018620
 
+If the Truncated Gaussian model performs best in the model comparison,
+metacognitive efficiency can be quantified using meta-d’/d’:
+
+``` r
+ MetaDs <- MetaDs <- fitMetaDprime(MaskOri, model="ML", .parallel = TRUE)
+```
+
 ## Future development
 
 The package is still#under active development. We plan to include more
