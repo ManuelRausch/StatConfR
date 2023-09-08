@@ -36,9 +36,9 @@
 #' parameter sets found by the grid search are used as the initial values for separate
 #' runs of the Nelder-Mead algorithm implemented in \code{\link[stats]{optim}}.
 #' Each run is restarted \code{nRestart} times. Warning: Meta-d'/d'
-#' are only guaranteed to be unbiased from discrimination sensitivity, discrimination
-#' bias, and confidence criteria if the independent truncated Gaussian model is
-#' a good description of the data (see Rausch et al., 2023).
+#' is only guaranteed to be unbiased from discrimination sensitivity, discrimination
+#' bias, and confidence criteria if the data is generated according to the
+#' independent truncated Gaussian model (see Rausch et al., 2023).
 #'
 #' @md
 #'
