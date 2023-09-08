@@ -21,19 +21,19 @@ gitbranch <- "main/"
 This package includes functions to fit meta-d´/d´ as well as several static
 models of decision making and confidence judgments to test the assumptions underlying meta-d´/d´. Currently, the following models are included:
 
--   signal-detection theory rating theory
+-   Signal Detection Rating Model
 
--   Gaussian  noise model
+-   Gaussian Noise Model
 
--   weighted evidence and visibility model
+-   Weighted Evidence and Visibility Model
 
--   post-decisional accumulation model
+-   Post-decisional Accumulation Model
 
--   independent Gaussian model
+-   Independent Gaussian model
 
--   independent truncated Gaussian model (the model underlying the meta-d´/d´ method)
+-   Independent Truncated Gaussian Model (the model underlying the meta-d´/d´ method)
 
-See Rausch et al. (2018, 2020, 2023) for more detail about the models.
+See Rausch et al. (2023) for more detail about the models.
 
 ## Installation
 
@@ -70,7 +70,7 @@ variables:
 -   stimulus (factor with 2 levels): In a binary decision task the
     stimulus identity gives the correct response
 -   condition (factor): The experimental manipulation that is expected
-    to affect sensitivity should be present
+    to affect sensitivity (optional()
 -   correct (0-1): Indicating whether the choice was correct (1) or
     incorrect(0).
 -   rating (factor): A discrete variable encoding the decision
@@ -450,6 +450,5 @@ Rausch, M., Hellmann, S. & Zehetleitner, M. (2018). Confidence in masked
 orientation judgments is informed by both evidence and visibility.
 *Atten Percept Psychophys*, 80, 134--154. [doi:
 10.3758/s13414-017-1431-5](https://doi.org/10.3758/s13414-017-1431-5)
-Rausch, M., Zehetleitner, M., Steinhauser, M., & Maier, M. E. (2020). Cognitive modelling reveals distinct electrophysiological markers of decision confidence and error monitoring. *NeuroImage*, 218, 116963. [doi:10.1016/j.neuroimage.2020.116963](https://doi.org/10.1016/j.neuroimage.2020.116963)
 Rausch, M., Hellmann, S. & Zehetleitner, M. (2023). Measures of metacognitive efficiency across cognitive models of decision confidence. [doi:
 10.31234/osf.io/kdz34](https://doi.org/10.31234/osf.io/kdz34) 

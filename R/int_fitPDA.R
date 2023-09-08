@@ -3,7 +3,7 @@
 # rating criteria are enforced to be ordered, b
 
 fitPDA <-
-  function(ratings, stimulus, correct, condition, nInits = 5, nRestart = 5){
+  function(ratings, stimulus, correct, condition, nInits = 5, nRestart = 4){
     if(!is.factor(condition)) stop ("condition should be a factor!")
     if(!is.factor(ratings)) stop ("ratings should be a factor!")
     if(!is.factor(stimulus )|| length(levels(stimulus)) != 2) {

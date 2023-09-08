@@ -109,7 +109,7 @@ fitITGcm <-
         exp(fit$par[nCond + nRatings*2]) * as.vector(fit$par[nCond+nRatings]) +
         cumsum(c(exp(fit$par[(nCond+nRatings+1):(nCond + nRatings*2-1)])))
 
-      res$m_ratio <- exp(fit$par[nCond + nRatings*2])
+      res$m <- exp(fit$par[nCond + nRatings*2])
 
       res$negLogLik <- fit$value
       res$N <- N
@@ -220,7 +220,7 @@ fitITGc <-
         exp(fit$par[nCond + nRatings*2]) * as.vector(fit$par[nCond+nRatings]) +
         cumsum(c(exp(fit$par[(nCond+nRatings+1):(nCond + nRatings*2-1)])))
 
-      res$m_ratio <- exp(fit$par[nCond + nRatings*2])
+      res$m <- exp(fit$par[nCond + nRatings*2])
 
       res$negLogLik <- fit$value
       res$N <- N

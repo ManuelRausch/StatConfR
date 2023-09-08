@@ -2,6 +2,7 @@
 
 export(fitConf)
 export(fitConfModels)
+export(fitMetaDprime)
 import(parallel)
 importFrom(stats,dnorm)
 importFrom(stats,integrate)
