@@ -2,3 +2,4 @@ usefulltools.R
 ^.*\.Rproj$
 ^\.Rproj\.user$
 LICENSE
+README.rmd

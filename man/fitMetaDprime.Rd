@@ -17,7 +17,7 @@ otherwise will be transformed to factor with a warning),
 should be a factor with two levels, otherwise it will be transformed to
 a factor with a warning),
 \item \code{correct} (encoding whether the response was correct; should  be 0 for incorrect responses and 1 for correct responses)
-\item \code{sbj} (giving the subject ID; the models given in the second argument are fitted for each
+\item \code{participant} (giving the subject ID; the models given in the second argument are fitted for each
 subject individually.
 }}
 
@@ -49,38 +49,39 @@ Gives data frame with rows for each participant and columns dprime, c, metaD, an
 \description{
 This function computes meta-d' and meta-d'/d' for each  participant in the \code{data}, respectively.
 }
-\section{The function computes meta-d' and meta-d'/d' either using the}{
+\details{
+The function computes meta-d' and meta-d'/d' either using the
 hypothetical signal detection model assumed by Maniscalco and Lau (2012, 2014)
 or the one assumed by Fleming (2014). The fitting routine first performs a coarse grid search to find promising
 starting values for the maximum likelihood optimization procedure. Then the best \code{nInits}
 parameter sets found by the grid search are used as the initial values for separate
 runs of the Nelder-Mead algorithm implemented in \code{\link[stats]{optim}}.
 Each run is restarted \code{nRestart} times. Warning: Meta-d'/d'
-are only guaranteed to be unbiased from discrimination sensitivity, discrimination
-bias, and confidence criteria if the independent truncated Gaussian model is
-a good description of the data (see Rausch et al., 2023).
+is only guaranteed to be unbiased from discrimination sensitivity, discrimination
+bias, and confidence criteria if the data is generated according to the
+independent truncated Gaussian model (see Rausch et al., 2023).
 }
-
 \examples{
-1. select two subject from the masked orientation discrimination experiment
+# 1. Select two subject from the masked orientation discrimination experiment
 data <- subset(MaskOri, participant \%in\% c(1:2))
 head(data)
 
-# Fit meta-d'/d' for each subject of the masked orientation discrimination experiment
+# 2. Fit meta-d'/d' for each subject in data
 \dontrun{
   # Fitting takes very long to run and uses multiple cores with this
   # call:
-  MetaDs <- fitMetaDprime(data, model="ML",  .parallel = TRUE, n.cores = 2)
+  MetaDs <- fitMetaDprime(data, model="ML", .parallel = TRUE, n.cores = 2)
 }
+
 }
 \references{
-Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, 1, 1–14. https://doi.org/10.1093/nc/nix007
+Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, 1, 1–14. doi: 10.1093/nc/nix007
 
 Maniscalco, B., & Lau, H. (2012). A signal detection theoretic method for estimating metacognitive sensitivity from confidence ratings. Consciousness and Cognition, 21(1), 422–430.
 
-Maniscalco, B., & Lau, H. C. (2014). Signal Detection Theory Analysis of Type 1 and Type 2 Data: Meta-d’, Response- Specific Meta-d’, and the Unequal Variance SDT Model. In S. M. Fleming & C. D. Frith (Eds.), The Cognitive Neuroscience of Metacognition (pp. 25–66). Springer. https://doi.org/10.1007/978-3-642-45190-4_3
+Maniscalco, B., & Lau, H. C. (2014). Signal Detection Theory Analysis of Type 1 and Type 2 Data: Meta-d’, Response- Specific Meta-d’, and the Unequal Variance SDT Model. In S. M. Fleming & C. D. Frith (Eds.), The Cognitive Neuroscience of Metacognition (pp. 25–66). Springer. doi: 10.1007/978-3-642-45190-4_3
 
-Rausch, M., Hellmann, S., & Zehetleitner, M. (2023). Measures of metacognitive efficiency across cognitive models of decision confidence \link{Preprint}. PsyArXiv. https://doi.org/10.31234/osf.io/kdz34
+Rausch, M., Hellmann, S., & Zehetleitner, M. (2023). Measures of metacognitive efficiency across cognitive models of decision confidence (Preprint). PsyArXiv. doi: 10.31234/osf.io/kdz34
 }
 \author{
 Manuel Rausch, \email{manuel.rausch@hochschule-rhein-waal.de}

@@ -15,11 +15,11 @@
 #'    should be a factor with two levels, otherwise it will be transformed to
 #'    a factor with a warning),
 #' * \code{correct} (encoding whether the response was correct; should  be 0 for incorrect responses and 1 for correct responses)
-#' * \code{sbj} (giving the subject ID; the models given in the second argument are fitted for each
+#' * \code{participant} (giving the subject ID; the models given in the second argument are fitted for each
 #'   subject individually.
-#' @param model `character` of length 1.
-#' Models implemented so far: 'WEV', 'SDT', 'Noisy', 'PDA', 'IG', 'ITGc' and 'ITGcm'
-#' Alternatively, if `model="all"` (default), all implemented models will be fit.
+#' @param models `character` vector of models to be fit for each participant.
+#'   Models implemented so far: 'WEV', 'SDT', 'Noisy', 'PDA', 'IG', 'ITGc' and 'ITGcm'
+#'   Alternatively, if `model="all"` (default), all implemented models will be fit.
 #' @param nInits `integer`. Number of initial values used for maximum likelihood optimization.
 #' Defaults to 5.
 #' @param nRestart `integer`. Number of times the optimization is restarted.
@@ -138,24 +138,24 @@
 #' @author Sebastian Hellmann, \email{sebastian.hellmann@@ku.de}
 #' @author Manuel Rausch, \email{manuel.rausch@@hochschule-rhein-waal.de}
 #'
-#' @name fitConfModel
+#' @name fitConfModels
 #' @import parallel
-#' @importFrom stats dnorm pnorm optim integrate
+#' @importFrom stats dnorm pnorm qnorm optim integrate
 # @importFrom pracma integral
 #'
-#' @references Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, 1, 1–14. https://doi.org/10.1093/nc/nix007
+#' @references Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, 1, 1–14. doi: 10.1093/nc/nix007
 #' @references Green, D. M., & Swets, J. A. (1966). Signal detection theory and psychophysics. Wiley.
-#' @references Maniscalco, B., & Lau, H. (2016). The signal processing architecture underlying subjective reports of sensory awareness. Neuroscience of Consciousness, 1, 1–17. https://doi.org/10.1093/nc/niw002
-#' @references Rausch, M., Hellmann, S., & Zehetleitner, M. (2018). Confidence in masked orientation judgments is informed by both evidence and visibility. Attention, Perception, and Psychophysics, 80(1), 134–154. https://doi.org/10.3758/s13414-017-1431-5
-#' @references Rausch, M., Hellmann, S., & Zehetleitner, M. (2023). Measures of metacognitive efficiency across cognitive models of decision confidence. PsyArXiv. https://doi.org/10.31234/osf.io/kdz34
-#' @references Rausch, M., & Zehetleitner, M. (2017). Should metacognition be measured by logistic regression? Consciousness and Cognition, 49, 291–312. https://doi.org/10.1016/j.concog.2017.02.007
+#' @references Maniscalco, B., & Lau, H. (2016). The signal processing architecture underlying subjective reports of sensory awareness. Neuroscience of Consciousness, 1, 1–17. doi: 10.1093/nc/niw002
+#' @references Rausch, M., Hellmann, S., & Zehetleitner, M. (2018). Confidence in masked orientation judgments is informed by both evidence and visibility. Attention, Perception, and Psychophysics, 80(1), 134–154. doi: 10.3758/s13414-017-1431-5
+#' @references Rausch, M., Hellmann, S., & Zehetleitner, M. (2023). Measures of metacognitive efficiency across cognitive models of decision confidence. PsyArXiv. doi: 10.31234/osf.io/kdz34
+#' @references Rausch, M., & Zehetleitner, M. (2017). Should metacognition be measured by logistic regression? Consciousness and Cognition, 49, 291–312. doi: 10.1016/j.concog.2017.02.007
 #'
 #' @examples
-#' 1. select two subject from the masked orientation discrimination experiment
+#' # 1. Select two subjects from the masked orientation discrimination experiment
 #' data <- subset(MaskOri, participant %in% c(1:2))
 #' head(data)
 #'
-#' # Fit some models to each subject of the masked orientation discrimination experiment
+#' # 2. Fit some models to each subject of the masked orientation discrimination experiment
 #' \dontrun{
 #'   # Fitting takes very long to run and uses multiple cores with this
 #'   # call:
@@ -218,6 +218,11 @@ fitConfModels <- function(data, models="all",  nInits = 5, nRestart = 4, #var="c
   }
 
   # generate a list of fitting jobs to do and setup parallelization
+  no_sbj_column <- FALSE
+  if (is.null(data$participant)) {
+    data$participant <- 1
+    no_sbj_column <- TRUE
+  }
   subjects <- unique(data$participant)
   nJobs <- length(models)*length(subjects)
   jobs <- expand.grid(model=1:length(models), sbj=subjects)
@@ -244,5 +249,6 @@ fitConfModels <- function(data, models="all",  nInits = 5, nRestart = 4, #var="c
 
   # finally, drop columns with unnecessary parameters
   res <- res[,apply(res, 2, function(X) any(!is.na(X)))]
+  if (no_sbj_column) res$participant <- NULL
   return(res)
 }

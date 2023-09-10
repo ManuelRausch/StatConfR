@@ -143,7 +143,7 @@ as well as greater than 1.
 \subsection{\strong{Independent Truncated Gaussian Model - Version Maniscalco and Lau (ITGcm)}}{
 
 According to the version of the Independent Truncated Gaussian Models consistent
-with the original meta-d' method (Maniscalco and Lau, 2012, see Rausch et al., 2023),
+with the original meta-d' method (Maniscalco & Lau, 2012, see Rausch et al., 2023),
 \eqn{y} is sampled independently
 from \eqn{x} from a truncated Gaussian distribution with a location parameter
 of \eqn{S\times d_k \times m/2} and a scale parameter
@@ -158,7 +158,7 @@ as well as greater than 1.
 }
 }
 \examples{
-# 1. select one subject from the masked orientation discrimination experiment
+# 1. Select one subject from the masked orientation discrimination experiment
 data <- subset(MaskOri, participant == 1)
 head(data)
 
@@ -171,17 +171,17 @@ head(data)
 
 }
 \references{
-Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, 1, 1–14. https://doi.org/10.1093/nc/nix007
+Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, 1, 1–14. doi: 10.1093/nc/nix007
 
 Green, D. M., & Swets, J. A. (1966). Signal detection theory and psychophysics. Wiley.
 
-Maniscalco, B., & Lau, H. (2016). The signal processing architecture underlying subjective reports of sensory awareness. Neuroscience of Consciousness, 1, 1–17. https://doi.org/10.1093/nc/niw002
+Maniscalco, B., & Lau, H. (2016). The signal processing architecture underlying subjective reports of sensory awareness. Neuroscience of Consciousness, 1, 1–17. doi: 10.1093/nc/niw002
 
-Rausch, M., Hellmann, S., & Zehetleitner, M. (2018). Confidence in masked orientation judgments is informed by both evidence and visibility. Attention, Perception, and Psychophysics, 80(1), 134–154. https://doi.org/10.3758/s13414-017-1431-5
+Rausch, M., Hellmann, S., & Zehetleitner, M. (2018). Confidence in masked orientation judgments is informed by both evidence and visibility. Attention, Perception, and Psychophysics, 80(1), 134–154. doi: 10.3758/s13414-017-1431-5
 
-Rausch, M., Hellmann, S., & Zehetleitner, M. (2023). Measures of metacognitive efficiency across cognitive models of decision confidence \link{Preprint}. PsyArXiv. https://doi.org/10.31234/osf.io/kdz34
+Rausch, M., Hellmann, S., & Zehetleitner, M. (2023). Measures of metacognitive efficiency across cognitive models of decision confidence (Preprint). PsyArXiv. doi: 10.31234/osf.io/kdz34
 
-Rausch, M., & Zehetleitner, M. (2017). Should metacognition be measured by logistic regression? Consciousness and Cognition, 49, 291–312. https://doi.org/10.1016/j.concog.2017.02.007
+Rausch, M., & Zehetleitner, M. (2017). Should metacognition be measured by logistic regression? Consciousness and Cognition, 49, 291–312. doi: 10.1016/j.concog.2017.02.007
 }
 \author{
 Sebastian Hellmann, \email{sebastian.hellmann@ku.de}

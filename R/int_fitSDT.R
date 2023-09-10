@@ -56,15 +56,15 @@ fitSDT <-
     noFitYet <- TRUE
     for (i in 1:nInits){
       m <- try(optim(par =  inits[i,],
-                     f = llSDT, gr = NULL,
+                     fn = llSDT, gr = NULL,
                      N_SA_RA = N_SA_RA,N_SA_RB = N_SA_RB,
                      N_SB_RA = N_SB_RA,N_SB_RB = N_SB_RB, nRatings = nRatings, nCond = nCond,
                      control = list(maxit = 10^4, reltol = 10^-4)))
 
-      if ((class(m) == "list")){
+      if (is.list(m)){
         for(j in 2:nRestart){
           try(m <- optim(par = m$par,
-                         f = llSDT, gr = NULL,
+                         fn = llSDT, gr = NULL,
                          N_SA_RA = N_SA_RA,N_SA_RB = N_SA_RB,
                          N_SB_RA = N_SB_RA,N_SB_RB = N_SB_RB, nRatings = nRatings, nCond = nCond,
                          control = list(maxit = 10^6, reltol = 10^-8)))

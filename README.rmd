@@ -18,8 +18,10 @@ gitbranch <- "main/"
 
 # statConfR: An R package for metacognition researchers
 
-This package includes functions to fit meta-d´/d´ as well as several static
-models of decision making and confidence judgments to test the assumptions underlying meta-d´/d´. Currently, the following models are included:
+This package includes functions to fit meta-d´/d´ as well as several
+static models of decision making and confidence judgments to test the
+assumptions underlying meta-d´/d´. Currently, the following models are
+included:
 
 -   Signal Detection Rating Model
 
@@ -31,7 +33,8 @@ models of decision making and confidence judgments to test the assumptions under
 
 -   Independent Gaussian model
 
--   Independent Truncated Gaussian Model (the model underlying the meta-d´/d´ method)
+-   Independent Truncated Gaussian Model (the model underlying the
+    meta-d´/d´ method)
 
 See Rausch et al. (2023) for more detail about the models.
 
@@ -47,7 +50,7 @@ devtools::install_github("ManuelRausch/StatConfR")
 The latest released version of the package will soon be available on
 CRAN via
 
-``` R
+``` r
 install.packages("statConfR")
 ```
 
@@ -67,10 +70,11 @@ head(MaskOri)
 Data should be in the form of a data.frame object columns for following
 variables:
 
--   stimulus (factor with 2 levels): The property of the stimulus which defines which response
-    is correct
+-   stimulus (factor with 2 levels): The property of the stimulus which
+    defines which response is correct
 -   condition (factor): The experimental manipulation that is expected
-    to affect discrimination sensitivity (only used for fitting confidence models)
+    to affect discrimination sensitivity (only used for fitting
+    confidence models)
 -   correct (0-1): Indicating whether the choice was correct (1) or
     incorrect(0).
 -   rating (factor): A discrete variable encoding the decision
@@ -84,7 +88,14 @@ head(MaskOri)
 
 ### Fitting
 
-It is strongly recommended that if metacognitive efficiency is to be measured using the meta-d'/d' method that researchers fist determine whether the Independent Truncated Gaussian Model, the confidence model implied by the meta-d'/d' method, is an adequate description of the data. Using the function fitConfModel, we can fit several confidence models to the data of each participant. The argument `.parallel=TRUE`allows for parallelization over all but one available core.
+It is strongly recommended that if metacognitive efficiency is to be
+measured using the meta-d'/d' method that researchers fist determine
+whether the Independent Truncated Gaussian Model, the confidence model
+implied by the meta-d'/d' method, is an adequate description of the
+data. Using the function fitConfModel, we can fit several confidence
+models to the data of each participant. The argument
+`.parallel=TRUE`allows for parallelization over all but one available
+core.
 
 ``` r
  fitted_pars <- fitConfModels(MaskOri, models=c("SDT", "WEV"), .parallel = TRUE) 
@@ -428,19 +439,19 @@ NA, 0.421345745527519, NA, 0.597386787271095, NA, 0.395496319035518
 head(fitted_pars)
 ```
 
-If the Truncated Gaussian model performs best in the model comparison, metacognitive efficiency can be quantified using meta-d'/d':
+If the Truncated Gaussian model performs best in the model comparison,
+metacognitive efficiency can be quantified using meta-d'/d':
 
 ``` r
- MetaDs <- MetaDs <- fitMetaDprime(MaskOri, model="ML", .parallel = TRUE)
+ MetaDs <- fitMetaDprime(MaskOri, model="ML", .parallel = TRUE)
 ```
-
 
 ## Future development
 
-The package is still#under active development. We plan to include more
-models from the literature and function to compute the
-predicted distribution of responses for given parameter sets. For any
-suggestions and contributions, please contact us!
+The package is still under active development. We plan to include more
+models from the literature and function to compute the predicted
+distribution of responses for given parameter sets. For any suggestions
+and contributions, please contact us!
 
 ## Contact
 
@@ -451,5 +462,6 @@ or [submit an issue](https://github.com/ManuelRausch/StatConfR/issues).
 
 ## References
 
-Rausch, M., Hellmann, S. & Zehetleitner, M. (2023). Measures of metacognitive efficiency across cognitive models of decision confidence. [doi:
-10.31234/osf.io/kdz34](https://doi.org/10.31234/osf.io/kdz34) 
+Rausch, M., Hellmann, S. & Zehetleitner, M. (2023). Measures of
+metacognitive efficiency across cognitive models of decision confidence.
+[doi: 10.31234/osf.io/kdz34](https://doi.org/10.31234/osf.io/kdz34)

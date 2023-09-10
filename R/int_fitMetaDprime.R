@@ -59,18 +59,18 @@ int_fitMetaDprime   <- function(ratings, stimulus, correct,
 
   if(ModelVersion == "ML"){
     for (j in 1:nInits){
-      m <- try(optim(par = inits[j,], f = negLoglMetaD, gr = NULL,
+      m <- try(optim(par = inits[j,], fn = negLoglMetaD, gr = NULL,
                      nC_rS1 = nC_rS1, nI_rS1 = nI_rS1, nC_rS2 = nC_rS2, nI_rS2 = nI_rS2,
                      nRatings = nRatings, cprime = cprime,
                      control = list(maxit = 10^6, reltol = 10^-8)), silent=T)
       for(i in 2:nRestart){
-        try(m <- try(optim(par = m$par, f = negLoglMetaD, gr = NULL,
+        try(m <- try(optim(par = m$par, fn = negLoglMetaD, gr = NULL,
                            nC_rS1 = nC_rS1, nI_rS1 = nI_rS1, nC_rS2 = nC_rS2, nI_rS2 = nI_rS2,
                            nRatings = nRatings, cprime = cprime,
                            control = list(maxit = 10^6, reltol = 10^-8)), silent=T),
             silent=T)
       }
-      if ((class(m) != "try-error")){
+      if ((!inherits(m, "try-error"))){
         if (noFitYet) {
           fit <- m
           noFitYet <- FALSE
@@ -83,18 +83,18 @@ int_fitMetaDprime   <- function(ratings, stimulus, correct,
 
   if(ModelVersion == "F"){
     for (j in 1:nInits){
-      m <- try(optim(par = inits[j,], f = negLoglFleming, gr = NULL,
+      m <- try(optim(par = inits[j,], fn = negLoglFleming, gr = NULL,
                      nC_rS1 = nC_rS1, nI_rS1 = nI_rS1, nC_rS2 = nC_rS2, nI_rS2 = nI_rS2,
                      nRatings = nRatings, type1_c = cs[nRatings],
                      control = list(maxit = 10^6, reltol = 10^-8)), silent=T)
       for(i in 2:nRestart){
-        try(m <- try(optim(par = m$par, f = negLoglFleming, gr = NULL,
+        try(m <- try(optim(par = m$par, fn = negLoglFleming, gr = NULL,
                            nC_rS1 = nC_rS1, nI_rS1 = nI_rS1, nC_rS2 = nC_rS2, nI_rS2 = nI_rS2,
                            nRatings = nRatings, type1_c = cs[nRatings],
                            control = list(maxit = 10^6, reltol = 10^-8)), silent=T),
             silent=T)
       }
-      if ((class(m) != "try-error")){
+      if ((!inherits(m, "try-error"))){
         if (noFitYet) {
           fit <- m
           noFitYet <- FALSE
@@ -112,7 +112,7 @@ int_fitMetaDprime   <- function(ratings, stimulus, correct,
     metaD = NA, Ratio = NA, ModelVersion = ModelVersion)
 
   if(exists("fit")){
-    if(class(fit)=="list"){
+    if(is.list("fit")){
       result$metaD = fit$par[1] # pnorm(fit$par[1])*20 - 10
       result$Ratio =  result$metaD / dprime
 

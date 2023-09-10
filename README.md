@@ -133,12 +133,12 @@ If the Truncated Gaussian model performs best in the model comparison,
 metacognitive efficiency can be quantified using meta-d’/d’:
 
 ``` r
- MetaDs <- MetaDs <- fitMetaDprime(MaskOri, model="ML", .parallel = TRUE)
+ MetaDs <- fitMetaDprime(MaskOri, model="ML", .parallel = TRUE)
 ```
 
 ## Future development
 
-The package is still#under active development. We plan to include more
+The package is still under active development. We plan to include more
 models from the literature and function to compute the predicted
 distribution of responses for given parameter sets. For any suggestions
 and contributions, please contact us!
