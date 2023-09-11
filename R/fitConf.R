@@ -162,7 +162,7 @@ fitConf <- function(data, model, nInits = 5, nRestart = 4#, var="constant"
     warning("condition transformed to a factor!")
   }
   if(length(unique(data$stimulus)) != 2) {
-    stop("There should be only two different values of stimulus")
+    stop("There must be exactly two different values of stimulus")
   }
   if (!is.factor(data$stimulus)) {
     data$stimulus <- factor(data$stimulus)

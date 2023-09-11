@@ -1,19 +1,18 @@
 Package: statConfR
 Type: Package
-Title: Static Models for Decision Confidence
-Version: 0.1
-Date: 2023-09-05
+Title: An R package for metacognition researchers
+Version: 0.0.1
+Date: 2023-09-11
 Authors@R: c(
-    person("Sebastian", "Hellmann", , "sebastian.hellmann@ku.de", role = c("aut","cre"),
-           comment = c(ORCID = "0000-0002-3621-6343")),
-    person("Manuel", "Rausch", , "manuel.rausch@hochschule-rhein-waal.de", role = c("aut", "ctb", "fnd"),
-           comment = c(ORCID = "0000-0002-5805-5544"))
-  )
-Maintainer: Sebastian Hellmann <sebastian.hellmann@ku.de>
-Description: Provides functions to fit several different static models of 
-    decision confidence. Most models are explained in detail in 
-    Rausch, Hellmann & Zehetleitner (2018; <doi:10.3758/s13414-017-1431-5>).
-    Future version will also include functions for prediction and simulation. 
+  person("Manuel", "Rausch",, "manuel.rausch@hochschule-rhein-waal.de", role = c("aut", "ctb", "fnd"),
+           comment = c(ORCID = "0000-0002-5805-5544")),
+    person("Sebastian", "Hellmann",,"sebastian.hellmann@ku.de", role = c("aut","cre"),
+           comment = c(ORCID = "0000-0002-3621-6343"))
+       )
+Maintainer: Manuel Rausch <manuel.rausch@hochschule-rhein-waal.de>
+Description: This package includes functions to fit meta-d´/d´ as well as several
+  static models of decision making and confidence judgments to test the
+  assumptions underlying meta-d´/d´. 
 License: GPL(>=3)
 URL: https://github.com/ManuelRausch/StatConfR
 BugReports: https://github.com/ManuelRausch/StatConfR

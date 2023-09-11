@@ -65,7 +65,7 @@
 #' \dontrun{
 #'   # Fitting takes very long to run and uses multiple cores with this
 #'   # call:
-#'   MetaDs <- fitMetaDprime(data, model="ML", .parallel = TRUE, n.cores = 2)
+#'   MetaDs <- fitMetaDprime(data, model="F", .parallel = TRUE, n.cores = 2)
 #' }
 #'
 
@@ -103,7 +103,8 @@ fitMetaDprime <- function(data, model="ML",  nInits = 5, nRestart = 3,
     cur_sbj <- X[2]
     participant <- NULL # to omit a note in R checks because of an unbound variable
     data_part <- subset(data, participant==cur_sbj)
-    res <- int_fitMetaDprime(data_part$rating, data_part$stimulus, data_part$correct,
+    res <- int_fitMetaDprime(ratings=data_part$rating,
+                             stimulus=data_part$stimulus, correct = data_part$correct,
                              ModelVersion = cur_model,  nInits = nInits, nRestart = nRestart)
     res$model <- cur_model
     res$participant <- cur_sbj

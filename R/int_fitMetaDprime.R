@@ -112,8 +112,8 @@ int_fitMetaDprime   <- function(ratings, stimulus, correct,
     metaD = NA, Ratio = NA, ModelVersion = ModelVersion)
 
   if(exists("fit")){
-    if(is.list("fit")){
-      result$metaD = fit$par[1] # pnorm(fit$par[1])*20 - 10
+    if(is.list(fit)){
+      result$metaD = fit$par[1]
       result$Ratio =  result$metaD / dprime
 
     }
