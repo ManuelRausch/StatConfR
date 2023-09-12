@@ -16,12 +16,11 @@ gitrep <- "https://github.com/ManuelRausch/StatConfR/tree"
 gitbranch <- "main/"
 ```
 
-# statConfR: An R package for metacognition researchers
+# statConfR: An R package for Decision Confidence and Metacognition Researchers
 
 This package includes functions to fit meta-d´/d´ as well as several
-static models of decision making and confidence judgments to test the
-assumptions underlying meta-d´/d´. Currently, the following models are
-included:
+static models of decision making and confidence derived from signal detection theory to test the
+assumptions underlying meta-d´/d´ and which may serve as an alternative when the assumptions of meta-d´/d´ do not hold. Currently, the following models are included:
 
 -   Signal Detection Rating Model
 

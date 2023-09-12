@@ -70,7 +70,7 @@ head(data)
 \dontrun{
   # Fitting takes very long to run and uses multiple cores with this
   # call:
-  MetaDs <- fitMetaDprime(data, model="ML", .parallel = TRUE, n.cores = 2)
+  MetaDs <- fitMetaDprime(data, model="F", .parallel = TRUE, n.cores = 2)
 }
 
 }

@@ -1,26 +1,26 @@
 Package: statConfR
 Type: Package
-Title: An R package for metacognition researchers
+Title: An R Package for Decision Confidence and Metacognition Researchers
 Version: 0.0.1
 Date: 2023-09-11
 Authors@R: c(
-  person("Manuel", "Rausch",, "manuel.rausch@hochschule-rhein-waal.de", role = c("aut", "ctb", "fnd"),
+  person("Manuel", "Rausch", email="manuel.rausch@hochschule-rhein-waal.de", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5805-5544")),
-    person("Sebastian", "Hellmann",,"sebastian.hellmann@ku.de", role = c("aut","cre"),
+    person("Sebastian", "Hellmann",email="sebastian.hellmann@ku.de", role = c("aut"),
            comment = c(ORCID = "0000-0002-3621-6343"))
        )
 Maintainer: Manuel Rausch <manuel.rausch@hochschule-rhein-waal.de>
-Description: This package includes functions to fit meta-d´/d´ as well as several
-  static models of decision making and confidence judgments to test the
-  assumptions underlying meta-d´/d´. 
+Description: Tools for decision confidence and metacognition researchers, including meta-d´/d´, often considered to be the gold standard to measure metacognitive efficiency.
+    Also allows to fit several static models of decision making and confidence to test the assumptions underlying meta-d´/d´ and which may serve as an alternative when the
+    assumptions of meta-d´/d´ do not hold.
 License: GPL(>=3)
 URL: https://github.com/ManuelRausch/StatConfR
 BugReports: https://github.com/ManuelRausch/StatConfR
-Depends: 
+Depends:
     R (>= 4.0)
-Imports: 
+Imports:
     parallel
-Date/Publication: 2023-09-10
+Date/Publication: 2023-09-12
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
