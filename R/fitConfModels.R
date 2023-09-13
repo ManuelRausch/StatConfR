@@ -156,10 +156,10 @@
 #' head(data)
 #'
 #' # 2. Fit some models to each subject of the masked orientation discrimination experiment
-#' \dontrun{
+#' \donttest{
 #'   # Fitting takes very long to run and uses multiple cores with this
 #'   # call:
-#'   Fits <- fitConfModels(data, models=c("all"), .parallel=TRUE)
+#'   Fits <- fitConfModels(data, models=c("all"), .parallel=TRUE, n.cores=2)
 #' }
 
 

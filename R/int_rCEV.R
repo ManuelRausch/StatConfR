@@ -62,9 +62,6 @@ rCEV <-
         response <- c(response,
                       sample(x=1:(2*nRatings), size=n,
                              prob=probs[nConds*(stimulus-1)+condition,], replace = TRUE))
-        print(sum(probs[nConds*(stimulus-1)+condition,]))
-        print(c(stimulus, condition, sum(probs[nConds*(stimulus-1)+condition,1:nRatings]),
-                sum(probs[nConds*(stimulus-1)+condition,(nRatings+1):(2*nRatings)])))
       }
     }
     df$response <- ifelse(response <= nRatings, -1, 1)

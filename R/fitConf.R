@@ -146,7 +146,7 @@
 #' head(data)
 #'
 #' # 2. Use fitting function
-#' \dontrun{
+#' \donttest{
 #'   # Fitting takes some time to run:
 #'   FitFirstSbjSDT <- fitConf(data, model=c("SDT"))
 #' }

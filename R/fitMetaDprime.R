@@ -62,7 +62,7 @@
 #' head(data)
 #'
 #' # 2. Fit meta-d'/d' for each subject in data
-#' \dontrun{
+#' \donttest{
 #'   # Fitting takes very long to run and uses multiple cores with this
 #'   # call:
 #'   MetaDs <- fitMetaDprime(data, model="F", .parallel = TRUE, n.cores = 2)
