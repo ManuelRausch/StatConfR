@@ -67,11 +67,7 @@ data <- subset(MaskOri, participant \%in\% c(1:2))
 head(data)
 
 # 2. Fit meta-d'/d' for each subject in data
-\dontrun{
-  # Fitting takes very long to run and uses multiple cores with this
-  # call:
-  MetaDs <- fitMetaDprime(data, model="F", .parallel = TRUE, n.cores = 2)
-}
+MetaDs <- fitMetaDprime(data, model="F", .parallel = TRUE, n.cores = 2)
 
 }
 \references{

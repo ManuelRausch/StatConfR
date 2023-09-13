@@ -16,7 +16,7 @@ Description: Provides fitting functions and other tools for decision confidence
     Also allows to fit several static models of decision making and confidence 
     to test the assumptions underlying meta-d´/d´ and which may serve as an 
     alternative when the assumptions of meta-d´/d´ do not hold. See also Rausch 
-    et al. (2023; Preprint at PsyArXiv <doi:10.31234/osf.io/kdz34>).
+    et al. (2023) <doi:10.31234/osf.io/kdz34>.
 License: GPL(>=3)
 URL: https://github.com/ManuelRausch/StatConfR
 BugReports: https://github.com/ManuelRausch/StatConfR
