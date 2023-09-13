@@ -141,7 +141,6 @@
 #' @name fitConfModels
 #' @import parallel
 #' @importFrom stats dnorm pnorm qnorm optim integrate
-# @importFrom pracma integral
 #'
 #' @references Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, 1, 1–14. doi: 10.1093/nc/nix007
 #' @references Green, D. M., & Swets, J. A. (1966). Signal detection theory and psychophysics. Wiley.

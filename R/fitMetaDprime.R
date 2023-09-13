@@ -49,7 +49,6 @@
 #'
 #' @import parallel
 #' @importFrom stats dnorm pnorm pnorm optim integrate
-# @importFrom pracma integral
 #'
 #' @references Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, 1, 1–14. doi: 10.1093/nc/nix007
 #' @references Maniscalco, B., & Lau, H. (2012). A signal detection theoretic method for estimating metacognitive sensitivity from confidence ratings. Consciousness and Cognition, 21(1), 422–430.
