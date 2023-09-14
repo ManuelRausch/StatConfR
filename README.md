@@ -1,4 +1,4 @@
-# statConfR: An R package for Decision Confidence and Metacognition Researchers
+# statConfR: Models of Decision Confidence and Metacognition
 
 This package includes functions to fit meta-d´/d´ as well as several
 static models of decision making and confidence derived from signal
