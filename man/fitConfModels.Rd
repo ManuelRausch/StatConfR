@@ -175,9 +175,10 @@ head(data)
 
 # 2. Fit some models to each subject of the masked orientation discrimination experiment
 \donttest{
-  # Fitting takes very long to run and uses multiple cores with this
-  # call:
-  Fits <- fitConfModels(data, models=c("all"), .parallel=TRUE, n.cores=2)
+  # Fitting several models to several subjects takes quite some time
+  # If you want to fit more than just two subjects,
+  # we strongly recommend setting .parallel=TRUE
+  Fits <- fitConfModels(data, models=c("ITGc", "SDT"), .parallel = FALSE)
 }
 }
 \references{

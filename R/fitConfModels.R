@@ -156,9 +156,10 @@
 #'
 #' # 2. Fit some models to each subject of the masked orientation discrimination experiment
 #' \donttest{
-#'   # Fitting takes very long to run and uses multiple cores with this
-#'   # call:
-#'   Fits <- fitConfModels(data, models=c("all"), .parallel=TRUE, n.cores=2)
+#'   # Fitting several models to several subjects takes quite some time
+#'   # If you want to fit more than just two subjects,
+#'   # we strongly recommend setting .parallel=TRUE
+#'   Fits <- fitConfModels(data, models=c("ITGc", "SDT"), .parallel = FALSE)
 #' }
 
 
@@ -230,7 +231,7 @@ fitConfModels <- function(data, models="all",  nInits = 5, nRestart = 4, #var="c
     for (i in 1:nrow(jobs)) {
       listjobs[[i]] <- c(model = jobs[["model"]][i], sbj = jobs[["sbj"]][i])
     }
-    if (is.null(n.cores)) n.cores <- parallel::detectCores()-1
+    if (is.null(n.cores)) n.cores <- detectCores()-1
 
     cl <- makeCluster(type="SOCK", n.cores)
     clusterExport(cl, c("data",  "models","outnames", "call_fitfct", "nInits", "nRestart"),

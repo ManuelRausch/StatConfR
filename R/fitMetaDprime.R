@@ -61,7 +61,7 @@
 #' head(data)
 #'
 #' # 2. Fit meta-d'/d' for each subject in data
-#' MetaDs <- fitMetaDprime(data, model="F", .parallel = TRUE, n.cores = 2)
+#' MetaDs <- fitMetaDprime(data, model="F", .parallel = FALSE)
 #'
 
 
@@ -117,7 +117,7 @@ fitMetaDprime <- function(data, model="ML",  nInits = 5, nRestart = 3,
     for (i in 1:nrow(jobs)) {
       listjobs[[i]] <- c(model = jobs[["model"]][i], sbj = jobs[["sbj"]][i])
     }
-    if (is.null(n.cores)) n.cores <- parallel::detectCores()-1
+    if (is.null(n.cores)) n.cores <- detectCores() - 1
 
     cl <- makeCluster(type="SOCK", n.cores)
     clusterExport(cl, c("data",  "model","outnames", "call_fitfct", "nInits", "nRestart"),
