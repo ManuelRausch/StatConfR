@@ -1,6 +1,6 @@
-#' Fits meta-d' and meta-d'/d' ratios for data from one or several subjects
+#' Fits meta-d′ and meta-d′/d′ ratios for data from one or several subjects
 #'
-#' This function computes meta-d' and meta-d'/d' for each  participant in the \code{data}, respectively.
+#' This function computes meta-d′ and meta-d′/d′ for each  participant in the \code{data}, respectively.
 #' @param data  a `data.frame` where each row is one trial, containing following
 #' variables:
 #' * \code{rating} (discrete confidence judgments, should be given as factor;
@@ -24,19 +24,19 @@
 #' number of cores -1 will be used.
 #'
 #' @return Gives data frame with rows for each participant and columns dprime, c, metaD, and Ratio
-#' - dprime is the discrimination sensitivity index d', calculated using a standard SDT formula
+#' - dprime is the discrimination sensitivity index d′, calculated using a standard SDT formula
 #' - c is the discrimination bias c, calculated using a standard SDT formula
-#' - metaD is meta-d', discrimination sensitivity estimated from confidence judgments conditioned on the response
-#' - Ratio is meta-d'/d', a quantity usually referred to as metacognitive efficiency.
+#' - metaD is meta-d′, discrimination sensitivity estimated from confidence judgments conditioned on the response
+#' - Ratio is meta-d′/d′, a quantity usually referred to as metacognitive efficiency.
 #'
 #' @details
-#' The function computes meta-d' and meta-d'/d' either using the
+#' The function computes meta-d′ and meta-d′/d′ either using the
 #' hypothetical signal detection model assumed by Maniscalco and Lau (2012, 2014)
 #' or the one assumed by Fleming (2014). The fitting routine first performs a coarse grid search to find promising
 #' starting values for the maximum likelihood optimization procedure. Then the best \code{nInits}
 #' parameter sets found by the grid search are used as the initial values for separate
 #' runs of the Nelder-Mead algorithm implemented in \code{\link[stats]{optim}}.
-#' Each run is restarted \code{nRestart} times. Warning: Meta-d'/d'
+#' Each run is restarted \code{nRestart} times. Warning: meta-d′/d′
 #' is only guaranteed to be unbiased from discrimination sensitivity, discrimination
 #' bias, and confidence criteria if the data is generated according to the
 #' independent truncated Gaussian model (see Rausch et al., 2023).
@@ -60,7 +60,7 @@
 #' data <- subset(MaskOri, participant %in% c(1:2))
 #' head(data)
 #'
-#' # 2. Fit meta-d'/d' for each subject in data
+#' # 2. Fit meta-d′/d′ for each subject in data
 #' MetaDs <- fitMetaDprime(data, model="F", .parallel = FALSE)
 #'
 

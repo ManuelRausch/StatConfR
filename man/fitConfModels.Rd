@@ -23,8 +23,8 @@ a factor with a warning),
 subject individually.
 }}
 
-\item{models}{\code{character} vector of models to be fit for each participant.
-Models implemented so far: 'WEV', 'SDT', 'Noisy', 'PDA', 'IG', 'ITGc' and 'ITGcm'
+\item{models}{\code{character} of length 1.
+Models implemented so far: 'WEV', 'SDT', 'Noisy', 'PDA', 'IG', 'ITGc', 'ITGcm', and 'logN'.
 Alternatively, if \code{model="all"} (default), all implemented models will be fit.}
 
 \item{nInits}{\code{integer}. Number of initial values used for maximum likelihood optimization.
@@ -41,8 +41,11 @@ number of cores -1 will be used.}
 }
 \value{
 Gives data frame with rows for each model-participant combination and columns for the different parameters
-as fitted result as well as additional information about the fit (\code{negLogLik} (for final parameters),
-\code{k} (number of parameters), \code{N} (number of data rows), \code{BIC}, \code{AICc} and \code{AIC})
+as fitted result as well as additional information about the fit #' (\code{negLogLik} (negative log-likelihood of the final set of parameters),
+\code{k} (number of parameters), \code{N} (number of data rows),
+\code{AIC} (Akaike Information Criterion; Akaike, 1974),
+\code{BIC} (Bayes information criterion; Schwarz, 1978), and
+\code{AICc} (AIC corrected for small samples; Burnham & Anderson, 2002)).
 }
 \description{
 This function is a wrapper of the function \code{\link{fitConf}} (see
@@ -58,48 +61,48 @@ runs of the Nelder-Mead algorithm implemented in \code{\link[stats]{optim}}.
 Each run is restarted \code{nRestart} times.
 \subsection{Mathematical description of models}{
 
-This section contains a detailed mathematical description of all models
-implemented in the package.
-
-The computational models are all based on signal detection theory. Assume that
-there are \eqn{k} different levels of difficulty manipulated in the
-(and the levels are given by the \code{condition} column in the \code{data}) and that
-the \code{stimulus} column indicated the identity of the true stimulus \eqn{S}
-being either -1 or 1. Then, for each level of difficulty , a value for the
-sensitivity \eqn{d_k} is fit. The models assume that the stimulus
-generates normally distributed sensory evidence \eqn{x} with mean \eqn{Sd_k/2}
-and variance \eqn{\sigma_k} (see below). The sensory evidence \eqn{x}
-is compared to a decision threshold \eqn{\theta} to generate a choice response
-\eqn{R}, which is 1, if \eqn{x} exceeds \eqn{\theta} and -1 else. (In the
-output of the functions this will be A and B respectively.)
-To generate confidence, the confidence variable \eqn{y} is compared to another
-set of thresholds \eqn{c_{D,i}, D=A, B,  i=1,...,L-1}, depending on the
-initial choice \eqn{D} to produce a \eqn{L}-step discrete confidence response.
-The number of thresholds will be inferred by the number of steps in the
+The computational models are all based on signal detection theory (Green & Swets, 1966). It is assumed
+that participants select a binary discrimination response \eqn{R} about a stimulus \eqn{S}.
+Both \eqn{S} and \eqn{R} can be either -1 or 1.
+\eqn{R} is considered correct if \eqn{S=R}.
+In addition, we assume that there are \eqn{K} different levels of stimulus discriminability
+in the experiment, i.e. a physical variable that makes the discrimination task easier or harder.
+For each level of discriminability, the function fits a different discrimination
+sensitivity parameter \eqn{d_k}. If there is more than one sensitivity parameter,
+we assume that the sensitivity parameters are ordered such as \eqn{0 < d_1 < d_2 < ... < d_k}.
+The models assume that the stimulus generates normally distributed sensory evidence \eqn{x} with mean \eqn{S\times d_k/2}
+and variance of 1. The sensory evidence \eqn{x} is compared to a decision
+criterion \eqn{c} to generate a discrimination response
+\eqn{R}, which is 1, if \eqn{x} exceeds \eqn{c} and -1 else.
+To generate confidence, it is assumed that the confidence variable \eqn{y} is compared to another
+set of criteria \eqn{\theta_{R,i}, i=1,2,...,L-1}, depending on the
+discrimination response \eqn{R} to produce a \eqn{L}-step discrete confidence response.
+The number of thresholds will be inferred from the number of steps in the
 \code{rating} column of \code{data}.
-The parameters common to all models are thus:
+Thus, the parameters shared between all models are:
 \itemize{
-\item sensitivity parameters \eqn{d_1},...,\eqn{d_k} (\eqn{k}: number of difficulty levels)
-\item choice threshold \eqn{\theta}
-\item confidence threshold \eqn{c_{A,1}},...\eqn{c_{A,L-1}},\eqn{c_{B,1}},...
-\eqn{c_{B,L-1}} (\eqn{L}: number of steps for confidence ratings)
+\item sensitivity parameters \eqn{d_1},...,\eqn{d_K} (\eqn{K}: number of difficulty levels)
+\item decision criterion \eqn{c}
+\item confidence criterion \eqn{\theta_{-1,1}},\eqn{\theta_{-1,2}},
+..., \eqn{\theta_{-1,L-1}}, \eqn{\theta_{1,1}},  \eqn{\theta_{1,2}},...,
+\eqn{\theta_{1,L-1}} (\eqn{L}: number of confidence categories available for confidence ratings)
 }
 
 How the confidence variable \eqn{y} is computed varies across the different models.
 The following models have been implemented so far:
 \subsection{\strong{Signal Detection Rating Model (SDT)}}{
 
-According to the signal detection rating model (Green & Swets, 1966), the same sample of sensory
+According to SDT, the same sample of sensory
 evidence is used to generate response and confidence, i.e.,
-\eqn{y=x} and the confidence thresholds span from the left and
-right side of the decision threshold \eqn{\theta}.
+\eqn{y=x} and the confidence criteria span from the left and
+right side of the decision criterion \eqn{c}(Green & Swets, 1966).
 }
 
 \subsection{\strong{Gaussian Noise Model (Noisy)}}{
 
-According to the Gaussian noise model (Maniscalco & Lau, 2016), \eqn{y} is subject to
+According to the model, \eqn{y} is subject to
 additive noise and assumed to be normally distributed around the decision
-evidence value \eqn{x} with some standard deviation \eqn{\sigma}.
+evidence value \eqn{x} with a standard deviation \eqn{\sigma}(Maniscalco & Lau, 2016).
 \eqn{\sigma} is an additional free parameter.
 }
 
@@ -113,7 +116,7 @@ The standard deviation quantifies the amount of unsystematic variability
 contributing to confidence judgments but not to the discrimination judgments.
 The parameter \eqn{w} represents the weight that is put on the choice-irrelevant
 features in the confidence judgment. \eqn{w} and \eqn{\sigma} are fitted in
-addition to the common parameters.
+addition to the set of shared parameters.
 }
 
 \subsection{\strong{Post-decisional accumulation model (PDA)}}{
@@ -122,48 +125,68 @@ PDA represents the idea of on-going information accumulation after the
 discrimination choice (Rausch et al., 2018). The parameter \eqn{a} indicates the amount of additional
 accumulation. The confidence variable is normally distributed with mean
 \eqn{x+S\times d_k\times a} and variance \eqn{a}.
-For this model the parameter \eqn{a} is fitted in addition to the common
+For this model the parameter \eqn{a} is fitted in addition to the shared
 parameters.
 }
 
 \subsection{\strong{Independent Gaussian Model (IG)}}{
 
-According to the Independent Gaussian Model, \eqn{y} is sampled independently
-from \eqn{x} (Rausch & Zehetleitner, 2017). It is normally distributed with a mean of \eqn{a\times d_k} and variance
+According to IG, \eqn{y} is sampled independently
+from \eqn{x} (Rausch & Zehetleitner, 2017). \eqn{y} is normally distributed with a mean of \eqn{a\times d_k} and variance
 of 1 (again as it would scale with \eqn{a}). The additional parameter \eqn{a}
 represents the amount of information available for confidence judgment
-relative to amount of evidence available for the discrimination decision and
-can be smaller as well as greater than 1.
+relative to amount of evidence available for the discrimination decision and can
+be smaller as well as greater than 1.
 }
 
-\subsection{\strong{Independent Truncated Gaussian Model - Version Fleming (ITGc)}}{
+\subsection{\strong{Independent Truncated Gaussian Model: HMetad-Version (ITGc)}}{
 
-According to the version of the Independent Truncated Gaussian Models consistent
+According to the version of ITG consistent
 with the HMetad-method (Fleming, 2017; see Rausch et al., 2023), \eqn{y} is sampled independently
 from \eqn{x} from a truncated Gaussian distribution with a location parameter
 of \eqn{S\times d_k \times m/2} and a scale parameter of 1. The Gaussian distribution of \eqn{y}
 is truncated in a way that it is impossible to sample evidence that contradicts
 the original decision: If \eqn{R = -1}, the distribution is truncated to the
-right of \eqn{\theta}. If \eqn{R = 1}, the distribution is truncated to the left
-of \eqn{\theta}. The additional parameter \eqn{m} represents metacognitive efficiency,
+right of \eqn{c}. If \eqn{R = 1}, the distribution is truncated to the left
+of \eqn{c}. The additional parameter \eqn{m} represents metacognitive efficiency,
 i.e., the amount of information available for confidence judgments relative to
 amount of evidence available for discrimination decisions and  can be smaller
 as well as greater than 1.
 }
 
-\subsection{\strong{Independent Truncated Gaussian Model - Version Maniscalco and Lau (ITGcm)}}{
+\subsection{\strong{Independent Truncated Gaussian Model: Meta-d′-Version (ITGcm)}}{
 
-According to the version of the Independent Truncated Gaussian Models consistent
-with the original meta-d' method (Maniscalco & Lau, 2012, see Rausch et al., 2023),
-\eqn{y} is sampled independently
-from \eqn{x} from a truncated Gaussian distribution with a location parameter
+According to the version of the ITG consistent
+with the original meta-d′ method (Maniscalco & Lau, 2012, 2014; see Rausch et al., 2023),
+\eqn{y} is sampled independently from \eqn{x} from a truncated Gaussian distribution with a location parameter
 of \eqn{S\times d_k \times m/2} and a scale parameter
-of 1. If \eqn{R = -1}, the distribution is truncated to the right of \eqn{m\times\theta}.
-If \eqn{R = 1}, the distribution is truncated to the left of  \eqn{m\times\theta}.
+of 1. If \eqn{R = -1}, the distribution is truncated to the right of \eqn{m\times c}.
+If \eqn{R = 1}, the distribution is truncated to the left of  \eqn{m\times c}.
 The additional parameter \eqn{m} represents metacognitive efficiency, i.e.,
 the amount of information available for confidence judgments relative to
 amount of evidence available for the discrimination decision and  can be smaller
 as well as greater than 1.
+}
+
+\subsection{\strong{Logistic Noise Model (logN)}}{
+
+According to logN, the same sample
+of sensory evidence is used to generate response and confidence, i.e.,
+\eqn{y=x} just as in SDT (Shekhar & Rahnev, 2021). However, according to logN, the confidence criteria
+are not assumed to be constant, but instead they are affected by noise drawn from
+a lognormal distribution. In each trial, \eqn{\theta_{-1,i}} is given
+by \eqn{c -  \epsilon_i}. Likewise,  \eqn{\theta_{1,i}} is given by
+\eqn{c + \epsilon_i}. \eqn{\epsilon_i} is drawn from a lognormal distribution with
+the location parameter
+\eqn{\mu_{R,i}=log(|\overline{\theta}_{R,i}- c|) - 0.5 \times \sigma^{2}} and
+scale parameter \eqn{\sigma}. \eqn{\sigma} is a free parameter designed to
+quantify metacognitive ability. It is assumed that the criterion noise is perfectly
+correlated across confidence criteria, ensuring that the confidence criteria
+are always perfectly ordered. Because \eqn{\theta_{-1,1}}, ..., \eqn{\theta_{-1,L-1}},
+\eqn{\theta_{1,1}}, ..., \eqn{\theta_{1,L-1}} change from trial to trial, they are not estimated
+as free parameters. Instead, we estimate the means of the confidence criteria, i.e., \eqn{\overline{\theta}_{-1,1}, ...,
+\overline{\theta}_{-1,L-1}, \overline{\theta}_{1,1}, ...  \overline{\theta}_{1,L-1}},
+as free parameters.
 }
 
 }
@@ -182,6 +205,10 @@ head(data)
 }
 }
 \references{
+Akaike, H. (1974). A New Look at the Statistical Model Identification. IEEE Transactions on Automatic Control, AC-19(6), 716–723.doi: 10.1007/978-1-4612-1694-0_16
+
+Burnham, K. P., & Anderson, D. R. (2002). Model selection and multimodel inference: A practical information-theoretic approach. Springer.
+
 Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, 1, 1–14. doi: 10.1093/nc/nix007
 
 Green, D. M., & Swets, J. A. (1966). Signal detection theory and psychophysics. Wiley.
@@ -190,9 +217,13 @@ Maniscalco, B., & Lau, H. (2016). The signal processing architecture underlying 
 
 Rausch, M., Hellmann, S., & Zehetleitner, M. (2018). Confidence in masked orientation judgments is informed by both evidence and visibility. Attention, Perception, and Psychophysics, 80(1), 134–154. doi: 10.3758/s13414-017-1431-5
 
-Rausch, M., Hellmann, S., & Zehetleitner, M. (2023). Measures of metacognitive efficiency across cognitive models of decision confidence. PsyArXiv. doi: 10.31234/osf.io/kdz34
+Rausch, M., Hellmann, S., & Zehetleitner, M. (2023). Measures of metacognitive efficiency across cognitive models of decision confidence. Psychological Methods. doi: 10.31234/osf.io/kdz34
 
 Rausch, M., & Zehetleitner, M. (2017). Should metacognition be measured by logistic regression? Consciousness and Cognition, 49, 291–312. doi: 10.1016/j.concog.2017.02.007
+
+Schwarz, G. (1978). Estimating the dimension of a model. The Annals of Statistics, 6(2), 461–464. doi: 10.1214/aos/1176344136
+
+Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive Inefficiency in Perceptual Decision Making. Psychological Review, 128(1), 45–70. doi: 10.1037/rev0000249
 }
 \author{
 Sebastian Hellmann, \email{sebastian.hellmann@ku.de}

@@ -84,11 +84,11 @@ fitSDT <-
       k <- length(fit$par)
       N <- length(ratings)
 
-      res[paste("d",1:nCond, sep="")] <-  as.vector(cumsum(exp(fit$par[1:(nCond)])))
-      res$theta <-  as.vector(fit$par[nCond+nRatings])
-      res[,paste("cA",1:(nRatings-1), sep="")] <-
+      res[paste("d_",1:nCond, sep="")] <-  as.vector(cumsum(exp(fit$par[1:(nCond)])))
+      res$c <-  as.vector(fit$par[nCond+nRatings])
+      res[,paste("theta_minus.",(nRatings-1):1, sep="")] <-
         as.vector(fit$par[nCond+nRatings] - rev(cumsum(c(exp( fit$par[(nCond+1):(nCond+nRatings-1)])))))
-      res[,paste("cB",1:(nRatings-1), sep="")] <-
+      res[,paste("theta_plus.",1:(nRatings-1), sep="")] <-
         as.vector(fit$par[nCond+nRatings] + cumsum(c(exp(fit$par[(nCond+nRatings+1):(nCond + nRatings*2-1)]))))
 
 

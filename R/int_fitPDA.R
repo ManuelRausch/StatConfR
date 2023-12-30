@@ -1,16 +1,9 @@
 ###   Functions to fit the postdecisional accumulation model
 # the model does not assume any parameter to measure metacognition
-# rating criteria are enforced to be ordered, b
+# rating criteria are enforced to be ordered,
 
 fitPDA <-
   function(ratings, stimulus, correct, condition, nInits = 5, nRestart = 4){
-    if(!is.factor(condition)) stop ("condition should be a factor!")
-    if(!is.factor(ratings)) stop ("ratings should be a factor!")
-    if(!is.factor(stimulus )|| length(levels(stimulus)) != 2) {
-      stop("stimulus should be a factor with 2 levels")
-    }
-    if(!all(correct %in% c(0,1))) stop("correct should be 1 or 0")
-
     A <- levels(stimulus)[1]
     B <- levels(stimulus)[2]
     nRatings <- length(levels(ratings))
@@ -95,18 +88,17 @@ fitPDA <-
       k <- length(fit$par)
       N <- length(ratings)
 
-      res[paste("d",1:nCond, sep="")] <-  as.vector(cumsum(exp(fit$par[1:(nCond)])))
-      res$theta <-  as.vector(fit$par[nCond+nRatings])
-      res[,paste("cA",1:(nRatings-1), sep="")] <-
+      res[paste("d_",1:nCond, sep="")] <-  as.vector(cumsum(exp(fit$par[1:(nCond)])))
+      res$c <-  as.vector(fit$par[nCond+nRatings])
+      res[,paste("theta_minus.",(nRatings-1):1, sep="")] <-
         c(as.vector(fit$par[nCond+nRatings-1] - rev(cumsum(c(exp(fit$par[(nCond+1):(nCond+nRatings-2)]))))),
           as.vector(fit$par[nCond+nRatings-1]))
-      res[,paste("cB",1:(nRatings-1), sep="")] <-
+      res[,paste("theta_plus.",1:(nRatings-1), sep="")] <-
         c(as.vector(fit$par[nCond+nRatings+1]),
           as.vector(fit$par[nCond+nRatings+1]) +
             as.vector(cumsum(c(exp(fit$par[(nCond+nRatings+2):(nCond + nRatings*2-1)])))))
 
-
-      res$a <- exp(fit$par[nCond + nRatings*2])
+      res$b <- exp(fit$par[nCond + nRatings*2])
 
       res$negLogLik <- fit$value
       res$N <- N
