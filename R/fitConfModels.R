@@ -18,7 +18,7 @@
 #' * \code{participant} (giving the subject ID; the models given in the second argument are fitted for each
 #'   subject individually.
 #' @param models `character` of length 1.
-#' Models implemented so far: 'WEV', 'SDT', 'Noisy', 'PDA', 'IG', 'ITGc', 'ITGcm', and 'logN'.
+#' Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'ITGcm', and 'logN'.
 #' Alternatively, if `model="all"` (default), all implemented models will be fit.
 #' @param nInits `integer`. Number of initial values used for maximum likelihood optimization.
 #' Defaults to 5.
@@ -78,7 +78,7 @@
 #' \eqn{y=x} and the confidence criteria span from the left and
 #' right side of the decision criterion \eqn{c}(Green & Swets, 1966).
 #'
-#' ### \strong{Gaussian Noise Model (Noisy)}
+#' ### \strong{Gaussian Noise Model (GN)}
 #' According to the model, \eqn{y} is subject to
 #' additive noise and assumed to be normally distributed around the decision
 #' evidence value \eqn{x} with a standard deviation \eqn{\sigma}(Maniscalco & Lau, 2016).
@@ -192,7 +192,7 @@
 #' @export
 fitConfModels <- function(data, models="all",  nInits = 5, nRestart = 4, #var="constant",
                              .parallel=FALSE, n.cores=NULL) {
-  AllModels <- c('WEV', 'SDT','IG','ITGc', 'ITGcm', 'Noisy', 'PDA', 'logN') # if you implement additional models, add them here!
+  AllModels <- c('WEV', 'SDT','IG','ITGc', 'ITGcm', 'GN', 'PDA', 'logN') # if you implement additional models, add them here!
   if (identical(models,"all")) models <- AllModels
   if (!all(models %in% AllModels)) {
     stop(paste(paste(setdiff(models, AllModels),collapse = " and "), " not implemented!"))

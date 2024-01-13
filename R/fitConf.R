@@ -14,7 +14,7 @@
 #'    a factor with a warning),
 #' * \code{correct} (encoding whether the response was correct; should  be 0 for incorrect responses and 1 for correct responses)
 #' @param model `character` of length 1.
-#' Models implemented so far: 'WEV', 'SDT', 'Noisy', 'PDA', 'IG', 'ITGc', 'ITGcm', and 'logN'.
+#' Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'ITGcm', 'logN', and 'logWEV'.
 #' Alternatively, if `model="all"` (default), all implemented models will be fit.
 #' @param nInits `integer`. Number of initial values used for maximum likelihood optimization.
 #' Defaults to 5.
@@ -69,7 +69,7 @@
 #' \eqn{y=x} and the confidence criteria span from the left and
 #' right side of the decision criterion \eqn{c}(Green & Swets, 1966).
 #'
-#' ### \strong{Gaussian Noise Model (Noisy)}
+#' ### \strong{Gaussian Noise Model (GN)}
 #' According to the model, \eqn{y} is subject to
 #' additive noise and assumed to be normally distributed around the decision
 #' evidence value \eqn{x} with a standard deviation \eqn{\sigma}(Maniscalco & Lau, 2016).
@@ -146,7 +146,8 @@
 #' \overline{\theta}_{-1,L-1}, \overline{\theta}_{1,1}, ...  \overline{\theta}_{1,L-1}},
 #' as free parameters.
 #'
-#'
+#' ### \strong{Logistic Weighted Evidence and Visibility model (logWEV)}
+#' To-Do Doc
 #'
 #' @md
 #'
@@ -212,13 +213,16 @@ fitConf <- function(data, model = "all", nInits = 5, nRestart = 4#, var="constan
     fitting_fct <- fitITGc
   } else if (model=="ITGcm") {
     fitting_fct <- fitITGcm
-  } else if (model=="Noisy") {
+  } else if (model=="GN") {
     fitting_fct <- fitNoisy
   } else if (model=="PDA") {
     fitting_fct <- fitPDA
   } else if (model=="logN") {
     fitting_fct <- fitLognorm
-  } else stop(paste0("Model: ", model, " not implemented!\nChoose one of: 'WEV', 'SDT','IG', 'ITGc', 'ITGcm,'Noisy', 'logN', or 'PDA'"))
+  } else if (model == "logWEV"){
+    fitting_fct <- fitLogWEV
+  }
+  } else stop(paste0("Model: ", model, " not implemented!\nChoose one of: 'WEV', 'SDT','IG', 'ITGc', 'ITGcm,'GN', 'logN', 'logWEV' or 'PDA'"))
 
   fit <- fitting_fct(data$rating, data$stimulus, data$correct, data$condition,
                      nInits = nInits, nRestart = nRestart)

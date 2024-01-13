@@ -1,4 +1,7 @@
+# (i) SDT
+
 generateDataSDT <- function(paramDf){
+
   nCond <- sum(is.finite(c(t(paramDf[,grep(pattern = "d_", names(paramDf), value=T)]))))
   nRatings <- sum(is.finite(c(t(paramDf[,grep(pattern = "theta_minus", names(paramDf), value=T)]))))+1
   ds <- c(t(paramDf[,paste("d_", 1:nCond, sep="")]))
@@ -51,18 +54,19 @@ generateDataSDT <- function(paramDf){
   X
 }
 
+# (ii) Noisy
 
 generateDataNoisy <-
   function(paramDf){
 
     nCond <- length(grep(pattern = "d_", names(paramDf), value=T))
-    nRatings <- (length(grep(pattern = "cA", names(paramDf), value=T)))+1
-    ds <- c(t(paramDf[,paste("d", 1:nCond, sep="")]))
+    nRatings <- (length(grep(pattern = "theta_minus.", names(paramDf), value=T)))+1
+    ds <- c(t(paramDf[,paste("d_", 1:nCond, sep="")]))
     locA <- -ds/2
     locB <- ds/2
-    theta <- paramDf$theta
-    c_RA <- c(-Inf,c(t(paramDf[,paste("cA", (nRatings-1):1, sep="")])), Inf)
-    c_RB <- c(-Inf,c(t(paramDf[,paste("cB", 1:(nRatings-1), sep="")])), Inf)
+    theta <- paramDf$c
+    c_RA <- c(-Inf,c(t(paramDf[,paste("theta_minus.", (nRatings-1):1, sep="")])), Inf)
+    c_RB <- c(-Inf,c(t(paramDf[,paste("theta_plus.", 1:(nRatings-1), sep="")])), Inf)
     sigma <- paramDf$sigma
 
     p_SA_RA <- expand.grid(j = 1:nCond, i = 1:nRatings)
@@ -95,15 +99,15 @@ generateDataNoisy <-
                 rel.tol = 10^-8)$value
     })
 
-    p_SB_RB <- cbind(stimulus = "B", response = "B",
+    p_SB_RB <- cbind(stimulus = 1, response = 1,
                      mdply(.data=p_SB_RB, .fun= P_SBRB_Noisy))
-    p_SB_RA <- cbind(stimulus = "B", response = "A",
+    p_SB_RA <- cbind(stimulus = 1, response = -1,
                      mdply(.data=p_SB_RA, .fun= P_SBRA_Noisy))
     p_SB_RA$i <- nRatings + 1 - p_SB_RA$i
-    p_SA_RA <- cbind(stimulus = "A", response = "A",
+    p_SA_RA <- cbind(stimulus = -1, response = -1,
                      mdply(.data=p_SA_RA, .fun= P_SARA_Noisy))
     p_SA_RA$i <-  nRatings + 1 - p_SA_RA$i
-    p_SA_RB <- cbind(stimulus = "A", response = "B",
+    p_SA_RB <- cbind(stimulus = -1, response = 1,
                      mdply(.data=p_SA_RB, .fun= P_SARB_Noisy))
 
     res <- rbind(p_SB_RB,p_SB_RA,  p_SA_RA,p_SA_RB)
@@ -125,20 +129,23 @@ generateDataNoisy <-
     X
   }
 
+
+# (iii) PDA
+
 generateDataISDT <-
   function(paramDf){
 
-    nCond <- length(grep(pattern = "d", names(paramDf), value=T))
-    nRatings <- (length(grep(pattern = "cA", names(paramDf), value=T)))+1
-    ds <- c(t(paramDf[,paste("d", 1:nCond, sep="")]))
+    nCond <- length(grep(pattern = "d_", names(paramDf), value=T))
+    nRatings <- (length(grep(pattern = "theta_minus.", names(paramDf), value=T)))+1
+    ds <- c(t(paramDf[,paste("d_", 1:nCond, sep="")]))
     locA <- -ds/2
     locB <- ds/2
-    theta <- paramDf$theta
+    theta <- paramDf$c
     a <-  paramDf$a
     sigma <- sqrt(a)
 
-    c_RA <- c(-Inf, c(t(paramDf[,paste("cA", (nRatings-1):1, sep="")])), Inf)
-    c_RB <- c(-Inf, c(t(paramDf[,paste("cB", 1:(nRatings-1), sep="")])), Inf)
+    c_RA <- c(-Inf, c(t(paramDf[,paste("theta_minus.", (nRatings-1):1, sep="")])), Inf)
+    c_RB <- c(-Inf, c(t(paramDf[,paste("theta_plus.", 1:(nRatings-1), sep="")])), Inf)
 
     p_SA_RA <- expand.grid(j = 1:nCond, i = 1:nRatings)
     p_SA_RB <- expand.grid(j = 1:nCond, i = 1:nRatings)
@@ -170,15 +177,15 @@ generateDataISDT <-
                 rel.tol = 10^-8)$value
     })
 
-    p_SB_RB <- cbind(stimulus = "B", response = "B",
+    p_SB_RB <- cbind(stimulus = 1, response = 1,
                      mdply(.data=p_SB_RB, .fun= P_SBRB))
-    p_SB_RA <- cbind(stimulus = "B", response = "A",
+    p_SB_RA <- cbind(stimulus = 1, response = -1,
                      mdply(.data=p_SB_RA, .fun= P_SBRA))
     p_SB_RA$i <- nRatings + 1 - p_SB_RA$i
-    p_SA_RA <- cbind(stimulus = "A", response = "A",
+    p_SA_RA <- cbind(stimulus = -1, response = -1,
                      mdply(.data=p_SA_RA, .fun= P_SARA))
     p_SA_RA$i <-  nRatings + 1 - p_SA_RA$i
-    p_SA_RB <- cbind(stimulus = "A", response = "B",
+    p_SA_RB <- cbind(stimulus = -1, response = 1,
                      mdply(.data=p_SA_RB, .fun= P_SARB))
 
     res <- rbind(p_SB_RB, p_SB_RA,  p_SA_RA, p_SA_RB)
@@ -202,20 +209,86 @@ generateDataISDT <-
     X
   }
 
+# (iv) IG
 
+generateData2Chan <- function(paramDf){
+  nCond <- sum(is.finite(c(t(paramDf[,grep(pattern = "d_", names(paramDf), value=T)]))))
+  nRatings <- sum(is.finite(c(t(paramDf[,grep(pattern = "theta_minus", names(paramDf), value=T)]))))+1
+  ds <- c(t(paramDf[,paste("d_", 1:nCond, sep="")]))
+  locA1 <- -ds/2
+  locB1 <- ds/2
+  theta <- paramDf$c
+  c_RA <- c(-Inf,c(t(paramDf[,paste("theta_minus.", (nRatings-1):1, sep="")])), Inf)
+  c_RB <- c(-Inf,c(t(paramDf[,paste("theta_plus.", 1:(nRatings-1), sep="")])), Inf)
+  metads <- paramDf$a * ds
+  locA2 <- -metads/2
+  locB2 <- metads/2
+
+  p_SA_RA <- expand.grid(j = 1:nCond, i = 1:nRatings)
+  p_SA_RB <- expand.grid(j = 1:nCond, i = 1:nRatings)
+  p_SB_RA <- expand.grid(j = 1:nCond, i = 1:nRatings)
+  p_SB_RB <- expand.grid(j = 1:nCond, i = 1:nRatings)
+
+  P_SBRB <- Vectorize(function(j,i){
+    (1 - pnorm(theta, locB1[j])) * (pnorm(c_RB[i+1], locB2[j]) - pnorm(c_RB[i], locB2[j]))
+  })
+  P_SBRA <- Vectorize(function(j,i){
+    pnorm(theta, locB1[j]) * (pnorm(c_RA[i+1], locB2[j]) - pnorm(c_RA[i], locB2[j]))
+  })
+  P_SARA <-  Vectorize(function(j,i){
+    pnorm(theta, locA1[j]) * (pnorm(c_RA[i+1], locA2[j]) - pnorm(c_RA[i], locA2[j]))
+  })
+  P_SARB <-  Vectorize(function(j,i){
+    (1 - pnorm(theta, locA1[j])) * (pnorm(c_RB[i+1], locA2[j]) - pnorm(c_RB[i], locA2[j]))
+  })
+
+  p_SB_RB <- cbind(stimulus = 1, response = 1,
+                   mdply(.data=p_SB_RB, .fun= P_SBRB))
+  p_SB_RA <- cbind(stimulus = 1, response = -1,
+                   mdply(.data=p_SB_RA, .fun= P_SBRA))
+  p_SB_RA$i <- nRatings + 1 - p_SB_RA$i
+  p_SA_RA <- cbind(stimulus = -1, response = -1,
+                   mdply(.data=p_SA_RA, .fun= P_SARA))
+  p_SA_RA$i <-  nRatings + 1 - p_SA_RA$i
+  p_SA_RB <- cbind(stimulus = -1, response = 1,
+                   mdply(.data=p_SA_RB, .fun= P_SARB))
+
+  res <- rbind(p_SB_RB, p_SB_RA,  p_SA_RA, p_SA_RB)
+  colnames(res) <- c("stimulus", "response", "condition",
+                     "rating", "p")
+  res$p[is.na(res$p) | is.nan(res$p)] <- 0
+  nTrials <- round(paramDf$nTrials / 2 / nCond)
+
+  f <- function(df){
+    ind <- sample(x=1:(2*nRatings),size= nTrials,
+                  prob = as.vector(df$p), replace=T)
+    response <- df$response[ind]
+    rating <- df$rating[ind]
+    data.frame(response = response, rating = rating)
+  }
+  X <- ddply(res, .(stimulus, condition), f)
+  X$condition <- factor(X$condition)
+  X$correct <- 0
+  X$correct[X$stimulus==X$response] <- 1
+  X$rating <- factor(X$rating)
+  X$stimulus <- factor(X$stimulus)
+  X
+}
+
+# (v) WEV
 
 generateDataWEV <-
   function(paramDf){
     require(plyr)
-    nCond <- length(grep(pattern = "d", names(paramDf), value=T))
-    nRatings <- (length(grep(pattern = "cA", names(paramDf), value=T)))+1
-    ds <- c(t(paramDf[,paste("d", 1:nCond, sep="")]))
+    nCond <- length(grep(pattern = "d_", names(paramDf), value=T))
+    nRatings <- (length(grep(pattern = "theta_minus", names(paramDf), value=T)))+1
+    ds <- c(t(paramDf[,paste("d_", 1:nCond, sep="")]))
     locA <- -ds/2
     locB <- ds/2
-    c_RA <- c(-Inf,c(t(paramDf[,paste("cA", (nRatings-1):1, sep="")])), Inf)
-    c_RB <- c(-Inf,c(t(paramDf[,paste("cB", 1:(nRatings-1), sep="")])), Inf)
+    c_RA <- c(-Inf,c(t(paramDf[,paste("theta_minus.", (nRatings-1):1, sep="")])), Inf)
+    c_RB <- c(-Inf,c(t(paramDf[,paste("theta_plus.", 1:(nRatings-1), sep="")])), Inf)
 
-    theta <- paramDf$theta
+    theta <- paramDf$c
     w <- paramDf$w
     sigma <- paramDf$sigma
 
@@ -253,12 +326,16 @@ generateDataWEV <-
         rel.tol = 10^-8)$value
     })
 
-    p_SB_RB <- cbind(stimulus = "B", response = "B",mdply(.data=p_SB_RB, .fun= P_SBRB_CEV))
-    p_SB_RA <- cbind(stimulus = "B", response = "A",mdply(.data=p_SB_RA, .fun= P_SBRA_CEV))
+    p_SB_RB <- cbind(stimulus = 1, response = 1,
+                     mdply(.data=p_SB_RB, .fun= P_SBRB_CEV))
+    p_SB_RA <- cbind(stimulus = 1, response = -1,
+                     mdply(.data=p_SB_RA, .fun= P_SBRA_CEV))
     p_SB_RA$i <- nRatings + 1 - p_SB_RA$i
-    p_SA_RA <- cbind(stimulus = "A", response = "A",mdply(.data=p_SA_RA, .fun= P_SARA_CEV))
+    p_SA_RA <- cbind(stimulus = -1, response = -1,
+                     mdply(.data=p_SA_RA, .fun= P_SARA_CEV))
     p_SA_RA$i <-  nRatings + 1 - p_SA_RA$i
-    p_SA_RB <- cbind(stimulus = "A", response = "B",mdply(.data=p_SA_RB, .fun= P_SARB_CEV))
+    p_SA_RB <- cbind(stimulus = -1, response = 1,
+                     mdply(.data=p_SA_RB, .fun= P_SARB_CEV))
 
     res <- rbind(p_SB_RB,p_SB_RA,  p_SA_RA,p_SA_RB)
     colnames(res) <- c("stimulus", "response", "condition", "rating", "p")
@@ -281,16 +358,17 @@ generateDataWEV <-
   }
 
 
+# (vi) ITGc
 
 generateDataIndTruncML <-
   function(paramDf){
 
-    nCond <- length(grep(pattern = "d", names(paramDf), value=T))
-    nRatings <- (length(grep(pattern = "cA", names(paramDf), value=T)))+1
-    ds <- c(t(paramDf[,paste("d", 1:nCond, sep="")]))
+    nCond <- length(grep(pattern = "d_", names(paramDf), value=T))
+    nRatings <- (length(grep(pattern = "theta_minus.", names(paramDf), value=T)))+1
+    ds <- c(t(paramDf[,paste("d_", 1:nCond, sep="")]))
     locA1 <- -ds/2
     locB1 <- ds/2
-    theta <- paramDf$theta
+    theta <- paramDf$c
 
     m_ratio <- paramDf$m_ratio
     metads <- m_ratio * ds
@@ -298,8 +376,8 @@ generateDataIndTruncML <-
     locB2 <- metads/2
     meta_c <- m_ratio * theta
 
-    c_RA <- c(-Inf, c(t(paramDf[,paste("cA", (nRatings-1):1, sep="")])), meta_c)
-    c_RB <- c(meta_c, c(t(paramDf[,paste("cB", 1:(nRatings-1), sep="")])), Inf)
+    c_RA <- c(-Inf, c(t(paramDf[,paste("theta_minus.", (nRatings-1):1, sep="")])), meta_c)
+    c_RB <- c(meta_c, c(t(paramDf[,paste("theta_plus.", 1:(nRatings-1), sep="")])), Inf)
 
     p_SA_RA <- expand.grid(j = 1:nCond, i = 1:nRatings)
     p_SA_RB <- expand.grid(j = 1:nCond, i = 1:nRatings)
@@ -323,15 +401,15 @@ generateDataIndTruncML <-
         (1 - pnorm(meta_c, locA2[j]))
     })
 
-    p_SB_RB <- cbind(stimulus = "B", response = "B",
+    p_SB_RB <- cbind(stimulus = 1, response = 1,
                      mdply(.data=p_SB_RB, .fun= P_SBRB))
-    p_SB_RA <- cbind(stimulus = "B", response = "A",
+    p_SB_RA <- cbind(stimulus = 1, response = -1,
                      mdply(.data=p_SB_RA, .fun= P_SBRA))
     p_SB_RA$i <- nRatings + 1 - p_SB_RA$i
-    p_SA_RA <- cbind(stimulus = "A", response = "A",
+    p_SA_RA <- cbind(stimulus = -1, response = -1,
                      mdply(.data=p_SA_RA, .fun= P_SARA))
     p_SA_RA$i <-  nRatings + 1 - p_SA_RA$i
-    p_SA_RB <- cbind(stimulus = "A", response = "B",
+    p_SA_RB <- cbind(stimulus = -1, response = 1,
                      mdply(.data=p_SA_RB, .fun= P_SARB))
 
     res <- rbind(p_SB_RB, p_SB_RA,  p_SA_RA, p_SA_RB)
@@ -355,12 +433,15 @@ generateDataIndTruncML <-
     X
   }
 
+
+# (vii) ITGcm
+
 generateDataIndTruncF <-
   function(paramDf){
 
-    nCond <- length(grep(pattern = "d", names(paramDf), value=T))
-    nRatings <- (length(grep(pattern = "cA", names(paramDf), value=T)))+1
-    ds <- c(t(paramDf[,paste("d", 1:nCond, sep="")]))
+    nCond <- length(grep(pattern = "d_", names(paramDf), value=T))
+    nRatings <- (length(grep(pattern = "theta_minus.", names(paramDf), value=T)))+1
+    ds <- c(t(paramDf[,paste("d_", 1:nCond, sep="")]))
     locA1 <- -ds/2
     locB1 <- ds/2
     theta <- paramDf$theta
@@ -371,8 +452,8 @@ generateDataIndTruncF <-
     locB2 <- metads/2
     meta_c <-  theta
 
-    c_RA <- c(-Inf, c(t(paramDf[,paste("cA", (nRatings-1):1, sep="")])), meta_c)
-    c_RB <- c(meta_c, c(t(paramDf[,paste("cB", 1:(nRatings-1), sep="")])), Inf)
+    c_RA <- c(-Inf, c(t(paramDf[,paste("theta_minus.", (nRatings-1):1, sep="")])), meta_c)
+    c_RB <- c(meta_c, c(t(paramDf[,paste("theta_plus.", 1:(nRatings-1), sep="")])), Inf)
 
     p_SA_RA <- expand.grid(j = 1:nCond, i = 1:nRatings)
     p_SA_RB <- expand.grid(j = 1:nCond, i = 1:nRatings)
@@ -396,15 +477,15 @@ generateDataIndTruncF <-
         (1 - pnorm(meta_c, locA2[j]))
     })
 
-    p_SB_RB <- cbind(stimulus = "B", response = "B",
+    p_SB_RB <- cbind(stimulus = 1, response = 1,
                      mdply(.data=p_SB_RB, .fun= P_SBRB))
-    p_SB_RA <- cbind(stimulus = "B", response = "A",
+    p_SB_RA <- cbind(stimulus = 1, response = -1,
                      mdply(.data=p_SB_RA, .fun= P_SBRA))
     p_SB_RA$i <- nRatings + 1 - p_SB_RA$i
-    p_SA_RA <- cbind(stimulus = "A", response = "A",
+    p_SA_RA <- cbind(stimulus = -1, response = -1,
                      mdply(.data=p_SA_RA, .fun= P_SARA))
     p_SA_RA$i <-  nRatings + 1 - p_SA_RA$i
-    p_SA_RB <- cbind(stimulus = "A", response = "B",
+    p_SA_RB <- cbind(stimulus = -1, response = 1,
                      mdply(.data=p_SA_RB, .fun= P_SARB))
 
     res <- rbind(p_SB_RB, p_SB_RA,  p_SA_RA, p_SA_RB)
@@ -427,3 +508,7 @@ generateDataIndTruncF <-
     X$stimulus <- factor(X$stimulus)
     X
   }
+
+# (viii) logN
+# (ix) logWEV
+
