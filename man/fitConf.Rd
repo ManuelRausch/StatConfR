@@ -21,7 +21,7 @@ a factor with a warning),
 }}
 
 \item{model}{\code{character} of length 1.
-Models implemented so far: 'WEV', 'SDT', 'Noisy', 'PDA', 'IG', 'ITGc', 'ITGcm', and 'logN'.
+Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'ITGcm', 'logN', and 'logWEV'.
 Alternatively, if \code{model="all"} (default), all implemented models will be fit.}
 
 \item{nInits}{\code{integer}. Number of initial values used for maximum likelihood optimization.
@@ -40,7 +40,7 @@ selected model as well as additional information about the fit
 \code{AICc} (AIC corrected for small samples; Burnham & Anderson, 2002))
 }
 \description{
-This function fits one static model of decision confidence to empirical data.
+This function fits one or more static models of decision confidence to binary choices and confidence judgments.
 It calls a corresponding fitting function for the selected model.
 }
 \details{
@@ -59,13 +59,13 @@ In addition, we assume that there are \eqn{K} different levels of stimulus discr
 in the experiment, i.e. a physical variable that makes the discrimination task easier or harder.
 For each level of discriminability, the function fits a different discrimination
 sensitivity parameter \eqn{d_k}. If there is more than one sensitivity parameter,
-we assume that the sensitivity parameters are ordered such as \eqn{0 < d_1 < d_2 < ... < d_k}.
+we assume that the sensitivity parameters are ordered such as \eqn{0 < d_1 <  ... < d_K}.
 The models assume that the stimulus generates normally distributed sensory evidence \eqn{x} with mean \eqn{S\times d_k/2}
 and variance of 1. The sensory evidence \eqn{x} is compared to a decision
 criterion \eqn{c} to generate a discrimination response
 \eqn{R}, which is 1, if \eqn{x} exceeds \eqn{c} and -1 else.
 To generate confidence, it is assumed that the confidence variable \eqn{y} is compared to another
-set of criteria \eqn{\theta_{R,i}, i=1,2,...,L-1}, depending on the
+set of criteria \eqn{\theta_{R,i}, i = 1, ..., L-1}, depending on the
 discrimination response \eqn{R} to produce a \eqn{L}-step discrete confidence response.
 The number of thresholds will be inferred from the number of steps in the
 \code{rating} column of \code{data}. Thus, the parameters shared between all models are:
@@ -84,24 +84,25 @@ The following models have been implemented so far:
 According to SDT, the same sample of sensory
 evidence is used to generate response and confidence, i.e.,
 \eqn{y=x} and the confidence criteria span from the left and
-right side of the decision criterion \eqn{c}(Green & Swets, 1966).
+right side of the decision criterion \eqn (Green & Swets, 19 66).
 }
 
-\subsection{\strong{Gaussian Noise Model (Noisy)}}{
+\subsection{\strong{Gaussian Noise Model (GN)}}{
 
 According to the model, \eqn{y} is subject to
 additive noise and assumed to be normally distributed around the decision
-evidence value \eqn{x} with a standard deviation \eqn{\sigma}(Maniscalco & Lau, 2016).
-\eqn{\sigma} is a free parameter.
+evidence value \eqn{x} with a standard deviation \eqn{\sigma} (Maniscalco & Lau, 2016).
+The parameter  \eqn{\sigma} is a free parameter.
 }
 
 \subsection{\strong{Weighted Evidence and Visibility model (WEV)}}{
 
 WEV assumes that the observer combines evidence about decision-relevant features
 of the stimulus with the strength of evidence about choice-irrelevant features
-to generate confidence (Rausch et al., 2018). Thus, the WEV model assumes that \eqn{y} is normally
+to generate confidence (Rausch et al., 2018). Here, we use the version of the WEV model
+used by Rausch et al. (2023), which assumes that \eqn{y} is normally
 distributed with a mean of \eqn{(1-w)\times x+w \times d_k\times R} and standard deviation \eqn{\sigma}.
-\eqn{\sigma}n quantifies the amount of unsystematic variability
+The parameter \eqn{\sigma} quantifies the amount of unsystematic variability
 contributing to confidence judgments but not to the discrimination judgments.
 The parameter \eqn{w} represents the weight that is put on the choice-irrelevant
 features in the confidence judgment. \eqn{w} and \eqn{\sigma} are fitted in
@@ -122,7 +123,7 @@ addition to the set of shared parameters.
 
 According to IG, \eqn{y} is sampled independently
 from \eqn{x} (Rausch & Zehetleitner, 2017). \eqn{y} is normally distributed with a mean of \eqn{a\times d_k} and variance
-of 1 (again as it would scale with \eqn{a}). The free parameter \eqn{a}
+of 1 (again as it would scale with \eqn{m}). The free parameter \eqn{m}
 represents the amount of information available for confidence judgment
 relative to amount of evidence available for the discrimination decision and can
 be smaller as well as greater than 1.
@@ -176,6 +177,21 @@ are always perfectly ordered. Because \eqn{\theta_{-1,1}}, ..., \eqn{\theta_{-1,
 as free parameters. Instead, we estimate the means of the confidence criteria, i.e., \eqn{\overline{\theta}_{-1,1}, ...,
 \overline{\theta}_{-1,L-1}, \overline{\theta}_{1,1}, ...  \overline{\theta}_{1,L-1}},
 as free parameters.
+}
+
+\subsection{\strong{Logistic Weighted Evidence and Visibility model (logWEV)}}{
+
+logWEV is a combination of logN and WEV proposed by Shekhar and Rahnev (2023).
+Conceptually, logWEV assumes that the observer combines evidence about decision-relevant features
+of the stimulus with the strength of evidence about choice-irrelevant features (Rausch et al., 2018).
+The model also assumes that noise affecting confidence judgments is lognormal in accordance with Shekhar and Rahnev (2021.)
+According to logWEV, \eqn{y^*} is sampled from a lognormal distribution with a location parameter
+of \eqn{(1-w)\times x+w \times d_k\times R} and a scale parameter of \eqn{\sigma}.
+\eqn{\sigma}n quantifies the amount of unsystematic variability
+contributing to confidence judgments but not to the discrimination judgments.
+The parameter \eqn{w} represents the weight that is put on the choice-irrelevant
+features in the confidence judgment. \eqn{w} and \eqn{\sigma} are fitted in
+addition to the set of shared parameters.
 }
 
 }

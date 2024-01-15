@@ -1,6 +1,6 @@
 #' Fit a static confidence model to data
 #'
-#' This function fits one static model of decision confidence to empirical data.
+#' This function fits one or more static models of decision confidence to binary choices and confidence judgments.
 #' It calls a corresponding fitting function for the selected model.
 #'
 #' @param data  a `data.frame` where each row is one trial, containing following
@@ -67,20 +67,21 @@
 #' According to SDT, the same sample of sensory
 #' evidence is used to generate response and confidence, i.e.,
 #' \eqn{y=x} and the confidence criteria span from the left and
-#' right side of the decision criterion \eqn{c}(Green & Swets, 1966).
+#' right side of the decision criterion \eqn (Green & Swets, 19 66).
 #'
 #' ### \strong{Gaussian Noise Model (GN)}
 #' According to the model, \eqn{y} is subject to
 #' additive noise and assumed to be normally distributed around the decision
-#' evidence value \eqn{x} with a standard deviation \eqn{\sigma}(Maniscalco & Lau, 2016).
-#' \eqn{\sigma} is a free parameter.
+#' evidence value \eqn{x} with a standard deviation \eqn{\sigma} (Maniscalco & Lau, 2016).
+#' The parameter  \eqn{\sigma} is a free parameter.
 #'
 #' ### \strong{Weighted Evidence and Visibility model (WEV)}
 #' WEV assumes that the observer combines evidence about decision-relevant features
 #' of the stimulus with the strength of evidence about choice-irrelevant features
-#' to generate confidence (Rausch et al., 2018). Thus, the WEV model assumes that \eqn{y} is normally
+#' to generate confidence (Rausch et al., 2018). Here, we use the version of the WEV model
+#' used by Rausch et al. (2023), which assumes that \eqn{y} is normally
 #' distributed with a mean of \eqn{(1-w)\times x+w \times d_k\times R} and standard deviation \eqn{\sigma}.
-#'  \eqn{\sigma}n quantifies the amount of unsystematic variability
+#' The parameter \eqn{\sigma} quantifies the amount of unsystematic variability
 #' contributing to confidence judgments but not to the discrimination judgments.
 #' The parameter \eqn{w} represents the weight that is put on the choice-irrelevant
 #' features in the confidence judgment. \eqn{w} and \eqn{\sigma} are fitted in
@@ -97,7 +98,7 @@
 #' ### \strong{Independent Gaussian Model (IG)}
 #' According to IG, \eqn{y} is sampled independently
 #' from \eqn{x} (Rausch & Zehetleitner, 2017). \eqn{y} is normally distributed with a mean of \eqn{a\times d_k} and variance
-#' of 1 (again as it would scale with \eqn{a}). The free parameter \eqn{a}
+#' of 1 (again as it would scale with \eqn{m}). The free parameter \eqn{m}
 #' represents the amount of information available for confidence judgment
 #' relative to amount of evidence available for the discrimination decision and can
 #'  be smaller as well as greater than 1.
@@ -147,7 +148,20 @@
 #' as free parameters.
 #'
 #' ### \strong{Logistic Weighted Evidence and Visibility model (logWEV)}
-#' To-Do Doc
+#' logWEV is a combination of logN and WEV proposed by Shekhar and Rahnev (2023).
+#' Conceptually, logWEV assumes that the observer combines evidence about decision-relevant features
+#' of the stimulus with the strength of evidence about choice-irrelevant features (Rausch et al., 2018).
+#' The model also assumes that noise affecting confidence judgments is lognormal
+#'  in accordance with Shekhar and Rahnev (2021).
+#' According to logWEV, the confidence decision variable is \eqn{y} is equal to
+#' \eqn{y^*\times R}.
+#' \eqn{y^*} is sampled from a lognormal distribution with a location parameter
+#'  of \eqn{(1-w)\times x+w \times d_k} and a scale parameter of \eqn{\sigma}.
+#'  \eqn{\sigma}n quantifies the amount of unsystematic variability
+#' contributing to confidence judgments but not to the discrimination judgments.
+#' The parameter \eqn{w} represents the weight that is put on the choice-irrelevant
+#' features in the confidence judgment. \eqn{w} and \eqn{\sigma} are fitted in
+#' addition to the set of shared parameters.
 #'
 #' @md
 #'
@@ -221,10 +235,9 @@ fitConf <- function(data, model = "all", nInits = 5, nRestart = 4#, var="constan
     fitting_fct <- fitLognorm
   } else if (model == "logWEV"){
     fitting_fct <- fitLogWEV
-  }
   } else stop(paste0("Model: ", model, " not implemented!\nChoose one of: 'WEV', 'SDT','IG', 'ITGc', 'ITGcm,'GN', 'logN', 'logWEV' or 'PDA'"))
 
-  fit <- fitting_fct(data$rating, data$stimulus, data$correct, data$condition,
-                     nInits = nInits, nRestart = nRestart)
-  return(fit)
+fit <- fitting_fct(data$rating, data$stimulus, data$correct, data$condition,
+                   nInits = nInits, nRestart = nRestart)
+return(fit)
 }

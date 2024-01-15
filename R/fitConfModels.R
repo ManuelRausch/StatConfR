@@ -106,7 +106,7 @@
 #' ### \strong{Independent Gaussian Model (IG)}
 #' According to IG, \eqn{y} is sampled independently
 #' from \eqn{x} (Rausch & Zehetleitner, 2017). \eqn{y} is normally distributed with a mean of \eqn{a\times d_k} and variance
-#' of 1 (again as it would scale with \eqn{a}). The additional parameter \eqn{a}
+#' of 1 (again as it would scale with \eqn{m}). The additional parameter \eqn{m}
 #' represents the amount of information available for confidence judgment
 #' relative to amount of evidence available for the discrimination decision and can
 #'  be smaller as well as greater than 1.
@@ -230,7 +230,7 @@ fitConfModels <- function(data, models="all",  nInits = 5, nRestart = 4, #var="c
                 paste0("theta_plus.",1:(nRatings-1)),
                 paste0("M_theta_minus.",(nRatings-1):1),
                 paste0("M_theta_plus.",1:(nRatings-1)),
-                "a", "b", "m", "sigma", "w"
+                 "b", "m", "sigma", "w"
                 )
   # This function will be called for every combination of participant and model
   call_fitfct <- function(X) {

@@ -24,7 +24,7 @@ subject individually.
 }}
 
 \item{models}{\code{character} of length 1.
-Models implemented so far: 'WEV', 'SDT', 'Noisy', 'PDA', 'IG', 'ITGc', 'ITGcm', and 'logN'.
+Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'ITGcm', and 'logN'.
 Alternatively, if \code{model="all"} (default), all implemented models will be fit.}
 
 \item{nInits}{\code{integer}. Number of initial values used for maximum likelihood optimization.
@@ -69,7 +69,7 @@ In addition, we assume that there are \eqn{K} different levels of stimulus discr
 in the experiment, i.e. a physical variable that makes the discrimination task easier or harder.
 For each level of discriminability, the function fits a different discrimination
 sensitivity parameter \eqn{d_k}. If there is more than one sensitivity parameter,
-we assume that the sensitivity parameters are ordered such as \eqn{0 < d_1 < d_2 < ... < d_k}.
+we assume that the sensitivity parameters are ordered such as \eqn{0 < d_1 < d_2 < ... < d_K}.
 The models assume that the stimulus generates normally distributed sensory evidence \eqn{x} with mean \eqn{S\times d_k/2}
 and variance of 1. The sensory evidence \eqn{x} is compared to a decision
 criterion \eqn{c} to generate a discrimination response
@@ -98,7 +98,7 @@ evidence is used to generate response and confidence, i.e.,
 right side of the decision criterion \eqn{c}(Green & Swets, 1966).
 }
 
-\subsection{\strong{Gaussian Noise Model (Noisy)}}{
+\subsection{\strong{Gaussian Noise Model (GN)}}{
 
 According to the model, \eqn{y} is subject to
 additive noise and assumed to be normally distributed around the decision
@@ -133,7 +133,7 @@ parameters.
 
 According to IG, \eqn{y} is sampled independently
 from \eqn{x} (Rausch & Zehetleitner, 2017). \eqn{y} is normally distributed with a mean of \eqn{a\times d_k} and variance
-of 1 (again as it would scale with \eqn{a}). The additional parameter \eqn{a}
+of 1 (again as it would scale with \eqn{m}). The additional parameter \eqn{m}
 represents the amount of information available for confidence judgment
 relative to amount of evidence available for the discrimination decision and can
 be smaller as well as greater than 1.

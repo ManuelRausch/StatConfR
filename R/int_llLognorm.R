@@ -10,33 +10,33 @@ ll_lognorm <-
     # average placement of the confidence criteria
     mu_cA <- theta + rev(cumsum(c(exp(p[(nCond+1):(nCond+nRatings-1)]))))
     mu_cB <- theta + cumsum(c(exp(p[(nCond+nRatings+1):(nCond + nRatings*2-1)])))
-   
+
     # convert to the location parameter of the latent lognormal distribution
-    loc_RA <-  c(Inf,log(abs(mu_cA - theta)) - .5*sigma^2, -Inf)
+    loc_RA <-  c(Inf,log(abs(mu_cA - theta)) - .5*sigma^2, -Inf) # the order here is REVERSED!!!
     loc_RB <- c(-Inf, log(mu_cB - theta) - .5*sigma^2, Inf)
-     
+
     p_SA_RA <- matrix(NA, nrow=nCond, ncol = nRatings)
     p_SA_RB <- matrix(NA, nrow=nCond, ncol = nRatings)
     p_SB_RA <- matrix(NA, nrow=nCond, ncol = nRatings)
     p_SB_RB <- matrix(NA, nrow=nCond, ncol = nRatings)
 
     P_SBRB <-  Vectorize(function(j,i){
-      integrate(function(x) dnorm(x, locB[j]) * 
+      integrate(function(x) dnorm(x, locB[j]) *
                   (plnorm(x-theta, loc_RB[i], sigma) - plnorm(x-theta, loc_RB[i+1], sigma)),
                 lower = theta, upper = Inf, rel.tol = 10^-8)$value
     })
     P_SBRA <-  Vectorize(function(j,i){
-      integrate(function(x) dnorm(x, locB[j]) * 
+      integrate(function(x) dnorm(x, locB[j]) *
                   (plnorm(theta-x,  loc_RA[i+1], sigma) - plnorm(theta-x,  loc_RA[i], sigma)),
                 lower = -Inf, upper =theta, rel.tol = 10^-8)$value
     })
     P_SARA <- Vectorize(function(j,i){
-      integrate(function(x) dnorm(x, locA[j]) * 
+      integrate(function(x) dnorm(x, locA[j]) *
                   (plnorm(theta-x,  loc_RA[i+1], sigma) - plnorm(theta-x,  loc_RA[i], sigma)),
                 lower = -Inf, upper =theta, rel.tol = 10^-8)$value
     })
     P_SARB <- Vectorize(function(j,i){
-      integrate(function(x) dnorm(x, locA[j]) * 
+      integrate(function(x) dnorm(x, locA[j]) *
                   (plnorm(x-theta, loc_RB[i], sigma) - plnorm(x-theta, loc_RB[i+1], sigma)),
                 lower = theta, upper = Inf, rel.tol = 10^-8)$value
     })
