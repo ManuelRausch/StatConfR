@@ -36,7 +36,7 @@ generateDataSDT <- function(paramDf){
   colnames(res) <- c("stimulus", "response", "condition",
                      "rating", "p")
   res$p[is.na(res$p) | is.nan(res$p)] <- 0
-  nTrials <- round(paramDf$nTrials / 2 / nCond)
+  nTrials <- round(paramDf$N / 2 / nCond)
 
   f <- function(df){
     ind <- sample(x=1:(2*nRatings),size= nTrials,
@@ -113,7 +113,7 @@ generateDataNoisy <-
     res <- rbind(p_SB_RB,p_SB_RA,  p_SA_RA,p_SA_RB)
     colnames(res) <- c("stimulus", "response", "condition", "rating", "p")
     res$p[is.na(res$p) | is.nan(res$p)] <- 0
-    nTrials <- paramDf$nTrials
+    nTrials <- paramDf$N
 
     f <- function(df){
       ind <- sample(x=1:(2*nRatings),size= nTrials, prob = as.vector(df$p), replace=T)
@@ -192,7 +192,7 @@ generateDataISDT <-
     colnames(res) <- c("stimulus", "response", "condition",
                        "rating", "p")
     res$p[is.na(res$p) | is.nan(res$p)] <- 0
-    nTrials <- paramDf$nTrials
+    nTrials <- paramDf$N
 
     f <- function(df){
       ind <- sample(x=1:(2*nRatings),size= nTrials, prob = as.vector(df$p), replace=T)
@@ -257,7 +257,7 @@ generateData2Chan <- function(paramDf){
   colnames(res) <- c("stimulus", "response", "condition",
                      "rating", "p")
   res$p[is.na(res$p) | is.nan(res$p)] <- 0
-  nTrials <- round(paramDf$nTrials / 2 / nCond)
+  nTrials <- round(paramDf$N / 2 / nCond)
 
   f <- function(df){
     ind <- sample(x=1:(2*nRatings),size= nTrials,
@@ -340,7 +340,7 @@ generateDataWEV <-
     res <- rbind(p_SB_RB,p_SB_RA,  p_SA_RA,p_SA_RB)
     colnames(res) <- c("stimulus", "response", "condition", "rating", "p")
     res$p[is.na(res$p) | is.nan(res$p)] <- 0
-    nTrials <- paramDf$nTrials
+    nTrials <- paramDf$N
 
     f <- function(df){
       ind <- sample(x=1:(2*nRatings),size= nTrials, prob = as.vector(df$p),
@@ -417,7 +417,7 @@ generateDataIndTruncML <-
                        "rating", "p")
     res$p[is.na(res$p) | is.nan(res$p) | res$p < 0] <- 0
 
-    nTrials <- paramDf$nTrials
+    nTrials <- paramDf$N
 
     f <- function(df){
       ind <- sample(x=1:(2*nRatings),size= nTrials, prob = as.vector(df$p), replace=T)
@@ -492,7 +492,7 @@ generateDataIndTruncF <-
     colnames(res) <- c("stimulus", "response", "condition",
                        "rating", "p")
     res$p[is.na(res$p) | is.nan(res$p)] <- 0
-    nTrials <- paramDf$nTrials
+    nTrials <- paramDf$N
 
     f <- function(df){
       ind <- sample(x=1:(2*nRatings),size= nTrials, prob = as.vector(df$p), replace=T)
@@ -510,5 +510,8 @@ generateDataIndTruncF <-
   }
 
 # (viii) logN
+
+generateDataLognorm <- function(paramDf){}
+
 # (ix) logWEV
 

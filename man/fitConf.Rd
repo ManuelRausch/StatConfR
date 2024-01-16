@@ -184,10 +184,12 @@ as free parameters.
 logWEV is a combination of logN and WEV proposed by Shekhar and Rahnev (2023).
 Conceptually, logWEV assumes that the observer combines evidence about decision-relevant features
 of the stimulus with the strength of evidence about choice-irrelevant features (Rausch et al., 2018).
-The model also assumes that noise affecting confidence judgments is lognormal in accordance with Shekhar and Rahnev (2021.)
-According to logWEV, \eqn{y^*} is sampled from a lognormal distribution with a location parameter
-of \eqn{(1-w)\times x+w \times d_k\times R} and a scale parameter of \eqn{\sigma}.
-\eqn{\sigma}n quantifies the amount of unsystematic variability
+The model also assumes that noise affecting the confidence decision variable is lognormal
+in accordance with Shekhar and Rahnev (2021).
+According to logWEV, the confidence decision variable is \eqn{y} is equal to
+\eqn{y^*\times R}. \eqn{y^*} is sampled from a lognormal distribution with a location parameter
+of \eqn{(1-w)\times x\times R + w \times d_k} and a scale parameter of \eqn{\sigma}.
+The parameter \eqn{\sigma} quantifies the amount of unsystematic variability
 contributing to confidence judgments but not to the discrimination judgments.
 The parameter \eqn{w} represents the weight that is put on the choice-irrelevant
 features in the confidence judgment. \eqn{w} and \eqn{\sigma} are fitted in
@@ -229,6 +231,8 @@ Rausch, M., & Zehetleitner, M. (2017). Should metacognition be measured by logis
 Schwarz, G. (1978). Estimating the dimension of a model. The Annals of Statistics, 6(2), 461–464. doi: 10.1214/aos/1176344136
 
 Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive Inefficiency in Perceptual Decision Making. Psychological Review, 128(1), 45–70. doi: 10.1037/rev0000249
+
+Shekhar, M., & Rahnev, D. (2023). How Do Humans Give Conﬁdence? A Comprehensive Comparison of Process Models of Perceptual Metacognition. Journal of Experimental Psychology: General. doi:10.1037/xge0001524
 }
 \author{
 Sebastian Hellmann, \email{sebastian.hellmann@ku.de}

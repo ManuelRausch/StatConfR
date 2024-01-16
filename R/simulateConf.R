@@ -4,7 +4,7 @@
 #' Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'ITGcm', 'logN', and 'logWEV'.
 #' @param data  a `data.frame` that contains all parameters to simulate a data set,
 #' with one row and the different parameters in different columns:
-#' * \code{nTrials} the number of trials be simulated
+#' * \code{N} the number of trials be simulated
 #' * \code{d_1}, \code{d_2}, ... sensitivity parameters. The number of sensitivity parameters determines the number of conditions
 #' * \code{c}: discrimination bias
 #' * \code{theta_minus.1}, \code{theta_minus.2},... confidence criteria associated with the response R = -1. The function simulates one more confidence category than there are confidence criteria.
@@ -14,7 +14,7 @@
 #' * \code{m} only for IG, ITGm, and ITGcm: metacognitive efficiency parameter, bounded between 0 and Inf
 #' * \code{b} only for PDA: postdecisional accumulation parameter, bounded between 0 and Inf
 
-#' @return a dataframe with \code{nTrials} rows, and the columns
+#' @return a dataframe with \code{N} rows, and the columns
 #' \code{stimulus}, \code{correct} and \code{rating}.
 #'
 #' @details see \code{fitConf} for a detailed description of the different models.
@@ -42,6 +42,10 @@ simConf <- function(model = "SDT",  paramDf) {
   if (! model %in% AllModels){
     stop(paste(paste(setdiff(models, AllModels),collapse = " and "), " not implemented!"))
   }
+  if(!"N" %in% colnames(paramDf)){
+   stop("Please specify the number of trials in the column N")
+  }
+
   SimFun <- switch(model,
                    'WEV' = generateDataWEV,
                    'SDT' = generateDataSDT,
