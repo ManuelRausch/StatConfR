@@ -1,5 +1,7 @@
 ll_LogWEV <-
   function(p, N_SA_RA,N_SA_RB, N_SB_RA, N_SB_RB, nRatings, nCond){
+
+
     p <- c(t(p))
     ds <- cumsum(exp(p[1:(nCond)])) # enforce that sensitivity is ordered and all sensitivities are greater than 0
     locA <- -ds/2
@@ -9,7 +11,7 @@ ll_LogWEV <-
     c_RA <- c(0,
               -cumsum(c(exp(p[(nCond+1):(nCond+nRatings-1)]))),
               -Inf) # due to the lognormal distributions, the rating criteria are bounded by 0
-    c_RB <- c(0, cumsum(c(exp(p[(nCond+nRatings+1):(p[nCond + nRatings*2-1])]))), Inf)
+    c_RB <- c(0, cumsum(c(exp(p[(nCond+nRatings+1):(nCond + nRatings*2-1)]))), Inf)
 
     sigma <- exp(p[nCond + nRatings*2])
     w <-  exp(p[nCond + nRatings*2+1])/(1+exp(p[nCond + nRatings*2+1]))

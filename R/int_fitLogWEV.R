@@ -22,8 +22,8 @@ fitLogWEV <-
 
     temp <- expand.grid(maxD =  seq(1, 5, 1),
                         theta = seq(-1/2,1/2, 1/2),
-                        tauMin =  c(.1, .3, 1),  # position of the most conservative confidence criteria with respect to theta
-                        tauRange = seq(1, 5, 1),  #  position of the most liberal confidence criterion with respect to theta
+                        tauMin =  c(1:3),  # position of the most conservative confidence criteria with respect to theta
+                        tauRange = c(3, 7, 20, 50, 150),  #  position of the most liberal confidence criterion with respect to theta
                         sigma = c(.1, .3, 1, 3), # noise parameter
                         w = c(.1, .3, .6, .9)) # weighting parameter
 
@@ -56,19 +56,18 @@ fitLogWEV <-
     noFitYet <- TRUE
     for (i in 1:nInits){
       m <- try(optim(par =  inits[i,],
-                     fn = ll_LogWEV , gr = NULL,
+                     fn = ll_LogWEV, gr = NULL,
                      N_SA_RA = N_SA_RA,N_SA_RB = N_SA_RB,
                      N_SB_RA = N_SB_RA,N_SB_RB = N_SB_RB, nRatings = nRatings, nCond = nCond,
                      control = list(maxit = 10^4, reltol = 10^-4)))
-
-      if (is.list(m)){
+      print(m)
+      if (!inherits(m, "try-error")){
         for(j in 2:nRestart){
           try(m <- optim(par = m$par,
-                         fn = ll_LogWEV , gr = NULL,
+                         fn = ll_LogWEV, gr = NULL,
                          N_SA_RA = N_SA_RA,N_SA_RB = N_SA_RB,
                          N_SB_RA = N_SB_RA,N_SB_RB = N_SB_RB, nRatings = nRatings, nCond = nCond,
                          control = list(maxit = 10^6, reltol = 10^-8)))
-
         }
         if (noFitYet) {
           fit <- m
