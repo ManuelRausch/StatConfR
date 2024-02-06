@@ -19,21 +19,25 @@ gitbranch <- "main/"
 # statConfR: Models of Decision Confidence and Metacognition
 
 This package includes functions to fit meta-d´/d´ as well as several
-static models of decision making and confidence derived from signal detection theory to test the
+static models of decision making and confidence derived from signal detection theory. It can be used to test the
 assumptions underlying meta-d´/d´ and which may serve as an alternative when the assumptions of meta-d´/d´ do not hold. Currently, the following models are included:
 
--   Signal Detection Rating Model
+-   Signal detection rating model
 
--   Gaussian Noise Model
+-   Gaussian noise model
 
--   Weighted Evidence and Visibility Model
+-   Weighted evidence and visibility model
 
 -   Post-decisional Accumulation Model
 
 -   Independent Gaussian model
 
--   Independent Truncated Gaussian Model (the model underlying the
+-   Independent truncated gaussian Model (the model underlying the
     meta-d´/d´ method)
+    
+-   Lognormal noise model
+
+-   Lognormal weighted evidence and visibility model
 
 See Rausch et al. (2023) for more detail about the models.
 

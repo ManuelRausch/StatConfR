@@ -11,9 +11,9 @@ simConf(model = "SDT", paramDf)
 Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'ITGcm', 'logN', and 'logWEV'.}
 
 \item{data}{a \code{data.frame} that contains all parameters to simulate a data set,
-with one row and the different parameters in different columns:
+with one row and the different parameters in different columns. Which paramters are needed depends on the specific model:
 \itemize{
-\item \code{nTrials} the number of trials be simulated
+\item \code{N} the number of trials be simulated
 \item \code{d_1}, \code{d_2}, ... sensitivity parameters. The number of sensitivity parameters determines the number of conditions
 \item \code{c}: discrimination bias
 \item \code{theta_minus.1}, \code{theta_minus.2},... confidence criteria associated with the response R = -1. The function simulates one more confidence category than there are confidence criteria.
@@ -22,10 +22,12 @@ with one row and the different parameters in different columns:
 \item \code{sigma} only for WEV, GN, logN, and logWEV: confidence noise, bounded between 0 and Inf.
 \item \code{m} only for IG, ITGm, and ITGcm: metacognitive efficiency parameter, bounded between 0 and Inf
 \item \code{b} only for PDA: postdecisional accumulation parameter, bounded between 0 and Inf
+\item \code{M_theta_minus.1}, \code{M_theta_minus.2},.... Only for logN: Mean confidence criteria associated with the response R = -1.
+\item \code{M_theta_plus.1}, \code{M_theta_plus.2},... . Only for logN: Mean confidence criteria associated with the response R = 1.
 }}
 }
 \value{
-a dataframe with \code{nTrials} rows, and the columns
+a dataframe with \code{N} rows, and the columns
 \code{stimulus}, \code{correct} and \code{rating}.
 }
 \description{

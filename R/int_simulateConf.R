@@ -141,7 +141,7 @@ generateDataISDT <-
     locA <- -ds/2
     locB <- ds/2
     theta <- paramDf$c
-    a <-  paramDf$a
+    a <-  paramDf$b
     sigma <- sqrt(a)
 
     c_RA <- c(-Inf, c(t(paramDf[,paste("theta_minus.", (nRatings-1):1, sep="")])), Inf)
@@ -279,7 +279,7 @@ generateData2Chan <- function(paramDf){
 
 generateDataWEV <-
   function(paramDf){
-    require(plyr)
+
     nCond <- length(grep(pattern = "d_", names(paramDf), value=T))
     nRatings <- (length(grep(pattern = "theta_minus", names(paramDf), value=T)))+1
     ds <- c(t(paramDf[,paste("d_", 1:nCond, sep="")]))
@@ -444,7 +444,7 @@ generateDataIndTruncF <-
     ds <- c(t(paramDf[,paste("d_", 1:nCond, sep="")]))
     locA1 <- -ds/2
     locB1 <- ds/2
-    theta <- paramDf$theta
+    theta <- paramDf$c
 
     m_ratio <- paramDf$m_ratio
     metads <- m_ratio * ds
@@ -511,7 +511,156 @@ generateDataIndTruncF <-
 
 # (viii) logN
 
-generateDataLognorm <- function(paramDf){}
+generateDataLognorm <- function(paramDf){
+  nCond <- length(grep(pattern = "d", names(paramDf), value=T))
+  nRatings <- (length(grep(pattern = "cA", names(paramDf), value=T)))+1
+  ds <- c(t(paramDf[,paste("d", 1:nCond, sep="")]))
+  locA <- -ds/2
+  locB <- ds/2
+  theta <- paramDf$c
+  sigma <- paramDf$sigma
+
+  loc_RA <-  c(Inf,log(abs(c(t(paramDf[,paste("mu_cA", 1:(nRatings-1), sep="")])) - theta)) -
+                 .5*sigma^2, -Inf)
+  loc_RB <- c(-Inf, log(c(t(paramDf[,paste("mu_cB", 1:(nRatings-1), sep="")])) - theta) -
+                .5*sigma^2, Inf)
+
+
+  p_SA_RA <- expand.grid(j = 1:nCond, i = 1:nRatings)
+  p_SA_RB <- expand.grid(j = 1:nCond, i = 1:nRatings)
+  p_SB_RA <- expand.grid(j = 1:nCond, i = 1:nRatings)
+  p_SB_RB <- expand.grid(j = 1:nCond, i = 1:nRatings)
+
+  P_SBRB <-  Vectorize(function(j,i){
+    integrate(function(x) dnorm(x, locB[j]) *
+                (plnorm(x-theta, loc_RB[i], sigma) - plnorm(x-theta, loc_RB[i+1], sigma)),
+              lower = theta, upper = Inf, rel.tol = 10^-8)$value
+  })
+  P_SBRA <-  Vectorize(function(j,i){
+    integrate(function(x) dnorm(x, locB[j]) *
+                (plnorm(theta-x,  loc_RA[i+1], sigma) - plnorm(theta-x,  loc_RA[i], sigma)),
+              lower = -Inf, upper =theta, rel.tol = 10^-8)$value
+  })
+  P_SARA <- Vectorize(function(j,i){
+    integrate(function(x) dnorm(x, locA[j]) *
+                (plnorm(theta-x,  loc_RA[i+1], sigma) - plnorm(theta-x,  loc_RA[i], sigma)),
+              lower = -Inf, upper =theta, rel.tol = 10^-8)$value
+  })
+  P_SARB <- Vectorize(function(j,i){
+    integrate(function(x) dnorm(x, locA[j]) *
+                (plnorm(x-theta, loc_RB[i], sigma) - plnorm(x-theta, loc_RB[i+1], sigma)),
+              lower = theta, upper = Inf, rel.tol = 10^-8)$value
+  })
+
+  p_SB_RB <- cbind(stimulus = 1, response = 1,
+                   mdply(.data= expand.grid(j = 1:nCond, i = 1:nRatings), .fun= P_SBRB))
+  p_SB_RA <- cbind(stimulus = 1, response = -1,
+                   mdply(.data=expand.grid(j = 1:nCond, i = 1:nRatings), .fun= P_SBRA))
+  p_SB_RA$i <- nRatings + 1 - p_SB_RA$i
+  p_SA_RA <- cbind(stimulus = -1, response =-1,
+                   mdply(.data=expand.grid(j = 1:nCond, i = 1:nRatings), .fun= P_SARA))
+  p_SA_RA$i <-  nRatings + 1 - p_SA_RA$i
+  p_SA_RB <- cbind(stimulus = -1, response = 1,
+                   mdply(.data=expand.grid(j = 1:nCond, i = 1:nRatings), .fun= P_SARB))
+
+  res <- rbind(p_SB_RB,p_SB_RA,  p_SA_RA,p_SA_RB)
+  colnames(res) <- c("stimulus", "response", "condition", "rating", "p")
+  res$p[is.na(res$p) | is.nan(res$p)] <- 0
+  nTrials <- paramDf$N
+
+  f <- function(df){
+    ind <- sample(x=1:(2*nRatings),size= nTrials, prob = as.vector(df$p),
+                  replace=T)
+    response <- df$response[ind]
+    rating <- df$rating[ind]
+    data.frame(response = response, rating = rating)
+  }
+  X <- ddply(res, .(stimulus, condition), f)
+  X$correct <- 0
+  X$correct[X$stimulus==X$response] <- 1
+  X$ratings <- factor(X$rating)
+  X$stimulus <- factor(X$stimulus)
+  X
+
+}
 
 # (ix) logWEV
 
+generateDataLogWEV <- function(paramDf){
+  nCond <- length(grep(pattern = "d_", names(paramDf), value=T))
+  nRatings <- (length(grep(pattern = "theta.minus", names(paramDf), value=T)))+1
+  ds <- c(t(paramDf[,paste("d_", 1:nCond, sep="")]))
+  locA <- -ds/2
+  locB <- ds/2
+  theta <- paramDf$c
+  sigma <- paramDf$sigma
+  w <- paramDf$w
+  c_RA <- c(0,c(t(paramDf[,paste("theta_minus.", 1:(nRatings-1), sep="")])),
+            -Inf) # due to the lognormal distributions, the rating criteria are bounded by 0
+  c_RB <- c(0, c(t(paramDf[,paste("theta_plus.", 1:(nRatings-1), sep="")])),
+            Inf)
+
+
+  p_SA_RA <- expand.grid(j = 1:nCond, i = 1:nRatings)
+  p_SA_RB <- expand.grid(j = 1:nCond, i = 1:nRatings)
+  p_SB_RA <- expand.grid(j = 1:nCond, i = 1:nRatings)
+  p_SB_RB <- expand.grid(j = 1:nCond, i = 1:nRatings)
+
+  P_SBRB <-  Vectorize(function(j,i){
+    integrate(
+      function(x) dnorm(x, locB[j]) * (plnorm(q = c_RB[i+1], (1 - w) * x + ds[j] * w, sigma) - plnorm(q = c_RB[i], (1 - w) * x + ds[j] * w,  sigma)),
+      lower = theta,
+      upper = Inf,
+      rel.tol = 10^-8)$value
+  })
+  P_SBRA <-  Vectorize(function(j,i){
+    integrate(
+      function(x) dnorm(x, locB[j]) * (plnorm(q = -c_RA[i+1], -(1 - w) * x + ds[j] * w, sigma) - plnorm(q = -c_RA[i], -(1 - w) * x + ds[j] * w, sigma)),
+      lower = -Inf,
+      upper = theta,
+      rel.tol = 10^-8)$value
+  })
+  P_SARA <- Vectorize(function(j,i){
+    integrate(
+      function(x) dnorm(x, locA[j]) * (plnorm(q= -c_RA[i+1], -(1 - w) * x + ds[j] * w, sigma) - plnorm(q = -c_RA[i], -(1 - w) * x + ds[j] * w, sigma)),
+      lower = -Inf,
+      upper = theta,
+      rel.tol = 10^-8)$value
+  })
+  P_SARB <- Vectorize(function(j,i){
+    integrate(
+      function(x) dnorm(x, locA[j]) * (plnorm(q=c_RB[i+1], (1 - w) * x + ds[j] * w, sigma) - plnorm(q=c_RB[i], (1 - w) * x + ds[j] * w, sigma)),
+      lower = theta,
+      upper= Inf,
+      rel.tol = 10^-8)$value
+  })
+
+
+  p_SB_RB <- cbind(stimulus = 1, response = 1,
+                   mdply(.data= expand.grid(j = 1:nCond, i = 1:nRatings), .fun= P_SBRB))
+  p_SB_RA <- cbind(stimulus = 1, response = -1,
+                   mdply(.data=expand.grid(j = 1:nCond, i = 1:nRatings), .fun= P_SBRA))
+  p_SA_RA <- cbind(stimulus = -1, response =-1,
+                   mdply(.data=expand.grid(j = 1:nCond, i = 1:nRatings), .fun= P_SARA))
+  p_SA_RB <- cbind(stimulus = -1, response = 1,
+                   mdply(.data=expand.grid(j = 1:nCond, i = 1:nRatings), .fun= P_SARB))
+
+  res <- rbind(p_SB_RB,p_SB_RA,  p_SA_RA,p_SA_RB)
+  colnames(res) <- c("stimulus", "response", "condition", "rating", "p")
+  res$p[is.na(res$p) | is.nan(res$p)] <- 0
+  nTrials <- paramDf$N
+
+  f <- function(df){
+    ind <- sample(x=1:(2*nRatings),size= nTrials, prob = as.vector(df$p),
+                  replace=T)
+    response <- df$response[ind]
+    rating <- df$rating[ind]
+    data.frame(response = response, rating = rating)
+  }
+  X <- ddply(res, .(stimulus, condition), f)
+  X$correct <- 0
+  X$correct[X$stimulus==X$response] <- 1
+  X$ratings <- factor(X$rating)
+  X$stimulus <- factor(X$stimulus)
+  X
+}

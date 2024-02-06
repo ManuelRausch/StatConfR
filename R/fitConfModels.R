@@ -18,7 +18,7 @@
 #' * \code{participant} (giving the subject ID; the models given in the second argument are fitted for each
 #'   subject individually.
 #' @param models `character` of length 1.
-#' Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'ITGcm', and 'logN'.
+#' Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'ITGcm', 'logN', and 'logWEV'.
 #' Alternatively, if `model="all"` (default), all implemented models will be fit.
 #' @param nInits `integer`. Number of initial values used for maximum likelihood optimization.
 #' Defaults to 5.
@@ -154,6 +154,22 @@
 #' as free parameters. Instead, we estimate the means of the confidence criteria, i.e., \eqn{\overline{\theta}_{-1,1}, ...,
 #' \overline{\theta}_{-1,L-1}, \overline{\theta}_{1,1}, ...  \overline{\theta}_{1,L-1}},
 #' as free parameters.
+#'
+#' ### \strong{Logistic Weighted Evidence and Visibility model (logWEV)}
+#' logWEV is a combination of logN and WEV proposed by Shekhar and Rahnev (2023).
+#' Conceptually, logWEV assumes that the observer combines evidence about decision-relevant features
+#' of the stimulus with the strength of evidence about choice-irrelevant features (Rausch et al., 2018).
+#' The model also assumes that noise affecting the confidence decision variable is lognormal
+#'  in accordance with Shekhar and Rahnev (2021).
+#' According to logWEV, the confidence decision variable is \eqn{y} is equal to
+#' \eqn{y^*\times R}. \eqn{y^*} is sampled from a lognormal distribution with a location parameter
+#'  of \eqn{(1-w)\times x\times R + w \times d_k} and a scale parameter of \eqn{\sigma}.
+#'  The parameter \eqn{\sigma} quantifies the amount of unsystematic variability
+#' contributing to confidence judgments but not to the discrimination judgments.
+#' The parameter \eqn{w} represents the weight that is put on the choice-irrelevant
+#' features in the confidence judgment. \eqn{w} and \eqn{\sigma} are fitted in
+#' addition to the set of shared parameters.
+#'
 #' @md
 #'
 #' @author Sebastian Hellmann, \email{sebastian.hellmann@@ku.de}

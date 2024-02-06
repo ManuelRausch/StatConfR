@@ -3,7 +3,7 @@
 #' @param model `character` of length 1.
 #' Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'ITGcm', 'logN', and 'logWEV'.
 #' @param data  a `data.frame` that contains all parameters to simulate a data set,
-#' with one row and the different parameters in different columns:
+#' with one row and the different parameters in different columns. Which paramters are needed depends on the specific model:
 #' * \code{N} the number of trials be simulated
 #' * \code{d_1}, \code{d_2}, ... sensitivity parameters. The number of sensitivity parameters determines the number of conditions
 #' * \code{c}: discrimination bias
@@ -13,7 +13,9 @@
 #' * \code{sigma} only for WEV, GN, logN, and logWEV: confidence noise, bounded between 0 and Inf.
 #' * \code{m} only for IG, ITGm, and ITGcm: metacognitive efficiency parameter, bounded between 0 and Inf
 #' * \code{b} only for PDA: postdecisional accumulation parameter, bounded between 0 and Inf
-
+#' * \code{M_theta_minus.1}, \code{M_theta_minus.2},.... Only for logN: Mean confidence criteria associated with the response R = -1.
+#' * \code{M_theta_plus.1}, \code{M_theta_plus.2},... . Only for logN: Mean confidence criteria associated with the response R = 1.
+#'
 #' @return a dataframe with \code{N} rows, and the columns
 #' \code{stimulus}, \code{correct} and \code{rating}.
 #'
@@ -27,7 +29,7 @@
 #' @name simConf
 
 
-#' @importFrom plyr mdply
+#' @importFrom plyr mdply ddply
 #'
 #' @examples
 #' 1. define some parameters
@@ -38,9 +40,9 @@
 #' @export
 simConf <- function(model = "SDT",  paramDf) {
   AllModels <-
-    c('WEV', 'SDT','IG','ITGc', 'ITGcm', 'GN', 'PDA', 'logN')
+    c('WEV', 'SDT','IG','ITGc', 'ITGcm', 'GN', 'PDA', 'logN', 'logWEV')
   if (! model %in% AllModels){
-    stop(paste(paste(setdiff(models, AllModels),collapse = " and "), " not implemented!"))
+    stop(paste(model, " not implemented!"))
   }
   if(!"N" %in% colnames(paramDf)){
    stop("Please specify the number of trials in the column N")
@@ -48,6 +50,7 @@ simConf <- function(model = "SDT",  paramDf) {
 
   SimFun <- switch(model,
                    'WEV' = generateDataWEV,
+                   'logWEV' = generateDataLogWEV,
                    'SDT' = generateDataSDT,
                    'IG' = generateData2Chan,
                    'ITGc' = generateDataIndTruncF,
@@ -55,10 +58,9 @@ simConf <- function(model = "SDT",  paramDf) {
                    'GN' = generateDataNoisy,
                    'PDA' = generateDataISDT,
                    'logN' = generateDataLognorm)
-  SimData <- SimFun(paramDf)
-  SimData <- cbind(paramDf, SimData)
+  paramDf$V1 <- 1:nrow(paramDf)
+  SimData <- plyr::ddply(paramDf, ~V1, SimFun)
   SimData
-
 }
 
 

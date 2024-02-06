@@ -67,7 +67,7 @@
 #' According to SDT, the same sample of sensory
 #' evidence is used to generate response and confidence, i.e.,
 #' \eqn{y=x} and the confidence criteria span from the left and
-#' right side of the decision criterion \eqn (Green & Swets, 19 66).
+#' right side of the decision criterion \eqn{c} (Green & Swets, 1966).
 #'
 #' ### \strong{Gaussian Noise Model (GN)}
 #' According to the model, \eqn{y} is subject to
@@ -164,7 +164,7 @@
 #'
 #' @md
 #'
-#' @author Sebastian Hellmann, \email{sebastian.hellmann@@ku.de}
+#' @author Sebastian Hellmann, \email{sebastian.hellmann@ku.de}
 #' @author Manuel Rausch, \email{manuel.rausch@hochschule-rhein-waal.de}
 #'
 #' @name fitConf

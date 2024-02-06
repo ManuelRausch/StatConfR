@@ -84,7 +84,7 @@ The following models have been implemented so far:
 According to SDT, the same sample of sensory
 evidence is used to generate response and confidence, i.e.,
 \eqn{y=x} and the confidence criteria span from the left and
-right side of the decision criterion \eqn (Green & Swets, 19 66).
+right side of the decision criterion \eqn{c} (Green & Swets, 1966).
 }
 
 \subsection{\strong{Gaussian Noise Model (GN)}}{
