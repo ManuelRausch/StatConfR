@@ -78,7 +78,7 @@ fitLognorm <-
     }
 
     res <-  data.frame(matrix(nrow=1, ncol=0))
-    if(!inherits(m, "try-error")){
+    if(!inherits(fit, "try-error")){
       k <- length(fit$par)
       N <- length(ratings)
 

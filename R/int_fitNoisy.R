@@ -36,8 +36,8 @@ fitNoisy <-
 
     inits <- data.frame(matrix(data=NA, nrow= nrow(temp), ncol = nCond + nRatings*2))
     if(nCond==1)  {
-      inits[,1] <-  log(temp$maxD)  }
-    else{
+      inits[,1] <-  log(temp$maxD)
+    } else{
       inits[,1:(nCond)] <-  log(t(mapply(function(maxD) diff(seq(0, maxD, length.out = nCond+1)), temp$maxD)))
     }
     inits[,(nCond+1):(nCond+nRatings-2)] <-
@@ -85,7 +85,7 @@ fitNoisy <-
     }
 
     res <-  data.frame(matrix(nrow=1, ncol=0))
-    if(!inherits(m, "try-error")){
+    if(!inherits(fit, "try-error")){
 
       k <- length(fit$par)
       N <- length(ratings)

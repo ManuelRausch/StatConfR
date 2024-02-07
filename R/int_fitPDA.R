@@ -53,7 +53,7 @@ fitPDA <-
                   function(p) try(ll_PDA(p, N_SA_RA, N_SA_RB, N_SB_RA,N_SB_RB, nRatings, nCond), silent = TRUE))
     logL <- as.numeric(logL)
     inits <- inits[order(logL),]
-    inits <- inits[1:nInits,] # recommedd
+    inits <- inits[1:nInits,] # recommended
 
     noFitYet <- TRUE
     for (i in 1:nInits){
@@ -83,7 +83,7 @@ fitPDA <-
 
     res <-  data.frame(matrix(nrow=1, ncol=0))
 
-    if(!inherits(m, "try-error")){
+    if(!inherits(fit, "try-error")){
 
       k <- length(fit$par)
       N <- length(ratings)

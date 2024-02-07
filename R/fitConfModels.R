@@ -208,7 +208,8 @@
 #' @export
 fitConfModels <- function(data, models="all",  nInits = 5, nRestart = 4, #var="constant",
                              .parallel=FALSE, n.cores=NULL) {
-  AllModels <- c('WEV', 'SDT','IG','ITGc', 'ITGcm', 'GN', 'PDA', 'logN') # if you implement additional models, add them here!
+  AllModels <- c('WEV', 'SDT','IG','ITGc',
+                 'ITGcm', 'GN', 'PDA', 'logN', 'logWEV') # if you implement additional models, add them here!
   if (identical(models,"all")) models <- AllModels
   if (!all(models %in% AllModels)) {
     stop(paste(paste(setdiff(models, AllModels),collapse = " and "), " not implemented!"))
