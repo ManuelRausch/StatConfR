@@ -17,7 +17,7 @@
 #' * \code{correct} (encoding whether the response was correct; should  be 0 for incorrect responses and 1 for correct responses)
 #' * \code{participant} (giving the subject ID; the models given in the second argument are fitted for each
 #'   subject individually.
-#' @param models `character` of length 1.
+#' @param models `character`.
 #' Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'ITGcm', 'logN', and 'logWEV'.
 #' Alternatively, if `model="all"` (default), all implemented models will be fit.
 #' @param nInits `integer`. Number of initial values used for maximum likelihood optimization.
@@ -29,12 +29,18 @@
 #' @param n.cores `integer`. Number of cores used for parallelization. If NULL (default), the available
 #' number of cores -1 will be used.
 #'
-#' @return Gives data frame with rows for each model-participant combination and columns for the different parameters
-#' as fitted result as well as additional information about the fit #' (`negLogLik` (negative log-likelihood of the final set of parameters),
-#' `k` (number of parameters), `N` (number of data rows),
-#' `AIC` (Akaike Information Criterion; Akaike, 1974),
-#' `BIC` (Bayes information criterion; Schwarz, 1978), and
-#' `AICc` (AIC corrected for small samples; Burnham & Anderson, 2002)).
+#' @return Gives data frame with one row for each combination of model and participant and columns for the estimated parameters.
+#' Additional information  about the fit is provided in additional columns:
+#' - `negLogLik` (negative log-likelihood of the best-fitting set of parameters),
+#' - `k` (number of parameters),
+#' - `N` (number of trials),
+#' - `AIC` (Akaike Information Criterion; Akaike, 1974),
+#' - `BIC` (Bayes information criterion; Schwarz, 1978),
+#' - `AICc` (AIC corrected for small samples; Burnham & Anderson, 2002)
+#' If length(models) > 1, there will be three additional columns:
+#' - `wAIC`: Akaike weights based on AIC,
+#' - `wAIC`: Akaike weights based on AICc,
+#' - `wBICc`: Schwarz weights (see Burnham & Anderson, 2002)
 #'
 #' @details The fitting routine first performs a coarse grid search to find promising
 #' starting values for the maximum likelihood optimization procedure. Then the best \code{nInits}
@@ -280,7 +286,7 @@ fitConfModels <- function(data, models="all",  nInits = 5, nRestart = 4, #var="c
     if (is.null(n.cores)) n.cores <- detectCores()-1
 
     cl <- makeCluster(type="SOCK", n.cores)
-    clusterExport(cl, c("data",  "models","outnames", "call_fitfct", "nInits", "nRestart"),
+    clusterExport(cl, c("data",  "models", "outnames", "call_fitfct", "nInits", "nRestart"),
                   envir = environment())
     # Following line ensures that the cluster is stopped even in cases of user
     # interrupt or errors
@@ -292,6 +298,18 @@ fitConfModels <- function(data, models="all",  nInits = 5, nRestart = 4, #var="c
   }
   # bind list-outout together into data.frame
   res <- do.call(rbind, res)
+
+  res$wAIC <- NA
+  res$wAICc <- NA
+  res$wBIC <- NA
+  for (sbj in subjects){
+    Ls <- exp(-0.5 * (res$AIC[res$participant==sbj]  - min(res$AIC[res$participant==sbj])))
+    res$wAIC[res$participant==sbj] <- Ls / sum(Ls)
+    Ls <- exp(-0.5 * (res$AICc[res$participant==sbj]  - min(res$AICc[res$participant==sbj])))
+    res$wAICc[res$participant==sbj] <- Ls / sum(Ls)
+    Ls <- exp(-0.5 * (res$BIC[res$participant==sbj]  - min(res$BIC[res$participant==sbj])))
+    res$wBIC[res$participant==sbj] <- Ls / sum(Ls)
+  }
 
   # finally, drop columns with unnecessary parameters
   res <- res[,apply(res, 2, function(X) any(!is.na(X)))]
