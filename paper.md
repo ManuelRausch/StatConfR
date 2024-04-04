@@ -1,31 +1,30 @@
 ---
-  title: 'statConfR: An R Package for Static Models of Decision Confidence and Metacognition'
+title: 'statConfR: An R Package for Static Models of Decision Confidence and Metacognition'
 tags:
-- Cognitive modelling 
-- R code
-- signal detection theory
-- decision confidence
-- metacognition
-- meta-d′/d′
+  - Cognitive modelling 
+  - R code
+  - signal detection theory
+  - decision confidence
+  - metacognition
+  - meta-d′/d′
 authors:
   - name: Manuel Rausch
-orcid: 0000-0002-5805-5544
-equal-contrib: true
-affiliation: "1, 2" # (Multiple affiliations must be quoted)
-- name: Sebastian Hellmann
-orcid:0000-0001-6006-5103
-equal-contrib: true 
-affiliation: "2, 3"
+    orcid: 0000-0002-5805-5544
+    equal-contrib: true
+    affiliation: "1, 2" # (Multiple affiliations must be quoted)
+  - name: Sebastian Hellmann
+    orcid: 0000-0001-6006-5103
+    equal-contrib: true 
+    affiliation: "2, 3"
 affiliations:
-  - name: Hochschule Rhein-Waal, Fakultät für Gesellschaft und Ökonomie, Germany
-index: 1
-- name: Katholische Universität Eichstätt-Ingolstadt, Philosophisch-pädagogische Fakultät, Germany
-index: 2
-- name: TUM School of Management, Technische Universität München, Germany
-index: 3
+ - name: Hochschule Rhein-Waal, Fakultät für Gesellschaft und Ökonomie, Germany
+   index: 1
+ - name: Katholische Universität Eichstätt-Ingolstadt, Philosophisch-pädagogische Fakultät, Germany
+   index: 2
+ - name: TUM School of Management, Technische Universität München, Germany
+   index: 3
 date: 04 April 2024
 bibliography: paper.bib
-
 ---
   
 # Summary
