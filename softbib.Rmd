@@ -1,0 +1,8 @@
+---
+bibliography: softbib.bib
+nocite: |
+  @base, @devtools, @knitr1, @knitr2, @knitr3, @parallel, @plyr, @rhub, @rmarkdown1, @rmarkdown2, @rmarkdown3, @statConfR, @stats
+---
+
+# Software Bibliography
+

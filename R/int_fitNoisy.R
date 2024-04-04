@@ -95,7 +95,7 @@ fitNoisy <-
       res[,paste("theta_minus.",(nRatings-1):1, sep="")] <-
         c(as.vector(fit$par[nCond+nRatings-1] - rev(cumsum(c(exp(fit$par[(nCond+1):(nCond+nRatings-2)]))))),
           as.vector(fit$par[nCond+nRatings-1]))
-      res[,paste("theta_plus",1:(nRatings-1), sep="")] <-
+      res[,paste("theta_plus.",1:(nRatings-1), sep="")] <-
         c(as.vector(fit$par[nCond+nRatings+1]),
           as.vector(fit$par[nCond+nRatings+1]) +
             as.vector(cumsum(c(exp(fit$par[(nCond+nRatings+2):(nCond + nRatings*2-1)])))))

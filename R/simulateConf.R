@@ -2,8 +2,8 @@
 #'
 #' @param model `character` of length 1.
 #' Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'ITGcm', 'logN', and 'logWEV'.
-#' @param data  a `data.frame` that contains all parameters to simulate a data set,
-#' with one row and the different parameters in different columns. Which paramters are needed depends on the specific model:
+#' @param paramDf  a `data.frame` that contains all parameters to simulate a data set,
+#' with one row and the different parameters in different columns. Which parameters are needed depends on the specific model:
 #' * \code{N} the number of trials be simulated
 #' * \code{d_1}, \code{d_2}, ... sensitivity parameters. The number of sensitivity parameters determines the number of conditions
 #' * \code{c}: discrimination bias
@@ -32,9 +32,11 @@
 #' @importFrom plyr mdply ddply
 #'
 #' @examples
-#' 1. define some parameters
-#' paramDf <- data.frame(d_1 = 0, d_2 = 2, d_3 = 4,c = .0,  theta_minus.2 = -2, theta_minus.1 = -1, theta_plus.1 = 1, theta_plus.2 = 2,  sigma = 1/2, w = 0.5, nTrials = 500)
-#' 2. Simulate dataset
+#' # 1. define some parameters
+#' paramDf <- data.frame(d_1 = 0, d_2 = 2, d_3 = 4,c = .0,
+#' theta_minus.2 = -2, theta_minus.1 = -1, theta_plus.1 = 1, theta_plus.2 = 2,
+#' sigma = 1/2, w = 0.5, nTrials = 500)
+#' # 2. Simulate dataset
 #' SimulatedData <- simConf(model = "WEV", paramDf)
 #'
 #' @export
@@ -58,8 +60,8 @@ simConf <- function(model = "SDT",  paramDf) {
                    'GN' = generateDataNoisy,
                    'PDA' = generateDataISDT,
                    'logN' = generateDataLognorm)
-  paramDf$V1 <- 1:nrow(paramDf)
-  SimData <- plyr::ddply(paramDf, ~V1, SimFun)
+  paramDf$participant <- 1:nrow(paramDf)
+  SimData <- ddply(paramDf, ~participant, SimFun)
   SimData
 }
 

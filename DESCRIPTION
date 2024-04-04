@@ -23,7 +23,7 @@ BugReports: https://github.com/ManuelRausch/StatConfR
 Depends:
     R (>= 4.0)
 Imports:
-    parallel
+    parallel, plyr, stats
 Date/Publication: 2023-09-12
 Encoding: UTF-8
 LazyData: true

@@ -3,7 +3,7 @@
 generateDataSDT <- function(paramDf){
 
   nCond <- sum(is.finite(c(t(paramDf[,grep(pattern = "d_", names(paramDf), value=T)]))))
-  nRatings <- sum(is.finite(c(t(paramDf[,grep(pattern = "theta_minus", names(paramDf), value=T)]))))+1
+  nRatings <- sum(is.finite(c(t(paramDf[,grep(pattern = "^theta_minus.", names(paramDf), value=T)]))))+1
   ds <- c(t(paramDf[,paste("d_", 1:nCond, sep="")]))
   locA <- -ds/2
   locB <- ds/2
@@ -45,7 +45,7 @@ generateDataSDT <- function(paramDf){
     rating <- df$rating[ind]
     data.frame(response = response, rating = rating)
   }
-  X <- ddply(res, .(stimulus, condition), f)
+  X <- ddply(res, ~ stimulus + condition, f)
   X$condition <- factor(X$condition)
   X$correct <- 0
   X$correct[X$stimulus==X$response] <- 1
@@ -60,7 +60,7 @@ generateDataNoisy <-
   function(paramDf){
 
     nCond <- length(grep(pattern = "d_", names(paramDf), value=T))
-    nRatings <- (length(grep(pattern = "theta_minus.", names(paramDf), value=T)))+1
+    nRatings <- (length(grep(pattern = "^theta_minus.", names(paramDf), value=T)))+1
     ds <- c(t(paramDf[,paste("d_", 1:nCond, sep="")]))
     locA <- -ds/2
     locB <- ds/2
@@ -113,7 +113,7 @@ generateDataNoisy <-
     res <- rbind(p_SB_RB,p_SB_RA,  p_SA_RA,p_SA_RB)
     colnames(res) <- c("stimulus", "response", "condition", "rating", "p")
     res$p[is.na(res$p) | is.nan(res$p)] <- 0
-    nTrials <- paramDf$N
+    nTrials <- round(paramDf$N / 2 / nCond)
 
     f <- function(df){
       ind <- sample(x=1:(2*nRatings),size= nTrials, prob = as.vector(df$p), replace=T)
@@ -121,7 +121,7 @@ generateDataNoisy <-
       rating <- df$rating[ind]
       data.frame(response = response, rating = rating)
     }
-    X <- ddply(res, .(stimulus, condition), f)
+    X <- ddply(res, ~ stimulus + condition, f)
     X$correct <- 0
     X$correct[X$stimulus==X$response] <- 1
     X$ratings <- factor(X$rating)
@@ -135,8 +135,8 @@ generateDataNoisy <-
 generateDataISDT <-
   function(paramDf){
 
-    nCond <- length(grep(pattern = "d_", names(paramDf), value=T))
-    nRatings <- (length(grep(pattern = "theta_minus.", names(paramDf), value=T)))+1
+    nCond <- length(grep(pattern = "^d_", names(paramDf), value=T))
+    nRatings <- (length(grep(pattern = "^theta_minus.", names(paramDf), value=T)))+1
     ds <- c(t(paramDf[,paste("d_", 1:nCond, sep="")]))
     locA <- -ds/2
     locB <- ds/2
@@ -192,7 +192,7 @@ generateDataISDT <-
     colnames(res) <- c("stimulus", "response", "condition",
                        "rating", "p")
     res$p[is.na(res$p) | is.nan(res$p)] <- 0
-    nTrials <- paramDf$N
+    nTrials <- round(paramDf$N / 2 / nCond)
 
     f <- function(df){
       ind <- sample(x=1:(2*nRatings),size= nTrials, prob = as.vector(df$p), replace=T)
@@ -200,7 +200,7 @@ generateDataISDT <-
       rating <- df$rating[ind]
       data.frame(response = response, rating = rating)
     }
-    X <- ddply(res, .(stimulus, condition), f)
+    X <- ddply(res, ~ stimulus + condition, f)
     X$correct <- 0
     X$correct[X$stimulus==X$response] <- 1
     X$ratings <- factor(X$rating)
@@ -213,14 +213,14 @@ generateDataISDT <-
 
 generateData2Chan <- function(paramDf){
   nCond <- sum(is.finite(c(t(paramDf[,grep(pattern = "d_", names(paramDf), value=T)]))))
-  nRatings <- sum(is.finite(c(t(paramDf[,grep(pattern = "theta_minus", names(paramDf), value=T)]))))+1
+  nRatings <- sum(is.finite(c(t(paramDf[,grep(pattern = "^theta_minus.", names(paramDf), value=T)]))))+1
   ds <- c(t(paramDf[,paste("d_", 1:nCond, sep="")]))
   locA1 <- -ds/2
   locB1 <- ds/2
   theta <- paramDf$c
   c_RA <- c(-Inf,c(t(paramDf[,paste("theta_minus.", (nRatings-1):1, sep="")])), Inf)
   c_RB <- c(-Inf,c(t(paramDf[,paste("theta_plus.", 1:(nRatings-1), sep="")])), Inf)
-  metads <- paramDf$a * ds
+  metads <- paramDf$m * ds
   locA2 <- -metads/2
   locB2 <- metads/2
 
@@ -266,11 +266,11 @@ generateData2Chan <- function(paramDf){
     rating <- df$rating[ind]
     data.frame(response = response, rating = rating)
   }
-  X <- ddply(res, .(stimulus, condition), f)
+  X <- ddply(res, ~ stimulus + condition, f)
   X$condition <- factor(X$condition)
   X$correct <- 0
   X$correct[X$stimulus==X$response] <- 1
-  X$rating <- factor(X$rating)
+  X$ratings <- factor(X$rating)
   X$stimulus <- factor(X$stimulus)
   X
 }
@@ -281,7 +281,7 @@ generateDataWEV <-
   function(paramDf){
 
     nCond <- length(grep(pattern = "d_", names(paramDf), value=T))
-    nRatings <- (length(grep(pattern = "theta_minus", names(paramDf), value=T)))+1
+    nRatings <- (length(grep(pattern = "^theta_minus.", names(paramDf), value=T)))+1
     ds <- c(t(paramDf[,paste("d_", 1:nCond, sep="")]))
     locA <- -ds/2
     locB <- ds/2
@@ -340,7 +340,7 @@ generateDataWEV <-
     res <- rbind(p_SB_RB,p_SB_RA,  p_SA_RA,p_SA_RB)
     colnames(res) <- c("stimulus", "response", "condition", "rating", "p")
     res$p[is.na(res$p) | is.nan(res$p)] <- 0
-    nTrials <- paramDf$N
+    nTrials <- round(paramDf$N / 2 / nCond)
 
     f <- function(df){
       ind <- sample(x=1:(2*nRatings),size= nTrials, prob = as.vector(df$p),
@@ -349,7 +349,7 @@ generateDataWEV <-
       rating <- df$rating[ind]
       data.frame(response = response, rating = rating)
     }
-    X <- ddply(res, .(stimulus, condition), f)
+    X <- ddply(res, ~ stimulus + condition, f)
     X$correct <- 0
     X$correct[X$stimulus==X$response] <- 1
     X$ratings <- factor(X$rating)
@@ -364,13 +364,13 @@ generateDataIndTruncML <-
   function(paramDf){
 
     nCond <- length(grep(pattern = "d_", names(paramDf), value=T))
-    nRatings <- (length(grep(pattern = "theta_minus.", names(paramDf), value=T)))+1
+    nRatings <- (length(grep(pattern = "^theta_minus.", names(paramDf), value=T)))+1
     ds <- c(t(paramDf[,paste("d_", 1:nCond, sep="")]))
     locA1 <- -ds/2
     locB1 <- ds/2
     theta <- paramDf$c
 
-    m_ratio <- paramDf$m_ratio
+    m_ratio <- paramDf$m
     metads <- m_ratio * ds
     locA2 <- -metads/2
     locB2 <- metads/2
@@ -385,10 +385,14 @@ generateDataIndTruncML <-
     p_SB_RB <- expand.grid(j = 1:nCond, i = 1:nRatings)
 
     P_SBRB <- Vectorize(function(j,i){
-      (1 - pnorm(theta, locB1[j])) * (pnorm(c_RB[i+1], locB2[j]) - pnorm(c_RB[i], locB2[j])) / (1 - pnorm(meta_c, locB2[j]))
+      (1 - pnorm(theta, locB1[j])) *
+        (pnorm(c_RB[i+1], locB2[j]) - pnorm(c_RB[i], locB2[j])) /
+        (1 - pnorm(meta_c, locB2[j]))
     })
     P_SBRA <- Vectorize(function(j,i){
-      pnorm(theta, locB1[j]) * (pnorm(c_RA[i+1], locB2[j]) - pnorm(c_RA[i], locB2[j])) / pnorm(meta_c, locB2[j])
+      pnorm(theta, locB1[j]) *
+        (pnorm(c_RA[i+1], locB2[j]) - pnorm(c_RA[i], locB2[j])) /
+        pnorm(meta_c, locB2[j])
     })
     P_SARA <-  Vectorize(function(j,i){
       pnorm(theta, locA1[j]) *
@@ -415,9 +419,12 @@ generateDataIndTruncML <-
     res <- rbind(p_SB_RB, p_SB_RA,  p_SA_RA, p_SA_RB)
     colnames(res) <- c("stimulus", "response", "condition",
                        "rating", "p")
-    res$p[is.na(res$p) | is.nan(res$p) | res$p < 0] <- 0
+    res$p[is.na(res$p)] <- 0
+    res$p[is.nan(res$p)] <- 0
+    res$p[res$p < 0] <- 0
 
-    nTrials <- paramDf$N
+
+    nTrials <- round(paramDf$N / 2 / nCond)
 
     f <- function(df){
       ind <- sample(x=1:(2*nRatings),size= nTrials, prob = as.vector(df$p), replace=T)
@@ -425,7 +432,7 @@ generateDataIndTruncML <-
       rating <- df$rating[ind]
       data.frame(response = response, rating = rating)
     }
-    X <- ddply(res, .(stimulus, condition), f)
+    X <- ddply(res, ~ stimulus + condition, f)
     X$correct <- 0
     X$correct[X$stimulus==X$response] <- 1
     X$ratings <- factor(X$rating)
@@ -440,13 +447,13 @@ generateDataIndTruncF <-
   function(paramDf){
 
     nCond <- length(grep(pattern = "d_", names(paramDf), value=T))
-    nRatings <- (length(grep(pattern = "theta_minus.", names(paramDf), value=T)))+1
+    nRatings <- (length(grep(pattern = "^theta_minus.", names(paramDf), value=T)))+1
     ds <- c(t(paramDf[,paste("d_", 1:nCond, sep="")]))
     locA1 <- -ds/2
     locB1 <- ds/2
     theta <- paramDf$c
 
-    m_ratio <- paramDf$m_ratio
+    m_ratio <- paramDf$m
     metads <- m_ratio * ds
     locA2 <- -metads/2
     locB2 <- metads/2
@@ -491,8 +498,10 @@ generateDataIndTruncF <-
     res <- rbind(p_SB_RB, p_SB_RA,  p_SA_RA, p_SA_RB)
     colnames(res) <- c("stimulus", "response", "condition",
                        "rating", "p")
-    res$p[is.na(res$p) | is.nan(res$p)] <- 0
-    nTrials <- paramDf$N
+    res$p[is.na(res$p)] <- 0
+    res$p[is.nan(res$p)] <- 0
+    res$p[res$p < 0] <- 0
+    nTrials <- round(paramDf$N / 2 / nCond)
 
     f <- function(df){
       ind <- sample(x=1:(2*nRatings),size= nTrials, prob = as.vector(df$p), replace=T)
@@ -500,7 +509,7 @@ generateDataIndTruncF <-
       rating <- df$rating[ind]
       data.frame(response = response, rating = rating)
     }
-    X <- ddply(res, .(stimulus, condition), f)
+    X <- ddply(res, ~ stimulus + condition, f)
     X$correct <- 0
     X$correct[X$stimulus==X$response] <- 1
     X$ratings <- factor(X$rating)
@@ -512,17 +521,17 @@ generateDataIndTruncF <-
 # (viii) logN
 
 generateDataLognorm <- function(paramDf){
-  nCond <- length(grep(pattern = "d", names(paramDf), value=T))
-  nRatings <- (length(grep(pattern = "cA", names(paramDf), value=T)))+1
-  ds <- c(t(paramDf[,paste("d", 1:nCond, sep="")]))
+  nCond <- length(grep(pattern = "d_", names(paramDf), value=T))
+  nRatings <- (length(grep(pattern = "^M_theta_minus.", names(paramDf), value=T)))+1
+  ds <- c(t(paramDf[,paste("d_", 1:nCond, sep="")]))
   locA <- -ds/2
   locB <- ds/2
   theta <- paramDf$c
   sigma <- paramDf$sigma
 
-  loc_RA <-  c(Inf,log(abs(c(t(paramDf[,paste("mu_cA", 1:(nRatings-1), sep="")])) - theta)) -
+  loc_RA <-  c(Inf,log(abs(c(t(paramDf[,paste("M_theta_minus.", 1:(nRatings-1), sep="")])) - theta)) -
                  .5*sigma^2, -Inf)
-  loc_RB <- c(-Inf, log(c(t(paramDf[,paste("mu_cB", 1:(nRatings-1), sep="")])) - theta) -
+  loc_RB <- c(-Inf, log(c(t(paramDf[,paste("M_theta_plus.", 1:(nRatings-1), sep="")])) - theta) -
                 .5*sigma^2, Inf)
 
 
@@ -566,7 +575,7 @@ generateDataLognorm <- function(paramDf){
   res <- rbind(p_SB_RB,p_SB_RA,  p_SA_RA,p_SA_RB)
   colnames(res) <- c("stimulus", "response", "condition", "rating", "p")
   res$p[is.na(res$p) | is.nan(res$p)] <- 0
-  nTrials <- paramDf$N
+  nTrials <- round(paramDf$N / 2 / nCond)
 
   f <- function(df){
     ind <- sample(x=1:(2*nRatings),size= nTrials, prob = as.vector(df$p),
@@ -575,7 +584,7 @@ generateDataLognorm <- function(paramDf){
     rating <- df$rating[ind]
     data.frame(response = response, rating = rating)
   }
-  X <- ddply(res, .(stimulus, condition), f)
+  X <- ddply(res, ~ stimulus + condition, f)
   X$correct <- 0
   X$correct[X$stimulus==X$response] <- 1
   X$ratings <- factor(X$rating)
@@ -588,7 +597,7 @@ generateDataLognorm <- function(paramDf){
 
 generateDataLogWEV <- function(paramDf){
   nCond <- length(grep(pattern = "d_", names(paramDf), value=T))
-  nRatings <- (length(grep(pattern = "theta.minus", names(paramDf), value=T)))+1
+  nRatings <- (length(grep(pattern = "^theta.minus", names(paramDf), value=T)))+1
   ds <- c(t(paramDf[,paste("d_", 1:nCond, sep="")]))
   locA <- -ds/2
   locB <- ds/2
@@ -648,7 +657,7 @@ generateDataLogWEV <- function(paramDf){
   res <- rbind(p_SB_RB,p_SB_RA,  p_SA_RA,p_SA_RB)
   colnames(res) <- c("stimulus", "response", "condition", "rating", "p")
   res$p[is.na(res$p) | is.nan(res$p)] <- 0
-  nTrials <- paramDf$N
+  nTrials <- round(paramDf$N / 2 / nCond)
 
   f <- function(df){
     ind <- sample(x=1:(2*nRatings),size= nTrials, prob = as.vector(df$p),
@@ -657,7 +666,7 @@ generateDataLogWEV <- function(paramDf){
     rating <- df$rating[ind]
     data.frame(response = response, rating = rating)
   }
-  X <- ddply(res, .(stimulus, condition), f)
+  X <- ddply(res, ~ stimulus + condition, f)
   X$correct <- 0
   X$correct[X$stimulus==X$response] <- 1
   X$ratings <- factor(X$rating)

@@ -23,7 +23,7 @@ a factor with a warning),
 subject individually.
 }}
 
-\item{models}{\code{character} of length 1.
+\item{models}{\code{character}.
 Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'ITGcm', 'logN', and 'logWEV'.
 Alternatively, if \code{model="all"} (default), all implemented models will be fit.}
 
@@ -40,12 +40,20 @@ Defaults to 4.}
 number of cores -1 will be used.}
 }
 \value{
-Gives data frame with rows for each model-participant combination and columns for the different parameters
-as fitted result as well as additional information about the fit #' (\code{negLogLik} (negative log-likelihood of the final set of parameters),
-\code{k} (number of parameters), \code{N} (number of data rows),
-\code{AIC} (Akaike Information Criterion; Akaike, 1974),
-\code{BIC} (Bayes information criterion; Schwarz, 1978), and
-\code{AICc} (AIC corrected for small samples; Burnham & Anderson, 2002)).
+Gives data frame with one row for each combination of model and participant and columns for the estimated parameters.
+Additional information  about the fit is provided in additional columns:
+\itemize{
+\item \code{negLogLik} (negative log-likelihood of the best-fitting set of parameters),
+\item \code{k} (number of parameters),
+\item \code{N} (number of trials),
+\item \code{AIC} (Akaike Information Criterion; Akaike, 1974),
+\item \code{BIC} (Bayes information criterion; Schwarz, 1978),
+\item \code{AICc} (AIC corrected for small samples; Burnham & Anderson, 2002)
+If length(models) > 1 or models == "all", there will be three additional columns:
+\item \code{wAIC}: Akaike weights based on AIC,
+\item \code{wAIC}: Akaike weights based on AICc,
+\item \code{wBICc}: Schwarz weights (see Burnham & Anderson, 2002)
+}
 }
 \description{
 This function is a wrapper of the function \code{\link{fitConf}} (see

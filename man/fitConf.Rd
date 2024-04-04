@@ -4,7 +4,7 @@
 \alias{fitConf}
 \title{Fit a static confidence model to data}
 \usage{
-fitConf(data, model = "all", nInits = 5, nRestart = 4)
+fitConf(data, model = "SDT", nInits = 5, nRestart = 4)
 }
 \arguments{
 \item{data}{a \code{data.frame} where each row is one trial, containing following
@@ -21,8 +21,7 @@ a factor with a warning),
 }}
 
 \item{model}{\code{character} of length 1.
-Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'ITGcm', 'logN', and 'logWEV'.
-Alternatively, if \code{model="all"} (default), all implemented models will be fit.}
+Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'ITGcm', 'logN', and 'logWEV'.}
 
 \item{nInits}{\code{integer}. Number of initial values used for maximum likelihood optimization.
 Defaults to 5.}
@@ -40,7 +39,7 @@ selected model as well as additional information about the fit
 \code{AICc} (AIC corrected for small samples; Burnham & Anderson, 2002))
 }
 \description{
-This function fits one or more static models of decision confidence to binary choices and confidence judgments.
+This function fits one static model of decision confidence to binary choices and confidence judgments.
 It calls a corresponding fitting function for the selected model.
 }
 \details{
@@ -186,7 +185,7 @@ Conceptually, logWEV assumes that the observer combines evidence about decision-
 of the stimulus with the strength of evidence about choice-irrelevant features (Rausch et al., 2018).
 The model also assumes that noise affecting the confidence decision variable is lognormal
 in accordance with Shekhar and Rahnev (2021).
-According to logWEV, the confidence decision variable is \eqn{y} is equal to
+According to logWEV, the confidence decision variable \eqn{y} is equal to
 \eqn{y^*\times R}. \eqn{y^*} is sampled from a lognormal distribution with a location parameter
 of \eqn{(1-w)\times x\times R + w \times d_k} and a scale parameter of \eqn{\sigma}.
 The parameter \eqn{\sigma} quantifies the amount of unsystematic variability
