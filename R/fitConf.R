@@ -213,16 +213,33 @@ fitConf <- function(data, model = "SDT", nInits = 5,
   }
   if (!is.factor(data$rating)) {
     data$rating <- factor(data$rating)
-    warning("rating  transformed to a factor!")
+    warning("rating transformed to a factor!")
   }
   if(!all(data$correct %in% c(0,1))) stop("correct should be 1 or 0")
 
+  A <- levels(data$stimulus)[1]
+  B <- levels(data$stimulus)[2]
+  nCond <- length(levels(data$condition))
+  nRatings <-  length(levels(data$rating))
+  abj_f <- 1 /(nRatings*2)
+
+  N_SA_RA <-
+    table(data$condition[data$stimulus == A & data$correct == 1],
+          data$rating[data$stimulus == A & data$correct == 1])[,nRatings:1] + abj_f
+  N_SA_RB <-
+    table(data$condition[data$stimulus == A & data$correct == 0],
+          data$rating[data$stimulus == A & data$correct == 0]) + abj_f
+  N_SB_RA <-
+    table(data$condition[data$stimulus == B & data$correct == 0],
+          data$rating[data$stimulus == B & data$correct == 0])[,nRatings:1] + abj_f
+  N_SB_RB <-
+    table(data$condition[data$stimulus == B & data$correct == 1],
+          data$rating[data$stimulus == B & data$correct == 1]) + abj_f
+
   if (model == "WEV") {
     fitting_fct <- fitCEV
-    #if (var=="increasing") fitting_fct <- fitCEVvarS
   } else if (model=="SDT") {
     fitting_fct <- fitSDT
-    #if (var=="increasing") fitting_fct <- fitSDTvarS
   } else if (model=="IG") {
     fitting_fct <- fit2Chan
   } else if (model=="ITGc") {
@@ -239,8 +256,9 @@ fitConf <- function(data, model = "SDT", nInits = 5,
     fitting_fct <- fitLogWEV
   } else stop(paste0("Model: ", model, " not implemented!\nChoose one of: 'WEV', 'SDT', 'IG', 'ITGc', 'ITGcm, 'GN', 'logN', 'logWEV', or 'PDA'"))
 
-  fit <- fitting_fct(ratings = data$rating, stimulus = data$stimulus,
-                     correct = data$correct, condition = data$condition,
-                     nInits = nInits, nRestart = nRestart)
+  fit <- fitting_fct(N_SA_RA = N_SA_RA,N_SA_RB = N_SA_RB,
+                     N_SB_RA = N_SB_RA,N_SB_RB = N_SB_RB,
+                     nInits = nInits, nRestart = nRestart,
+                     nRatings = nRatings, nCond = nCond)
   return(fit)
 }

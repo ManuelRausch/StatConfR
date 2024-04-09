@@ -5,21 +5,8 @@
 
 
 fitITGcm <-
-  function(ratings, stimulus, correct, condition, nInits = 5, nRestart = 4){
-
-    A <- levels(stimulus)[1]
-    B <- levels(stimulus)[2]
-    nRatings <- length(levels(ratings))
-    nCond <- length(levels(condition))
-
-    N_SA_RA <- table(condition[stimulus == A & correct == 1],
-                     ratings[stimulus == A & correct == 1])[,nRatings:1] + 0.001
-    N_SA_RB <- table(condition[stimulus == A & correct == 0],
-                     ratings[stimulus == A & correct == 0]) + 0.001
-    N_SB_RA <- table(condition[stimulus == B & correct == 0],
-                     ratings[stimulus == B & correct == 0])[,nRatings:1] + 0.001
-    N_SB_RB <- table(condition[stimulus == B & correct == 1],
-                     ratings[stimulus == B & correct == 1]) + 0.001
+  function(N_SA_RA, N_SA_RB, N_SB_RA, N_SB_RB,
+           nInits, nRestart, nRatings, nCond){
 
     # search for initial values using a coarse search grind
     temp <- expand.grid(maxD =  seq(1, 5, 1),
@@ -41,16 +28,25 @@ fitITGcm <-
     else{
       inits[,1:(nCond)] <-  log(t(mapply(function(maxD) diff(seq(0, maxD, length.out = nCond+1)), temp$maxD)))
     }
-    inits[,(nCond+1):(nCond+nRatings-2)] <-
-      log(t(mapply(function(tauMin, tauRange) diff(seq(-tauRange-tauMin, -tauMin, length.out=nRatings-1)),
-                   temp$tauMin, temp$tauRange)))
+    if (nRatings > 3){
+      inits[,(nCond+1):(nCond+nRatings-2)] <-
+        log(t(mapply(function(tauMin, tauRange) diff(seq(-tauRange-tauMin, -tauMin, length.out=nRatings-1)),
+                     temp$tauMin, temp$tauRange)))
+      inits[,(nCond+nRatings+2):(nCond + nRatings*2-1)] <-
+        log(t(mapply(function(tauMin, tauRange) diff(seq(tauMin, tauMin+tauRange, length.out=nRatings-1)),
+                     temp$tauMin, temp$tauRange)))
+    }
+    if (nRatings == 3){
+      inits[,(nCond+1):(nCond+nRatings-2)] <-
+        log(mapply(function(tauMin, tauRange) diff(seq(-tauRange-tauMin, -tauMin, length.out=nRatings-1)),
+                     temp$tauMin, temp$tauRange))
+      inits[,(nCond+nRatings+2):(nCond + nRatings*2-1)] <-
+        log(mapply(function(tauMin, tauRange) diff(seq(tauMin, tauMin+tauRange, length.out=nRatings-1)),
+                     temp$tauMin, temp$tauRange))
+    }
     inits[,nCond+(nRatings-1)] <- log(temp$tauMin)
     inits[,nCond+nRatings] <- temp$theta
     inits[,nCond+(nRatings+1)] <- log(temp$tauMin)
-    inits[,(nCond+nRatings+2):(nCond + nRatings*2-1)] <-
-      log(t(mapply(function(tauMin, tauRange) diff(seq(tauMin, tauMin+tauRange, length.out=nRatings-1)),
-                   temp$tauMin, temp$tauRange)))
-
     inits[,(nCond + nRatings*2)] <- log(temp$m)
 
     logL <- apply(inits, MARGIN = 1,
@@ -116,27 +112,8 @@ fitITGcm <-
   }
 
 fitITGc <-
-  function(ratings, stimulus, correct, condition, nInits = 5, nRestart = 4){
-    if(!is.factor(condition)) stop ("condition should be a factor!")
-    if(!is.factor(ratings)) stop ("ratings should be a factor!")
-    if(!is.factor(stimulus )|| length(levels(stimulus)) != 2) {
-      stop("stimulus should be a factor with 2 levels")
-    }
-    if(!all(correct %in% c(0,1))) stop("correct should be 1 or 0")
-
-    A <- levels(stimulus)[1]
-    B <- levels(stimulus)[2]
-    nRatings <- length(levels(ratings))
-    nCond <- length(levels(condition))
-
-    N_SA_RA <- table(condition[stimulus == A & correct == 1],
-                     ratings[stimulus == A & correct == 1])[,nRatings:1] + 0.001
-    N_SA_RB <- table(condition[stimulus == A & correct == 0],
-                     ratings[stimulus == A & correct == 0]) + 0.001
-    N_SB_RA <- table(condition[stimulus == B & correct == 0],
-                     ratings[stimulus == B & correct == 0])[,nRatings:1] + 0.001
-    N_SB_RB <- table(condition[stimulus == B & correct == 1],
-                     ratings[stimulus == B & correct == 1]) + 0.001
+  function(N_SA_RA, N_SA_RB, N_SB_RA, N_SB_RB,
+           nInits, nRestart, nRatings, nCond){
 
     # search for inital values using a coarse search grind
     temp <- expand.grid(maxD =  seq(1, 5, 1),
@@ -152,16 +129,25 @@ fitITGc <-
     else{
       inits[,1:(nCond)] <-  log(t(mapply(function(maxD) diff(seq(0, maxD, length.out = nCond+1)), temp$maxD)))
     }
-    inits[,(nCond+1):(nCond+nRatings-2)] <-
-      log(t(mapply(function(tauMin, tauRange) diff(seq(-tauRange-tauMin, -tauMin, length.out=nRatings-1)),
-                   temp$tauMin, temp$tauRange)))
+    if (nRatings > 3){
+      inits[,(nCond+1):(nCond+nRatings-2)] <-
+        log(t(mapply(function(tauMin, tauRange) diff(seq(-tauRange-tauMin, -tauMin, length.out=nRatings-1)),
+                     temp$tauMin, temp$tauRange)))
+      inits[,(nCond+nRatings+2):(nCond + nRatings*2-1)] <-
+        log(t(mapply(function(tauMin, tauRange) diff(seq(tauMin, tauMin+tauRange, length.out=nRatings-1)),
+                     temp$tauMin, temp$tauRange)))
+    }
+    if (nRatings == 3){
+      inits[,(nCond+1):(nCond+nRatings-2)] <-
+        log(mapply(function(tauMin, tauRange) diff(seq(-tauRange-tauMin, -tauMin, length.out=nRatings-1)),
+                     temp$tauMin, temp$tauRange))
+      inits[,(nCond+nRatings+2):(nCond + nRatings*2-1)] <-
+        log(mapply(function(tauMin, tauRange) diff(seq(tauMin, tauMin+tauRange, length.out=nRatings-1)),
+                     temp$tauMin, temp$tauRange))
+    }
     inits[,nCond+(nRatings-1)] <- log(temp$tauMin)
     inits[,nCond+nRatings] <- temp$theta
     inits[,nCond+(nRatings+1)] <- log(temp$tauMin)
-    inits[,(nCond+nRatings+2):(nCond + nRatings*2-1)] <-
-      log(t(mapply(function(tauMin, tauRange) diff(seq(tauMin, tauMin+tauRange, length.out=nRatings-1)),
-                   temp$tauMin, temp$tauRange)))
-
     inits[,(nCond + nRatings*2)] <- log(temp$m)
 
     logL <- apply(inits, MARGIN = 1,

@@ -87,8 +87,11 @@ fitMetaDprime <- function(data, model="ML",  nInits = 5, nRestart = 3,
   if(!all(data$correct %in% c(0,1))) stop("correct should be 1 or 0")
   if(!any(data$correct == 0)) stop("There should be at least one erroneous response")
   if(!any(data$correct == 1)) stop("There should be at least one correct response")
+  if(nrow(data) < 400) warning("Warning! At least 400 trials per subject are recommended for measuring metacognitive performance")
 
-  nRatings <- length(unique(data$rating))
+  nRatings <-  length(levels(data$rating))
+  abj_f <- 1 /(nRatings*2) # adjustment for low frequencies used by Maniscalco and Lau (2012)
+
   ## Define common names for the output to rbind all parameter fits together
   ## ToDo: Namen anpassen
   outnames <- c("model", "participant", "dprime", "c", "metaD", "Ratio")
@@ -100,7 +103,9 @@ fitMetaDprime <- function(data, model="ML",  nInits = 5, nRestart = 3,
     data_part <- subset(data, participant==cur_sbj)
     res <- int_fitMetaDprime(ratings=data_part$rating,
                              stimulus=data_part$stimulus, correct = data_part$correct,
-                             ModelVersion = cur_model,  nInits = nInits, nRestart = nRestart)
+                             ModelVersion = cur_model,
+                             nInits = nInits, nRestart = nRestart,
+                             nRatings = nRatings, abj_f = abj_f)
     res$model <- cur_model
     res$participant <- cur_sbj
     res[outnames[!(outnames %in% names(res))]] <- NA

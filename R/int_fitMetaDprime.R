@@ -1,14 +1,13 @@
 int_fitMetaDprime   <- function(ratings, stimulus, correct,
-                                ModelVersion = "ML",
-                                nInits = 5, nRestart = 3){
+                                ModelVersion, nInits,
+                                nRestart, nRatings, abj_f){
 
   # prepare data
 
-  nRatings <-  length(levels(ratings))
-  nCriteria <- nRatings * 2 - 1
-  abj_f <- 1 /(nRatings*2)
-  abs_corrects <-  table(ratings[correct == 1], stimulus[correct == 1]) + abj_f
-  abs_errors <- table(ratings[correct == 0], stimulus[correct == 0]) + abj_f
+  abs_corrects <-
+    table(ratings[correct == 1], stimulus[correct == 1]) + abj_f
+  abs_errors <-
+    table(ratings[correct == 0], stimulus[correct == 0]) + abj_f
 
   abs_S1 <- c(rev(abs_errors[,2]),abs_corrects[,2])
   ratingHrs <- qnorm(1 - cumsum(abs_S1)/sum(abs_S1))
@@ -36,13 +35,23 @@ int_fitMetaDprime   <- function(ratings, stimulus, correct,
 
   inits <- data.frame(matrix(data=NA, nrow= nrow(temp), ncol = 1 + (nRatings-1)*2))
   inits[,1] <- temp$d #  qnorm((temp$d + 10)/ 20)
-  inits[,2:(nRatings-1)] <-
-    log(t(mapply(function(tauRange) rep(tauRange/(nRatings-1), nRatings-2),
-                 temp$tauRange)))
+  if (nRatings == 3){
+    inits[,2] <-
+      log(mapply(function(tauRange) rep(tauRange/(nRatings-1), nRatings-2),
+                 temp$tauRange))
+    inits[,(nRatings+2):(nRatings*2-1)] <-
+      log(mapply(function(tauRange) rep(tauRange/(nRatings-1), nRatings-2),
+                   temp$tauRange))
+  }
+  if (nRatings > 3){
+    inits[,2:(nRatings-1)] <-
+      log(t(mapply(function(tauRange) rep(tauRange/(nRatings-1), nRatings-2),
+                   temp$tauRange)))
+    inits[,(nRatings+2):(nRatings*2-1)] <-
+      log(t(mapply(function(tauRange) rep(tauRange/(nRatings-1), nRatings-2),
+                   temp$tauRange)))
+  }
   inits[,nRatings:(nRatings+1)] <- rep(log(temp$tauMin),2)
-  inits[,(nRatings+2):(nRatings*2-1)] <-
-    log(t(mapply(function(tauRange) rep(tauRange/(nRatings-1), nRatings-2),
-                 temp$tauRange)))
 
   if(ModelVersion == "ML"){
     logL <- apply(inits, MARGIN = 1,
