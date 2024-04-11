@@ -1,25 +1,32 @@
 # statConfR: Models of Decision Confidence and Metacognition
 
-This package includes functions to fit meta-d´/d´ as well as several
-static models of decision making and confidence derived from signal
-detection theory to test the assumptions underlying meta-d´/d´ and which
-may serve as an alternative when the assumptions of meta-d´/d´ do not
-hold. Currently, the following models are included:
+The statConfR package provides functions to fit static models of
+decision-making and confidence derived from signal detection theory for
+binary discrimination tasks, as well as meta-d′/d′ (Rausch & Hellmann,
+2024). The package can be used to test the assumptions underlying
+meta-d′/d′. Several models provide a metacognition parameter that may
+serve as an alternative when the assumptions of meta-d′/d′ assuming the
+corresponding model provides a better fit to the data. Currently, the
+following models are included:
 
-- Signal Detection Rating Model
+- Signal detection rating model
 
-- Gaussian Noise Model
+- Gaussian noise model
 
-- Weighted Evidence and Visibility Model
+- Weighted evidence and visibility model
 
 - Post-decisional Accumulation Model
 
 - Independent Gaussian model
 
-- Independent Truncated Gaussian Model (the model underlying the
-  meta-d´/d´ method)
+- Independent truncated gaussian Model (the model underlying the
+  meta-d′/d′ method, see Rausch et al., 2023)
 
-See Rausch et al. (2023) for more detail about the models.
+- Lognormal noise model
+
+- Lognormal weighted evidence and visibility model
+
+- Response-congruent evidence model
 
 ## Installation
 
@@ -131,18 +138,11 @@ head(fitted_pars)
     ## 6 -1.2341607 -0.07619421  0.2861275 1.2793275 2.018620
 
 If the Truncated Gaussian model performs best in the model comparison,
-metacognitive efficiency can be quantified using meta-d’/d’:
+metacognitive efficiency can be quantified using meta-d′/d′:
 
 ``` r
  MetaDs <- fitMetaDprime(MaskOri, model="ML", .parallel = TRUE)
 ```
-
-## Future development
-
-The package is still under active development. We plan to include more
-models from the literature and function to compute the predicted
-distribution of responses for given parameter sets. For any suggestions
-and contributions, please contact us!
 
 ## Contact
 
@@ -154,4 +154,8 @@ or [submit an issue](https://github.com/ManuelRausch/StatConfR/issues).
 
 Rausch, M., Hellmann, S. & Zehetleitner, M. (2023). Measures of
 metacognitive efficiency across cognitive models of decision confidence.
-[doi: 10.31234/osf.io/kdz34](https://doi.org/10.31234/osf.io/kdz34)
+Psychological Methods.
+[doi:10.1037/met0000634](https://doi.org/10.1037/met0000634) Rausch, M.,
+& Hellmann, S. (2024). statConfR: An R Package for Static Models of
+Decision Confidence and Metacognition. PsyArXiv.
+[doi:10.31234/osf.io/dk6mr](https://doi.org/10.31234/osf.io/dk6mr)

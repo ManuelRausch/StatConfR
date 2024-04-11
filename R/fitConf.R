@@ -196,9 +196,14 @@
 #'
 
 #' @export
-fitConf <- function(data, model = "SDT", nInits = 5,
-                    nRestart = 4#, var="constant"
+fitConf <- function(data, model = "SDT",
+                    condition = NULL, stimulus = NULL, correct = NULL, rating = NULL,
+                    nInits = 5, nRestart = 4,
 ) {
+  if (!is.null(condition)) data$condition <- data[,condition]
+  if (!is.null(stimulus)) data$stimulus <- data[,stimulus]
+  if (!is.null(correct)) data$correct <- data[,correct]
+  if (!is.null(rating)) data$rating <- data[,rating]
   if (is.null(data$condition)) data$condition <- 1
   if (!is.factor(data$condition)) {
     data$condition <- factor(data$condition)

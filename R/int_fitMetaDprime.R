@@ -71,7 +71,7 @@ int_fitMetaDprime   <- function(ratings, stimulus, correct,
       m <- try(optim(par = inits[j,], fn = negLoglMetaD, gr = NULL,
                      nC_rS1 = nC_rS1, nI_rS1 = nI_rS1, nC_rS2 = nC_rS2, nI_rS2 = nI_rS2,
                      nRatings = nRatings, cprime = cprime,
-                     control = list(maxit = 10^6, reltol = 10^-8)), silent=T)
+                     control = list(maxit = 10^4, reltol = 10^-4)), silent=T)
       for(i in 2:nRestart){
         try(m <- try(optim(par = m$par, fn = negLoglMetaD, gr = NULL,
                            nC_rS1 = nC_rS1, nI_rS1 = nI_rS1, nC_rS2 = nC_rS2, nI_rS2 = nI_rS2,
@@ -118,7 +118,8 @@ int_fitMetaDprime   <- function(ratings, stimulus, correct,
     dprime = dprime,
     cprime = cprime,
     c = dprime * cprime,
-    metaD = NA, Ratio = NA, ModelVersion = ModelVersion)
+    metaD = NA, Ratio = NA,
+    ModelVersion = ModelVersion)
 
   if(exists("fit")){
     if(is.list(fit)){
