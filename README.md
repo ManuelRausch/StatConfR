@@ -26,8 +26,6 @@ following models are included:
 
 - Lognormal weighted evidence and visibility model
 
-- Response-congruent evidence model
-
 ## Installation
 
 For the current development version, the easiest way of installation is
@@ -155,7 +153,8 @@ or [submit an issue](https://github.com/ManuelRausch/StatConfR/issues).
 Rausch, M., Hellmann, S. & Zehetleitner, M. (2023). Measures of
 metacognitive efficiency across cognitive models of decision confidence.
 Psychological Methods.
-[doi:10.1037/met0000634](https://doi.org/10.1037/met0000634) Rausch, M.,
-& Hellmann, S. (2024). statConfR: An R Package for Static Models of
-Decision Confidence and Metacognition. PsyArXiv.
+[doi:10.1037/met0000634](https://doi.org/10.1037/met0000634)
+
+Rausch, M., & Hellmann, S. (2024). statConfR: An R Package for Static
+Models of Decision Confidence and Metacognition. PsyArXiv.
 [doi:10.31234/osf.io/dk6mr](https://doi.org/10.31234/osf.io/dk6mr)

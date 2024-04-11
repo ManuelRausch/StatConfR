@@ -7,7 +7,7 @@
 #'
 #' @param data  a `data.frame` where each row is one trial, containing following
 #' variables:
-#' * \code{condition} (optional; different levels of discriminability,
+#' * \code{diffCond} (optional; different levels of discriminability,
 #'    should be a factor with levels ordered from hardest to easiest),
 #' * \code{rating} (discrete confidence judgments, should be given as factor;
 #'    otherwise will be transformed to factor with a warning),
@@ -224,14 +224,14 @@ fitConfModels <- function(data, models="all",  nInits = 5, nRestart = 4, #var="c
     warning("Duplicate models are dropped")
     models <- unique(models)
   }
-  if (!is.null(condition)) data$condition <- data[,condition]
+  if (!is.null(diffCond)) data$diffCond <- data[,diffCond]
   if (!is.null(stimulus)) data$stimulus <- data[,stimulus]
   if (!is.null(correct)) data$correct <- data[,correct]
   if (!is.null(rating)) data$rating <- data[,rating]
-  if (is.null(data$condition)) data$condition <- factor(1)
-  if (!is.factor(data$condition)) {
-    data$condition <- factor(data$condition)
-    warning("condition is transformed to a factor!")
+  if (is.null(data$diffCond)) data$diffCond <- factor(1)
+  if (!is.factor(data$diffCond)) {
+    data$diffCond <- factor(data$diffCond)
+    warning("diffCond is transformed to a factor!")
   }
   if(length(unique(data$stimulus)) != 2) {
     stop("There must be exacltly two different possible values of stimulus")
@@ -247,7 +247,7 @@ fitConfModels <- function(data, models="all",  nInits = 5, nRestart = 4, #var="c
   }
   if(!all(data$correct %in% c(0,1))) stop("correct should be 1 or 0")
 
-  nConds <- length(unique(data$condition))
+  nConds <- length(unique(data$diffCond))
   nRatings <- length(unique(data$rating))
   ## Define common names for the output to rbind all parameter fits together
   ## ToDo: Namen anpassen

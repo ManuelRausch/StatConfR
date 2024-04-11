@@ -44,7 +44,6 @@ following models are included:
 
 -   Lognormal weighted evidence and visibility model
 
--   Response-congruent evidence model
 
 ## Installation
 

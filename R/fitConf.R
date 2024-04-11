@@ -5,7 +5,7 @@
 #'
 #' @param data  a `data.frame` where each row is one trial, containing following
 #' variables:
-#' * \code{condition} (optional; different levels of discriminability,
+#' * \code{diffCond} (optional; different levels of discriminability,
 #'    should be a factor with levels ordered from hardest to easiest),
 #' * \code{rating} (discrete confidence judgments, should be given as factor;
 #'    otherwise will be transformed to factor with a warning),
@@ -161,6 +161,7 @@
 #' features in the confidence judgment. \eqn{w} and \eqn{\sigma} are fitted in
 #' addition to the set of shared parameters.
 #'
+#'
 #' @md
 #'
 #' @author Sebastian Hellmann, \email{sebastian.hellmann@ku.de}
@@ -194,20 +195,18 @@
 #' }
 #'
 #'
-
 #' @export
 fitConf <- function(data, model = "SDT",
-                    condition = NULL, stimulus = NULL, correct = NULL, rating = NULL,
-                    nInits = 5, nRestart = 4,
-) {
-  if (!is.null(condition)) data$condition <- data[,condition]
+                    diffCond = NULL, stimulus = NULL, correct = NULL, rating = NULL,
+                    nInits = 5, nRestart = 4) {
+  if (!is.null(diffCond)) data$diffCond <- data[,diffCond]
   if (!is.null(stimulus)) data$stimulus <- data[,stimulus]
   if (!is.null(correct)) data$correct <- data[,correct]
   if (!is.null(rating)) data$rating <- data[,rating]
-  if (is.null(data$condition)) data$condition <- 1
-  if (!is.factor(data$condition)) {
-    data$condition <- factor(data$condition)
-    warning("condition transformed to a factor!")
+  if (is.null(data$diffCond)) data$diffCond <- 1
+  if (!is.factor(data$diffCond)) {
+    data$diffCond <- factor(data$diffCond)
+    warning("diffCond transformed to a factor!")
   }
   if(length(unique(data$stimulus)) != 2) {
     stop("There must be exactly two different values of stimulus")
@@ -224,21 +223,21 @@ fitConf <- function(data, model = "SDT",
 
   A <- levels(data$stimulus)[1]
   B <- levels(data$stimulus)[2]
-  nCond <- length(levels(data$condition))
+  nCond <- length(levels(data$diffCond))
   nRatings <-  length(levels(data$rating))
   abj_f <- 1 /(nRatings*2)
 
   N_SA_RA <-
-    table(data$condition[data$stimulus == A & data$correct == 1],
+    table(data$diffCond[data$stimulus == A & data$correct == 1],
           data$rating[data$stimulus == A & data$correct == 1])[,nRatings:1] + abj_f
   N_SA_RB <-
-    table(data$condition[data$stimulus == A & data$correct == 0],
+    table(data$diffCond[data$stimulus == A & data$correct == 0],
           data$rating[data$stimulus == A & data$correct == 0]) + abj_f
   N_SB_RA <-
-    table(data$condition[data$stimulus == B & data$correct == 0],
+    table(data$diffCond[data$stimulus == B & data$correct == 0],
           data$rating[data$stimulus == B & data$correct == 0])[,nRatings:1] + abj_f
   N_SB_RB <-
-    table(data$condition[data$stimulus == B & data$correct == 1],
+    table(data$diffCond[data$stimulus == B & data$correct == 1],
           data$rating[data$stimulus == B & data$correct == 1]) + abj_f
 
   if (model == "WEV") {
