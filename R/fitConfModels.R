@@ -1,7 +1,6 @@
 #' Fit several static confidence models to multiple participants
 #'
-#' This function is a wrapper of the function \code{\link{fitConf}} (see
-#' there for more information). It calls the function for every possible combination
+#' This function is a wrapper of the function \code{\link{fitConf}}. It calls the function for every possible combination
 #' of model in the `model` argument and participant in the \code{data}, respectively.
 #' See the Details for more information about the parameters.
 #'
@@ -196,7 +195,6 @@
 #' @references Schwarz, G. (1978). Estimating the dimension of a model. The Annals of Statistics, 6(2), 461–464. doi: 10.1214/aos/1176344136
 #' @references Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive Inefficiency in Perceptual Decision Making. Psychological Review, 128(1), 45–70. doi: 10.1037/rev0000249
 #'
-#'
 #' @examples
 #' # 1. Select two subjects from the masked orientation discrimination experiment
 #' data <- subset(MaskOri, participant %in% c(1:2))
@@ -259,8 +257,8 @@ fitConfModels <- function(data, models="all",
                 paste0("theta_plus.",1:(nRatings-1)),
                 paste0("M_theta_minus.",(nRatings-1):1),
                 paste0("M_theta_plus.",1:(nRatings-1)),
-                 "b", "m", "sigma", "w"
-                )
+                "b", "m", "sigma", "w"
+  )
   # This function will be called for every combination of participant and model
   call_fitfct <- function(X) {
     cur_model <- models[X[1]]
@@ -305,17 +303,20 @@ fitConfModels <- function(data, models="all",
   # bind list-outout together into data.frame
   res <- do.call(rbind, res)
 
-  res$wAIC <- NA
-  res$wAICc <- NA
-  res$wBIC <- NA
-  for (sbj in subjects){
-    Ls <- exp(-0.5 * (res$AIC[res$participant==sbj]  - min(res$AIC[res$participant==sbj])))
-    res$wAIC[res$participant==sbj] <- Ls / sum(Ls)
-    Ls <- exp(-0.5 * (res$AICc[res$participant==sbj]  - min(res$AICc[res$participant==sbj])))
-    res$wAICc[res$participant==sbj] <- Ls / sum(Ls)
-    Ls <- exp(-0.5 * (res$BIC[res$participant==sbj]  - min(res$BIC[res$participant==sbj])))
-    res$wBIC[res$participant==sbj] <- Ls / sum(Ls)
+  if ("all" %in% models | length(models) > 1){
+    res$wAIC <- NA
+    res$wAICc <- NA
+    res$wBIC <- NA
+    for (sbj in subjects){
+      Ls <- exp(-0.5 * (res$AIC[res$participant==sbj]  - min(res$AIC[res$participant==sbj])))
+      res$wAIC[res$participant==sbj] <- Ls / sum(Ls)
+      Ls <- exp(-0.5 * (res$AICc[res$participant==sbj]  - min(res$AICc[res$participant==sbj])))
+      res$wAICc[res$participant==sbj] <- Ls / sum(Ls)
+      Ls <- exp(-0.5 * (res$BIC[res$participant==sbj]  - min(res$BIC[res$participant==sbj])))
+      res$wBIC[res$participant==sbj] <- Ls / sum(Ls)
+    }
   }
+
 
   # finally, drop columns with unnecessary parameters
   res <- res[,apply(res, 2, function(X) any(!is.na(X)))]

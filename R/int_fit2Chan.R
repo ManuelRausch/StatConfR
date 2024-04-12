@@ -2,7 +2,7 @@
 
 fit2Chan <-
   function(N_SA_RA, N_SA_RB, N_SB_RA, N_SB_RB,
-           nInits, nRestart, nRatings, nCond){
+           nInits, nRestart, nRatings, nCond, nTrials){
 
 
 
@@ -36,10 +36,10 @@ fit2Chan <-
     if (nRatings == 3){
       inits[,(nCond+1):(nCond+nRatings-2)] <-
         log(mapply(function(tauMin, tauRange) diff(seq(-tauRange-tauMin, -tauMin, length.out=nRatings-1)),
-                     temp$tauMin, temp$tauRange))
+                   temp$tauMin, temp$tauRange))
       inits[,(nCond+nRatings+2):(nCond + nRatings*2-1)] <-
         log(mapply(function(tauMin, tauRange) diff(seq(tauMin, tauMin+tauRange, length.out=nRatings-1)),
-                     temp$tauMin, temp$tauRange))
+                   temp$tauMin, temp$tauRange))
     }
     inits[,nCond+(nRatings-1)] <- log(temp$tauMin)
     inits[,nCond+nRatings] <- temp$theta
@@ -83,8 +83,6 @@ fit2Chan <-
     if(!inherits(fit, "try-error")){
 
       k <- length(fit$par)
-      N <- length(ratings)
-
       res[paste("d_",1:nCond, sep="")] <-  as.vector(cumsum(exp(fit$par[1:(nCond)])))
       res$c <-  as.vector(fit$par[nCond+nRatings])
       res[,paste("theta_minus.",(nRatings-1):1, sep="")] <-
@@ -98,10 +96,10 @@ fit2Chan <-
       res$m <- exp(fit$par[nCond + nRatings*2])
 
       res$negLogLik <- fit$value
-      res$N <- N
+      res$N <- nTrials
       res$k <- k
-      res$BIC <-  2 * fit$value + k * log(N)
-      res$AICc <- 2 * fit$value + k * 2 + 2*k*(k-1)/(N-k-1)
+      res$BIC <-  2 * fit$value + k * log(nTrials)
+      res$AICc <- 2 * fit$value + k * 2 + 2*k*(k-1)/(nTrials-k-1)
       res$AIC <- 2 * fit$value + k * 2
     }
     res

@@ -191,7 +191,7 @@
 #' # 2. Use fitting function
 #' \donttest{
 #'   # Fitting takes some time to run:
-#'   FitFirstSbjSDT <- fitConf(data, model=c("SDT"))
+#'   FitFirstSbjSDT <- fitConf(data, model="SDT")
 #' }
 #'
 #'

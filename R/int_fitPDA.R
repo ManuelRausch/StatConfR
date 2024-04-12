@@ -4,7 +4,7 @@
 
 fitPDA <-
   function(N_SA_RA, N_SA_RB, N_SB_RA, N_SB_RB,
-           nInits, nRestart, nRatings, nCond){
+           nInits, nRestart, nRatings, nCond, nTrials){
 
     # coarse grid search to find promising initial values
 
@@ -84,7 +84,6 @@ fitPDA <-
     if(!inherits(fit, "try-error")){
 
       k <- length(fit$par)
-      N <- length(ratings)
 
       res[paste("d_",1:nCond, sep="")] <-  as.vector(cumsum(exp(fit$par[1:(nCond)])))
       res$c <-  as.vector(fit$par[nCond+nRatings])
@@ -99,10 +98,10 @@ fitPDA <-
       res$b <- exp(fit$par[nCond + nRatings*2])
 
       res$negLogLik <- fit$value
-      res$N <- N
+      res$N <- nTrials
       res$k <- k
-      res$BIC <-  2 * fit$value + k * log(N)
-      res$AICc <- 2 * fit$value + k * 2 + 2*k*(k-1)/(N-k-1)
+      res$BIC <-  2 * fit$value + k * log(nTrials)
+      res$AICc <- 2 * fit$value + k * 2 + 2*k*(k-1)/(nTrials-k-1)
       res$AIC <- 2 * fit$value + k * 2
     }
     res
