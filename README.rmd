@@ -24,8 +24,7 @@ binary discrimination tasks, as well as meta-d′/d′ (Rausch & Hellmann,
 2024). The package can be used to test the assumptions underlying
 meta-d′/d′. Several models provide a metacognition parameter that may
 serve as an alternative when the assumptions of meta-d′/d′ assuming the
-corresponding model provides a better fit to the data. Currently, the
-following models are included:
+corresponding model provides a better fit to the data. At this point in time, the following models are included:
 
 -   Signal detection rating model
 
@@ -37,7 +36,7 @@ following models are included:
 
 -   Independent Gaussian model
 
--   Independent truncated gaussian Model (the model underlying the
+-   Independent truncated Gaussian model (the model underlying the
     meta-d′/d′ method, see Rausch et al., 2023)
 
 -   Lognormal noise model
@@ -46,19 +45,21 @@ following models are included:
 
 ## Installation
 
-For the current development version, the easiest way of installation is
+The latest released version of the package is available on
+CRAN via
+
+```
+install.packages("statConfR")
+```
+
+
+The easiest way to install the development version is
 using `devtools` and install from GitHub:
 
 ```         
 devtools::install_github("ManuelRausch/StatConfR")
 ```
 
-The latest released version of the package will soon be available on
-CRAN via
-
-``` r
-install.packages("statConfR")
-```
 
 ## Usage
 
@@ -98,7 +99,7 @@ models to the data of each participant. The argument
 `.parallel=TRUE`allows for parallelization over all but one available
 core.
 
-```{r}
+```
 fitted_pars <- fitConfModels(MaskOri, models=c("SDT", "WEV"), .parallel = TRUE) 
 ```
 
@@ -242,7 +243,7 @@ head(fitted_pars)
 
 If the Independent Truncated Gaussian model provides a decent account of the data (which is not the case though in the demo dataset), it is legitimate to quantify metacognitive efficiency with meta-d′/d′:
 
-``` {r}
+``` 
 MetaDs <- fitMetaDprime(subset(MaskOri, diffCond == "33.3"), 
                         model="ML", .parallel = TRUE)
 ```

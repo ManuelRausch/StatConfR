@@ -6,8 +6,8 @@ binary discrimination tasks, as well as meta-d′/d′ (Rausch & Hellmann,
 2024). The package can be used to test the assumptions underlying
 meta-d′/d′. Several models provide a metacognition parameter that may
 serve as an alternative when the assumptions of meta-d′/d′ assuming the
-corresponding model provides a better fit to the data. Currently, the
-following models are included:
+corresponding model provides a better fit to the data. At this point in
+time, the following models are included:
 
 - Signal detection rating model
 
@@ -19,7 +19,7 @@ following models are included:
 
 - Independent Gaussian model
 
-- Independent truncated gaussian Model (the model underlying the
+- Independent truncated Gaussian model (the model underlying the
   meta-d′/d′ method, see Rausch et al., 2023)
 
 - Lognormal noise model
@@ -28,24 +28,22 @@ following models are included:
 
 ## Installation
 
-For the current development version, the easiest way of installation is
-using `devtools` and install from GitHub:
+The latest released version of the package is available on CRAN via
+
+    install.packages("statConfR")
+
+The easiest way to install the development version is using `devtools`
+and install from GitHub:
 
     devtools::install_github("ManuelRausch/StatConfR")
-
-The latest released version of the package will soon be available on
-CRAN via
-
-``` r
-install.packages("statConfR")
-```
 
 ## Usage
 
 ### Data structure
 
 The package includes a demo data set from a masked orientation
-discrimination task with confidence judgments.
+discrimination task with confidence judgments (Hellmann et al., 2023,
+Exp. 1.
 
 ``` r
 library(statConfR)
@@ -53,55 +51,39 @@ data("MaskOri")
 head(MaskOri)
 ```
 
-    ##   participant stimulus correct rating condition gender age trialNo
-    ## 1           1        0       0      1      33.3      f  23       1
-    ## 2           1        0       0      1      16.7      f  23       2
-    ## 3           1       90       1      1     133.3      f  23       3
-    ## 4           1        0       1      4     133.3      f  23       4
-    ## 5           1       90       1      2      33.3      f  23       5
-    ## 6           1       90       0      2      16.7      f  23       6
+    ##   participant stimulus correct rating diffCond trialNo
+    ## 1           1        0       1      0      8.3       1
+    ## 2           1       90       0      4    133.3       2
+    ## 3           1        0       1      0     33.3       3
+    ## 4           1       90       0      0     16.7       4
+    ## 5           1        0       1      3    133.3       5
+    ## 6           1        0       1      0     16.7       6
 
 Data should be in the form of a data.frame object columns for following
 variables:
 
 - stimulus (factor with 2 levels): The property of the stimulus which
   defines which response is correct
-- condition (factor): The experimental manipulation that is expected to
-  affect discrimination sensitivity (only used for fitting confidence
-  models)
+- diffCond (factor): The experimental manipulation that is expected to
+  affect discrimination sensitivity
 - correct (0-1): Indicating whether the choice was correct (1) or
   incorrect(0).
 - rating (factor): A discrete variable encoding the decision confidence
   (high: very confident; low: less confident)
-- sbj (integer): giving the subject ID.
-
-``` r
-MaskOri$condition <- MaskOri$diffCond
-head(MaskOri)
-```
-
-    ##   participant stimulus correct rating gender age trialNo
-    ## 1           1        0       0      1      f  23       1
-    ## 2           1        0       0      1      f  23       2
-    ## 3           1       90       1      1      f  23       3
-    ## 4           1        0       1      4      f  23       4
-    ## 5           1       90       1      2      f  23       5
-    ## 6           1       90       0      2      f  23       6
+- participant (integer): giving the subject ID.
 
 ### Fitting
 
 It is strongly recommended that if metacognitive efficiency is to be
-measured using the meta-d’/d’ method that researchers fist determine
+measured using the meta-d′/d′ method that researchers fist determine
 whether the Independent Truncated Gaussian Model, the confidence model
-implied by the meta-d’/d’ method, is an adequate description of the
+implied by the meta-d′/d′ method, is an adequate description of the
 data. Using the function fitConfModel, we can fit several confidence
 models to the data of each participant. The argument
 `.parallel=TRUE`allows for parallelization over all but one available
 core.
 
-``` r
- fitted_pars <- fitConfModels(MaskOri, models=c("SDT", "WEV"), .parallel = TRUE) 
-```
+    fitted_pars <- fitConfModels(MaskOri, models=c("SDT", "WEV"), .parallel = TRUE) 
 
 This parallelizes the fitting process over participant-model
 combinations. The output is then a data frame with one row for each
@@ -113,34 +95,41 @@ These may be used for quantitative model comparison.
 head(fitted_pars)
 ```
 
-    ##   model participant negLogLik   N  k      BIC     AICc      AIC         d1
-    ## 1   SDT           1  989.8068 960 11 2055.150 2001.846 2001.614 0.15071384
-    ## 2   WEV           1  913.0819 960 13 1915.434 1852.494 1852.164 0.13854199
-    ## 3   SDT           2 1076.5072 960 11 2228.551 2175.246 2175.014 0.24277316
-    ## 4   WEV           2 1053.6981 960 13 2196.666 2133.726 2133.396 0.37470202
-    ## 5   SDT           3  890.3000 960 11 1856.136 1802.832 1802.600 0.01609433
-    ## 6   WEV           3  767.7225 960 13 1624.715 1561.775 1561.445 0.00244278
-    ##          d2       d3       d4       theta         w     sigma        cA1
-    ## 1 1.1622992 5.866728 8.625396  0.38575591        NA        NA -1.7634060
-    ## 2 1.4499134 4.233249 5.506721  0.39877878 0.4147619 0.5123999 -0.8207672
-    ## 3 1.4138645 4.925860 7.691836  0.02784248        NA        NA -2.1061454
-    ## 4 1.4442048 4.073919 5.971996  0.02595525 0.2332637 0.4086341 -1.4745243
-    ## 5 0.1404938 2.947725 7.086975 -1.26647186        NA        NA -2.2868067
-    ## 6 0.4075982 3.206503 5.926012 -1.33589282 0.4360688 0.6875500 -1.9056750
-    ##          cA2         cA3        cB1       cB2      cB3
-    ## 1 -1.1169610 -0.12542605  1.0221640 1.7691779 2.183439
-    ## 2 -0.2423225  0.82897295 -0.1272569 0.6705370 1.086434
-    ## 3 -1.5485703 -0.90972112  0.7944319 1.5473073 1.995515
-    ## 4 -0.9671368 -0.38593372  0.2404484 0.9270251 1.339125
-    ## 5 -1.7878067 -1.35670379  0.8875427 1.7188347 2.410818
-    ## 6 -1.2341607 -0.07619421  0.2861275 1.2793275 2.018620
+    ##   model participant negLogLik    N  k      BIC     AICc      AIC    d_1    d_2
+    ## 1   SDT           1  2721.256 1620 14 5545.975 5470.739 5470.513 0.0428 0.4593
+    ## 2   WEV           1  2621.110 1620 16 5360.464 5274.520 5274.221 0.2027 0.6142
+    ## 3   SDT           2  1946.258 1620 14 3995.979 3920.743 3920.517 0.0000 0.0950
+    ## 4   WEV           2  1827.221 1620 16 3772.684 3686.741 3686.441 0.0512 0.1920
+    ## 5   SDT           3  1706.178 1620 14 3515.818 3440.582 3440.356 0.2708 0.4673
+    ## 6   WEV           3  1661.617 1620 16 3441.476 3355.533 3355.233 0.4146 0.8561
+    ##      d_3    d_4    d_5       c theta_minus.4 theta_minus.3 theta_minus.2
+    ## 1 1.0526 3.6806 4.7779 -0.2723       -1.5467       -1.0333       -0.6336
+    ## 2 1.0797 3.4746 4.0799 -0.2957       -2.0665       -1.2485       -0.4152
+    ## 3 0.8601 6.1410 8.0556 -0.1394       -2.0092       -1.9193       -1.4097
+    ## 4 1.0412 4.1423 5.2886 -0.1475       -2.0441       -1.9500       -1.3982
+    ## 5 1.9117 6.4257 7.5755 -1.1510       -1.9938       -1.6372       -1.2600
+    ## 6 2.7115 6.9164 7.9863 -1.3743       -2.7625       -1.9192       -0.3724
+    ##   theta_minus.1 theta_plus.1 theta_plus.2 theta_plus.3 theta_plus.4  sigma
+    ## 1       -0.4543      -0.0944       0.2152       0.9850       1.5735     NA
+    ## 2        0.1296      -0.6196       0.1544       1.3976       2.1879 1.0105
+    ## 3       -0.9580       0.7857       1.3781       2.0879       2.2369     NA
+    ## 4       -0.9030       0.8201       1.4484       2.2447       2.4030 0.6391
+    ## 5       -1.1668      -1.1143      -0.7344       0.2961       0.9314     NA
+    ## 6        0.9328      -2.7695      -1.1313       0.7714       1.7520 1.3289
+    ##        w wAIC wAICc wBIC
+    ## 1     NA    0     0    0
+    ## 2 0.5361    1     1    1
+    ## 3     NA    0     0    0
+    ## 4 0.5020    1     1    1
+    ## 5     NA    0     0    0
+    ## 6 0.3818    1     1    1
 
-If the Truncated Gaussian model performs best in the model comparison,
-metacognitive efficiency can be quantified using meta-d′/d′:
+If the Independent Truncated Gaussian model provides a decent account of
+the data (which is not the case though in the demo dataset), it is
+legitimate to quantify metacognitive efficiency with meta-d′/d′:
 
-``` r
- MetaDs <- fitMetaDprime(MaskOri, model="ML", .parallel = TRUE)
-```
+    MetaDs <- fitMetaDprime(subset(MaskOri, diffCond == "33.3"), 
+                            model="ML", .parallel = TRUE)
 
 ## Contact
 
@@ -149,6 +138,11 @@ For comments, remarks, and questions please contact either
 or [submit an issue](https://github.com/ManuelRausch/StatConfR/issues).
 
 ## References
+
+Hellmann, S., Zehetleitner, M., & Rausch, M. (2023). Simultaneous
+modeling of choice, confidence, and response time in visual perception.
+Psychological Review. 130(6), 1521–1543.
+[doi:10.1037/rev0000411](https://doi.org/10.1037/rev0000411)
 
 Rausch, M., Hellmann, S. & Zehetleitner, M. (2023). Measures of
 metacognitive efficiency across cognitive models of decision confidence.
