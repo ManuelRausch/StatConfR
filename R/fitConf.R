@@ -225,6 +225,7 @@ fitConf <- function(data, model = "SDT",
   B <- levels(data$stimulus)[2]
   nCond <- length(levels(data$diffCond))
   nRatings <-  length(levels(data$rating))
+  nTrials <- length(data$rating)
   abj_f <- 1 /(nRatings*2)
 
   N_SA_RA <-
@@ -263,6 +264,6 @@ fitConf <- function(data, model = "SDT",
   fit <- fitting_fct(N_SA_RA = N_SA_RA,N_SA_RB = N_SA_RB,
                      N_SB_RA = N_SB_RA,N_SB_RB = N_SB_RB,
                      nInits = nInits, nRestart = nRestart,
-                     nRatings = nRatings, nCond = nCond)
+                     nRatings = nRatings, nCond = nCond, nTrials = nTrials)
   return(fit)
 }

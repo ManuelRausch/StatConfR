@@ -212,8 +212,10 @@
 
 
 #' @export
-fitConfModels <- function(data, models="all",  nInits = 5, nRestart = 4, #var="constant",
-                             .parallel=FALSE, n.cores=NULL) {
+fitConfModels <- function(data, models="all",
+                          diffCond = NULL, stimulus = NULL, correct = NULL, rating = NULL,
+                          nInits = 5, nRestart = 4,
+                          .parallel=FALSE, n.cores=NULL) {
   AllModels <- c('WEV', 'SDT','IG','ITGc',
                  'ITGcm', 'GN', 'PDA', 'logN', 'logWEV') # if you implement additional models, add them here!
   if (identical(models,"all")) models <- AllModels
