@@ -10,7 +10,7 @@ fitConf(data, model = "SDT", nInits = 5, nRestart = 4)
 \item{data}{a \code{data.frame} where each row is one trial, containing following
 variables:
 \itemize{
-\item \code{condition} (optional; different levels of discriminability,
+\item \code{diffCond} (optional; different levels of discriminability,
 should be a factor with levels ordered from hardest to easiest),
 \item \code{rating} (discrete confidence judgments, should be given as factor;
 otherwise will be transformed to factor with a warning),
@@ -205,7 +205,7 @@ head(data)
 # 2. Use fitting function
 \donttest{
   # Fitting takes some time to run:
-  FitFirstSbjSDT <- fitConf(data, model=c("SDT"))
+  FitFirstSbjSDT <- fitConf(data, model="SDT")
 }
 
 

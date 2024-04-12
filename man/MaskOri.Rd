@@ -3,17 +3,15 @@
 \docType{data}
 \name{MaskOri}
 \alias{MaskOri}
-\title{Data of 36 participants in a masked orientation discrimination experiment}
+\title{Data of 16 participants in a masked orientation discrimination experiment (Hellmann et al., 2023, Exp. 1)}
 \format{
-A data.frame with 34,430 rows and 8 variables:
+A data.frame with 25920 rows representing different trials and 5 variables:
 \describe{
 \item{participant}{integer values as unique participant identifier}
 \item{stimulus}{orientation of the grating (90: vertical, 0: horizontal)}
 \item{correct}{0-1 column indicating whether the discrimination response was correct (1) or not (0)}
-\item{rating}{factor 4-point confidence scale. The four confidence categories were labelled as "not at all", "a little", "nearly sure" and "sure".}
+\item{rating}{0-4 confidence rating on a continous scale binned into five categories}
 \item{diffCond}{stimulus-onset-asynchrony in ms (i.e. time between stimulus and mask onset)}
-\item{gender}{gender of the participant: "w" for female; "m" for male participants}
-\item{age}{the age of participants in years}
 \item{trialNo}{Enumeration of trials per participant}
 }
 }

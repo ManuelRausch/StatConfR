@@ -11,7 +11,7 @@ fitConfModels(data, models = "all", nInits = 5, nRestart = 4,
 \item{data}{a \code{data.frame} where each row is one trial, containing following
 variables:
 \itemize{
-\item \code{condition} (optional; different levels of discriminability,
+\item \code{diffCond} (optional; different levels of discriminability,
 should be a factor with levels ordered from hardest to easiest),
 \item \code{rating} (discrete confidence judgments, should be given as factor;
 otherwise will be transformed to factor with a warning),
@@ -56,8 +56,7 @@ If length(models) > 1 or models == "all", there will be three additional columns
 }
 }
 \description{
-This function is a wrapper of the function \code{\link{fitConf}} (see
-there for more information). It calls the function for every possible combination
+This function is a wrapper of the function \code{\link{fitConf}}. It calls the function for every possible combination
 of model in the \code{model} argument and participant in the \code{data}, respectively.
 See the Details for more information about the parameters.
 }

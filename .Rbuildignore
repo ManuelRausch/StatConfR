@@ -5,3 +5,8 @@ usefulltools.R
 ^\.Rproj\.user$
 LICENSE
 README.rmd
+paper.bib
+paper.md
+softbib.Rmd
+softbib.bib
+softbib.tex

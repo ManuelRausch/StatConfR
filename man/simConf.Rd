@@ -14,11 +14,11 @@ Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'ITGcm', 'lo
 with one row and the different parameters in different columns. Which parameters are needed depends on the specific model:
 \itemize{
 \item \code{N} the number of trials be simulated
-\item \code{d_1}, \code{d_2}, ... sensitivity parameters. The number of sensitivity parameters determines the number of conditions
+\item \code{d_1}, \code{d_2}, ... sensitivity parameters. The number of sensitivity parameters determines the number of levels of discriminability.
 \item \code{c}: discrimination bias
 \item \code{theta_minus.1}, \code{theta_minus.2},... confidence criteria associated with the response R = -1. The function simulates one more confidence category than there are confidence criteria.
 \item \code{theta_plus.1}, \code{theta_plus.2},... confidence criteria associated with the response R = 1. The function simulates one more confidence category than there are confidence criteria.
-\item \code{w} only for WEV: the visibility weighting parameter, bounded between 0 and 1
+\item \code{w} only for WEV and logWEV: the visibility weighting parameter, bounded between 0 and 1
 \item \code{sigma} only for WEV, GN, logN, and logWEV: confidence noise, bounded between 0 and Inf.
 \item \code{m} only for IG, ITGm, and ITGcm: metacognitive efficiency parameter, bounded between 0 and Inf
 \item \code{b} only for PDA: postdecisional accumulation parameter, bounded between 0 and Inf
@@ -28,7 +28,8 @@ with one row and the different parameters in different columns. Which parameters
 }
 \value{
 a dataframe with \code{N} rows, and the columns
-\code{stimulus}, \code{correct} and \code{rating}.
+\code{stimulus}, \code{correct} and \code{rating}. If more than 1 sensitivity parameter is provided, there is
+\code{diffCond}.
 }
 \description{
 Simulate data  according to a static model of confidence
@@ -40,7 +41,7 @@ see \code{fitConf} for a detailed description of the different models.
 # 1. define some parameters
 paramDf <- data.frame(d_1 = 0, d_2 = 2, d_3 = 4,c = .0,
 theta_minus.2 = -2, theta_minus.1 = -1, theta_plus.1 = 1, theta_plus.2 = 2,
-sigma = 1/2, w = 0.5, nTrials = 500)
+sigma = 1/2, w = 0.5, N = 500)
 # 2. Simulate dataset
 SimulatedData <- simConf(model = "WEV", paramDf)
 

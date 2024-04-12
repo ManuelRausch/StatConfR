@@ -211,7 +211,7 @@
 
 #' @export
 fitConfModels <- function(data, models="all",
-                          diffCond = NULL, stimulus = NULL, correct = NULL, rating = NULL,
+                         # diffCond = NULL, stimulus = NULL, correct = NULL, rating = NULL,
                           nInits = 5, nRestart = 4,
                           .parallel=FALSE, n.cores=NULL) {
   AllModels <- c('WEV', 'SDT','IG','ITGc',
@@ -224,10 +224,10 @@ fitConfModels <- function(data, models="all",
     warning("Duplicate models are dropped")
     models <- unique(models)
   }
-  if (!is.null(diffCond)) data$diffCond <- data[,diffCond]
-  if (!is.null(stimulus)) data$stimulus <- data[,stimulus]
-  if (!is.null(correct)) data$correct <- data[,correct]
-  if (!is.null(rating)) data$rating <- data[,rating]
+  # if (!is.null(diffCond)) data$diffCond <- data[,diffCond]
+  # if (!is.null(stimulus)) data$stimulus <- data[,stimulus]
+  # if (!is.null(correct)) data$correct <- data[,correct]
+  # if (!is.null(rating)) data$rating <- data[,rating]
   if (is.null(data$diffCond)) data$diffCond <- factor(1)
   if (!is.factor(data$diffCond)) {
     data$diffCond <- factor(data$diffCond)
