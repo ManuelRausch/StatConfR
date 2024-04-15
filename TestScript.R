@@ -44,9 +44,9 @@ head(MaskOri)
 
 fitted_pars <-
   MaskOri %>%
-  filter(participant < 3) %>% #uncomment this line if you don't have so much time for testing the package"
-  fitConfModels( models = "all",
-                 .parallel = TRUE, n.cores=9)
+  # filter(participant < 3) %>% #uncomment this line if you don't have so much time for testing the package"
+  fitConfModels(models = "all",
+                .parallel = TRUE)
 
 
 # 2) Parameter recovery based on simulated data using the fitted parameter sets
@@ -84,7 +84,8 @@ recov_pars_GN <-
   filter(model=="GN") %>%
   group_by(participant) %>%
   simConf(model="GN") %>%
-  fitConfModels(models = "GN", .parallel = TRUE)
+  fitConfModels(models = "GN",
+                .parallel = TRUE)
 
 Plot_recov_GN <-
   merge(recov_pars_GN %>%
@@ -110,7 +111,8 @@ recov_pars_PDA <-
   filter(model=="PDA") %>%
   group_by(participant) %>%
   simConf(model="PDA") %>%
-  fitConfModels(models = "PDA", .parallel = TRUE)
+  fitConfModels(models = "PDA",
+                .parallel = TRUE)
 
 Plot_recov_PDA <-
   merge(recov_pars_PDA %>%
@@ -136,7 +138,8 @@ recov_pars_IG <-
   filter(model=="IG") %>%
   group_by(participant) %>%
   simConf(model="IG") %>%
-  fitConfModels(models = "IG", .parallel = TRUE)
+  fitConfModels(models = "IG",
+                .parallel = TRUE)
 
 Plot_recov_IG <-
   merge(recov_pars_IG %>%
@@ -161,7 +164,8 @@ recov_pars_WEV <-
   filter(model=="WEV") %>%
   group_by(participant) %>%
   simConf(model="WEV") %>%
-  fitConfModels(models = "WEV", .parallel = TRUE)
+  fitConfModels(models = "WEV",
+                .parallel = TRUE)
 
 Plot_recov_WEV <-
   merge(recov_pars_WEV %>%
