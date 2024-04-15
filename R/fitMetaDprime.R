@@ -122,7 +122,7 @@ fitMetaDprime <- function(data, model="ML",  nInits = 5, nRestart = 3,
     for (i in 1:nrow(jobs)) {
       listjobs[[i]] <- c(model = jobs[["model"]][i], sbj = jobs[["sbj"]][i])
     }
-    if (is.null(n.cores)) n.cores <- detectCores() - 1
+    if (is.null(n.cores)) n.cores <- min(nJobs, detectCores() - 1)
 
     cl <- makeCluster(type="SOCK", n.cores)
     clusterExport(cl, c("data",  "model","outnames", "call_fitfct", "nInits", "nRestart"),

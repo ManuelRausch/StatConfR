@@ -225,7 +225,7 @@ head(data)
   # Fitting several models to several subjects takes quite some time
   # If you want to fit more than just two subjects,
   # we strongly recommend setting .parallel=TRUE
-  Fits <- fitConfModels(data, models=c("ITGc", "SDT"), .parallel = FALSE)
+  Fits <- fitConfModels(data, models = c("SDT", "ITGc"), .parallel = FALSE)
 }
 }
 \references{

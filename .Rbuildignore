@@ -1,5 +1,6 @@
 TestScript.R
 TestResults.RData
+QuickTests.R
 usefulltools.R
 ^.*\.Rproj$
 ^\.Rproj\.user$

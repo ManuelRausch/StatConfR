@@ -17,17 +17,19 @@
 # 0) Preprare
 # 1) Fit all models to the dataset from Hellmann et al. (2023) Exp. 1
 # 2) For each model: Parameter recovery based on simulated data using the fitted parameter sets
-  # 2.1) SDT
-  # 2.2) GN
-  # 2.3) PDA
-  # 2.4) IG
-  # 2.5) WEV
-  # 2.6) ITGc
-  # 2.7) ITGcm
-  # 2.8) logN
-  # 2.9) logWEV
+# 2.1) SDT
+# 2.2) GN
+# 2.3) PDA
+# 2.4) IG
+# 2.5) WEV
+# 2.6) ITGc
+# 2.7) ITGcm
+# 2.8) logN
+# 2.9) logWEV
 
-# 3) Meta-d
+# 3) meta-d′/d′
+# 3.1) meta-d′/d′ using Maniscalco and Lau (2012)'s model specification
+# 3.2) meta-d′/d′ using Fleming (2017)'s model specification
 
 # 1) Fit all models to the dataset from Hellmann et al. (2023) Exp. 1
 
@@ -280,7 +282,58 @@ Plot_recov_logWEV <-
   theme_minimal()
 Plot_recov_logWEV
 
-# 3)
+# 3) meta-d′/d′
+# 3.1) meta-d′/d′ using Maniscalco and Lau (2012)'s model specification
+
+recov_metaDprime_ML <-
+  fitted_pars %>%
+  filter(model=="ITGcm") %>%
+  select(participant, d_3, c:m) %>%
+  rename(d_1 = d_3) %>%
+  mutate(N = 400) %>% # simulate 400 trials because 400 trials considered to be required to estimate meta-d′/d′
+  group_by(participant) %>%
+  simConf(model="ITGcm") %>%
+  fitMetaDprime(model="ML", .parallel = TRUE)
+
+Plot_recov_metaDprime_ML <-
+  merge(recov_metaDprime_ML %>%
+          select(participant, Ratio),
+        fitted_pars %>%
+          filter(model=="ITGcm") %>%
+          select(participant, m)) %>%
+  ggplot(aes(x=m, y=Ratio)) +
+  xlab("m-parameter") + ylab("meta-d′/d′") +
+  geom_point(color="purple") +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
+  theme_minimal()
+Plot_recov_metaDprime_ML
+
+
+# 3.2) meta-d′/d′ using Fleming (2017)'s model specification
+
+recov_metaDprime_F  <-
+  fitted_pars %>%
+  filter(model=="ITGc") %>%
+  select(participant, d_3, c:m) %>%
+  rename(d_1 = d_3) %>%
+  mutate(N = 400) %>% # simulate 400 trials because 400 trials considered to be required to estimate meta-d′/d′
+  group_by(participant) %>%
+  simConf(model="ITGc") %>%
+  fitMetaDprime(model="F", .parallel = TRUE)
+
+Plot_recov_metaDprime_F <-
+  merge(recov_metaDprime_F %>%
+          select(participant, Ratio),
+        fitted_pars %>%
+          filter(model=="ITGc") %>%
+          select(participant, m)) %>%
+  ggplot(aes(x=m, y=Ratio)) +
+  xlab("m-parameter") + ylab("meta-d′/d′") +
+  geom_point(color="purple") +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
+  theme_minimal()
+Plot_recov_metaDprime_F
+
 
 save(fitted_pars,
      recov_pars_SDT, Plot_recov_SDT,
@@ -292,4 +345,7 @@ save(fitted_pars,
      recov_pars_ITGc, Plot_recov_ITGc,
      recov_pars_ITGcm, Plot_recov_ITGcm,
      recov_pars_PDA, Plot_recov_PDA,
+
+     recov_metaDprime_ML, Plot_recov_metaDprime_ML,
+     recov_metaDprime_F, Plot_recov_metaDprime_F,
      file = "TestResults.RData")
