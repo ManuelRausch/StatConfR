@@ -1,5 +1,5 @@
-AnalysisRausch&Hellmann2024.R
-ResultsRausch&Hellmann2024.R
+TestScript.R
+TestResults.RData
 usefulltools.R
 ^.*\.Rproj$
 ^\.Rproj\.user$
@@ -10,3 +10,4 @@ paper.md
 softbib.Rmd
 softbib.bib
 softbib.tex
+.github

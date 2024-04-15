@@ -22,18 +22,18 @@ generateDataSDT <- function(paramDf){
   P_SARB <- Vectorize(function(j,i) pnorm(q=c_RB[i+1], locA[j]) - pnorm(q=c_RB[i], locA[j]))
 
   p_SB_RB <- cbind(stimulus = 1, response = 1,
-                   mdply(.data=p_SB_RB, .fun= P_SBRB))
+                   plyr::mdply(.data=p_SB_RB, .fun= P_SBRB))
   p_SB_RA <- cbind(stimulus = 1, response = -1,
-                   mdply(.data=p_SB_RA, .fun= P_SBRA))
+                   plyr::mdply(.data=p_SB_RA, .fun= P_SBRA))
   p_SB_RA$i <- nRatings + 1 - p_SB_RA$i
   p_SA_RA <- cbind(stimulus = -1, response = -1,
-                   mdply(.data=p_SA_RA, .fun= P_SARA))
+                   plyr::mdply(.data=p_SA_RA, .fun= P_SARA))
   p_SA_RA$i <-  nRatings + 1 - p_SA_RA$i
   p_SA_RB <- cbind(stimulus = -1, response = 1,
-                   mdply(.data=p_SA_RB, .fun= P_SARB))
+                   plyr::mdply(.data=p_SA_RB, .fun= P_SARB))
 
   res <- rbind(p_SB_RB, p_SB_RA,  p_SA_RA, p_SA_RB)
-  colnames(res) <- c("stimulus", "response", "condition",
+  colnames(res) <- c("stimulus", "response", "diffCond",
                      "rating", "p")
   res$p[is.na(res$p) | is.nan(res$p)] <- 0
   nTrials <- round(paramDf$N / 2 / nCond)
@@ -45,8 +45,8 @@ generateDataSDT <- function(paramDf){
     rating <- df$rating[ind]
     data.frame(response = response, rating = rating)
   }
-  X <- ddply(res, ~ stimulus + condition, f)
-  X$condition <- factor(X$condition)
+  X <- plyr::ddply(res, ~ stimulus + diffCond, f)
+  X$diffCond <- factor(X$diffCond)
   X$correct <- 0
   X$correct[X$stimulus==X$response] <- 1
   X$rating <- factor(X$rating)
@@ -100,18 +100,18 @@ generateDataNoisy <-
     })
 
     p_SB_RB <- cbind(stimulus = 1, response = 1,
-                     mdply(.data=p_SB_RB, .fun= P_SBRB_Noisy))
+                     plyr::mdply(.data=p_SB_RB, .fun= P_SBRB_Noisy))
     p_SB_RA <- cbind(stimulus = 1, response = -1,
-                     mdply(.data=p_SB_RA, .fun= P_SBRA_Noisy))
+                     plyr::mdply(.data=p_SB_RA, .fun= P_SBRA_Noisy))
     p_SB_RA$i <- nRatings + 1 - p_SB_RA$i
     p_SA_RA <- cbind(stimulus = -1, response = -1,
-                     mdply(.data=p_SA_RA, .fun= P_SARA_Noisy))
+                     plyr::mdply(.data=p_SA_RA, .fun= P_SARA_Noisy))
     p_SA_RA$i <-  nRatings + 1 - p_SA_RA$i
     p_SA_RB <- cbind(stimulus = -1, response = 1,
-                     mdply(.data=p_SA_RB, .fun= P_SARB_Noisy))
+                     plyr::mdply(.data=p_SA_RB, .fun= P_SARB_Noisy))
 
     res <- rbind(p_SB_RB,p_SB_RA,  p_SA_RA,p_SA_RB)
-    colnames(res) <- c("stimulus", "response", "condition", "rating", "p")
+    colnames(res) <- c("stimulus", "response", "diffCond", "rating", "p")
     res$p[is.na(res$p) | is.nan(res$p)] <- 0
     nTrials <- round(paramDf$N / 2 / nCond)
 
@@ -121,7 +121,7 @@ generateDataNoisy <-
       rating <- df$rating[ind]
       data.frame(response = response, rating = rating)
     }
-    X <- ddply(res, ~ stimulus + condition, f)
+    X <- plyr::ddply(res, ~ stimulus + diffCond, f)
     X$correct <- 0
     X$correct[X$stimulus==X$response] <- 1
     X$ratings <- factor(X$rating)
@@ -178,18 +178,18 @@ generateDataISDT <-
     })
 
     p_SB_RB <- cbind(stimulus = 1, response = 1,
-                     mdply(.data=p_SB_RB, .fun= P_SBRB))
+                     plyr::mdply(.data=p_SB_RB, .fun= P_SBRB))
     p_SB_RA <- cbind(stimulus = 1, response = -1,
-                     mdply(.data=p_SB_RA, .fun= P_SBRA))
+                     plyr::mdply(.data=p_SB_RA, .fun= P_SBRA))
     p_SB_RA$i <- nRatings + 1 - p_SB_RA$i
     p_SA_RA <- cbind(stimulus = -1, response = -1,
-                     mdply(.data=p_SA_RA, .fun= P_SARA))
+                     plyr::mdply(.data=p_SA_RA, .fun= P_SARA))
     p_SA_RA$i <-  nRatings + 1 - p_SA_RA$i
     p_SA_RB <- cbind(stimulus = -1, response = 1,
-                     mdply(.data=p_SA_RB, .fun= P_SARB))
+                     plyr::mdply(.data=p_SA_RB, .fun= P_SARB))
 
     res <- rbind(p_SB_RB, p_SB_RA,  p_SA_RA, p_SA_RB)
-    colnames(res) <- c("stimulus", "response", "condition",
+    colnames(res) <- c("stimulus", "response", "diffCond",
                        "rating", "p")
     res$p[is.na(res$p) | is.nan(res$p)] <- 0
     nTrials <- round(paramDf$N / 2 / nCond)
@@ -200,7 +200,7 @@ generateDataISDT <-
       rating <- df$rating[ind]
       data.frame(response = response, rating = rating)
     }
-    X <- ddply(res, ~ stimulus + condition, f)
+    X <- plyr::ddply(res, ~ stimulus + diffCond, f)
     X$correct <- 0
     X$correct[X$stimulus==X$response] <- 1
     X$ratings <- factor(X$rating)
@@ -243,18 +243,18 @@ generateData2Chan <- function(paramDf){
   })
 
   p_SB_RB <- cbind(stimulus = 1, response = 1,
-                   mdply(.data=p_SB_RB, .fun= P_SBRB))
+                   plyr::mdply(.data=p_SB_RB, .fun= P_SBRB))
   p_SB_RA <- cbind(stimulus = 1, response = -1,
-                   mdply(.data=p_SB_RA, .fun= P_SBRA))
+                   plyr::mdply(.data=p_SB_RA, .fun= P_SBRA))
   p_SB_RA$i <- nRatings + 1 - p_SB_RA$i
   p_SA_RA <- cbind(stimulus = -1, response = -1,
-                   mdply(.data=p_SA_RA, .fun= P_SARA))
+                   plyr::mdply(.data=p_SA_RA, .fun= P_SARA))
   p_SA_RA$i <-  nRatings + 1 - p_SA_RA$i
   p_SA_RB <- cbind(stimulus = -1, response = 1,
-                   mdply(.data=p_SA_RB, .fun= P_SARB))
+                   plyr::mdply(.data=p_SA_RB, .fun= P_SARB))
 
   res <- rbind(p_SB_RB, p_SB_RA,  p_SA_RA, p_SA_RB)
-  colnames(res) <- c("stimulus", "response", "condition",
+  colnames(res) <- c("stimulus", "response", "diffCond",
                      "rating", "p")
   res$p[is.na(res$p) | is.nan(res$p)] <- 0
   nTrials <- round(paramDf$N / 2 / nCond)
@@ -266,8 +266,8 @@ generateData2Chan <- function(paramDf){
     rating <- df$rating[ind]
     data.frame(response = response, rating = rating)
   }
-  X <- ddply(res, ~ stimulus + condition, f)
-  X$condition <- factor(X$condition)
+  X <- plyr::ddply(res, ~ stimulus + diffCond, f)
+  X$diffCond <- factor(X$diffCond)
   X$correct <- 0
   X$correct[X$stimulus==X$response] <- 1
   X$ratings <- factor(X$rating)
@@ -327,18 +327,18 @@ generateDataWEV <-
     })
 
     p_SB_RB <- cbind(stimulus = 1, response = 1,
-                     mdply(.data=p_SB_RB, .fun= P_SBRB_CEV))
+                     plyr::mdply(.data=p_SB_RB, .fun= P_SBRB_CEV))
     p_SB_RA <- cbind(stimulus = 1, response = -1,
-                     mdply(.data=p_SB_RA, .fun= P_SBRA_CEV))
+                     plyr::mdply(.data=p_SB_RA, .fun= P_SBRA_CEV))
     p_SB_RA$i <- nRatings + 1 - p_SB_RA$i
     p_SA_RA <- cbind(stimulus = -1, response = -1,
-                     mdply(.data=p_SA_RA, .fun= P_SARA_CEV))
+                     plyr::mdply(.data=p_SA_RA, .fun= P_SARA_CEV))
     p_SA_RA$i <-  nRatings + 1 - p_SA_RA$i
     p_SA_RB <- cbind(stimulus = -1, response = 1,
-                     mdply(.data=p_SA_RB, .fun= P_SARB_CEV))
+                     plyr::mdply(.data=p_SA_RB, .fun= P_SARB_CEV))
 
     res <- rbind(p_SB_RB,p_SB_RA,  p_SA_RA,p_SA_RB)
-    colnames(res) <- c("stimulus", "response", "condition", "rating", "p")
+    colnames(res) <- c("stimulus", "response", "diffCond", "rating", "p")
     res$p[is.na(res$p) | is.nan(res$p)] <- 0
     nTrials <- round(paramDf$N / 2 / nCond)
 
@@ -349,7 +349,7 @@ generateDataWEV <-
       rating <- df$rating[ind]
       data.frame(response = response, rating = rating)
     }
-    X <- ddply(res, ~ stimulus + condition, f)
+    X <- plyr::ddply(res, ~ stimulus + diffCond, f)
     X$correct <- 0
     X$correct[X$stimulus==X$response] <- 1
     X$ratings <- factor(X$rating)
@@ -406,18 +406,18 @@ generateDataIndTruncML <-
     })
 
     p_SB_RB <- cbind(stimulus = 1, response = 1,
-                     mdply(.data=p_SB_RB, .fun= P_SBRB))
+                     plyr::mdply(.data=p_SB_RB, .fun= P_SBRB))
     p_SB_RA <- cbind(stimulus = 1, response = -1,
-                     mdply(.data=p_SB_RA, .fun= P_SBRA))
+                     plyr::mdply(.data=p_SB_RA, .fun= P_SBRA))
     p_SB_RA$i <- nRatings + 1 - p_SB_RA$i
     p_SA_RA <- cbind(stimulus = -1, response = -1,
-                     mdply(.data=p_SA_RA, .fun= P_SARA))
+                     plyr::mdply(.data=p_SA_RA, .fun= P_SARA))
     p_SA_RA$i <-  nRatings + 1 - p_SA_RA$i
     p_SA_RB <- cbind(stimulus = -1, response = 1,
-                     mdply(.data=p_SA_RB, .fun= P_SARB))
+                     plyr::mdply(.data=p_SA_RB, .fun= P_SARB))
 
     res <- rbind(p_SB_RB, p_SB_RA,  p_SA_RA, p_SA_RB)
-    colnames(res) <- c("stimulus", "response", "condition",
+    colnames(res) <- c("stimulus", "response", "diffCond",
                        "rating", "p")
     res$p[is.na(res$p)] <- 0
     res$p[is.nan(res$p)] <- 0
@@ -432,7 +432,7 @@ generateDataIndTruncML <-
       rating <- df$rating[ind]
       data.frame(response = response, rating = rating)
     }
-    X <- ddply(res, ~ stimulus + condition, f)
+    X <- plyr::ddply(res, ~ stimulus + diffCond, f)
     X$correct <- 0
     X$correct[X$stimulus==X$response] <- 1
     X$ratings <- factor(X$rating)
@@ -485,18 +485,18 @@ generateDataIndTruncF <-
     })
 
     p_SB_RB <- cbind(stimulus = 1, response = 1,
-                     mdply(.data=p_SB_RB, .fun= P_SBRB))
+                     plyr::mdply(.data=p_SB_RB, .fun= P_SBRB))
     p_SB_RA <- cbind(stimulus = 1, response = -1,
-                     mdply(.data=p_SB_RA, .fun= P_SBRA))
+                     plyr::mdply(.data=p_SB_RA, .fun= P_SBRA))
     p_SB_RA$i <- nRatings + 1 - p_SB_RA$i
     p_SA_RA <- cbind(stimulus = -1, response = -1,
-                     mdply(.data=p_SA_RA, .fun= P_SARA))
+                     plyr::mdply(.data=p_SA_RA, .fun= P_SARA))
     p_SA_RA$i <-  nRatings + 1 - p_SA_RA$i
     p_SA_RB <- cbind(stimulus = -1, response = 1,
-                     mdply(.data=p_SA_RB, .fun= P_SARB))
+                     plyr::mdply(.data=p_SA_RB, .fun= P_SARB))
 
     res <- rbind(p_SB_RB, p_SB_RA,  p_SA_RA, p_SA_RB)
-    colnames(res) <- c("stimulus", "response", "condition",
+    colnames(res) <- c("stimulus", "response", "diffCond",
                        "rating", "p")
     res$p[is.na(res$p)] <- 0
     res$p[is.nan(res$p)] <- 0
@@ -509,7 +509,7 @@ generateDataIndTruncF <-
       rating <- df$rating[ind]
       data.frame(response = response, rating = rating)
     }
-    X <- ddply(res, ~ stimulus + condition, f)
+    X <- plyr::ddply(res, ~ stimulus + diffCond, f)
     X$correct <- 0
     X$correct[X$stimulus==X$response] <- 1
     X$ratings <- factor(X$rating)
@@ -529,11 +529,10 @@ generateDataLognorm <- function(paramDf){
   theta <- paramDf$c
   sigma <- paramDf$sigma
 
-  loc_RA <-  c(Inf,log(abs(c(t(paramDf[,paste("M_theta_minus.", 1:(nRatings-1), sep="")])) - theta)) -
-                 .5*sigma^2, -Inf)
+  loc_RA <-  c(Inf,log(abs(c(t(paramDf[,paste("M_theta_minus.", (nRatings-1):1, sep="")])) - theta)) -
+                 .5*sigma^2, -Inf)  # the order here is REVERSED!!!
   loc_RB <- c(-Inf, log(c(t(paramDf[,paste("M_theta_plus.", 1:(nRatings-1), sep="")])) - theta) -
                 .5*sigma^2, Inf)
-
 
   p_SA_RA <- expand.grid(j = 1:nCond, i = 1:nRatings)
   p_SA_RB <- expand.grid(j = 1:nCond, i = 1:nRatings)
@@ -562,18 +561,18 @@ generateDataLognorm <- function(paramDf){
   })
 
   p_SB_RB <- cbind(stimulus = 1, response = 1,
-                   mdply(.data= expand.grid(j = 1:nCond, i = 1:nRatings), .fun= P_SBRB))
+                   plyr::mdply(.data= expand.grid(j = 1:nCond, i = 1:nRatings), .fun= P_SBRB))
   p_SB_RA <- cbind(stimulus = 1, response = -1,
-                   mdply(.data=expand.grid(j = 1:nCond, i = 1:nRatings), .fun= P_SBRA))
+                   plyr::mdply(.data=expand.grid(j = 1:nCond, i = 1:nRatings), .fun= P_SBRA))
   p_SB_RA$i <- nRatings + 1 - p_SB_RA$i
   p_SA_RA <- cbind(stimulus = -1, response =-1,
-                   mdply(.data=expand.grid(j = 1:nCond, i = 1:nRatings), .fun= P_SARA))
+                   plyr::mdply(.data=expand.grid(j = 1:nCond, i = 1:nRatings), .fun= P_SARA))
   p_SA_RA$i <-  nRatings + 1 - p_SA_RA$i
   p_SA_RB <- cbind(stimulus = -1, response = 1,
-                   mdply(.data=expand.grid(j = 1:nCond, i = 1:nRatings), .fun= P_SARB))
+                   plyr::mdply(.data=expand.grid(j = 1:nCond, i = 1:nRatings), .fun= P_SARB))
 
   res <- rbind(p_SB_RB,p_SB_RA,  p_SA_RA,p_SA_RB)
-  colnames(res) <- c("stimulus", "response", "condition", "rating", "p")
+  colnames(res) <- c("stimulus", "response", "diffCond", "rating", "p")
   res$p[is.na(res$p) | is.nan(res$p)] <- 0
   nTrials <- round(paramDf$N / 2 / nCond)
 
@@ -584,7 +583,7 @@ generateDataLognorm <- function(paramDf){
     rating <- df$rating[ind]
     data.frame(response = response, rating = rating)
   }
-  X <- ddply(res, ~ stimulus + condition, f)
+  X <- plyr::ddply(res, ~ stimulus + diffCond, f)
   X$correct <- 0
   X$correct[X$stimulus==X$response] <- 1
   X$ratings <- factor(X$rating)
@@ -646,16 +645,16 @@ generateDataLogWEV <- function(paramDf){
 
 
   p_SB_RB <- cbind(stimulus = 1, response = 1,
-                   mdply(.data= expand.grid(j = 1:nCond, i = 1:nRatings), .fun= P_SBRB))
+                   plyr::mdply(.data= expand.grid(j = 1:nCond, i = 1:nRatings), .fun= P_SBRB))
   p_SB_RA <- cbind(stimulus = 1, response = -1,
-                   mdply(.data=expand.grid(j = 1:nCond, i = 1:nRatings), .fun= P_SBRA))
+                   plyr::mdply(.data=expand.grid(j = 1:nCond, i = 1:nRatings), .fun= P_SBRA))
   p_SA_RA <- cbind(stimulus = -1, response =-1,
-                   mdply(.data=expand.grid(j = 1:nCond, i = 1:nRatings), .fun= P_SARA))
+                   plyr::mdply(.data=expand.grid(j = 1:nCond, i = 1:nRatings), .fun= P_SARA))
   p_SA_RB <- cbind(stimulus = -1, response = 1,
-                   mdply(.data=expand.grid(j = 1:nCond, i = 1:nRatings), .fun= P_SARB))
+                   plyr::mdply(.data=expand.grid(j = 1:nCond, i = 1:nRatings), .fun= P_SARB))
 
   res <- rbind(p_SB_RB,p_SB_RA,  p_SA_RA,p_SA_RB)
-  colnames(res) <- c("stimulus", "response", "condition", "rating", "p")
+  colnames(res) <- c("stimulus", "response", "diffCond", "rating", "p")
   res$p[is.na(res$p) | is.nan(res$p)] <- 0
   nTrials <- round(paramDf$N / 2 / nCond)
 
@@ -666,7 +665,7 @@ generateDataLogWEV <- function(paramDf){
     rating <- df$rating[ind]
     data.frame(response = response, rating = rating)
   }
-  X <- ddply(res, ~ stimulus + condition, f)
+  X <- plyr::ddply(res, ~ stimulus + diffCond, f)
   X$correct <- 0
   X$correct[X$stimulus==X$response] <- 1
   X$ratings <- factor(X$rating)

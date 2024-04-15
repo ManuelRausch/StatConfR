@@ -205,7 +205,7 @@
 #'   # Fitting several models to several subjects takes quite some time
 #'   # If you want to fit more than just two subjects,
 #'   # we strongly recommend setting .parallel=TRUE
-#'   Fits <- fitConfModels(data, models=c("ITGc", "SDT"), .parallel = FALSE)
+#'   Fits <- fitConfModels(data, models = c("SDT", "ITGc"), .parallel = FALSE)
 #' }
 
 
@@ -214,7 +214,7 @@ fitConfModels <- function(data, models="all",
                          # diffCond = NULL, stimulus = NULL, correct = NULL, rating = NULL,
                           nInits = 5, nRestart = 4,
                           .parallel=FALSE, n.cores=NULL) {
-  AllModels <- c('WEV', 'SDT','IG','ITGc',
+  AllModels <- c('WEV', 'SDT', 'IG', 'ITGc',
                  'ITGcm', 'GN', 'PDA', 'logN', 'logWEV') # if you implement additional models, add them here!
   if (identical(models,"all")) models <- AllModels
   if (!all(models %in% AllModels)) {
@@ -287,7 +287,7 @@ fitConfModels <- function(data, models="all",
     for (i in 1:nrow(jobs)) {
       listjobs[[i]] <- c(model = jobs[["model"]][i], sbj = jobs[["sbj"]][i])
     }
-    if (is.null(n.cores)) n.cores <- detectCores()-1
+    if (is.null(n.cores)) n.cores <- min(nJobs, detectCores()-1)
 
     cl <- makeCluster(type="SOCK", n.cores)
     clusterExport(cl, c("data",  "models", "outnames", "call_fitfct", "nInits", "nRestart"),
