@@ -14,7 +14,7 @@
 # We also uploaded the results of our own run of "TestScripts.R" to show the results of our
 # parameter recovery analysis.
 
-# 0) Preprare
+# 0) Preparations
 # 1) Fit all models to the dataset from Hellmann et al. (2023) Exp. 1
 # 2) For each model: Parameter recovery based on simulated data using the fitted parameter sets
 # 2.1) SDT
@@ -31,17 +31,22 @@
 # 3.1) meta-d′/d′ using Maniscalco and Lau (2012)'s model specification
 # 3.2) meta-d′/d′ using Fleming (2017)'s model specification
 
-# 1) Fit all models to the dataset from Hellmann et al. (2023) Exp. 1
+# 0) Preparations
 
 rm(list=ls())
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # if you are not using R-Studio, specify here a working directory.
 
 library(tidyverse)
+
+if ("statConfR" %in% loadedNamespaces()){
+  detach(package:statConfR, unload=TRUE)
+}
+devtools::install_github("ManuelRausch/StatConfR")
 library(statConfR)
 
 
+# 1) Fit all models to the dataset from Hellmann et al. (2023) Exp. 1
 
-head(MaskOri)
 
 fitted_pars <-
   MaskOri %>%

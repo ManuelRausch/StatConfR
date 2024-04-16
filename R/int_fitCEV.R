@@ -56,7 +56,7 @@ fitCEV <-
                      N_SB_RA = N_SB_RA,N_SB_RB = N_SB_RB, nRatings = nRatings, nCond = nCond,
                      control = list(maxit = 10^4, reltol = 10^-4)))
 
-      if (is.list(m)){
+      if (!inherits(m, "try-error")){
         for(j in 2:nRestart){
           try(m <- optim(par = m$par,
                          fn = ll_CEV, gr = NULL,
