@@ -6,7 +6,7 @@ Date: 2024-04-12
 Authors@R: c(
   person("Manuel", "Rausch", email="manuel.rausch@hochschule-rhein-waal.de", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5805-5544")),
-    person("Sebastian", "Hellmann",email="sebastian.hellmann@ku.de", role = c("aut"),
+    person("Sebastian", "Hellmann",email="sebastian.hellmann@tum.de", role = c("aut"),
            comment = c(ORCID = "0000-0002-3621-6343"))
        )
 Maintainer: Manuel Rausch <manuel.rausch@hochschule-rhein-waal.de>

@@ -8,7 +8,7 @@
 #' variables:
 #' * \code{diffCond} (optional; different levels of discriminability,
 #'    should be a factor with levels ordered from hardest to easiest),
-#' * \code{rating} (discrete confidence judgments, should be given as factor;
+#' * \code{rating} (discrete confidence judgments, should be a factor with levels ordered from lowest confidence to highest confidence;
 #'    otherwise will be transformed to factor with a warning),
 #' * \code{stimulus} (stimulus category in a binary choice task,
 #'    should be a factor with two levels, otherwise it will be transformed to
@@ -188,12 +188,16 @@
 #' @references Burnham, K. P., & Anderson, D. R. (2002). Model selection and multimodel inference: A practical information-theoretic approach. Springer.
 #' @references Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, 1, 1–14. doi: 10.1093/nc/nix007
 #' @references Green, D. M., & Swets, J. A. (1966). Signal detection theory and psychophysics. Wiley.
+#' @references Maniscalco, B., & Lau, H. (2012). A signal detection theoretic method for estimating metacognitive sensitivity from confidence ratings. Consciousness and Cognition, 21(1), 422–430.
+#' @references Maniscalco, B., & Lau, H. C. (2014). Signal Detection Theory Analysis of Type 1 and Type 2 Data: Meta-d’, Response- Specific Meta-d’, and the Unequal Variance SDT Model. In S. M. Fleming & C. D. Frith (Eds.), The Cognitive Neuroscience of Metacognition (pp. 25–66). Springer. doi: 10.1007/978-3-642-45190-4_3
 #' @references Maniscalco, B., & Lau, H. (2016). The signal processing architecture underlying subjective reports of sensory awareness. Neuroscience of Consciousness, 1, 1–17. doi: 10.1093/nc/niw002
 #' @references Rausch, M., Hellmann, S., & Zehetleitner, M. (2018). Confidence in masked orientation judgments is informed by both evidence and visibility. Attention, Perception, and Psychophysics, 80(1), 134–154. doi: 10.3758/s13414-017-1431-5
 #' @references Rausch, M., Hellmann, S., & Zehetleitner, M. (2023). Measures of metacognitive efficiency across cognitive models of decision confidence. Psychological Methods. doi: 10.31234/osf.io/kdz34
 #' @references Rausch, M., & Zehetleitner, M. (2017). Should metacognition be measured by logistic regression? Consciousness and Cognition, 49, 291–312. doi: 10.1016/j.concog.2017.02.007
 #' @references Schwarz, G. (1978). Estimating the dimension of a model. The Annals of Statistics, 6(2), 461–464. doi: 10.1214/aos/1176344136
 #' @references Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive Inefficiency in Perceptual Decision Making. Psychological Review, 128(1), 45–70. doi: 10.1037/rev0000249
+#' @references Shekhar, M., & Rahnev, D. (2023). How Do Humans Give Conﬁdence? A Comprehensive Comparison of Process Models of Perceptual Metacognition. Journal of Experimental Psychology: General. doi:10.1037/xge0001524
+
 #'
 #' @examples
 #' # 1. Select two subjects from the masked orientation discrimination experiment

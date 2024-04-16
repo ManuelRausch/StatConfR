@@ -12,7 +12,7 @@ variables:
 \itemize{
 \item \code{diffCond} (optional; different levels of discriminability,
 should be a factor with levels ordered from hardest to easiest),
-\item \code{rating} (discrete confidence judgments, should be given as factor;
+\item \code{rating} (discrete confidence judgments, should be a factor with levels ordered from lowest confidence to highest confidence;
 otherwise will be transformed to factor with a warning),
 \item \code{stimulus} (stimulus category in a binary choice task,
 should be a factor with two levels, otherwise it will be transformed to
@@ -218,6 +218,10 @@ Burnham, K. P., & Anderson, D. R. (2002). Model selection and multimodel inferen
 Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, 1, 1–14. doi: 10.1093/nc/nix007
 
 Green, D. M., & Swets, J. A. (1966). Signal detection theory and psychophysics. Wiley.
+
+Maniscalco, B., & Lau, H. (2012). A signal detection theoretic method for estimating metacognitive sensitivity from confidence ratings. Consciousness and Cognition, 21(1), 422–430.
+
+Maniscalco, B., & Lau, H. C. (2014). Signal Detection Theory Analysis of Type 1 and Type 2 Data: Meta-d’, Response- Specific Meta-d’, and the Unequal Variance SDT Model. In S. M. Fleming & C. D. Frith (Eds.), The Cognitive Neuroscience of Metacognition (pp. 25–66). Springer. doi: 10.1007/978-3-642-45190-4_3
 
 Maniscalco, B., & Lau, H. (2016). The signal processing architecture underlying subjective reports of sensory awareness. Neuroscience of Consciousness, 1, 1–17. doi: 10.1093/nc/niw002
 

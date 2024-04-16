@@ -40,6 +40,7 @@ library(tidyverse)
 library(statConfR)
 
 
+
 head(MaskOri)
 
 fitted_pars <-
@@ -48,6 +49,14 @@ fitted_pars <-
   fitConfModels(models = "all",
                 .parallel = TRUE)
 
+PlotFitsBICWeights <-
+  fitted_pars %>% #group_by(participant) %>%
+  ggplot(aes(x=participant, y=wBIC, fill = model)) +
+  geom_bar(stat="identity", color="black") +
+  scale_x_continuous(breaks=unique(fitted_pars$participant)) +
+  labs(fill = "Model")+
+  ylab("Schwarz Weights") +
+  theme_minimal()
 
 # 2) Parameter recovery based on simulated data using the fitted parameter sets
 
@@ -71,7 +80,7 @@ Plot_recov_SDT <-
                        values_to = "true")) %>%
   ggplot(aes(x=true, y=value)) +
   facet_wrap(~ name, nrow=4, scales="free") + xlab("true parameter") + ylab("estimated parameter") +
-  geom_point(color="blue") +
+  geom_point(color="purple") +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
   theme_minimal()
 Plot_recov_SDT
@@ -98,7 +107,7 @@ Plot_recov_GN <-
                        values_to = "true")) %>%
   ggplot(aes(x=true, y=value)) +
   facet_wrap(~ name, nrow=4, scales="free") + xlab("true parameter") + ylab("estimated parameter") +
-  geom_point(color="blue") +
+  geom_point(color="purple") +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
   theme_minimal()
 Plot_recov_GN
@@ -125,7 +134,7 @@ Plot_recov_PDA <-
                        values_to = "true")) %>%
   ggplot(aes(x=true, y=value)) +
   facet_wrap(~ name, nrow=4, scales="free") + xlab("true parameter") + ylab("estimated parameter") +
-  geom_point(color="blue") +
+  geom_point(color="purple") +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
   theme_minimal()
 Plot_recov_PDA
@@ -152,7 +161,7 @@ Plot_recov_IG <-
                        values_to = "true")) %>%
   ggplot(aes(x=true, y=value)) +
   facet_wrap(~ name, nrow=4, scales="free") + xlab("true parameter") + ylab("estimated parameter") +
-  geom_point(color="blue") +
+  geom_point(color="purple") +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
   theme_minimal()
 Plot_recov_IG
@@ -178,7 +187,7 @@ Plot_recov_WEV <-
                        values_to = "true")) %>%
   ggplot(aes(x=true, y=value)) +
   facet_wrap(~ name, nrow=4, scales="free") + xlab("true parameter") + ylab("estimated parameter") +
-  geom_point(color="blue") +
+  geom_point(color="purple") +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
   theme_minimal()
 Plot_recov_WEV
@@ -203,7 +212,7 @@ Plot_recov_ITGc <-
                        values_to = "true")) %>%
   ggplot(aes(x=true, y=value)) +
   facet_wrap(~ name, nrow=4, scales="free") + xlab("true parameter") + ylab("estimated parameter") +
-  geom_point(color="blue") +
+  geom_point(color="purple") +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
   theme_minimal()
 Plot_recov_ITGc
@@ -229,7 +238,7 @@ Plot_recov_ITGcm <-
                        values_to = "true")) %>%
   ggplot(aes(x=true, y=value)) +
   facet_wrap(~ name, nrow=4, scales="free") + xlab("true parameter") + ylab("estimated parameter") +
-  geom_point(color="blue") +
+  geom_point(color="purple") +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
   theme_minimal()
 Plot_recov_ITGcm
@@ -255,7 +264,7 @@ Plot_recov_logN <-
                        values_to = "true")) %>%
   ggplot(aes(x=true, y=value)) +
   facet_wrap(~ name, nrow=4, scales="free") + xlab("true parameter") + ylab("estimated parameter") +
-  geom_point(color="blue") +
+  geom_point(color="purple") +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
   theme_minimal()
 Plot_recov_logN
@@ -281,7 +290,7 @@ Plot_recov_logWEV <-
                        values_to = "true")) %>%
   ggplot(aes(x=true, y=value)) +
   facet_wrap(~ name, nrow=4, scales="free") + xlab("true parameter") + ylab("estimated parameter") +
-  geom_point(color="blue") +
+  geom_point(color="purple") +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
   theme_minimal()
 Plot_recov_logWEV
@@ -305,7 +314,7 @@ Plot_recov_metaDprime_ML <-
         fitted_pars %>%
           filter(model=="ITGcm") %>%
           select(participant, m)) %>%
-  ggplot(aes(x=m, y=Ratio)) +
+  ggplot(aes(x=m, y=Ratio)) +  scale_x_log10() + scale_y_log10() +
   xlab("m-parameter") + ylab("meta-d′/d′") +
   geom_point(color="purple") +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
@@ -331,7 +340,7 @@ Plot_recov_metaDprime_F <-
         fitted_pars %>%
           filter(model=="ITGc") %>%
           select(participant, m)) %>%
-  ggplot(aes(x=m, y=Ratio)) +
+  ggplot(aes(x=m, y=Ratio)) + scale_x_log10() + scale_y_log10() +
   xlab("m-parameter") + ylab("meta-d′/d′") +
   geom_point(color="purple") +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
@@ -339,7 +348,7 @@ Plot_recov_metaDprime_F <-
 Plot_recov_metaDprime_F
 
 
-save(fitted_pars,
+save(fitted_pars, PlotFitsBICWeights,
      recov_pars_SDT, Plot_recov_SDT,
      recov_pars_GN, Plot_recov_GN,
      recov_pars_logN, Plot_recov_logN,
