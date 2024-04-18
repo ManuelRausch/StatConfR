@@ -358,7 +358,7 @@ generateDataWEV <-
   }
 
 
-# (vi) ITGc
+# (vi) ITGcm
 
 generateDataIndTruncML <-
   function(paramDf){
@@ -441,7 +441,7 @@ generateDataIndTruncML <-
   }
 
 
-# (vii) ITGcm
+# (vii) ITGc
 
 generateDataIndTruncF <-
   function(paramDf){
