@@ -1,5 +1,5 @@
 ll2Chan <-
-function(p, N_SA_RA,N_SA_RB, N_SB_RA, N_SB_RB, nRatings, nCond){
+  function(p, N_SA_RA,N_SA_RB, N_SB_RA, N_SB_RB, nRatings, nCond){
     p <- c(t(p))
     ds <- exp(p[1:nCond])
     locA1 <- - ds /2

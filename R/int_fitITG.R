@@ -186,7 +186,6 @@ fitITGc <-
     if(!inherits(fit, "try-error")){
       k <- length(fit$par)
 
-
       res[paste("d_",1:nCond, sep="")] <-  as.vector(cumsum(exp(fit$par[1:(nCond)])))
       res$c <-  as.vector(fit$par[nCond+nRatings])
       res[,paste("theta_minus.",(nRatings-1):1, sep="")] <-

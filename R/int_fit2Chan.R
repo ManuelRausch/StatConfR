@@ -86,11 +86,13 @@ fit2Chan <-
       res[paste("d_",1:nCond, sep="")] <-  as.vector(cumsum(exp(fit$par[1:(nCond)])))
       res$c <-  as.vector(fit$par[nCond+nRatings])
       res[,paste("theta_minus.",(nRatings-1):1, sep="")] <-
-        exp(fit$par[nCond + nRatings*2]) * as.vector(fit$par[nCond+nRatings]) -
+        #exp(fit$par[nCond + nRatings*2]) *
+        as.vector(fit$par[nCond+nRatings]) -
         rev( cumsum(c(exp(fit$par[(nCond+1):(nCond+nRatings-1)]))))
 
       res[,paste("theta_plus.",1:(nRatings-1), sep="")] <-
-        exp(fit$par[nCond + nRatings*2]) * as.vector(fit$par[nCond+nRatings]) +
+        #exp(fit$par[nCond + nRatings*2]) *
+        as.vector(fit$par[nCond+nRatings]) +
         cumsum(c(exp(fit$par[(nCond+nRatings+1):(nCond + nRatings*2-1)])))
 
       res$m <- exp(fit$par[nCond + nRatings*2])

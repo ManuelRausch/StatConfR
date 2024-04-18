@@ -67,7 +67,7 @@ ll_MratioF <-
     metads <- m_ratio * ds
     locA2 <- -metads/2
     locB2 <- metads/2
-    meta_c <-  theta # this is the version of the model used vy Fleming (2017)
+    meta_c <-  theta # this is the version of the model used by Fleming (2017)
     c_RA <- c(-Inf,
               meta_c - rev(cumsum(c(exp(p[(nCond+1):(nCond+nRatings-1)])))),
               meta_c)
