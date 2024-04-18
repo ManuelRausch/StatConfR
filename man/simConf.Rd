@@ -13,17 +13,18 @@ Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'ITGcm', 'lo
 \item{paramDf}{a \code{data.frame} that contains all parameters to simulate a data set,
 with one row and the different parameters in different columns. Which parameters are needed depends on the specific model:
 \itemize{
-\item \code{N} the number of trials be simulated
-\item \code{d_1}, \code{d_2}, ... sensitivity parameters. The number of sensitivity parameters determines the number of levels of discriminability.
-\item \code{c}: discrimination bias
-\item \code{theta_minus.1}, \code{theta_minus.2},... confidence criteria associated with the response R = -1. The function simulates one more confidence category than there are confidence criteria.
-\item \code{theta_plus.1}, \code{theta_plus.2},... confidence criteria associated with the response R = 1. The function simulates one more confidence category than there are confidence criteria.
-\item \code{w} only for WEV and logWEV: the visibility weighting parameter, bounded between 0 and 1
-\item \code{sigma} only for WEV, GN, logN, and logWEV: confidence noise, bounded between 0 and Inf.
-\item \code{m} only for IG, ITGm, and ITGcm: metacognitive efficiency parameter, bounded between 0 and Inf
-\item \code{b} only for PDA: postdecisional accumulation parameter, bounded between 0 and Inf
-\item \code{M_theta_minus.1}, \code{M_theta_minus.2},.... Only for logN: Mean confidence criteria associated with the response R = -1.
-\item \code{M_theta_plus.1}, \code{M_theta_plus.2},... . Only for logN: Mean confidence criteria associated with the response R = 1.
+\item \code{N} (the number of trials be simulated),
+\item \code{participant} (optional, the participant ID of each parameter set. Should be unique to each row),
+\item \code{d_1}, \code{d_2}, ... (sensitivity parameters. The number of sensitivity parameters determines the number of levels of discriminability),
+\item \code{c} (discrimination bias),
+\item \code{theta_minus.1}, \code{theta_minus.2}, ... (confidence criteria associated with the response R = -1. The function simulates one more confidence category than there are confidence criteria),
+\item \code{theta_plus.1}, \code{theta_plus.2}, ... (confidence criteria associated with the response R = 1. The function simulates one more confidence category than there are confidence criteria),
+\item \code{w} (only for models WEV and logWEV: the visibility weighting parameter, bounded between 0 and 1),
+\item \code{sigma} (only for models WEV, GN, logN, and logWEV: confidence noise, bounded between 0 and Inf),
+\item \code{m} (only for IG, ITGm, and ITGcm: metacognitive efficiency parameter, bounded between 0 and Inf),
+\item \code{b} (only for PDA: postdecisional accumulation parameter, bounded between 0 and Inf),
+\item \code{M_theta_minus.1}, \code{M_theta_minus.2}, ... (only for logN: Mean confidence criteria associated with the response R = -1),
+\item \code{M_theta_plus.1}, \code{M_theta_plus.2},... (only for logN: Mean confidence criteria associated with the response R = 1).
 }}
 }
 \value{

@@ -129,9 +129,9 @@
 #' amount of evidence available for discrimination decisions and  can be smaller
 #' as well as greater than 1.
 #'
-#' ### \strong{Independent Truncated Gaussian Model: Meta-d′-Version (ITGcm)}
+#' ### \strong{Independent Truncated Gaussian Model: Meta-d'-Version (ITGcm)}
 #' According to the version of the ITG consistent
-#' with the original meta-d′ method (Maniscalco & Lau, 2012, 2014; see Rausch et al., 2023),
+#' with the original meta-d' method (Maniscalco & Lau, 2012, 2014; see Rausch et al., 2023),
 #' \eqn{y} is sampled independently from \eqn{x} from a truncated Gaussian distribution with a location parameter
 #' of \eqn{S\times d_k \times m/2} and a scale parameter
 #' of 1. If \eqn{R = -1}, the distribution is truncated to the right of \eqn{m\times c}.
