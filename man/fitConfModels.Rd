@@ -253,7 +253,7 @@ Schwarz, G. (1978). Estimating the dimension of a model. The Annals of Statistic
 
 Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive Inefficiency in Perceptual Decision Making. Psychological Review, 128(1), 45–70. doi: 10.1037/rev0000249
 
-Shekhar, M., & Rahnev, D. (2023). How Do Humans Give Conﬁdence? A Comprehensive Comparison of Process Models of Perceptual Metacognition. Journal of Experimental Psychology: General. doi:10.1037/xge0001524
+Shekhar, M., & Rahnev, D. (2023). How Do Humans Give Confidence? A Comprehensive Comparison of Process Models of Perceptual Metacognition. Journal of Experimental Psychology: General. doi:10.1037/xge0001524
 }
 \author{
 Sebastian Hellmann, \email{sebastian.hellmann@ku.de}
