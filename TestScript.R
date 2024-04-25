@@ -57,7 +57,7 @@ PlotFitsBICWeights <-
   labs(fill = "Model")+
   ylab("Schwarz Weights") +
   theme_minimal()
-PlotFitsBICWeights 
+PlotFitsBICWeights
 
 
 # 2) Parameter recovery based on simulated data using the fitted parameter sets
@@ -303,7 +303,7 @@ Plot_recov_logWEV
 recov_metaDprime_ML <-
   fitted_pars %>%
   filter(model=="ITGcm") %>%
-  filter(participant!=11) %>%  # subject 11 performed very low. 
+  filter(participant!=11) %>%  # subject 11 performed very low.
   select(participant, d_3, c:theta_plus.4, m) %>%
   rename(d_1 = d_3) %>%
   mutate(N = 400) %>% # simulate 400 trials because 400 trials considered to be required to estimate meta-d′/d′
@@ -330,7 +330,7 @@ Plot_recov_metaDprime_ML
 recov_metaDprime_F  <-
   fitted_pars %>%
   filter(model=="ITGc") %>%
-  filter(participant!=11) %>%  # subject 11 performed very low. 
+  filter(participant!=11) %>%  # subject 11 performed very low, so meta-d'/d' will be unstable no matter whether the code works or not.
   select(participant, d_3, c:theta_plus.4, m) %>%
   rename(d_1 = d_3) %>%
   mutate(N = 10000) %>% # simulate 400 trials because 400 trials considered to be required to estimate meta-d′/d′
