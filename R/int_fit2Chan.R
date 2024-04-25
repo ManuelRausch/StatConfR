@@ -41,9 +41,9 @@ fit2Chan <-
         log(mapply(function(tauMin, tauRange) diff(seq(tauMin, tauMin+tauRange, length.out=nRatings-1)),
                    temp$tauMin, temp$tauRange))
     }
-    inits[,nCond+(nRatings-1)] <- log(temp$tauMin)
+    inits[,nCond+(nRatings-1)] <- temp$tauMin
     inits[,nCond+nRatings] <- temp$theta
-    inits[,nCond+(nRatings+1)] <- log(temp$tauMin)
+    inits[,nCond+(nRatings+1)] <- temp$tauMin
     inits[,(nCond + nRatings*2)] <- log(temp$a)
 
     logL <- apply(inits, MARGIN = 1,
@@ -85,15 +85,14 @@ fit2Chan <-
       k <- length(fit$par)
       res[paste("d_",1:nCond, sep="")] <-  as.vector(cumsum(exp(fit$par[1:(nCond)])))
       res$c <-  as.vector(fit$par[nCond+nRatings])
-      res[,paste("theta_minus.",(nRatings-1):1, sep="")] <-
-        #exp(fit$par[nCond + nRatings*2]) *
-        as.vector(fit$par[nCond+nRatings]) -
-        rev( cumsum(c(exp(fit$par[(nCond+1):(nCond+nRatings-1)]))))
 
+      res[,paste("theta_minus.",(nRatings-1):1, sep="")] <-
+        c(as.vector(fit$par[nCond+nRatings-1] - rev(cumsum(c(exp(fit$par[(nCond+1):(nCond+nRatings-2)]))))),
+          as.vector(fit$par[nCond+nRatings-1]))
       res[,paste("theta_plus.",1:(nRatings-1), sep="")] <-
-        #exp(fit$par[nCond + nRatings*2]) *
-        as.vector(fit$par[nCond+nRatings]) +
-        cumsum(c(exp(fit$par[(nCond+nRatings+1):(nCond + nRatings*2-1)])))
+        c(as.vector(fit$par[nCond+nRatings+1]),
+          as.vector(fit$par[nCond+nRatings+1]) +
+            as.vector(cumsum(c(exp(fit$par[(nCond+nRatings+2):(nCond + nRatings*2-1)])))))
 
       res$m <- exp(fit$par[nCond + nRatings*2])
 

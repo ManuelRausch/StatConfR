@@ -37,11 +37,6 @@ rm(list=ls())
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # if you are not using R-Studio, specify here a working directory.
 
 library(tidyverse)
-
-if ("statConfR" %in% loadedNamespaces()){
-  detach(package:statConfR, unload=TRUE)
-}
-devtools::install_github("ManuelRausch/StatConfR")
 library(statConfR)
 
 
@@ -62,6 +57,8 @@ PlotFitsBICWeights <-
   labs(fill = "Model")+
   ylab("Schwarz Weights") +
   theme_minimal()
+PlotFitsBICWeights 
+
 
 # 2) Parameter recovery based on simulated data using the fitted parameter sets
 
@@ -306,7 +303,8 @@ Plot_recov_logWEV
 recov_metaDprime_ML <-
   fitted_pars %>%
   filter(model=="ITGcm") %>%
-  select(participant, d_3, c:m) %>%
+  filter(participant!=11) %>%  # subject 11 performed very low. 
+  select(participant, d_3, c:theta_plus.4, m) %>%
   rename(d_1 = d_3) %>%
   mutate(N = 400) %>% # simulate 400 trials because 400 trials considered to be required to estimate meta-d′/d′
   group_by(participant) %>%
@@ -319,7 +317,7 @@ Plot_recov_metaDprime_ML <-
         fitted_pars %>%
           filter(model=="ITGcm") %>%
           select(participant, m)) %>%
-  ggplot(aes(x=m, y=Ratio)) +  scale_x_log10() + scale_y_log10() +
+  ggplot(aes(x=m, y=Ratio)) +  #scale_x_log10() + scale_y_log10() +
   xlab("m-parameter") + ylab("meta-d′/d′") +
   geom_point(color="purple") +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
@@ -332,9 +330,10 @@ Plot_recov_metaDprime_ML
 recov_metaDprime_F  <-
   fitted_pars %>%
   filter(model=="ITGc") %>%
-  select(participant, d_3, c:m) %>%
+  filter(participant!=11) %>%  # subject 11 performed very low. 
+  select(participant, d_3, c:theta_plus.4, m) %>%
   rename(d_1 = d_3) %>%
-  mutate(N = 400) %>% # simulate 400 trials because 400 trials considered to be required to estimate meta-d′/d′
+  mutate(N = 10000) %>% # simulate 400 trials because 400 trials considered to be required to estimate meta-d′/d′
   group_by(participant) %>%
   simConf(model="ITGc") %>%
   fitMetaDprime(model="F", .parallel = TRUE)
@@ -343,9 +342,9 @@ Plot_recov_metaDprime_F <-
   merge(recov_metaDprime_F %>%
           select(participant, Ratio),
         fitted_pars %>%
-          filter(model=="ITGc") %>%
+          filter(model=="ITGc" ) %>%
           select(participant, m)) %>%
-  ggplot(aes(x=m, y=Ratio)) + scale_x_log10() + scale_y_log10() +
+  ggplot(aes(x=m, y=Ratio)) + #scale_x_log10() + scale_y_log10() +
   xlab("m-parameter") + ylab("meta-d′/d′") +
   geom_point(color="purple") +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
@@ -359,7 +358,7 @@ save(fitted_pars, PlotFitsBICWeights,
      recov_pars_logN, Plot_recov_logN,
      recov_pars_WEV, Plot_recov_WEV,
      recov_pars_logWEV, Plot_recov_logWEV,
-     recov_pars_IG, Plot_recov_IG,
+     recov_pars_IG, Plot_recov_IG, # re-test that
      recov_pars_ITGc, Plot_recov_ITGc,
      recov_pars_ITGcm, Plot_recov_ITGcm,
      recov_pars_PDA, Plot_recov_PDA,
