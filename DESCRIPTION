@@ -1,7 +1,7 @@
 Package: statConfR
 Type: Package
 Title: Models of Decision Confidence and Metacognition
-Version: 0.1.1
+Version: 0.1.2
 Date: 2024-04-24
 Authors@R: c(
   person("Manuel", "Rausch", email="manuel.rausch@hochschule-rhein-waal.de", role = c("aut", "cre"),
