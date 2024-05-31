@@ -306,7 +306,7 @@ recov_metaDprime_ML <-
   filter(participant!=11) %>%  # subject 11 performed very low.
   select(participant, d_3, c:theta_plus.4, m) %>%
   rename(d_1 = d_3) %>%
-  mutate(N = 400) %>% # simulate 400 trials because 400 trials considered to be required to estimate meta-d′/d′
+  mutate(N = 10000) %>% #
   group_by(participant) %>%
   simConf(model="ITGcm") %>%
   fitMetaDprime(model="ML", .parallel = TRUE)
