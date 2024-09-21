@@ -49,7 +49,7 @@ generateDataSDT <- function(paramDf){
   X$diffCond <- factor(X$diffCond)
   X$correct <- 0
   X$correct[X$stimulus==X$response] <- 1
-  X$rating <- factor(X$rating)
+  X$ratings <- factor(X$rating)
   X$stimulus <- factor(X$stimulus)
   X
 }
