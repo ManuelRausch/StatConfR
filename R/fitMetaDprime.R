@@ -1,6 +1,12 @@
-#' Fits meta-d' and meta-d'/d' ratios for data from one or several subjects
+#' Compute measures of metacognitive sensitivity (meta-d') and metacognitive efficiency(meta-d'/d') for data from one or several subjects
 #'
-#' This function computes meta-d' and meta-d'/d' for each  participant in the \code{data}, respectively.
+#' This function computes the measures for metacognitive sensitivity, meta-d',
+#' and metacognitive efficiency, meta-d'/d' (Maniscalco and Lau, 2012, 2014;
+#' Fleming, 2017) to data from binary choice tasks with discrete confidence
+#' judgments. Meta-d' and meta-d'/d' are computed using a maximum likelihood
+#' method for each subset of the `data` argument indicated by different values
+#' in the column `participant`, which can represent different subjects as well
+#' as experimental conditions.
 #'
 #' @param data  a `data.frame` where each row is one trial, containing following
 #' variables:
@@ -24,16 +30,25 @@
 #' @param n.cores `integer`. Number of cores used for parallelization. If NULL (default), the available
 #' number of cores -1 will be used.
 #'
-#' @return Gives data frame with rows for each participant and columns dprime, c, metaD, and Ratio
-#' - dprime is the discrimination sensitivity index d, calculated using a standard SDT formula
-#' - c is the discrimination bias c, calculated using a standard SDT formula
-#' - metaD is meta-d', discrimination sensitivity estimated from confidence judgments conditioned on the response
-#' - Ratio is meta-d'/d', a quantity usually referred to as metacognitive efficiency.
+#' @return Gives data frame with one row for each participant and following columns:
+#' - `model` gives the model used for the computation of meta-d' (see `model` argument)
+#' - `participant` is the participant ID for the respecitve row
+#' - `dprime` is the discrimination sensitivity index d, calculated using a standard SDT formula
+#' - `c` is the discrimination bias c, calculated using a standard SDT formula
+#' - `metaD` is meta-d', discrimination sensitivity estimated from confidence judgments conditioned on the response
+#' - `Ratio` is meta-d'/d', a quantity usually referred to as metacognitive efficiency.
 #'
 #' @details
 #' The function computes meta-d' and meta-d'/d' either using the
 #' hypothetical signal detection model assumed by Maniscalco and Lau (2012, 2014)
-#' or the one assumed by Fleming (2014). The fitting routine first performs a coarse grid search to find promising
+#' or the one assumed by Fleming (2014).
+#'
+#' The provided `data` argument is split into subsets according to the values of
+#' the `participant` column. Then for each subset, the parameters of the
+#' hypothetical signal detection model determined by the `model` argument
+#' are fitted to the data subset.
+#'
+#' The fitting routine first performs a coarse grid search to find promising
 #' starting values for the maximum likelihood optimization procedure. Then the best \code{nInits}
 #' parameter sets found by the grid search are used as the initial values for separate
 #' runs of the Nelder-Mead algorithm implemented in \code{\link[stats]{optim}}.

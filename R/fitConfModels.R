@@ -1,24 +1,36 @@
 #' Fit several static confidence models to multiple participants
 #'
-#' This function is a wrapper of the function \code{\link{fitConf}}. It calls the function for every possible combination
-#' of model in the `model` argument and participant in the \code{data}, respectively.
-#' See the Details for more information about the parameters.
+#' This functions fits the parameters of several computational models of decision
+#' confidence, in binary choice tasks,  specified in the `model` argument, to
+#' different subsets of one data frame, indicated by different values in the column
+#' `participant` of the `data` argument.
+#' `fitConfModels` is a wrapper of the function \code{\link{fitConf}} and calls
+#'  \code{\link{fitConf}} for every possible combination
+#' of model in the `models` argument and sub-data frame of `data` for each value
+#' in the `participant` column.
+#' See Details for more information about the parameters.
+#' In addition to the estimated parameters, measures of model fits are provided
+#' for a quantiative comparison between the models.
 #'
 #' @param data  a `data.frame` where each row is one trial, containing following
 #' variables:
 #' * \code{diffCond} (optional; different levels of discriminability,
 #'    should be a factor with levels ordered from hardest to easiest),
-#' * \code{rating} (discrete confidence judgments, should be a factor with levels ordered from lowest confidence to highest confidence;
+#' * \code{rating} (discrete confidence judgments, should be a factor with levels
+#'    ordered from lowest confidence to highest confidence;
 #'    otherwise will be transformed to factor with a warning),
 #' * \code{stimulus} (stimulus category in a binary choice task,
 #'    should be a factor with two levels, otherwise it will be transformed to
 #'    a factor with a warning),
-#' * \code{correct} (encoding whether the response was correct; should  be 0 for incorrect responses and 1 for correct responses)
-#' * \code{participant} (giving the subject ID; the models given in the second argument are fitted for each
-#'   subject individually.
-#' @param models `character`.
-#' Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'ITGcm', 'logN', and 'logWEV'.
-#' Alternatively, if `model="all"` (default), all implemented models will be fit.
+#' * \code{correct} (encoding whether the response was correct; should  be 0 for
+#'    incorrect responses and 1 for correct responses)
+#' * \code{participant} (some group ID, most often a participant identifier;
+#'    the models given in the second argument are fitted to each subset of `data`
+#'    determined by the different values of this column)
+#' @param models `character`. The different computational models that should be
+#'    fitted. Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc',
+#'    'ITGcm', 'logN', and 'logWEV'. Alternatively, if `model="all"` (default),
+#'    all implemented models will be fit.
 #' @param nInits `integer`. Number of initial values used for maximum likelihood optimization.
 #' Defaults to 5.
 #' @param nRestart `integer`. Number of times the optimization is restarted.
@@ -28,7 +40,11 @@
 #' @param n.cores `integer`. Number of cores used for parallelization. If NULL (default), the available
 #' number of cores -1 will be used.
 #'
-#' @return Gives data frame with one row for each combination of model and participant and columns for the estimated parameters.
+#' @return Gives data frame with one row for each combination of model and
+#' participant. Columns include a model and participant column,
+#' one column for each estimated parameter for the different models (parameters
+#' that are not present in a specific model (row) but in other models are
+#' filled with NAs.
 #' Additional information  about the fit is provided in additional columns:
 #' - `negLogLik` (negative log-likelihood of the best-fitting set of parameters),
 #' - `k` (number of parameters),
@@ -41,7 +57,12 @@
 #' - `wAIC`: Akaike weights based on AICc,
 #' - `wBICc`: Schwarz weights (see Burnham & Anderson, 2002)
 #'
-#' @details The fitting routine first performs a coarse grid search to find promising
+#' @details
+#' The provided `data` argument is split into subsets according to the values of
+#' the `participant` column. Then for each subset and each model in the `models`
+#' argument, the parameters of the respective model are fitted to the data subset.
+#'
+#' The fitting routine first performs a coarse grid search to find promising
 #' starting values for the maximum likelihood optimization procedure. Then the best \code{nInits}
 #' parameter sets found by the grid search are used as the initial values for separate
 #' runs of the Nelder-Mead algorithm implemented in \code{\link[stats]{optim}}.
@@ -177,7 +198,7 @@
 #'
 #' @md
 #'
-#' @author Sebastian Hellmann, \email{sebastian.hellmann@@ku.de}
+#' @author Sebastian Hellmann, \email{sebastian.hellmann@@tum.de}
 #' @author Manuel Rausch, \email{manuel.rausch@@hochschule-rhein-waal.de}
 #'
 #' @name fitConfModels
@@ -207,6 +228,8 @@
 #' # 2. Fit some models to each subject of the masked orientation discrimination experiment
 #' \donttest{
 #'   # Fitting several models to several subjects takes quite some time
+#'   # (about 10 minutes per model fit per participant on a 2.8GHz processor with
+#'   the default values of nInits and nRestart).
 #'   # If you want to fit more than just two subjects,
 #'   # we strongly recommend setting .parallel=TRUE
 #'   Fits <- fitConfModels(data, models = c("SDT", "ITGc"), .parallel = FALSE)

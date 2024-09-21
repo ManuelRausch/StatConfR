@@ -1,7 +1,13 @@
 #' Fit a static confidence model to data
 #'
-#' This function fits one static model of decision confidence to binary choices and confidence judgments.
-#' It calls a corresponding fitting function for the selected model.
+#' This function fits the parameters of one static model of decision confidence,
+#' provided by the `model` argument, to binary choices and confidence judgments.
+#' See Details for the mathematical specification of the implemented models and
+#' their parameters.
+#' Parameters are fitted using a maximum likelihood estimation method with a
+#' initial grid search to find promissing starting values for the optimization.
+#' Additional measures for model fit (negative log-likelihood, BIC, AIC, and AICc)
+#' are computed, which may be used for a quantiative model evaluation.
 #'
 #' @param data  a `data.frame` where each row is one trial, containing following
 #' variables:
@@ -13,13 +19,14 @@
 #'    should be a factor with two levels, otherwise it will be transformed to
 #'    a factor with a warning),
 #' * \code{correct} (encoding whether the response was correct; should  be 0 for incorrect responses and 1 for correct responses)
-#' @param model `character` of length 1.
-#' Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'ITGcm', 'logN', and 'logWEV'.
-#' @param nInits `integer`. Number of initial values used for maximum likelihood optimization.
+#' @param model `character` of length 1. The generative model that should be
+#'    fitted. Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG',
+#'    'ITGc', 'ITGcm', 'logN', and 'logWEV'.
+#' @param nInits `integer`. Number of starting values used for maximum likelihood optimization.
 #' Defaults to 5.
 #' @param nRestart `integer`. Number of times the optimization algorithm is restarted.
 #' Defaults to 4.
-#' @return Gives data frame with one row and columns for the fitted parameters of the
+#' @return Gives data frame with one row and one column for each of the fitted parameters of the
 #' selected model as well as additional information about the fit
 #' (`negLogLik` (negative log-likelihood of the final set of parameters),
 #' `k` (number of parameters), `N` (number of data rows),
@@ -164,7 +171,7 @@
 #'
 #' @md
 #'
-#' @author Sebastian Hellmann, \email{sebastian.hellmann@ku.de}
+#' @author Sebastian Hellmann, \email{sebastian.hellmann@tum.de}
 #' @author Manuel Rausch, \email{manuel.rausch@hochschule-rhein-waal.de}
 #'
 #' @name fitConf
@@ -192,7 +199,7 @@
 #'
 #' # 2. Use fitting function
 #' \donttest{
-#'   # Fitting takes some time to run:
+#'   # Fitting takes some time (about 10 minutes on an 2.8GHz processor) to run:
 #'   FitFirstSbjWEV <- fitConf(data, model="WEV")
 #' }
 #'
