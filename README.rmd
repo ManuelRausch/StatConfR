@@ -24,7 +24,8 @@ binary discrimination tasks, as well as meta-d′/d′ (Rausch & Hellmann,
 2024). The package can be used to test the assumptions underlying
 meta-d′/d′. Several models provide a metacognition parameter that may
 serve as an alternative when the assumptions of meta-d′/d′ assuming the
-corresponding model provides a better fit to the data. At this point in time, the following models are included:
+corresponding model provides a better fit to the data. At this point in
+time, the following models are included:
 
 -   Signal detection rating model
 
@@ -45,21 +46,18 @@ corresponding model provides a better fit to the data. At this point in time, th
 
 ## Installation
 
-The latest released version of the package is available on
-CRAN via
+The latest released version of the package is available on CRAN via
 
-```
+```         
 install.packages("statConfR")
 ```
 
-
-The easiest way to install the development version is
-using `devtools` and install from GitHub:
+The easiest way to install the development version is using `devtools`
+and install from GitHub:
 
 ```         
 devtools::install_github("ManuelRausch/StatConfR")
 ```
-
 
 ## Usage
 
@@ -94,12 +92,18 @@ It is strongly recommended that if metacognitive efficiency is to be
 measured using the meta-d′/d′ method that researchers fist determine
 whether the Independent Truncated Gaussian Model, the confidence model
 implied by the meta-d′/d′ method, is an adequate description of the
-data. Using the function fitConfModel, we can fit several confidence
-models to the data of each participant. The argument
-`.parallel=TRUE`allows for parallelization over all but one available
-core.
+data. Using the function fitConfModels, we can fit several confidence
+models to the data of each participant.
 
-```
+Note that the fitting procedure takes some time as the models have
+several parameters. Depending on the model and the number of
+experimental conditions, this may take up to 20-30 minutes per
+participant and model combination on a modern 2.8GHz CPU.
+
+The argument `.parallel=TRUE`allows for parallelization over all but one
+available core.
+
+```         
 fitted_pars <- fitConfModels(MaskOri, models=c("SDT", "WEV"), .parallel = TRUE) 
 ```
 
@@ -241,12 +245,53 @@ fitted_pars <- structure(list(
 head(fitted_pars)
 ```
 
-If the Independent Truncated Gaussian model provides a decent account of the data (which is not the case though in the demo dataset), it is legitimate to quantify metacognitive efficiency with meta-d′/d′:
+If the Independent Truncated Gaussian model provides a decent account of
+the data (which is not the case though in the demo dataset), it is
+legitimate to quantify metacognitive efficiency with meta-d′/d′:
 
-``` 
+```         
 MetaDs <- fitMetaDprime(subset(MaskOri, diffCond == "33.3"), 
                         model="ML", .parallel = TRUE)
 ```
+
+## Contributing to the package 
+The package is under constant development. 
+We try to include other models that are published in the literature in the package.
+If you have a own model published that you want to include in the package, or want 
+to contribute in any other kind, feel free to contact us. We are always happy to 
+extend the range of models the package covers. 
+
+### Instruction for including custom models
+Implementing custom models in the package is best done in the following way:
+- Compute the likelihood of a binary response ($R=-1, 1$) and confidence judgment
+  ($C=1,...K$), given the stimulus ($S=-1, 1$), i.e. $P(R, C | S)$. 
+- Use one of the files 'int_ll*model*.R' from the package sources and adapt the 
+  formula to fit your likelihood functions. Name the new file according to the 
+  convention 'int_ll*yourmodelname*.R'.
+  
+  Note that all parameters are fitted on the reals, i.e. positive parameters 
+  should be transformed outside the log-likelihood function (e.g. using the 
+  logarithm) and back-transformed within the log-likelihood function (e.g. using
+  the exponential)
+  
+- Use one of the files 'int_fit*model*.R'  from the package sources and adapt:
+  -   the initial grid for the grid search to include all parameters of your model
+      and their expected range
+  -   the parameter transformations (such that all parameters included in the 
+      parameter vector for optimization are real-valued)
+  -   the function calls for the log-likelihood function
+  -   the back-transformation in the output object `res`
+  
+  Name the new file according to the convention 'int_fit*yourmodelname*.R'
+
+- Add your model and fitting-functions to the high-level functions `fitConf` and `fitConfModels`
+
+- Add a simulation function in the file 'int_simulateConf.R' which uses the same 
+  structure as the other functions but adapt the likelihood of the responses.
+  
+  
+
+
 
 ## Contact
 
