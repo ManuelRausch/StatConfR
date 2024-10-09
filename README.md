@@ -27,7 +27,7 @@ corresponding model provides a better fit to the data. The following models are 
 
 ## Mathematical description of models
 The computational models are all based on signal detection theory (Green & Swets, 1966). It is assumed that participants select a binary discrimination response \eqn{R} about a stimulus \eqn{S}.
-Both \eqn{S} and \eqn{R} can be either -1 or 1.
+Both $S$ and $R$ can be either -1 or 1.
 \eqn{R} is considered correct if \eqn{S=R}.
 In addition, we assume that there are \eqn{K} different levels of stimulus discriminability
 in the experiment, i.e. a physical variable that makes the discrimination task easier or harder.
