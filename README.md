@@ -26,7 +26,7 @@ corresponding model provides a better fit to the data. The following models are 
 - Lognormal weighted evidence and visibility model
 
 ## Mathematical description of models
-The computational models are all based on signal detection theory (Green & Swets, 1966). 
+The models included in the statConfR package are all based on signal detection theory (Green & Swets, 1966). 
 It is assumed that participants select a binary discrimination response $R$ about a stimulus $S$.
 Both $S$ and $R$ can be either -1 or 1. $R$ is considered correct if $S=R$.
 In addition, we assume that in the experiment, there are $K$ different levels of stimulus discriminability, 
@@ -39,15 +39,13 @@ and variance of 1. The sensory evidence $x$ is compared to a decision criterion 
 to generate a discrimination response $R$, which is 1, if $x$ exceeds $c$ and -1 else.
 To generate confidence, it is assumed that the confidence variable $y$ is compared to another
 set of criteria $\theta_{R,i}, i=1,2,...,L-1$, depending on the
-discrimination response $R$ to produce a $L$-step discrete confidence response.
-The number of thresholds will be inferred from the number of steps in the
-`rating` column of `data`.
-Thus, the parameters shared between all models are:
+discrimination response $R$ to produce a $L$-step discrete confidence response. The different models
+vary in how $y$ is generated (see below). 
+The parameters shared between all models are:
 - sensitivity parameters $d_1$,...,$d_K$ ($K$: number of difficulty levels)
 - decision criterion $c$, 
-- confidence criterion $\theta_{-1,1}$,$\theta_{-1,2}$, ..., $\theta_{-1,L-1}$, 
-$\theta_{1,1}$,  $\theta_{1,2}$,...,$\theta_{1,L-1}$ ($L$: number of confidence categories available for confidence ratings)
-How the confidence variable $y$ is computed varies across the different models.
+- confidence criterion $\theta_{-1,1}$, ..., $\theta_{-1,L-1}$, 
+$\theta_{1,1}$,  ,...,$\theta_{1,L-1}$ ($L$: number of confidence categories available for confidence ratings)
 
 ### \strong{Signal Detection Rating Model (SDT)}
 According to SDT, the same sample of sensory evidence is used to generate response and confidence, i.e.,
