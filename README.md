@@ -44,8 +44,8 @@ vary in how $y$ is generated (see below).
 The parameters shared between all models are:
 - sensitivity parameters $d_1$,...,$d_K$ ($K$: number of difficulty levels)
 - decision criterion $c$, 
-- confidence criterion $\theta_{-1,1}$, ..., $\theta_{-1,L-1}$, 
-$\theta_{1,1}$,  ,...,$\theta_{1,L-1}$ ($L$: number of confidence categories available for confidence ratings)
+- confidence criterion $\theta_{-1,1}$, ..., $\theta_{-1,L-1}, 
+\theta_{1,1}$,  ,...,$\theta_{1,L-1}$ ($L$: number of confidence categories available for confidence ratings)
 
 ### \strong{Signal Detection Rating Model (SDT)}
 According to SDT, the same sample of sensory evidence is used to generate response and confidence, i.e.,
