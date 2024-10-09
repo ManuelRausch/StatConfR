@@ -25,6 +25,37 @@ corresponding model provides a better fit to the data. The following models are 
 
 - Lognormal weighted evidence and visibility model
 
+## Mathematical description of models
+The computational models are all based on signal detection theory (Green & Swets, 1966). It is assumed that participants select a binary discrimination response \eqn{R} about a stimulus \eqn{S}.
+Both \eqn{S} and \eqn{R} can be either -1 or 1.
+\eqn{R} is considered correct if \eqn{S=R}.
+In addition, we assume that there are \eqn{K} different levels of stimulus discriminability
+in the experiment, i.e. a physical variable that makes the discrimination task easier or harder.
+For each level of discriminability, the function fits a different discrimination
+sensitivity parameter \eqn{d_k}. If there is more than one sensitivity parameter,
+we assume that the sensitivity parameters are ordered such as \eqn{0 < d_1 < d_2 < ... < d_K}.
+The models assume that the stimulus generates normally distributed sensory evidence \eqn{x} with mean \eqn{S\times d_k/2}
+and variance of 1. The sensory evidence \eqn{x} is compared to a decision
+criterion \eqn{c} to generate a discrimination response
+\eqn{R}, which is 1, if \eqn{x} exceeds \eqn{c} and -1 else.
+To generate confidence, it is assumed that the confidence variable \eqn{y} is compared to another
+set of criteria \eqn{\theta_{R,i}, i=1,2,...,L-1}, depending on the
+discrimination response \eqn{R} to produce a \eqn{L}-step discrete confidence response.
+The number of thresholds will be inferred from the number of steps in the
+`rating` column of `data`.
+Thus, the parameters shared between all models are:
+- sensitivity parameters \eqn{d_1},...,\eqn{d_K} (\eqn{K}: number of difficulty levels)
+- decision criterion \eqn{c}
+- confidence criterion \eqn{\theta_{-1,1}},\eqn{\theta_{-1,2}},
+..., \eqn{\theta_{-1,L-1}}, \eqn{\theta_{1,1}},  \eqn{\theta_{1,2}},...,
+\eqn{\theta_{1,L-1}} (\eqn{L}: number of confidence categories available for confidence ratings)
+How the confidence variable \eqn{y} is computed varies across the different models.
+
+### \strong{Signal Detection Rating Model (SDT)}
+According to SDT, the same sample of sensory evidence is used to generate response and confidence, i.e.,
+\eqn{y=x} and the confidence criteria span from the left and
+right side of the decision criterion \eqn{c}(Green & Swets, 1966).
+
 ## Installation
 
 The latest released version of the package is available on CRAN via
