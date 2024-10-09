@@ -56,7 +56,7 @@ FitSeveralSbj_MoreModels  <-
 
 
 # Fit Meta-D prime
-  # (not a good here because the ITGc is not a good fit to the data. This is for demonstration purposes only.)
+  # (not a good ideahere because the ITGc is not a good fit to the data. This is for demonstration purposes only.)
 
 MetaDs <- MaskOri %>%
   filter(diffCond == "33.3") %>%

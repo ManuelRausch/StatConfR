@@ -6,7 +6,7 @@
 
 # To demonstrate that the package is working, we first fitted all models to the data of a
 # masked orientation discrimination task, and then use the obtained parameter sets
-# for a parameter recovery analysis. Unfortunately, running the complete script takes approximately
+# for a parameter recovery analysis. Unfortunately, running the complete script takes several hours
 # on a PC with 15 cores. We upload the script anyway to document how we have varified the
 # the functionality of our package.
 # For those who want to test whether the package is working in principle, we

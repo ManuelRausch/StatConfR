@@ -1,4 +1,4 @@
-# statConfR: Models of Decision Confidence and Metacognition
+# statConfR: Models of Decision Confidence and Measures of Metacognition
 
 The statConfR package provides functions to fit static models of
 decision-making and confidence derived from signal detection theory for
@@ -6,8 +6,7 @@ binary discrimination tasks, as well as meta-d′/d′ (Rausch & Hellmann,
 2024). The package can be used to test the assumptions underlying
 meta-d′/d′. Several models provide a metacognition parameter that may
 serve as an alternative when the assumptions of meta-d′/d′ assuming the
-corresponding model provides a better fit to the data. At this point in
-time, the following models are included:
+corresponding model provides a better fit to the data. The following models are included:
 
 - Signal detection rating model
 
@@ -15,7 +14,7 @@ time, the following models are included:
 
 - Weighted evidence and visibility model
 
-- Post-decisional Accumulation Model
+- Post-decisional accumulation Model
 
 - Independent Gaussian model
 
@@ -134,7 +133,7 @@ legitimate to quantify metacognitive efficiency with meta-d′/d′:
 ## Contact
 
 For comments, remarks, and questions please contact either
-<manuel.rausch@hochschule-rhein-waal.de> or <sebastian.hellmann@ku.de>
+<manuel.rausch@ku.de> or <sebastian.hellmann@ku.de>
 or [submit an issue](https://github.com/ManuelRausch/StatConfR/issues).
 
 ## References
