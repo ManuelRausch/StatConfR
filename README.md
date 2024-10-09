@@ -60,33 +60,31 @@ which is an additional free parameter (Maniscalco & Lau, 2016).
 ### Weighted Evidence and Visibility model (WEV)
 WEV assumes that the observer combines evidence about decision-relevant features 
 of the stimulus with the strength of evidence about choice-irrelevant features 
-to generate confidence (Rausch et al., 2018). Thus, the WEV model assumes that $Y$ is normally 
-distributed with a mean of $(1-w)\times x+w \times d_k\times R} and standard deviation $\sigma$.
+to generate confidence (Rausch et al., 2018). Thus, the WEV model assumes that $y$ is normally 
+distributed with a mean of $(1-w)\times x+w \times d_k\times R$ and standard deviation $\sigma$.
 The standard deviation quantifies the amount of unsystematic variability
 contributing to confidence judgments but not to the discrimination judgments.
 The parameter $w$ represents the weight that is put on the choice-irrelevant
-features in the confidence judgment. $w$ and $\sigma$ are fitted in
+features in the confidence judgment. The parameters $w$ and $\sigma$ are free parameters in
 addition to the set of shared parameters.
 
-### \strong{Post-decisional accumulation model (PDA)}
+### Post-decisional accumulation model (PDA)
 PDA represents the idea of on-going information accumulation after the
 discrimination choice (Rausch et al., 2018). The parameter $a$ indicates the amount of additional
 accumulation. The confidence variable is normally distributed with mean
-$x+S\times d_k\times a$ and variance $a$.
-For this model the parameter $a$ is fitted in addition to the shared
+$x+S\times d_k\times a$ and variance $a$. The parameter $a$ is fitted in addition to the shared
 parameters.
 
-### \strong{Independent Gaussian Model (IG)
-According to IG, $y$ is sampled independently
-from $x$ (Rausch & Zehetleitner, 2017). $y$ is normally distributed with a mean of $a\times d_k$ and variance
-of 1 (again as it would scale with $m$). The additional parameter $m$
-represents the amount of information available for confidence judgment
-relative to amount of evidence available for the discrimination decision and can
- be smaller as well as greater than 1.
+### Independent Gaussian Model (IG)
+According to IG, $y$ is sampled independently from $x$ (Rausch & Zehetleitner, 2017). 
+The variable $y$ is normally distributed with a mean of $a\times d_k$ and variance
+of 1. The additional parameter $m$ represents the amount of information available for confidence judgment
+relative to amount of evidence available for the discrimination decision and can 
+be smaller as well as greater than 1.
 
-### \strong{Independent Truncated Gaussian Model: HMetad-Version (ITGc)
-According to the version of ITG consistent
-with the HMetad-method (Fleming, 2017; see Rausch et al., 2023), $y$ is sampled independently
+### Independent Truncated Gaussian Model: HMetad-Version (ITGc)
+According to the version of ITG consistent with the HMetad-method 
+(Fleming, 2017; see Rausch et al., 2023), $y$ is sampled independently
 from $x$ from a truncated Gaussian distribution with a location parameter
 of $S\times d_k \times m/2$ and a scale parameter of 1. The Gaussian distribution of $y$
 is truncated in a way that it is impossible to sample evidence that contradicts
@@ -97,28 +95,26 @@ i.e., the amount of information available for confidence judgments relative to
 amount of evidence available for discrimination decisions and  can be smaller
 as well as greater than 1.
 
-### \strong{Independent Truncated Gaussian Model: Meta-d'-Version (ITGcm)
-According to the version of the ITG consistent
-with the original meta-d' method (Maniscalco & Lau, 2012, 2014; see Rausch et al., 2023),
+### Independent Truncated Gaussian Model: Meta-d'-Version (ITGcm)
+According to the version of the ITG consistent with the original meta-d' 
+method (Maniscalco & Lau, 2012, 2014; see Rausch et al., 2023),
 $y$ is sampled independently from $x$ from a truncated Gaussian distribution with a location parameter
-of $S\times d_k \times m/2$ and a scale parameter
-of 1. If $R = -1$, the distribution is truncated to the right of $m\times c$.
-If $R = 1$, the distribution is truncated to the left of  $m\times c$.
-The additional parameter $m$ represents metacognitive efficiency, i.e.,
-the amount of information available for confidence judgments relative to
+of $S\times d_k \times m/2$ and a scale parameter of 1. If $R = -1$, 
+the distribution is truncated to the right of $m\times c$. If $R = 1$, 
+the distribution is truncated to the left of  $m\times c$. The additional parameter $m$ 
+represents metacognitive efficiency, i.e., the amount of information available for confidence judgments relative to
 amount of evidence available for the discrimination decision and  can be smaller
 as well as greater than 1.
 
-### \strong{Logistic Noise Model (logN)
-According to logN, the same sample
-of sensory evidence is used to generate response and confidence, i.e.,
+### Logistic Noise Model (logN)
+According to logN, the same sample of sensory evidence is used to generate response and confidence, i.e.,
 $y=x$ just as in SDT (Shekhar & Rahnev, 2021). However, according to logN, the confidence criteria
 are not assumed to be constant, but instead they are affected by noise drawn from
 a lognormal distribution. In each trial, $\theta_{-1,i}$ is given
 by $c -  \epsilon_i$. Likewise,  $\theta_{1,i}$ is given by
-$c + \epsilon_i$. $\epsilon_i$ is drawn from a lognormal distribution with
+$c + \epsilon_i$. The noise $\epsilon_i$ is drawn from a lognormal distribution with
 the location parameter
-$\mu_{R,i}=log(|\overline{\theta}_{R,i}- c|) - 0.5 \times \sigma^{2}$ and
+$\mu_{R,i}=\log(\left|\overline{\theta}_{R,i}- c\right|) - 0.5 \times \sigma^{2}$ and
 scale parameter $\sigma$. $\sigma$ is a free parameter designed to
 quantify metacognitive ability. It is assumed that the criterion noise is perfectly
 correlated across confidence criteria, ensuring that the confidence criteria
