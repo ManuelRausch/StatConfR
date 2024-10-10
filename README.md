@@ -8,24 +8,24 @@ meta-d′/d′. Several models provide a metacognition parameter that may
 serve as an alternative when the assumptions of meta-d′/d′ assuming the
 corresponding model provides a better fit to the data. The following models are included:
 
-- Signal detection rating model
+- signal detection rating model,
 
-- Gaussian noise model
+- Gaussian noise model,
 
-- Weighted evidence and visibility model
+- weighted evidence and visibility model,
 
-- Post-decisional accumulation Model
+- post-decisional accumulation model,
 
-- Independent Gaussian model
+- independent Gaussian model,
 
-- Independent truncated Gaussian model (the model underlying the
-  meta-d′/d′ method, see Rausch et al., 2023)
+- independent truncated Gaussian model (the model underlying the
+  meta-d′/d′ method, see Rausch et al., 2023),
 
-- Lognormal noise model
+- lognormal noise model, and
 
-- Lognormal weighted evidence and visibility model
+- lognormal weighted evidence and visibility model.
 
-## Mathematical description of models
+## Mathematical description of implemented models of confidence
 The models included in the statConfR package are all based on signal detection theory (Green & Swets, 1966). 
 It is assumed that participants select a binary discrimination response $R$ about a stimulus $S$.
 Both $S$ and $R$ can be either -1 or 1. $R$ is considered correct if $S=R$.
@@ -42,22 +42,22 @@ set of criteria $\theta_{R,i}, i=1,2,...,L-1$, depending on the
 discrimination response $R$ to produce a $L$-step discrete confidence response. The different models
 vary in how $y$ is generated (see below). 
 The parameters shared between all models are:
-- sensitivity parameters $d_1, ..., d_K$ ($K$: number of difficulty levels)
+- sensitivity parameters $d_1, ..., d_K$ ($K$: number of difficulty levels),
 - decision criterion $c$, 
 - confidence criterion $\theta_{-1,1}, ..., \theta_{-1,L-1}, 
-\theta_{1,1},  ,...,\theta_{1,L-1}$ ($L$: number of confidence categories available for confidence ratings)
+\theta_{1,1},  ,...,\theta_{1,L-1}$ ($L$: number of confidence categories available for confidence ratings).
 
-### Signal Detection Rating Model (SDT)
+### Signal detection rating model (SDT)
 According to SDT, the same sample of sensory evidence is used to generate response and confidence, i.e.,
 $y=x$. The confidence criteria associated with $R=-1$ are more negative than the 
-decision criterion $c$, whereas the confidence criteria associated with $R=1$ are more positive than $c$(Green & Swets, 1966).
+decision criterion $c$, whereas the confidence criteria associated with $R=1$ are more positive than $c$ (Green & Swets, 1966).
 
-### Gaussian Noise Model (GN)
+### Gaussian noise model (GN)
 According to GN, $y$ is subject to additive noise and assumed to be normally distributed
 around the decision evidence value $x$ with a standard deviation $\sigma$, 
 which is an additional free parameter (Maniscalco & Lau, 2016).
 
-### Weighted Evidence and Visibility model (WEV)
+### Weighted evidence and visibility model (WEV)
 WEV assumes that the observer combines evidence about decision-relevant features 
 of the stimulus with the strength of evidence about choice-irrelevant features 
 to generate confidence (Rausch et al., 2018). Thus, the WEV model assumes that $y$ is normally 
@@ -75,14 +75,14 @@ accumulation. The confidence variable is normally distributed with mean
 $x+S\times d_k\times a$ and variance $a$. The parameter $a$ is fitted in addition to the shared
 parameters.
 
-### Independent Gaussian Model (IG)
+### Independent Gaussian model (IG)
 According to IG, $y$ is sampled independently from $x$ (Rausch & Zehetleitner, 2017). 
 The variable $y$ is normally distributed with a mean of $a\times d_k$ and variance
 of 1. The additional parameter $m$ represents the amount of information available for confidence judgment
 relative to amount of evidence available for the discrimination decision and can 
 be smaller as well as greater than 1.
 
-### Independent Truncated Gaussian Model: HMetad-Version (ITGc)
+### Independent truncated Gaussian model: HMetad-Version (ITGc)
 According to the version of ITG consistent with the HMetad-method 
 (Fleming, 2017; see Rausch et al., 2023), $y$ is sampled independently
 from $x$ from a truncated Gaussian distribution with a location parameter
@@ -95,7 +95,7 @@ i.e., the amount of information available for confidence judgments relative to
 amount of evidence available for discrimination decisions and  can be smaller
 as well as greater than 1.
 
-### Independent Truncated Gaussian Model: Meta-d'-Version (ITGcm)
+### Independent truncated Gaussian model: Meta-d'-Version (ITGcm)
 According to the version of the ITG consistent with the original meta-d' 
 method (Maniscalco & Lau, 2012, 2014; see Rausch et al., 2023),
 $y$ is sampled independently from $x$ from a truncated Gaussian distribution with a location parameter
@@ -106,7 +106,7 @@ represents metacognitive efficiency, i.e., the amount of information available f
 amount of evidence available for the discrimination decision and  can be smaller
 as well as greater than 1.
 
-### Logistic Noise Model (logN)
+### Logistic noise model (logN)
 According to logN, the same sample of sensory evidence is used to generate response and confidence, i.e.,
 $y=x$ just as in SDT (Shekhar & Rahnev, 2021). However, according to logN, the confidence criteria
 are not assumed to be constant, but instead they are affected by noise drawn from
@@ -114,7 +114,7 @@ a lognormal distribution. In each trial, $\theta_{-1,i}$ is given
 by $c -  \epsilon_i$. Likewise,  $\theta_{1,i}$ is given by
 $c + \epsilon_i$. The noise $\epsilon_i$ is drawn from a lognormal distribution with
 the location parameter
-$\mu_{R,i}=\log(\left|\overline{\theta}_{R,i}- c\right|) - 0.5 \times \sigma^{2}$ and
+$\mu_{R,i}$ =\log(\left|\overline{\theta}_{R,i}- c\right|) - 0.5 \times \sigma^{2}$ and
 scale parameter $\sigma$. $\sigma$ is a free parameter designed to
 quantify metacognitive ability. It is assumed that the criterion noise is perfectly
 correlated across confidence criteria, ensuring that the confidence criteria
