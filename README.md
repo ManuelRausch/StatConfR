@@ -114,7 +114,7 @@ a lognormal distribution. In each trial, $\theta_{-1,i}$ is given
 by $c -  \epsilon_i$. Likewise,  $\theta_{1,i}$ is given by
 $c + \epsilon_i$. The noise $\epsilon_i$ is drawn from a lognormal distribution with
 the location parameter $\mu_{R,i} = \log(\left| \theta_{R,i} - c\right|)- 0.5 \times \sigma^{2}$, 
-$\mu_{R,i} = \log(\left| \bar{\theta}_{R,i} - c\right|)- 0.5 \times \sigma^{2}$. Continue here. 
+$\mu_{R,i} = \log(\left| \overline{\theta}_{R,i} - c\right|)- 0.5 \times \sigma^{2}$. Continue here. 
 $\mu_{R,i} =\log(\left|\overline{\theta}_{R,i}- c\right|) $ and
 scale parameter $\sigma$. $\sigma$ is a free parameter designed to
 quantify metacognitive ability. It is assumed that the criterion noise is perfectly
