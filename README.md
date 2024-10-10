@@ -119,7 +119,7 @@ quantify metacognitive ability. It is assumed that the criterion noise is perfec
 correlated across confidence criteria, ensuring that the confidence criteria
 are always perfectly ordered. Because $\theta_{-1,1}$, ..., $\theta_{-1,L-1}$,
 $\theta_{1,1}$, ..., $\theta_{1,L-1}$ change from trial to trial, they are not estimated
-as free parameters. Instead, we estimate the means of the confidence criteria, i.e., $\mu_{\theta}_{-1,1}, ...,
+as free parameters. Instead, we estimate the means of the confidence criteria, i.e., $\mu_{\theta_{-1,1}}, ...,
 \mu_{\theta_{-1,L-1}}, \mu_{\theta_{1,1}}, ...  \mu_{\theta_{1,L-1}}$,
 as free parameters.
 
