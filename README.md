@@ -130,7 +130,7 @@ of the stimulus with the strength of evidence about choice-irrelevant features (
 The model also assumes that noise affecting the confidence decision variable is lognormal
  in accordance with Shekhar and Rahnev (2021).
 According to logWEV, the confidence decision variable is $y$ is equal to
-R &times; y<sup>*</sup>. y<sup>*</sup> is sampled from a lognormal distribution with a location parameter
+R &times; y<sup>*</sup>. y<sup>2</sup> is sampled from a lognormal distribution with a location parameter
  of $(1-w)\times x\times R + w \times d_k$ and a scale parameter of $\sigma$.
  The parameter $\sigma$ quantifies the amount of unsystematic variability
 contributing to confidence judgments but not to the discrimination judgments.
