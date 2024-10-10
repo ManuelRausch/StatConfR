@@ -120,7 +120,7 @@ correlated across confidence criteria, ensuring that the confidence criteria
 are always perfectly ordered. Because $\theta_{-1,1}$, ..., $\theta_{-1,L-1}$,
 $\theta_{1,1}$, ..., $\theta_{1,L-1}$ change from trial to trial, they are not estimated
 as free parameters. Instead, we estimate the means of the confidence criteria, i.e., $\mu_{\theta}_{-1,1}, ...,
-\mu_{\theta}_{-1,L-1}, \mu_{\theta}_{1,1}, ...  \mu_{\theta}_{1,L-1}$,
+\mu_{\theta_{-1,L-1}}, \mu_{\theta_{1,1}}, ...  \mu_{\theta_{1,L-1}}$,
 as free parameters.
 
 ### Logistic weighted evidence and visibility model (logWEV)
@@ -150,11 +150,11 @@ because both are measured on the same scale. Meta-d′ can be compared against t
 estimated from discrimination responses, which is referred to as d′: 
 If meta-d′ equals d′, it means that metacognitive accuracy is exactly as good as expected from discrimination performance. If
 meta-d′ is lower than d′, it means that metacognitive accuracy is suboptimal. It can be shown that 
-the implicit model of confidence underlying the meta-d'/d' method is identical to the independent truncated Gaussian model. 
-
-Our function is a translation of matlab code provided by Brian Maniscalco (http:// www. colum bia. edu/ ~bsm21 05/ type2 sdt, last accessed
-2021–09-20).
-
+the implicit model of confidence underlying the meta-d'/d' method is identical to the independent truncated Gaussian model (Rausch et al., 2023). 
+We strongly recommend that if metacognitive efficiency is to be
+measured using the meta-d′/d′ method that researchers fist determine
+whether the independent truncated Gaussian model, is an adequate description of the
+data. 
 
 ## Installation
 
@@ -192,23 +192,19 @@ head(MaskOri)
 Data should be in the form of a data.frame object columns for following
 variables:
 
-- stimulus (factor with 2 levels): The property of the stimulus which
-  defines which response is correct
-- diffCond (factor): The experimental manipulation that is expected to
-  affect discrimination sensitivity
-- correct (0-1): Indicating whether the choice was correct (1) or
-  incorrect(0).
-- rating (factor): A discrete variable encoding the decision confidence
-  (high: very confident; low: less confident)
+- stimulus (factor with 2 levels): the feature of the stimulus which
+  defines which response is correct,
+- diffCond (factor, optinal): the experimental manipulation that is expected to
+  affect discrimination sensitivity,
+- correct (0-1): a variable indicating whether the choice was correct (1) or
+  incorrect(0),
+- rating (factor): a discrete variable encoding the decision confidence
+  (high: very confident; low: less confident).
 - participant (integer): giving the subject ID.
 
 ### Fitting
 
-We strongly recommend that if metacognitive efficiency is to be
-measured using the meta-d′/d′ method that researchers fist determine
-whether the Independent Truncated Gaussian Model, the confidence model
-implied by the meta-d′/d′ method, is an adequate description of the
-data. Using the function fitConfModel, we can fit several confidence
+Using the function fitConfModel, we can fit several confidence
 models to the data of each participant. The argument
 `.parallel=TRUE`allows for parallelization over all but one available
 core.
