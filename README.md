@@ -113,25 +113,24 @@ are not assumed to be constant, but instead they are affected by noise drawn fro
 a lognormal distribution. In each trial, $\theta_{-1,i}$ is given
 by $c -  \epsilon_i$. Likewise,  $\theta_{1,i}$ is given by
 $c + \epsilon_i$. The noise $\epsilon_i$ is drawn from a lognormal distribution with
-the location parameter $\mu_{R,i} = \log(\left| \theta_{R,i} - c\right|)- 0.5 \times \sigma^{2}$, 
-$\mu_{R,i} = \log(\left| \mu_{\theta_{R,i}} - c\right|)- 0.5 \times \sigma^{2}$,  and
-scale parameter $\sigma$. $\sigma$ is a free parameter designed to
+the location parameter $\mu_{R,i} = \log(\left| \mu_{\theta_{R,i}} - c\right|)- 0.5 \times \sigma^{2}$, 
+and scale parameter $\sigma$. $\sigma$ is a free parameter designed to
 quantify metacognitive ability. It is assumed that the criterion noise is perfectly
 correlated across confidence criteria, ensuring that the confidence criteria
 are always perfectly ordered. Because $\theta_{-1,1}$, ..., $\theta_{-1,L-1}$,
 $\theta_{1,1}$, ..., $\theta_{1,L-1}$ change from trial to trial, they are not estimated
-as free parameters. Instead, we estimate the means of the confidence criteria, i.e., $\overline{\theta}_{-1,1}, ...,
-\overline{\theta}_{-1,L-1}, \overline{\theta}_{1,1}, ...  \overline{\theta}_{1,L-1}$,
+as free parameters. Instead, we estimate the means of the confidence criteria, i.e., $\mu_{\theta}_{-1,1}, ...,
+\mu_{\theta}_{-1,L-1}, \mu_{\theta}_{1,1}, ...  \mu_{\theta}_{1,L-1}$,
 as free parameters.
 
-### \strong{Logistic Weighted Evidence and Visibility model (logWEV)
+### Logistic weighted evidence and visibility model (logWEV)
 The logWEV model is a combination of logN and WEV, proposed by Shekhar and Rahnev (2023).
 Conceptually, logWEV assumes that the observer combines evidence about decision-relevant features
 of the stimulus with the strength of evidence about choice-irrelevant features (Rausch et al., 2018).
 The model also assumes that noise affecting the confidence decision variable is lognormal
  in accordance with Shekhar and Rahnev (2021).
 According to logWEV, the confidence decision variable is $y$ is equal to
-$y^*\times R$. $y^*$ is sampled from a lognormal distribution with a location parameter
+R &times; y<sup>*</sup>. y<sup>*</sup> is sampled from a lognormal distribution with a location parameter
  of $(1-w)\times x\times R + w \times d_k$ and a scale parameter of $\sigma$.
  The parameter $\sigma$ quantifies the amount of unsystematic variability
 contributing to confidence judgments but not to the discrimination judgments.
