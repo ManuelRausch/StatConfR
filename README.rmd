@@ -162,14 +162,8 @@ under the assumption that participants had perfect access to the sensory evidenc
 and were perfectly consistent in placing their confidence criteria (Maniscalco & Lau, 2012, 2014).
 Using a signal detection model describing the primary task to quantify metacognition
 allows a direct comparison between metacognitive accuracy and discrimination performance
-because both are measured on the same scale. Meta-d′ can be compared against the estimate of the distance between the two stimulus distributions 
-estimated from discrimination responses, which is referred to as d′: 
-If meta-d′ equals d′, it means that metacognitive accuracy is exactly as good as expected from discrimination performance. If
-meta-d′ is lower than d′, it means that metacognitive accuracy is suboptimal. It can be shown that 
-the implicit model of confidence underlying the meta-d'/d' method is identical to the independent truncated Gaussian model (Rausch et al., 2023). 
-We strongly recommend that if metacognitive efficiency is to be
-measured using the meta-d′/d′ method that researchers fist determine
-whether the independent truncated Gaussian model, is an adequate description of the
+because both are measured on the same scale. Meta-d′ can be compared against the estimate of the distance between the two stimulus distributions estimated from discrimination responses, which is referred to as d′: If meta-d′ equals d′, it means that metacognitive accuracy is exactly as good as expected from discrimination performance. If meta-d′ is lower than d′, it means that metacognitive accuracy is not optimal. It can be shown that the implicit model of confidence underlying the meta-d'/d' method is identical to different versions of the independent truncated Gaussian model (Rausch et al., 2023), depending on whether the original model specification by Maniscalco and Lau (2012) or alternatively the specification by Fleming (2017). We strongly recommend that if metacognitive efficiency is to bemeasured using the meta-d′/d′ method that researchers fist determine
+whether the independent truncated Gaussian models are adequate descriptions of the
 data. 
 
 ## Installation
@@ -189,11 +183,11 @@ devtools::install_github("ManuelRausch/StatConfR")
 
 ## Usage
 
-### Data structure
+### Example data set
 
 The package includes a demo data set from a masked orientation
 discrimination task with confidence judgments (Hellmann et al., 2023,
-Exp. 1.
+Exp. 1).
 
 ```{r}
 library(statConfR)
@@ -201,9 +195,12 @@ data("MaskOri")
 head(MaskOri)
 ```
 
-Data should be in the form of a data.frame object columns for following
-variables:
+### Fitting
 
+The function `fitConfModels` allows the user to fit several confidence
+models separately to the data of each participant. 
+The data should be provided via the argument `.data` in the form of a data.frame 
+object with the following variables in seperate columns: 
 -   stimulus (factor with 2 levels): The property of the stimulus which
     defines which response is correct
 -   diffCond (factor): The experimental manipulation that is expected to
@@ -213,178 +210,38 @@ variables:
 -   rating (factor): A discrete variable encoding the decision
     confidence (high: very confident; low: less confident)
 -   participant (integer): giving the subject ID.
+The argument `model` is used to specify which model should be fitted, with 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'ITGcm', 'logN', and 'logWEV' as available options. If model="all" (default), all implemented models will be fit, although this may take a while. 
 
-### Fitting
+Setting the optional argument `.parallel=TRUE` parallizes model fitting over all but 1 available core.
+Note that the fitting procedure takes may take a considerable amount of time, 
+especially, when there are multiple models, several difficulty conditions, and/or  several confidence categories.  Depending on the model and the number of experimental conditions, fitting one participant and model combination may take up to 20-30 minutes on a modern 2.8GHz CPU.
 
-It is strongly recommended that if metacognitive efficiency is to be
-measured using the meta-d′/d′ method that researchers fist determine
-whether the Independent Truncated Gaussian Model, the confidence model
-implied by the meta-d′/d′ method, is an adequate description of the
-data. Using the function fitConfModels, we can fit several confidence
-models to the data of each participant.
-
-Note that the fitting procedure takes some time as the models have
-several parameters. Depending on the model and the number of
-experimental conditions, this may take up to 20-30 minutes per
-participant and model combination on a modern 2.8GHz CPU.
-
-The argument `.parallel=TRUE`allows for parallelization over all but one
-available core.
-
-```         
-fitted_pars <- fitConfModels(MaskOri, models=c("SDT", "WEV"), .parallel = TRUE) 
+```     
+fitted_pars <- fitConfModels(MaskOri, models=c("ITGcm", "WEV"), .parallel = TRUE) 
 ```
 
-This parallelizes the fitting process over participant-model
-combinations. The output is then a data frame with one row for each
-participant-model combination and columns for parameters and measures
-for model performance (negative log-likelihood, BIC, AIC and AICc).
-These may be used for quantitative model comparison.
-
-```{r, echo=FALSE}
-fitted_pars <- structure(list(
-  model = c("SDT", "WEV", "SDT", "WEV", "SDT", "WEV", "SDT", "WEV", "SDT", "WEV",             "SDT", "WEV", "SDT", "WEV", "SDT", "WEV", "SDT", "WEV", "SDT", "WEV",             "SDT", "WEV", "SDT", "WEV", "SDT", "WEV", "SDT", "WEV", "SDT", "WEV",             "SDT", "WEV"), 
-  participant = c(1, 1, 2, 2, 3, 3, 4, 4, 
-                  5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 
-                  14, 14, 15, 15, 16, 16), 
-  negLogLik = c(2721.256, 2621.110, 1946.258, 1827.221, 1706.178, 
-                1661.617, 1315.112, 1247.284, 1820.819, 1723.671,
-                2593.780, 2514.932, 1698.055, 1612.056, 2544.435, 
-                2491.750, 2347.679, 2219.598, 1715.222, 1582.766, 2182.176,                      1868.587, 2485.889, 2393.366, 1096.712, 1048.117, 2030.395,                      1821.567, 2306.528, 2156.135, 2434.188, 2193.127), 
-  N = c(1620L, 1620L, 1620L, 1620L, 1620L, 1620L, 1620L, 1620L, 
-        1620L, 1620L, 1620L, 1620L, 1620L, 1620L, 1620L, 1620L, 
-        1620L, 1620L, 1620L, 1620L, 1620L, 1620L, 1620L, 1620L, 
-        1620L, 1620L, 1620L, 1620L, 1620L, 1620L, 1620L, 1620L), 
-  k = c(14L, 16L, 14L, 16L, 14L, 16L, 14L, 16L, 
-        14L, 16L, 14L, 16L, 14L, 16L, 14L, 16L, 
-        14L, 16L, 14L, 16L, 14L, 16L, 14L, 16L, 
-        14L, 16L, 14L, 16L, 14L, 16L, 14L, 16L), 
-  BIC = c(5545.975, 5360.464, 3995.979, 3772.684, 
-          3515.818, 3441.476, 2733.686, 2612.811, 
-          3745.101, 3565.585, 5291.023, 5148.107, 
-          3499.572, 3342.356, 5192.333, 5101.744, 
-          4798.820, 4557.439, 3533.907, 3283.774,
-          4467.814, 3855.416, 5075.241, 4904.975, 
-          2296.886, 2214.477, 4164.253, 3761.376,
-          4716.518, 4430.512, 4971.838, 4504.496), 
-  AICc = c( 5470.739, 5274.520, 3920.743, 3686.741,
-            3440.582, 3355.533, 2658.451, 2526.868,
-            3669.866, 3479.642, 5215.787, 5062.164,
-            3424.336, 3256.412, 5117.097, 5015.800, 
-            4723.584, 4471.495, 3458.671, 3197.831, 
-            4392.578, 3769.473, 5000.005, 4819.031,
-            2221.650, 2128.533, 4089.017, 3675.432, 
-            4641.282, 4344.569, 4896.602, 4418.553), 
-  AIC = c(5470.513, 5274.221, 3920.517, 3686.441, 
-          3440.356, 3355.233, 2658.224, 2526.569, 
-          3669.639, 3479.342, 5215.560, 5061.865,
-          3424.110, 3256.113, 5116.870, 5015.501,
-          4723.358, 4471.196, 3458.444, 3197.531,
-          4392.351, 3769.174, 4999.779, 4818.732, 
-          2221.423, 2128.234, 4088.790, 3675.133,
-          4641.055, 4344.269, 4896.375, 4418.253), 
-  d_1 = c(0.0428, 0.2027, 0.0000, 0.0512, 0.2708, 0.4146, 0.0002, 0.0266,
-          0.0001, 0.0002, 0.0070, 0.0094, 0.0133, 0.1092, 0.1272, 0.0283, 
-          0.0874, 0.1894, 0.0979, 0.0815, 0.0036, 0.0000, 0.0394, 0.2394, 
-          0.0014, 0.0008, 0.0371, 0.0029, 0.0506, 0.2515, 0.0043, 0.0056), 
-  d_2 = c(0.4593, 0.6142, 0.0950, 0.1920, 0.4673, 0.8561, 0.0785, 0.1828, 
-          0.1510, 0.1708, 0.3743, 0.3872, 0.5764, 0.6861, 0.1283, 0.1393, 
-          0.2870, 0.4464, 0.2501, 0.2981, 0.0048, 0.0000, 0.3578, 0.2691,
-          0.0288, 0.0030, 0.0553, 0.0494, 0.3503, 0.5728, 0.2345, 0.2263), 
-  d_3 = c(1.0526, 1.0797, 0.8601, 1.0412, 1.9117, 2.7115, 2.6508, 2.2663, 
-          1.5160, 1.5043, 0.8712, 1.2054, 1.7979, 1.8298, 0.5464, 0.7973, 
-          1.0209, 1.0596, 0.5550, 0.6764, 0.0067, 0.2912, 0.6599, 0.8339, 
-          0.5883, 0.7724, 2.6441, 2.1897, 1.8880, 1.9333, 0.3032, 0.5420), 
-  d_4 = c(3.6806, 3.4746, 6.1410, 4.1423, 6.4257, 6.9164, 7.3334, 4.7879, 
-          5.8306, 3.7159, 4.0074, 3.2443, 5.9603, 4.5527, 2.6227, 2.5127, 
-          5.2454, 3.7840, 3.1460, 2.3962, 2.4328, 1.9491, 2.7917, 2.5463, 
-          6.3653, 4.5931, 6.8276, 4.2693, 5.3671, 4.0775, 1.6437, 1.8035), 
-  d_5 = c(4.7779, 4.0799, 8.0556, 5.2886, 7.5755, 7.9863, 8.3112, 5.3117, 
-          7.5051, 4.5348, 6.3132, 4.6611, 8.6092, 6.2114, 5.3301, 4.6658, 
-          9.1885, 5.8474, 6.0059, 3.3914, 6.6479, 3.3889, 6.0167, 4.4172, 
-          9.2753, 6.4803, 9.1068, 5.3490, 7.7549, 5.2797, 5.4378, 2.8724), 
-  c = c(-0.2723, -0.2957, -0.1394, -0.1475, -1.1510, -1.3743, 0.1900, 0.1717,            -0.1358, -0.1179, -0.1861, -0.1905, -0.1001, -0.1248, 0.4126, 0.4138, 
-        -0.2692, -0.2673, -0.0105, -0.0008, -0.1961, -0.1895, -0.1925, -0.2076,          -0.9455, -0.9123, -0.2795, -0.2606, -0.1878, -0.1973, 0.1028,  0.1013),
-  theta_minus.4 = c(-1.5467, -2.0665, -2.0092, -2.0441,
-                    -1.9938, -2.7625, -2.4023, -2.3219, 
-                    -2.4831, -2.2074, -2.0534, -2.3283, 
-                    -1.9612, -2.2717, -1.7405, -2.2854, 
-                    -2.5484, -2.6862, -5.1218, -3.7997, 
-                    -3.7311, -2.8340, -1.4923, -1.7448, 
-                    -2.6828, -2.5758, -3.4180, -3.0854, 
-                    -1.8803, -2.1973, -1.4694, -1.5659), 
-  theta_minus.3 = c(-1.0333, -1.2485, -1.9193, -1.9500, 
-                    -1.6372, -1.9192, -2.1014, -2.0707, 
-                    -1.7127, -1.6231, 1.4491, -1.6752, 
-                    -1.7638, -2.0425, -1.5328, -2.0199, 
-                    -1.7582, -1.8359, -4.4336, -3.3743, 
-                    -2.2426, -1.8941, -1.2401, -1.4400, 
-                    -2.3699, -2.3140, -2.0691, -2.0793, 
-                    -1.2779, -1.5282, -1.3487, -1.4590), 
-  theta_minus.2 = c(-0.6336, -0.4152, -1.4097, -1.3982, -1.2600, -0.3724,                            -1.9896, -1.9636, -1.5134, -1.4513, -1.1293, -1.2743,                            -1.7095, -1.9781, -1.2594, -1.6607, -1.1097, -1.1141,                            -3.3155, -2.6892, -1.8550, -1.5981, -1.0955, -1.2453,                            2.2514, -2.2057, -1.6390, -1.6791, -0.9313, -1.0813,                            -1.0651, -1.1707), 
-  theta_minus.1 = c(-0.4543,  0.1296, -0.9580, -0.9030, -1.1668, 0.9328,
-                    -1.7341, -1.7092, -1.2946, -1.2548, -0.6609, -0.5921,
-                    -1.2117, -1.3993, -0.7776, -1.0002, -0.5582, -0.3386,
-                    -1.7153, -1.6536, -1.4748, -1.2134, -0.7674, -0.7641,
-                    -2.0412, -1.9852, -0.9709, -0.9152, -0.4497, -0.2818,
-                    -0.9105, -0.9926), 
-  theta_plus.1 = c(-0.0944, -0.6196, 0.7857,  0.8201, -1.1143, -2.7695,  
-                   2.0205,  2.0109,  1.5262,  1.3854,  0.5231,  0.5995,
-                   1.2145, 1.5088, 0.9446,  0.8995 , 0.1476,  0.1797,
-                   1.7219,  1.6238,  1.0330,  0.9896, 0.7259,  0.8791,  
-                   1.8260,  1.6742,  0.9272,  0.9170,  0.1505,  0.1830,  
-                   0.9580,  0.8831), 
-  theta_plus.2 = c(0.2152,  0.1544,  1.3781,  1.4484, -0.7344, -1.1313,  
-                   2.2051,  2.1714,  1.7948,  1.6133,  1.0471,  1.2389,  
-                   1.6436,  1.9894,  1.2760,  1.5454,  0.8249,  0.9612,  
-                   2.9214,  2.4354,  1.6332,  1.5325,  1.3923,  1.6567, 
-                   2.1620,  2.0029,  1.5213,  1.5131,  0.8220,  1.0777,  
-                   1.1148,  1.0462), 
-  theta_plus.3 = c(0.9850, 1.3976, 2.0879, 2.2447, 0.2961, 0.7714, 
-                   2.3807, 2.3164, 2.0180, 1.7985, 1.3480, 1.5777, 
-                   1.8176, 2.1864, 1.6817, 2.1866, 1.3751, 1.5394, 
-                   4.1369, 3.1720, 2.0967, 1.8586, 1.5691, 1.8518, 
-                   2.3198, 2.1595, 2.1597, 2.0872, 1.1492, 1.4735, 
-                   1.7962, 1.7024), 
-  theta_plus.4 = c(1.5735, 2.1879, 2.2369, 2.4030, 0.9314, 1.7520, 
-                   2.7241, 2.5805, 2.9750, 2.5276, 1.9832, 2.2356,
-                   2.1917, 2.5857, 1.9370, 2.5482, 2.3346, 2.5794, 
-                   5.2679, 3.8478, 3.8224, 2.8743, 1.8500, 2.1539, 
-                   2.7041, 2.5091, 3.7390, 3.3099, 1.8606, 2.2707, 
-                   1.8980, 1.7892),
-  sigma = c(NA, 1.0105, NA, 0.6391, NA, 1.3289, NA, 0.3921, 
-            NA, 0.2973, NA, 0.7526, NA, 0.7537, NA, 1.0749, 
-            NA, 0.6463, NA, 0.2883, NA, 0.3090, NA, 0.7764, 
-            NA, 0.3878, NA, 0.4180, NA, 0.6858, NA, 0.5179), 
-  w = c(NA, 0.5361, NA, 0.5020, NA, 0.3818, NA, 0.3805,
-        NA, 0.3596, NA, 0.4417, NA, 0.4783, NA, 0.4843,
-        NA, 0.5162, NA, 0.4645, NA, 0.5261, NA, 0.4832,
-        NA, 0.2917, NA, 0.4503, NA, 0.5133, NA, 0.6329), 
-  wAIC = c(0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 
-           0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1), 
-  wAICc = c(0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 
-            0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1), 
-  wBIC = c(0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 
-           0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1)), class = "data.frame", row.names = c(NA, 
-                                                                                           -32L))
-```
+The output is then a data frame with one row for each combination of 
+participant and model and seperate columns for each estimated parameter as well as for different measures for goodness-of-fit (negative log-likelihood, BIC, AIC and AICc).
+These may be used for statistical  model comparisons.
 
 ```{r}
 head(fitted_pars)
 ```
 
-If the Independent Truncated Gaussian model provides a decent account of
-the data (which is not the case though in the demo dataset), it is
-legitimate to quantify metacognitive efficiency with meta-d′/d′:
+It can be seen that the independent truncated Gaussian model is consistently outperformed by the weighted evidence and visibility model, which is why we would not recommend using meta-d′/d′ for this specific task. 
+
+### Measuring metacognition
+
+Assuming that the independent truncated Gaussian model provides a decent account of
+the data (which is not the case though in the demo dataset), the function `fitConfModels` can be used to estimate meta-d′/d′. The arguments `.data` and `.parallel=TRUE` are identical to the arguments in `fitConfModels`. The argument `model` offers the user the choice between two model specificationsEither "ML" to use the original model specification used by Maniscalco and Lau (2012, 2014) or "F" to use the model specification by Fleming (2017)'s Hmetad method. 
 
 ```         
-MetaDs <- fitMetaDprime(subset(MaskOri, diffCond == "33.3"), 
+MetaDs <- fitMetaDprime(data = subset(MaskOri, diffCond == "33.3"), 
                         model="ML", .parallel = TRUE)
 ```
 
 ## Contributing to the package 
-The package is under constant development. 
-We try to include other models that are published in the literature in the package.
+The package is under active development. We aim to include other models that are published in the literature in the package.
 If you have a own model published that you want to include in the package, or want 
 to contribute in any other kind, feel free to contact us. We are always happy to 
 extend the range of models the package covers. 
@@ -430,16 +287,14 @@ or [submit an issue](https://github.com/ManuelRausch/StatConfR/issues).
 
 ## References
 
-Hellmann, S., Zehetleitner, M., & Rausch, M. (2023). Simultaneous
-modeling of choice, confidence, and response time in visual perception.
-Psychological Review. 130(6), 1521--1543.
-[doi:10.1037/rev0000411](https://doi.org/10.1037/rev0000411)
+Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, 1, 1–14. https://doi.org/10.1093/nc/nix007
+Green, D. M., & Swets, J. A. (1966). Signal detection theory and psychophysics. Wiley.
+Hellmann, S., Zehetleitner, M., & Rausch, M. (2023). Simultaneous modeling of choice, confidence, and response time in visual perception. Psychological Review, 130(6), 1521–1543. https://doi.org/10.1037/rev0000411
+Maniscalco, B., & Lau, H. (2012). A signal detection theoretic method for estimating metacognitive sensitivity from confidence ratings. Consciousness and Cognition, 21(1), 422–430. https://doi.org/10.1016/j.concog.2011.09.021
+Maniscalco, B., & Lau, H. (2016). The signal processing architecture underlying subjective reports of sensory awareness. Neuroscience of Consciousness, 1, 1–17. https://doi.org/10.1093/nc/niw002
+Maniscalco, B., & Lau, H. C. (2014). Signal Detection Theory Analysis of Type 1 and Type 2 Data: Meta-d, Response- Specific Meta-d, and the Unequal Variance SDT Model. In S. M. Fleming & C. D. Frith (Eds.), The Cognitive Neuroscience of Metacognition (pp. 25–66). Springer. https://doi.org/10.1007/978-3-642-45190-4_3
+Rausch, M., Hellmann, S., & Zehetleitner, M. (2018). Confidence in masked orientation judgments is informed by both evidence and visibility. Attention, Perception, and Psychophysics, 80(1), 134–154. https://doi.org/10.3758/s13414-017-1431-5
+Rausch, M., & Zehetleitner, M. (2017). Should metacognition be measured by logistic regression? Consciousness and Cognition, 49, 291–312. https://doi.org/10.1016/j.concog.2017.02.007
+Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive Inefficiency in Perceptual Decision Making. Psychological Review, 128(1), 45–70. https://doi.org/10.1037/rev0000249
+Shekhar, M., & Rahnev, D. (2024). How Do Humans Give Conﬁdence? A Comprehensive Comparison of Process Models of Perceptual Metacognition. Journal of Experimental Psychology: General, 153(3), 656–688. https://doi.org/10.1037/xge0001524
 
-Rausch, M., Hellmann, S. & Zehetleitner, M. (2023). Measures of
-metacognitive efficiency across cognitive models of decision confidence.
-Psychological Methods.
-[doi:10.1037/met0000634](https://doi.org/10.1037/met0000634)
-
-Rausch, M., & Hellmann, S. (2024). statConfR: An R Package for Static
-Models of Decision Confidence and Metacognition. PsyArXiv.
-[doi:10.31234/osf.io/dk6mr](https://doi.org/10.31234/osf.io/dk6mr)
