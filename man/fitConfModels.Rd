@@ -13,19 +13,23 @@ variables:
 \itemize{
 \item \code{diffCond} (optional; different levels of discriminability,
 should be a factor with levels ordered from hardest to easiest),
-\item \code{rating} (discrete confidence judgments, should be a factor with levels ordered from lowest confidence to highest confidence;
+\item \code{rating} (discrete confidence judgments, should be a factor with levels
+ordered from lowest confidence to highest confidence;
 otherwise will be transformed to factor with a warning),
 \item \code{stimulus} (stimulus category in a binary choice task,
 should be a factor with two levels, otherwise it will be transformed to
 a factor with a warning),
-\item \code{correct} (encoding whether the response was correct; should  be 0 for incorrect responses and 1 for correct responses)
-\item \code{participant} (giving the subject ID; the models given in the second argument are fitted for each
-subject individually.
+\item \code{correct} (encoding whether the response was correct; should  be 0 for
+incorrect responses and 1 for correct responses)
+\item \code{participant} (some group ID, most often a participant identifier;
+the models given in the second argument are fitted to each subset of \code{data}
+determined by the different values of this column)
 }}
 
-\item{models}{\code{character}.
-Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'ITGcm', 'logN', and 'logWEV'.
-Alternatively, if \code{model="all"} (default), all implemented models will be fit.}
+\item{models}{\code{character}. The different computational models that should be
+fitted. Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc',
+'ITGcm', 'logN', and 'logWEV'. Alternatively, if \code{model="all"} (default),
+all implemented models will be fit.}
 
 \item{nInits}{\code{integer}. Number of initial values used for maximum likelihood optimization.
 Defaults to 5.}
@@ -40,7 +44,11 @@ Defaults to 4.}
 number of cores -1 will be used.}
 }
 \value{
-Gives data frame with one row for each combination of model and participant and columns for the estimated parameters.
+Gives data frame with one row for each combination of model and
+participant. Columns include a model and participant column,
+one column for each estimated parameter for the different models (parameters
+that are not present in a specific model (row) but in other models are
+filled with NAs.
 Additional information  about the fit is provided in additional columns:
 \itemize{
 \item \code{negLogLik} (negative log-likelihood of the best-fitting set of parameters),
@@ -56,11 +64,25 @@ If length(models) > 1 or models == "all", there will be three additional columns
 }
 }
 \description{
-This function is a wrapper of the function \code{\link{fitConf}}. It calls the function for every possible combination
-of model in the \code{model} argument and participant in the \code{data}, respectively.
-See the Details for more information about the parameters.
+The \code{fitConfModels} function fits the parameters of several computational models of decision
+confidence, in binary choice tasks,  specified in the \code{model} argument, to
+different subsets of one data frame, indicated by different values in the column
+\code{participant} of the \code{data} argument.
+\code{fitConfModels} is a wrapper of the function \code{\link{fitConf}} and calls
+\code{\link{fitConf}} for every possible combination
+of model in the \code{models} argument and sub-data frame of \code{data} for each value
+in the \code{participant} column.
+See Details for more information about the parameters.
+Parameters are fitted using a maximum likelihood estimation method with a
+initial grid search to find promising starting values for the optimization.
+In addition, several measures of model fit (negative log-likelihood, BIC, AIC, and AICc)
+are computed, which can be used for a quantitative model evaluation.
 }
 \details{
+The provided \code{data} argument is split into subsets according to the values of
+the \code{participant} column. Then for each subset and each model in the \code{models}
+argument, the parameters of the respective model are fitted to the data subset.
+
 The fitting routine first performs a coarse grid search to find promising
 starting values for the maximum likelihood optimization procedure. Then the best \code{nInits}
 parameter sets found by the grid search are used as the initial values for separate
@@ -97,7 +119,7 @@ Thus, the parameters shared between all models are:
 
 How the confidence variable \eqn{y} is computed varies across the different models.
 The following models have been implemented so far:
-\subsection{\strong{Signal Detection Rating Model (SDT)}}{
+\subsection{\strong{Signal detection rating model (SDT)}}{
 
 According to SDT, the same sample of sensory
 evidence is used to generate response and confidence, i.e.,
@@ -105,7 +127,7 @@ evidence is used to generate response and confidence, i.e.,
 right side of the decision criterion \eqn{c}(Green & Swets, 1966).
 }
 
-\subsection{\strong{Gaussian Noise Model (GN)}}{
+\subsection{\strong{Gaussian noise model (GN)}}{
 
 According to the model, \eqn{y} is subject to
 additive noise and assumed to be normally distributed around the decision
@@ -113,7 +135,7 @@ evidence value \eqn{x} with a standard deviation \eqn{\sigma}(Maniscalco & Lau, 
 \eqn{\sigma} is an additional free parameter.
 }
 
-\subsection{\strong{Weighted Evidence and Visibility model (WEV)}}{
+\subsection{\strong{Weighted evidence and visibility model (WEV)}}{
 
 WEV assumes that the observer combines evidence about decision-relevant features
 of the stimulus with the strength of evidence about choice-irrelevant features
@@ -136,7 +158,7 @@ For this model the parameter \eqn{a} is fitted in addition to the shared
 parameters.
 }
 
-\subsection{\strong{Independent Gaussian Model (IG)}}{
+\subsection{\strong{Independent Gaussian model (IG)}}{
 
 According to IG, \eqn{y} is sampled independently
 from \eqn{x} (Rausch & Zehetleitner, 2017). \eqn{y} is normally distributed with a mean of \eqn{a\times d_k} and variance
@@ -146,7 +168,7 @@ relative to amount of evidence available for the discrimination decision and can
 be smaller as well as greater than 1.
 }
 
-\subsection{\strong{Independent Truncated Gaussian Model: HMetad-Version (ITGc)}}{
+\subsection{\strong{Independent truncated Gaussian model: HMetad-Version (ITGc)}}{
 
 According to the version of ITG consistent
 with the HMetad-method (Fleming, 2017; see Rausch et al., 2023), \eqn{y} is sampled independently
@@ -161,7 +183,7 @@ amount of evidence available for discrimination decisions and  can be smaller
 as well as greater than 1.
 }
 
-\subsection{\strong{Independent Truncated Gaussian Model: Meta-d'-Version (ITGcm)}}{
+\subsection{\strong{Independent truncated Gaussian model: Meta-d'-Version (ITGcm)}}{
 
 According to the version of the ITG consistent
 with the original meta-d' method (Maniscalco & Lau, 2012, 2014; see Rausch et al., 2023),
@@ -175,7 +197,7 @@ amount of evidence available for the discrimination decision and  can be smaller
 as well as greater than 1.
 }
 
-\subsection{\strong{Logistic Noise Model (logN)}}{
+\subsection{\strong{Logistic noise model (logN)}}{
 
 According to logN, the same sample
 of sensory evidence is used to generate response and confidence, i.e.,
@@ -196,7 +218,7 @@ as free parameters. Instead, we estimate the means of the confidence criteria, i
 as free parameters.
 }
 
-\subsection{\strong{Logistic Weighted Evidence and Visibility model (logWEV)}}{
+\subsection{\strong{Logistic weighted evidence and visibility model (logWEV)}}{
 
 logWEV is a combination of logN and WEV proposed by Shekhar and Rahnev (2023).
 Conceptually, logWEV assumes that the observer combines evidence about decision-relevant features
@@ -223,6 +245,8 @@ head(data)
 # 2. Fit some models to each subject of the masked orientation discrimination experiment
 \donttest{
   # Fitting several models to several subjects takes quite some time
+  # (about 10 minutes per model fit per participant on a 2.8GHz processor with
+  the default values of nInits and nRestart).
   # If you want to fit more than just two subjects,
   # we strongly recommend setting .parallel=TRUE
   Fits <- fitConfModels(data, models = c("SDT", "ITGc"), .parallel = FALSE)
@@ -256,7 +280,7 @@ Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive Inefficiency in Pe
 Shekhar, M., & Rahnev, D. (2023). How Do Humans Give Confidence? A Comprehensive Comparison of Process Models of Perceptual Metacognition. Journal of Experimental Psychology: General. doi:10.1037/xge0001524
 }
 \author{
-Sebastian Hellmann, \email{sebastian.hellmann@ku.de}
+Sebastian Hellmann, \email{sebastian.hellmann@tum.de}
 
-Manuel Rausch, \email{manuel.rausch@hochschule-rhein-waal.de}
+Manuel Rausch, \email{manuel.rausch@ku.de}
 }

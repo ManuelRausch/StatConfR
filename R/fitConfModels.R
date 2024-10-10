@@ -1,6 +1,6 @@
 #' Fit several static confidence models to multiple participants
 #'
-#' This functions fits the parameters of several computational models of decision
+#' The `fitConfModels` function fits the parameters of several computational models of decision
 #' confidence, in binary choice tasks,  specified in the `model` argument, to
 #' different subsets of one data frame, indicated by different values in the column
 #' `participant` of the `data` argument.
@@ -9,8 +9,10 @@
 #' of model in the `models` argument and sub-data frame of `data` for each value
 #' in the `participant` column.
 #' See Details for more information about the parameters.
-#' In addition to the estimated parameters, measures of model fits are provided
-#' for a quantiative comparison between the models.
+#' Parameters are fitted using a maximum likelihood estimation method with a
+#' initial grid search to find promising starting values for the optimization.
+#' In addition, several measures of model fit (negative log-likelihood, BIC, AIC, and AICc)
+#' are computed, which can be used for a quantitative model evaluation.
 #'
 #' @param data  a `data.frame` where each row is one trial, containing following
 #' variables:
@@ -98,19 +100,19 @@
 #' How the confidence variable \eqn{y} is computed varies across the different models.
 #' The following models have been implemented so far:
 #'
-#' ### \strong{Signal Detection Rating Model (SDT)}
+#' ### \strong{Signal detection rating model (SDT)}
 #' According to SDT, the same sample of sensory
 #' evidence is used to generate response and confidence, i.e.,
 #' \eqn{y=x} and the confidence criteria span from the left and
 #' right side of the decision criterion \eqn{c}(Green & Swets, 1966).
 #'
-#' ### \strong{Gaussian Noise Model (GN)}
+#' ### \strong{Gaussian noise model (GN)}
 #' According to the model, \eqn{y} is subject to
 #' additive noise and assumed to be normally distributed around the decision
 #' evidence value \eqn{x} with a standard deviation \eqn{\sigma}(Maniscalco & Lau, 2016).
 #' \eqn{\sigma} is an additional free parameter.
 #'
-#' ### \strong{Weighted Evidence and Visibility model (WEV)}
+#' ### \strong{Weighted evidence and visibility model (WEV)}
 #' WEV assumes that the observer combines evidence about decision-relevant features
 #' of the stimulus with the strength of evidence about choice-irrelevant features
 #' to generate confidence (Rausch et al., 2018). Thus, the WEV model assumes that \eqn{y} is normally
@@ -129,7 +131,7 @@
 #' For this model the parameter \eqn{a} is fitted in addition to the shared
 #' parameters.
 #'
-#' ### \strong{Independent Gaussian Model (IG)}
+#' ### \strong{Independent Gaussian model (IG)}
 #' According to IG, \eqn{y} is sampled independently
 #' from \eqn{x} (Rausch & Zehetleitner, 2017). \eqn{y} is normally distributed with a mean of \eqn{a\times d_k} and variance
 #' of 1 (again as it would scale with \eqn{m}). The additional parameter \eqn{m}
@@ -137,7 +139,7 @@
 #' relative to amount of evidence available for the discrimination decision and can
 #'  be smaller as well as greater than 1.
 #'
-#' ### \strong{Independent Truncated Gaussian Model: HMetad-Version (ITGc)}
+#' ### \strong{Independent truncated Gaussian model: HMetad-Version (ITGc)}
 #' According to the version of ITG consistent
 #' with the HMetad-method (Fleming, 2017; see Rausch et al., 2023), \eqn{y} is sampled independently
 #' from \eqn{x} from a truncated Gaussian distribution with a location parameter
@@ -150,7 +152,7 @@
 #' amount of evidence available for discrimination decisions and  can be smaller
 #' as well as greater than 1.
 #'
-#' ### \strong{Independent Truncated Gaussian Model: Meta-d'-Version (ITGcm)}
+#' ### \strong{Independent truncated Gaussian model: Meta-d'-Version (ITGcm)}
 #' According to the version of the ITG consistent
 #' with the original meta-d' method (Maniscalco & Lau, 2012, 2014; see Rausch et al., 2023),
 #' \eqn{y} is sampled independently from \eqn{x} from a truncated Gaussian distribution with a location parameter
@@ -162,7 +164,7 @@
 #' amount of evidence available for the discrimination decision and  can be smaller
 #' as well as greater than 1.
 #'
-#' ### \strong{Logistic Noise Model (logN)}
+#' ### \strong{Logistic noise model (logN)}
 #' According to logN, the same sample
 #' of sensory evidence is used to generate response and confidence, i.e.,
 #' \eqn{y=x} just as in SDT (Shekhar & Rahnev, 2021). However, according to logN, the confidence criteria
@@ -181,7 +183,7 @@
 #' \overline{\theta}_{-1,L-1}, \overline{\theta}_{1,1}, ...  \overline{\theta}_{1,L-1}},
 #' as free parameters.
 #'
-#' ### \strong{Logistic Weighted Evidence and Visibility model (logWEV)}
+#' ### \strong{Logistic weighted evidence and visibility model (logWEV)}
 #' logWEV is a combination of logN and WEV proposed by Shekhar and Rahnev (2023).
 #' Conceptually, logWEV assumes that the observer combines evidence about decision-relevant features
 #' of the stimulus with the strength of evidence about choice-irrelevant features (Rausch et al., 2018).
@@ -199,7 +201,7 @@
 #' @md
 #'
 #' @author Sebastian Hellmann, \email{sebastian.hellmann@@tum.de}
-#' @author Manuel Rausch, \email{manuel.rausch@@hochschule-rhein-waal.de}
+#' @author Manuel Rausch, \email{manuel.rausch@ku.de}
 #'
 #' @name fitConfModels
 #' @import parallel

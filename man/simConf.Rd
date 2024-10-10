@@ -7,11 +7,13 @@
 simConf(model = "SDT", paramDf)
 }
 \arguments{
-\item{model}{\code{character} of length 1.
-Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'ITGcm', 'logN', and 'logWEV'.}
+\item{model}{\code{character} of length 1. The generative model that should be
+used for simulation. Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA',
+'IG', 'ITGc', 'ITGcm', 'logN', and 'logWEV'.}
 
-\item{paramDf}{a \code{data.frame} that contains all parameters to simulate a data set,
-with one row and the different parameters in different columns. Which parameters are needed depends on the specific model:
+\item{paramDf}{a \code{data.frame}providing the number of generared trials and
+the parameters of the chosen model. \code{paramDf} should contain following columns
+(which parameters are needed depends on the specific model):
 \itemize{
 \item \code{N} (the number of trials be simulated),
 \item \code{participant} (optional, the participant ID of each parameter set. Should be unique to each row),
@@ -28,15 +30,48 @@ with one row and the different parameters in different columns. Which parameters
 }}
 }
 \value{
-a dataframe with \code{N} rows, and the columns
-\code{stimulus}, \code{correct} and \code{rating}. If more than 1 sensitivity parameter is provided, there is
-\code{diffCond}.
+a dataframe with about \code{nrow(paramDf)*N} rows (see Details),
+and the following columns:
+\itemize{
+\item \code{participant} giving the row ID of the simulation (see Details)
+\item \code{stimulus} giving the category of the stimulus (-1 or 1)
+\item only, if more than 1 sensitivity parameter (\code{d1},\code{d2},...) is provided:
+\code{diffCond} representing the difficulty condition (values correspond to
+the levels of the sensitivity parameters, i.e. diffCond=1 represents
+simulated trials with sensitivity \code{d1})
+\item \code{response} giving the response category (-1 or 1, corresponding to the stimulus categories)
+\item \code{rating} giving the discrete confidence rating (integer, number of
+categories depends on the number of confidence criteria provided in the parameters)
+\item \code{correct} giving the accuracy of the response (0 incorrect, 1 correct)
+\item \code{ratings} same as \code{rating} but as a factor
+}
 }
 \description{
-Simulate data  according to a static model of confidence
+This function generates a data frame with random trials generated according to
+the computational model of decision confidence specified in the \code{model} argument
+with given parameters.
+Simulations can be used to visualize and test qualitative model predictions
+(e.g. using previously fitted parameters returned by \code{\link{fitConf}}).
+See \code{\link{fitConf}} for a full mathematical description of all models
+and their parameters.
 }
 \details{
-see \code{fitConf} for a detailed description of the different models.
+The function generates about \code{N} trials per row with the provided parameters
+in the data frame. The output includes a column \code{participant} indicating the
+row ID of the simulated data. The values of the \code{participant} column may be
+controlled by the user, by including a \code{participant} column in the input
+\code{paramDf}. Note that the values of this column have to be unique! If no
+\code{participant} column is present in the input, the row numbers will be used
+as row IDs.
+
+The number of simulated trials for each row of parameters may slightly
+deviate from the provided \code{N}.
+Precisely, if there are K levels of sensitivity (i.e. there are columns
+d1, d2, ..., dK), the function simulates \code{round(N/2/K)} trials per stimulus
+identity (2 levels) and level of sensitivity (K levels).
+
+Simulation is performed following the generative process structure of the models.
+See \code{fitConf} for a detailed description of the different models.
 }
 \examples{
 # 1. define some parameters

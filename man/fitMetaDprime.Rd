@@ -2,7 +2,7 @@
 % Please edit documentation in R/fitMetaDprime.R
 \name{fitMetaDprime}
 \alias{fitMetaDprime}
-\title{Fits meta-d' and meta-d'/d' ratios for data from one or several subjects}
+\title{Compute measures of metacognitive sensitivity (meta-d') and metacognitive efficiency(meta-d'/d') for data from one or several subjects}
 \usage{
 fitMetaDprime(data, model = "ML", nInits = 5, nRestart = 3,
   .parallel = FALSE, n.cores = NULL)
@@ -38,21 +38,52 @@ Defaults to 3.}
 number of cores -1 will be used.}
 }
 \value{
-Gives data frame with rows for each participant and columns dprime, c, metaD, and Ratio
+Gives data frame with one row for each participant and following columns:
 \itemize{
-\item dprime is the discrimination sensitivity index d, calculated using a standard SDT formula
-\item c is the discrimination bias c, calculated using a standard SDT formula
-\item metaD is meta-d', discrimination sensitivity estimated from confidence judgments conditioned on the response
-\item Ratio is meta-d'/d', a quantity usually referred to as metacognitive efficiency.
+\item \code{model} gives the model used for the computation of meta-d' (see \code{model} argument)
+\item \code{participant} is the participant ID for the respecitve row
+\item \code{dprime} is the discrimination sensitivity index d, calculated using a standard SDT formula
+\item \code{c} is the discrimination bias c, calculated using a standard SDT formula
+\item \code{metaD} is meta-d', discrimination sensitivity estimated from confidence judgments conditioned on the response
+\item \code{Ratio} is meta-d'/d', a quantity usually referred to as metacognitive efficiency.
 }
 }
 \description{
-This function computes meta-d' and meta-d'/d' for each  participant in the \code{data}, respectively.
+This function computes the measures for metacognitive sensitivity, meta-d',
+and metacognitive efficiency, meta-d'/d' (Maniscalco and Lau, 2012, 2014;
+Fleming, 2017) to data from binary choice tasks with discrete confidence
+judgments. Meta-d' and meta-d'/d' are computed using a maximum likelihood
+method for each subset of the \code{data} argument indicated by different values
+in the column \code{participant}, which can represent different subjects as well
+as experimental conditions.
 }
 \details{
 The function computes meta-d' and meta-d'/d' either using the
 hypothetical signal detection model assumed by Maniscalco and Lau (2012, 2014)
-or the one assumed by Fleming (2014). The fitting routine first performs a coarse grid search to find promising
+or the one assumed by Fleming (2014).
+
+The conceptual idea of meta-d′ is to quantify metacognition in terms of sensitivity
+in a hypothetical signal detection rating model describing the primary task,
+under the assumption that participants had perfect access to the sensory evidence
+and were perfectly consistent in placing their confidence criteria (Maniscalco & Lau, 2012, 2014).
+Using a signal detection model describing the primary task to quantify metacognition allows
+a direct comparison between metacognitive accuracy and discrimination performance
+because both are measured on the same scale. Meta-d′ can be compared against
+the estimate of the distance between the two stimulus distributions
+estimated from discrimination responses, which is referred to as d′:
+If meta-d′ equals d′, it means that metacognitive accuracy is exactly
+as good as expected from discrimination performance.
+Ifmeta-d′ is lower than d′, it means that metacognitive accuracy is suboptimal.
+It can be shown that the implicit model of confidence underlying the meta-d'/d'
+method is identical to the independent truncated Gaussian model.
+Our function is a translation of MATLAB code provided by Brian Maniscalco (http:// www. colum bia. edu/ ~bsm21 05/ type2 sdt, last accessed2021–09-20).
+
+The provided \code{data} argument is split into subsets according to the values of
+the \code{participant} column. Then for each subset, the parameters of the
+hypothetical signal detection model determined by the \code{model} argument
+are fitted to the data subset.
+
+The fitting routine first performs a coarse grid search to find promising
 starting values for the maximum likelihood optimization procedure. Then the best \code{nInits}
 parameter sets found by the grid search are used as the initial values for separate
 runs of the Nelder-Mead algorithm implemented in \code{\link[stats]{optim}}.

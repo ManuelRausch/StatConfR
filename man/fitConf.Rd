@@ -20,17 +20,18 @@ a factor with a warning),
 \item \code{correct} (encoding whether the response was correct; should  be 0 for incorrect responses and 1 for correct responses)
 }}
 
-\item{model}{\code{character} of length 1.
-Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'ITGcm', 'logN', and 'logWEV'.}
+\item{model}{\code{character} of length 1. The generative model that should be
+fitted. Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG',
+'ITGc', 'ITGcm', 'logN', and 'logWEV'.}
 
-\item{nInits}{\code{integer}. Number of initial values used for maximum likelihood optimization.
+\item{nInits}{\code{integer}. Number of starting values used for maximum likelihood optimization.
 Defaults to 5.}
 
 \item{nRestart}{\code{integer}. Number of times the optimization algorithm is restarted.
 Defaults to 4.}
 }
 \value{
-Gives data frame with one row and columns for the fitted parameters of the
+Gives data frame with one row and one column for each of the fitted parameters of the
 selected model as well as additional information about the fit
 (\code{negLogLik} (negative log-likelihood of the final set of parameters),
 \code{k} (number of parameters), \code{N} (number of data rows),
@@ -39,8 +40,14 @@ selected model as well as additional information about the fit
 \code{AICc} (AIC corrected for small samples; Burnham & Anderson, 2002))
 }
 \description{
-This function fits one static model of decision confidence to binary choices and confidence judgments.
-It calls a corresponding fitting function for the selected model.
+The \code{fitConf} function fits the parameters of one static model of decision confidence,
+provided by the \code{model} argument, to binary choices and confidence judgments.
+See Details for the mathematical specification of the implemented models and
+their parameters.
+Parameters are fitted using a maximum likelihood estimation method with a
+initial grid search to find promising starting values for the optimization.
+In addition, several measures of model fit (negative log-likelihood, BIC, AIC, and AICc)
+are computed, which can be used for a quantitative model evaluation.
 }
 \details{
 The fitting routine first performs a coarse grid search to find promising
@@ -78,7 +85,7 @@ The number of thresholds will be inferred from the number of steps in the
 
 How the confidence variable \eqn{y} is computed varies across the different models.
 The following models have been implemented so far:
-\subsection{\strong{Signal Detection Rating Model (SDT)}}{
+\subsection{\strong{Signal detection rating model (SDT)}}{
 
 According to SDT, the same sample of sensory
 evidence is used to generate response and confidence, i.e.,
@@ -86,7 +93,7 @@ evidence is used to generate response and confidence, i.e.,
 right side of the decision criterion \eqn{c} (Green & Swets, 1966).
 }
 
-\subsection{\strong{Gaussian Noise Model (GN)}}{
+\subsection{\strong{Gaussian noise model (GN)}}{
 
 According to the model, \eqn{y} is subject to
 additive noise and assumed to be normally distributed around the decision
@@ -94,7 +101,7 @@ evidence value \eqn{x} with a standard deviation \eqn{\sigma} (Maniscalco & Lau,
 The parameter  \eqn{\sigma} is a free parameter.
 }
 
-\subsection{\strong{Weighted Evidence and Visibility model (WEV)}}{
+\subsection{\strong{Weighted evidence and visibility model (WEV)}}{
 
 WEV assumes that the observer combines evidence about decision-relevant features
 of the stimulus with the strength of evidence about choice-irrelevant features
@@ -118,7 +125,7 @@ For this model the parameter \eqn{b} is fitted in
 addition to the set of shared parameters.
 }
 
-\subsection{\strong{Independent Gaussian Model (IG)}}{
+\subsection{\strong{Independent Gaussian model (IG)}}{
 
 According to IG, \eqn{y} is sampled independently
 from \eqn{x} (Rausch & Zehetleitner, 2017). \eqn{y} is normally distributed with a mean of \eqn{a\times d_k} and variance
@@ -128,7 +135,7 @@ relative to amount of evidence available for the discrimination decision and can
 be smaller as well as greater than 1.
 }
 
-\subsection{\strong{Independent Truncated Gaussian Model: HMetad-Version (ITGc)}}{
+\subsection{\strong{Independent truncated Gaussian model: HMetad-Version (ITGc)}}{
 
 According to the version of ITG consistent
 with the HMetad-method (Fleming, 2017; see Rausch et al., 2023), \eqn{y} is sampled independently
@@ -143,7 +150,7 @@ amount of evidence available for discrimination decisions and  can be smaller
 as well as greater than 1.
 }
 
-\subsection{\strong{Independent Truncated Gaussian Model: Meta-d'-Version (ITGcm)}}{
+\subsection{\strong{Independent truncated Gaussian model: Meta-d'-Version (ITGcm)}}{
 
 According to the version of the ITG consistent
 with the original meta-d' method (Maniscalco & Lau, 2012, 2014; see Rausch et al., 2023),
@@ -157,7 +164,7 @@ amount of evidence available for the discrimination decision and  can be smaller
 as well as greater than 1.
 }
 
-\subsection{\strong{Logistic Noise Model (logN)}}{
+\subsection{\strong{Logistic noise model (logN)}}{
 
 According to logN, the same sample
 of sensory evidence is used to generate response and confidence, i.e.,
@@ -178,7 +185,7 @@ as free parameters. Instead, we estimate the means of the confidence criteria, i
 as free parameters.
 }
 
-\subsection{\strong{Logistic Weighted Evidence and Visibility model (logWEV)}}{
+\subsection{\strong{Logistic weighted evidence and visibility model (logWEV)}}{
 
 logWEV is a combination of logN and WEV proposed by Shekhar and Rahnev (2023).
 Conceptually, logWEV assumes that the observer combines evidence about decision-relevant features
@@ -204,7 +211,7 @@ head(data)
 
 # 2. Use fitting function
 \donttest{
-  # Fitting takes some time to run:
+  # Fitting takes some time (about 10 minutes on an 2.8GHz processor) to run:
   FitFirstSbjWEV <- fitConf(data, model="WEV")
 }
 
@@ -238,7 +245,7 @@ Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive Inefficiency in Pe
 Shekhar, M., & Rahnev, D. (2023). How Do Humans Give Confidence? A Comprehensive Comparison of Process Models of Perceptual Metacognition. Journal of Experimental Psychology: General. doi:10.1037/xge0001524
 }
 \author{
-Sebastian Hellmann, \email{sebastian.hellmann@ku.de}
+Sebastian Hellmann, \email{sebastian.hellmann@tum.de}
 
-Manuel Rausch, \email{manuel.rausch@hochschule-rhein-waal.de}
+Manuel Rausch, \email{manuel.rausch@ku.de}
 }

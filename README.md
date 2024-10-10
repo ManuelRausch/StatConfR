@@ -1,10 +1,10 @@
 # statConfR: Models of Decision Confidence and Measures of Metacognition
 
-The statConfR package provides functions to fit static models of
+The `statConfR` package provides functions to fit static models of
 decision-making and confidence derived from signal detection theory for
-binary discrimination tasks, as well as meta-d′/d′ (Rausch & Hellmann,
-2024). The package can be used to test the assumptions underlying
-meta-d′/d′. Several models provide a metacognition parameter that may
+binary discrimination tasks, as well as meta-d′/d′ as measures of metacognition.
+Fitting models of confidence can be used to test the assumptions underlying
+meta-d′/d′. Several models include a metacognition parameter that may
 serve as an alternative when the assumptions of meta-d′/d′ assuming the
 corresponding model provides a better fit to the data. The following models are included:
 
@@ -130,12 +130,31 @@ of the stimulus with the strength of evidence about choice-irrelevant features (
 The model also assumes that noise affecting the confidence decision variable is lognormal
  in accordance with Shekhar and Rahnev (2021).
 According to logWEV, the confidence decision variable is $y$ is equal to
-R &times; y<sup>*</sup>. y<sup>2</sup> is sampled from a lognormal distribution with a location parameter
+R &times; y<sup>*</sup>. y<sup>*</sup> is sampled from a lognormal distribution with a location parameter
  of $(1-w)\times x\times R + w \times d_k$ and a scale parameter of $\sigma$.
  The parameter $\sigma$ quantifies the amount of unsystematic variability
 contributing to confidence judgments but not to the discrimination judgments.
 The parameter $w$ represents the weight that is put on the choice-irrelevant
 features in the confidence judgment. $w$ and $\sigma$ are free parameters. 
+
+## Measures of metacognition
+
+# Meta-d'/d'
+The conceptual idea of meta-d′ is to quantify metacognition in terms of sensitivity
+in a hypothetical signal detection rating model describing the primary task, 
+under the assumption that participants had perfect access to the sensory evidence
+and were perfectly consistent in placing their confidence criteria (Maniscalco & Lau, 2012, 2014).
+Using a signal detection model describing the primary task to quantify metacognition
+allows a direct comparison between metacognitive accuracy and discrimination performance
+because both are measured on the same scale. Meta-d′ can be compared against the estimate of the distance between the two stimulus distributions 
+estimated from discrimination responses, which is referred to as d′: 
+If meta-d′ equals d′, it means that metacognitive accuracy is exactly as good as expected from discrimination performance. If
+meta-d′ is lower than d′, it means that metacognitive accuracy is suboptimal. It can be shown that 
+the implicit model of confidence underlying the meta-d'/d' method is identical to the independent truncated Gaussian model. 
+
+Our function is a translation of matlab code provided by Brian Maniscalco (http:// www. colum bia. edu/ ~bsm21 05/ type2 sdt, last accessed
+2021–09-20).
+
 
 ## Installation
 
@@ -185,7 +204,7 @@ variables:
 
 ### Fitting
 
-It is strongly recommended that if metacognitive efficiency is to be
+We strongly recommend that if metacognitive efficiency is to be
 measured using the meta-d′/d′ method that researchers fist determine
 whether the Independent Truncated Gaussian Model, the confidence model
 implied by the meta-d′/d′ method, is an adequate description of the
@@ -244,22 +263,21 @@ legitimate to quantify metacognitive efficiency with meta-d′/d′:
 
 ## Contact
 
-For comments, remarks, and questions please contact either
+For comments, bug reports, feature suggestions, and questions please contact either
 <manuel.rausch@ku.de> or <sebastian.hellmann@ku.de>
 or [submit an issue](https://github.com/ManuelRausch/StatConfR/issues).
 
 ## References
 
-Hellmann, S., Zehetleitner, M., & Rausch, M. (2023). Simultaneous
-modeling of choice, confidence, and response time in visual perception.
-Psychological Review. 130(6), 1521–1543.
-[doi:10.1037/rev0000411](https://doi.org/10.1037/rev0000411)
+Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, 1, 1–14. https://doi.org/10.1093/nc/nix007
+Green, D. M., & Swets, J. A. (1966). Signal detection theory and psychophysics. Wiley.
+Hellmann, S., Zehetleitner, M., & Rausch, M. (2023). Simultaneous modeling of choice, confidence, and response time in visual perception. Psychological Review, 130(6), 1521–1543. https://doi.org/10.1037/rev0000411
+Maniscalco, B., & Lau, H. (2012). A signal detection theoretic method for estimating metacognitive sensitivity from confidence ratings. Consciousness and Cognition, 21(1), 422–430. https://doi.org/10.1016/j.concog.2011.09.021
+Maniscalco, B., & Lau, H. (2016). The signal processing architecture underlying subjective reports of sensory awareness. Neuroscience of Consciousness, 1, 1–17. https://doi.org/10.1093/nc/niw002
+Maniscalco, B., & Lau, H. C. (2014). Signal Detection Theory Analysis of Type 1 and Type 2 Data: Meta-d, Response- Specific Meta-d, and the Unequal Variance SDT Model. In S. M. Fleming & C. D. Frith (Eds.), The Cognitive Neuroscience of Metacognition (pp. 25–66). Springer. https://doi.org/10.1007/978-3-642-45190-4_3
+Rausch, M., Hellmann, S., & Zehetleitner, M. (2018). Confidence in masked orientation judgments is informed by both evidence and visibility. Attention, Perception, and Psychophysics, 80(1), 134–154. https://doi.org/10.3758/s13414-017-1431-5
+Rausch, M., & Zehetleitner, M. (2017). Should metacognition be measured by logistic regression? Consciousness and Cognition, 49, 291–312. https://doi.org/10.1016/j.concog.2017.02.007
+Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive Inefficiency in Perceptual Decision Making. Psychological Review, 128(1), 45–70. https://doi.org/10.1037/rev0000249
+Shekhar, M., & Rahnev, D. (2024). How Do Humans Give Conﬁdence? A Comprehensive Comparison of Process Models of Perceptual Metacognition. Journal of Experimental Psychology: General, 153(3), 656–688. https://doi.org/10.1037/xge0001524
 
-Rausch, M., Hellmann, S. & Zehetleitner, M. (2023). Measures of
-metacognitive efficiency across cognitive models of decision confidence.
-Psychological Methods.
-[doi:10.1037/met0000634](https://doi.org/10.1037/met0000634)
 
-Rausch, M., & Hellmann, S. (2024). statConfR: An R Package for Static
-Models of Decision Confidence and Metacognition. PsyArXiv.
-[doi:10.31234/osf.io/dk6mr](https://doi.org/10.31234/osf.io/dk6mr)
