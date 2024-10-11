@@ -1,3 +1,5 @@
+`{r setup, include=FALSE} # this stuff is invissible in the rendered document knitr::opts_chunk$set(echo = TRUE) gitrep <- "https://github.com/ManuelRausch/StatConfR/tree" gitbranch <- "main/"`
+
 The `statConfR` package provides functions to fit static models of
 decision-making and confidence derived from signal detection theory for
 binary discrimination tasks, as well as meta-d′/d′ as measures of
@@ -184,13 +186,15 @@ two stimulus distributions estimated from discrimination responses,
 which is referred to as d′: If meta-d′ equals d′, it means that
 metacognitive accuracy is exactly as good as expected from
 discrimination performance. If meta-d′ is lower than d′, it means that
-metacognitive accuracy is suboptimal. It can be shown that the implicit
-model of confidence underlying the meta-d’/d’ method is identical to the
-independent truncated Gaussian model (Rausch et al., 2023). We strongly
-recommend that if metacognitive efficiency is to be measured using the
-meta-d′/d′ method that researchers fist determine whether the
-independent truncated Gaussian model, is an adequate description of the
-data.
+metacognitive accuracy is not optimal. It can be shown that the implicit
+model of confidence underlying the meta-d’/d’ method is identical to
+different versions of the independent truncated Gaussian model (Rausch
+et al., 2023), depending on whether the original model specification by
+Maniscalco and Lau (2012) or alternatively the specification by Fleming
+(2017). We strongly recommend that if metacognitive efficiency is to
+bemeasured using the meta-d′/d′ method that researchers fist determine
+whether the independent truncated Gaussian models are adequate
+descriptions of the data.
 
 ## Installation
 
@@ -203,13 +207,15 @@ and install from GitHub:
 
     devtools::install_github("ManuelRausch/StatConfR")
 
+<!-- without any dots, the code chunk will be shown, but not executed -->
+
 ## Usage
 
-### Data structure
+### Example data set
 
 The package includes a demo data set from a masked orientation
 discrimination task with confidence judgments (Hellmann et al., 2023,
-Exp. 1.
+Exp. 1).
 
 ``` r
 library(statConfR)
@@ -225,144 +231,259 @@ head(MaskOri)
     ## 5           1        0       1      3    133.3       5
     ## 6           1        0       1      0     16.7       6
 
-Data should be in the form of a data.frame object columns for following
-variables:
-
-- stimulus (factor with 2 levels): The property of the stimulus which
-  defines which response is correct
-- diffCond (factor): The experimental manipulation that is expected to
-  affect discrimination sensitivity
-- correct (0-1): Indicating whether the choice was correct (1) or
-  incorrect(0).
-- rating (factor): A discrete variable encoding the decision confidence
-  (high: very confident; low: less confident)
-- participant (integer): giving the subject ID.
-
 ### Fitting
 
-It is strongly recommended that if metacognitive efficiency is to be
-measured using the meta-d′/d′ method that researchers fist determine
-whether the Independent Truncated Gaussian Model, the confidence model
-implied by the meta-d′/d′ method, is an adequate description of the
-data. Using the function fitConfModels, we can fit several confidence
-models to the data of each participant.
+The function `fitConfModels` allows the user to fit several confidence
+models separately to the data of each participant. The data should be
+provided via the argument `.data` in the form of a data.frame object
+with the following variables in seperate columns: - stimulus (factor
+with 2 levels): The property of the stimulus which defines which
+response is correct - diffCond (factor): The experimental manipulation
+that is expected to affect discrimination sensitivity - correct (0-1):
+Indicating whether the choice was correct (1) or incorrect(0). - rating
+(factor): A discrete variable encoding the decision confidence (high:
+very confident; low: less confident) - participant (integer): giving the
+subject ID. The argument `model` is used to specify which model should
+be fitted, with ‘WEV’, ‘SDT’, ‘GN’, ‘PDA’, ‘IG’, ‘ITGc’, ‘ITGcm’,
+‘logN’, and ‘logWEV’ as available options. If model=“all” (default), all
+implemented models will be fit, although this may take a while.
 
-Note that the fitting procedure takes some time as the models have
-several parameters. Depending on the model and the number of
-experimental conditions, this may take up to 20-30 minutes per
-participant and model combination on a modern 2.8GHz CPU.
+Setting the optional argument `.parallel=TRUE` parallizes model fitting
+over all but 1 available core. Note that the fitting procedure takes may
+take a considerable amount of time, especially, when there are multiple
+models, several difficulty conditions, and/or several confidence
+categories. Depending on the model and the number of experimental
+conditions, fitting ther WEV model to one participant may take 20-30
+minutes on a modern 2.8GHz CPU.
 
-The argument `.parallel=TRUE`allows for parallelization over all but one
-available core.
+``` r
+fitted_pars <- fitConfModels(MaskOri, models=c("ITGcm", "WEV"), .parallel = TRUE) 
+```
 
-    fitted_pars <- fitConfModels(MaskOri, models=c("SDT", "WEV"), .parallel = TRUE) 
-
-This parallelizes the fitting process over participant-model
-combinations. The output is then a data frame with one row for each
-participant-model combination and columns for parameters and measures
-for model performance (negative log-likelihood, BIC, AIC and AICc).
-These may be used for quantitative model comparison.
+The output is then a data frame with one row for each combination of
+participant and model and seperate columns for each estimated parameter
+as well as for different measures for goodness-of-fit (negative
+log-likelihood, BIC, AIC and AICc). These may be used for statistical
+model comparisons.
 
 ``` r
 head(fitted_pars)
 ```
 
-    ##   model participant negLogLik    N  k      BIC     AICc      AIC    d_1    d_2
-    ## 1   SDT           1  2721.256 1620 14 5545.975 5470.739 5470.513 0.0428 0.4593
-    ## 2   WEV           1  2621.110 1620 16 5360.464 5274.520 5274.221 0.2027 0.6142
-    ## 3   SDT           2  1946.258 1620 14 3995.979 3920.743 3920.517 0.0000 0.0950
-    ## 4   WEV           2  1827.221 1620 16 3772.684 3686.741 3686.441 0.0512 0.1920
-    ## 5   SDT           3  1706.178 1620 14 3515.818 3440.582 3440.356 0.2708 0.4673
-    ## 6   WEV           3  1661.617 1620 16 3441.476 3355.533 3355.233 0.4146 0.8561
-    ##      d_3    d_4    d_5       c theta_minus.4 theta_minus.3 theta_minus.2
-    ## 1 1.0526 3.6806 4.7779 -0.2723       -1.5467       -1.0333       -0.6336
-    ## 2 1.0797 3.4746 4.0799 -0.2957       -2.0665       -1.2485       -0.4152
-    ## 3 0.8601 6.1410 8.0556 -0.1394       -2.0092       -1.9193       -1.4097
-    ## 4 1.0412 4.1423 5.2886 -0.1475       -2.0441       -1.9500       -1.3982
-    ## 5 1.9117 6.4257 7.5755 -1.1510       -1.9938       -1.6372       -1.2600
-    ## 6 2.7115 6.9164 7.9863 -1.3743       -2.7625       -1.9192       -0.3724
-    ##   theta_minus.1 theta_plus.1 theta_plus.2 theta_plus.3 theta_plus.4  sigma
-    ## 1       -0.4543      -0.0944       0.2152       0.9850       1.5735     NA
-    ## 2        0.1296      -0.6196       0.1544       1.3976       2.1879 1.0105
-    ## 3       -0.9580       0.7857       1.3781       2.0879       2.2369     NA
-    ## 4       -0.9030       0.8201       1.4484       2.2447       2.4030 0.6391
-    ## 5       -1.1668      -1.1143      -0.7344       0.2961       0.9314     NA
-    ## 6        0.9328      -2.7695      -1.1313       0.7714       1.7520 1.3289
-    ##        w wAIC wAICc wBIC
-    ## 1     NA    0     0    0
-    ## 2 0.5361    1     1    1
-    ## 3     NA    0     0    0
-    ## 4 0.5020    1     1    1
-    ## 5     NA    0     0    0
-    ## 6 0.3818    1     1    1
+    ##   model participant negLogLik    N  k      BIC     AICc      AIC        d_1
+    ## 1 ITGcm           1  2719.492 1620 15 5549.837 5469.247 5468.985 0.02791587
+    ## 2   WEV           1  2621.110 1620 16 5360.464 5274.520 5274.221 0.20268438
+    ## 3 ITGcm           2  1926.296 1620 15 3963.445 3882.854 3882.592 0.01889636
+    ## 4   WEV           2  1827.221 1620 16 3772.684 3686.741 3686.441 0.05119639
+    ## 5 ITGcm           3  1695.957 1620 15 3502.766 3422.176 3421.914 0.32340627
+    ## 6   WEV           3  1661.617 1620 16 3441.476 3355.533 3355.233 0.41460563
+    ##          d_2       d_3      d_4      d_5          c theta_minus.4 theta_minus.3
+    ## 1 0.43212223 1.0210704 3.472310 4.395496 -0.2499098     -1.584000     -1.055322
+    ## 2 0.61422596 1.0796567 3.474608 4.079890 -0.2957338     -2.066516     -1.248524
+    ## 3 0.06496444 0.6926183 4.209053 5.463259 -0.1068211     -2.109575     -2.009674
+    ## 4 0.19195858 1.0412267 4.142295 5.288622 -0.1474590     -2.044069     -1.950015
+    ## 5 0.60550967 2.3776478 7.924170 9.428593 -1.2804566     -1.793311     -1.448681
+    ## 6 0.85608686 2.7115290 6.916448 7.986348 -1.3742943     -2.762529     -1.919228
+    ##   theta_minus.2 theta_minus.1 theta_plus.1 theta_plus.2 theta_plus.3
+    ## 1    -0.6463512    -0.4645142  -0.09770594    0.2168548    1.0019751
+    ## 2    -0.4151617     0.1296425  -0.61959026    0.1544368    1.3976350
+    ## 3    -1.4620933    -0.9950160   0.78839560    1.4081014    2.1950659
+    ## 4    -1.3982493    -0.9030114   0.82007352    1.4484447    2.2446957
+    ## 5    -1.0652684    -0.9656961  -0.92027462   -0.6053266    0.3337906
+    ## 6    -0.3723945     0.9327974  -2.76951959   -1.1312635    0.7714093
+    ##   theta_plus.4         m     sigma         w         wAIC        wAICc
+    ## 1    1.6044716 1.1177354        NA        NA 5.099723e-43 5.196487e-43
+    ## 2    2.1879187        NA 1.0104584 0.5361153 1.000000e+00 1.000000e+00
+    ## 3    2.3601086 1.5701944        NA        NA 2.549474e-43 2.597848e-43
+    ## 4    2.4029896        NA 0.6390763 0.5019978 1.000000e+00 1.000000e+00
+    ## 5    0.9382662 0.7404757        NA        NA 3.315175e-15 3.378078e-15
+    ## 6    1.7520050        NA 1.3288815 0.3817864 1.000000e+00 1.000000e+00
+    ##           wBIC
+    ## 1 7.551090e-42
+    ## 2 1.000000e+00
+    ## 3 3.774970e-42
+    ## 4 1.000000e+00
+    ## 5 4.908733e-14
+    ## 6 1.000000e+00
 
-If the Independent Truncated Gaussian model provides a decent account of
-the data (which is not the case though in the demo dataset), it is
-legitimate to quantify metacognitive efficiency with meta-d′/d′:
+It can be seen that the independent truncated Gaussian model is
+consistently outperformed by the weighted evidence and visibility model,
+which is why we would not recommend using meta-d′/d′ for this specific
+task.
 
-    MetaDs <- fitMetaDprime(subset(MaskOri, diffCond == "33.3"), 
-                            model="ML", .parallel = TRUE)
+### Visualization
+
+After obtaining model fits, it is strongly recommended to visualize the
+prediction implied by the best fitting sets of parameters and to compare
+the prediction with the actual data. The best way to visualize the data
+is highly specific to the data set and research question, which is why
+`statConfR` does not come with its own visualisation tools. This being
+said, here is an example for how a visualization could look like:
+
+<!-- insert a visualization  -->
+
+``` r
+library(tidyverse)
+```
+
+    ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+    ## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+    ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+    ## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+    ## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+    ## ✔ purrr     1.0.2     
+    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ✖ dplyr::filter() masks stats::filter()
+    ## ✖ dplyr::lag()    masks stats::lag()
+    ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+
+``` r
+AggregatedData <- MaskOri %>%
+  mutate(ratings = as.numeric(rating), diffCond = as.numeric(diffCond)) %>%
+  group_by(participant, diffCond, correct ) %>% 
+  dplyr::summarise(ratings=mean(ratings,na.rm=T)) %>%
+  Rmisc::summarySEwithin(measurevar = "ratings",
+                         withinvars = c("diffCond", "correct"), 
+                         idvar = "participant",
+                         na.rm = TRUE, .drop = TRUE) %>% 
+  mutate(diffCond = as.numeric(diffCond))
+```
+
+    ## `summarise()` has grouped output by 'participant', 'diffCond'. You can override
+    ## using the `.groups` argument.
+    ## Automatically converting the following non-factors to factors: diffCond,
+    ## correct
+
+``` r
+AggregatedPrediction <- 
+  rbind(fitted_pars %>%
+          filter(model=="ITGcm") %>%
+          group_by(participant) %>%
+          simConf(model="ITGcm") %>% 
+          mutate(model="ITGcm"), 
+        fitted_pars %>%
+          filter(model=="WEV") %>%
+          group_by(participant) %>%
+          simConf(model="WEV") %>% 
+          mutate(model="WEV")) %>%
+  mutate(ratings = as.numeric(rating) ) %>%
+  group_by(participant, diffCond, correct, model ) %>% 
+  dplyr::summarise(ratings=mean(ratings,na.rm=T)) %>%
+  Rmisc::summarySEwithin(measurevar = "ratings",
+                  withinvars = c("diffCond", "correct", "model"), 
+                  idvar = "participant",
+                  na.rm = TRUE, .drop = TRUE) %>% 
+  mutate(diffCond = as.numeric(diffCond))
+```
+
+    ## `summarise()` has grouped output by 'participant', 'diffCond', 'correct'. You
+    ## can override using the `.groups` argument.
+    ## Automatically converting the following non-factors to factors: diffCond,
+    ## correct, model
+
+``` r
+PlotMeans <- 
+  ggplot(AggregatedPrediction, 
+         aes(x = diffCond, y = ratings, color = correct)) + facet_grid(~ model) +
+   ylim(c(1,5)) + 
+   geom_line() +  ylab("confidence rating") + xlab("difficulty condition") +
+   scale_color_manual(values = c("darkred", "green4"),
+                     labels = c("Error", "Correct response"), name = "model prediction") + 
+  geom_errorbar(data = AggregatedData, 
+                aes(ymin = ratings-se, ymax = ratings+se), color="black") + 
+  geom_point(data = AggregatedData, aes(shape=correct), color="black") + 
+  scale_shape_manual(values = c(15, 16),
+                     labels = c("Error", "Correct response"), name = "observed data") 
+PlotMeans 
+```
+
+![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+
+### Measuring metacognition
+
+Assuming that the independent truncated Gaussian model provides a decent
+account of the data (which is not the case though in the demo dataset),
+the function `fitMetaDprime` can be used to estimate meta-d′/d′. The
+arguments `.data` and `.parallel=TRUE` are identical to the arguments in
+`fitConfModels`. The argument `model` offers the user the choice between
+two model specificationsEither “ML” to use the original model
+specification used by Maniscalco and Lau (2012, 2014) or “F” to use the
+model specification by Fleming (2017)’s Hmetad method.
+
+``` r
+MetaDs <- fitMetaDprime(data = MaskOri, model="ML", .parallel = TRUE)
+```
 
 ## Contributing to the package
 
-The package is under constant development. We try to include other
-models that are published in the literature in the package. If you have
-a own model published that you want to include in the package, or want
-to contribute in any other kind, feel free to contact us. We are always
-happy to extend the range of models the package covers.
+The package is under active development. We are planning to implement
+new models of decision confidence when they are published. Please feel
+free to [contact us](malto::manuel.rausch@ku.de) to suggest models to
+implement in in the package.
 
-### Instruction for including custom models
+### Instruction for implementing custom models of decision confidence (only recommended for users experienced with cognitive modelling)
 
-Implementing custom models in the package is best done in the following
-way: - Compute the likelihood of a binary response ($`R=-1, 1`$) and
-confidence judgment ($`C=1,...K`$), given the stimulus ($`S=-1, 1`$),
-i.e. $`P(R, C | S)`$. - Use one of the files ‘int_ll*model*.R’ from the
-package sources and adapt the formula to fit your likelihood functions.
-Name the new file according to the convention ‘int_ll*yourmodelname*.R’.
-
-Note that all parameters are fitted on the reals, i.e. positive
-parameters should be transformed outside the log-likelihood function
-(e.g. using the logarithm) and back-transformed within the
-log-likelihood function (e.g. using the exponential)
-
-- Use one of the files ‘int_fit*model*.R’ from the package sources and
-  adapt:
-
-  - the initial grid for the grid search to include all parameters of
-    your model and their expected range
-  - the parameter transformations (such that all parameters included in
-    the parameter vector for optimization are real-valued)
-  - the function calls for the log-likelihood function
-  - the back-transformation in the output object `res`
-
-  Name the new file according to the convention
-  ‘int_fit*yourmodelname*.R’
-
-- Add your model and fitting-functions to the high-level functions
-  `fitConf` and `fitConfModels`
-
-- Add a simulation function in the file ‘int_simulateConf.R’ which uses
-  the same structure as the other functions but adapt the likelihood of
-  the responses.
+For readers who want to use our open code to implement models of
+confidence themselves, the following steps need to be taken: -Derive the
+likelihood of a binary response ($`R=-1, 1`$) and a specific level of
+confidence ($`C=1,...K`$) according to the custom model and a set of
+parameters, given the binary stimulus ($`S=-1, 1`$),
+i.e. $`P(R, C | S)`$. - Use one of the files named ‘int_ll*model*.R’
+from the package sources and adapt the likelihood function according to
+your model. According to our convention, name the new file a
+‘int_ll*yourmodelname*.R’. Note that all parameters are fitted on the
+reals, i.e. positive parameters should be transformed outside the
+log-likelihood function (e.g. using the logarithm) and back-transformed
+within the log-likelihood function (e.g. using the exponential). - Use
+one of the files ‘int_fit*model*.R’ from the package sources and adapt
+the fitting function to reflect the new model. - the initial grid used
+during the grid search should include a plausible range of all
+parameters of your model. - if applicable, the parameters of the initial
+grid needs be transformed so the parameter vector for optimization is
+real-valued) - the optimization routine should call the new
+log-likelihood function. - if applicable, the parameter vector
+i`obtained during optimization needs to be back-transformation for the the output object`res`- Name the new file according to the convention 'int_fit*yourmodelname*.R' - Add your model and fitting-functions to the high-level functions`fitConf`and`fitConfModels\` -
+Add a simulation function in the file ‘int_simulateConf.R’ which uses
+the same structure as the other functions but adapt the likelihood of
+the responses.
 
 ## Contact
 
-For comments, remarks, and questions please contact either
-<manuel.rausch@hochschule-rhein-waal.de> or <sebastian.hellmann@ku.de>
-or [submit an issue](https://github.com/ManuelRausch/StatConfR/issues).
+For comments, bug reports, and feature suggestions please feel free to
+write to either <manuel.rausch@ku.de> or <sebastian.hellmann@ku.de> or
+[submit an issue](https://github.com/ManuelRausch/StatConfR/issues).
 
 ## References
 
-Hellmann, S., Zehetleitner, M., & Rausch, M. (2023). Simultaneous
+Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of
+metacognitive efficiency from confidence ratings. Neuroscience of
+Consciousness, 1, 1–14. <https://doi.org/10.1093/nc/nix007> Green, D.
+M., & Swets, J. A. (1966). Signal detection theory and psychophysics.
+Wiley. Hellmann, S., Zehetleitner, M., & Rausch, M. (2023). Simultaneous
 modeling of choice, confidence, and response time in visual perception.
-Psychological Review. 130(6), 1521–1543.
-[doi:10.1037/rev0000411](https://doi.org/10.1037/rev0000411)
-
-Rausch, M., Hellmann, S. & Zehetleitner, M. (2023). Measures of
-metacognitive efficiency across cognitive models of decision confidence.
-Psychological Methods.
-[doi:10.1037/met0000634](https://doi.org/10.1037/met0000634)
-
-Rausch, M., & Hellmann, S. (2024). statConfR: An R Package for Static
-Models of Decision Confidence and Metacognition. PsyArXiv.
-[doi:10.31234/osf.io/dk6mr](https://doi.org/10.31234/osf.io/dk6mr)
+Psychological Review, 130(6), 1521–1543.
+<https://doi.org/10.1037/rev0000411> Maniscalco, B., & Lau, H. (2012). A
+signal detection theoretic method for estimating metacognitive
+sensitivity from confidence ratings. Consciousness and Cognition, 21(1),
+422–430. <https://doi.org/10.1016/j.concog.2011.09.021> Maniscalco, B.,
+& Lau, H. (2016). The signal processing architecture underlying
+subjective reports of sensory awareness. Neuroscience of Consciousness,
+1, 1–17. <https://doi.org/10.1093/nc/niw002> Maniscalco, B., & Lau, H.
+C. (2014). Signal Detection Theory Analysis of Type 1 and Type 2 Data:
+Meta-d, Response- Specific Meta-d, and the Unequal Variance SDT Model.
+In S. M. Fleming & C. D. Frith (Eds.), The Cognitive Neuroscience of
+Metacognition (pp. 25–66). Springer.
+<https://doi.org/10.1007/978-3-642-45190-4_3> Rausch, M., Hellmann, S.,
+& Zehetleitner, M. (2018). Confidence in masked orientation judgments is
+informed by both evidence and visibility. Attention, Perception, and
+Psychophysics, 80(1), 134–154.
+<https://doi.org/10.3758/s13414-017-1431-5> Rausch, M., & Zehetleitner,
+M. (2017). Should metacognition be measured by logistic regression?
+Consciousness and Cognition, 49, 291–312.
+<https://doi.org/10.1016/j.concog.2017.02.007> Shekhar, M., & Rahnev, D.
+(2021). The Nature of Metacognitive Inefficiency in Perceptual Decision
+Making. Psychological Review, 128(1), 45–70.
+<https://doi.org/10.1037/rev0000249> Shekhar, M., & Rahnev, D. (2024).
+How Do Humans Give Conﬁdence? A Comprehensive Comparison of Process
+Models of Perceptual Metacognition. Journal of Experimental Psychology:
+General, 153(3), 656–688. <https://doi.org/10.1037/xge0001524>
