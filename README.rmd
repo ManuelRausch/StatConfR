@@ -26,15 +26,14 @@ meta-d′/d′. Several models include a metacognition parameter that may
 serve as an alternative when the assumptions of meta-d′/d′ assuming the
 corresponding model provides a better fit to the data. The following models are included:
 
-- signal detection rating model,
-- Gaussian noise model,
-- weighted evidence and visibility model,
-- post-decisional accumulation model,
-- independent Gaussian model,
-- independent truncated Gaussian model (the model underlying the
-- meta-d′/d′ method, see Rausch et al., 2023),
-- lognormal noise model, and
-- lognormal weighted evidence and visibility model.
+- signal detection rating model (Green & Swets, 1966),
+- Gaussian noise model (Maniscalco & Lau, 2016),
+- weighted evidence and visibility model (Rausch et al., 2018),
+- post-decisional accumulation model (Rausch et al., 2018),
+- independent Gaussian model (Rausch & Zehetleitner, 2017),
+- independent truncated Gaussian model (the model underlying the meta-d′/d′ method, see Rausch et al., 2023),
+- lognormal noise model (Shekhar & Rahnev, 2021), and
+- lognormal weighted evidence and visibility model (Shekhar & Rahnev, 2023).
 
 ## Mathematical description of implemented models of confidence
 The models included in the statConfR package are all based on signal detection theory (Green & Swets, 1966). 
@@ -62,17 +61,17 @@ The following parameters are shared between all models:
 ### Signal detection rating model (SDT)
 According to SDT, the same sample of sensory evidence is used to generate response and confidence, i.e.,
 $y=x$. The confidence criteria associated with $R=-1$ are more negative than the 
-decision criterion $c$, whereas the confidence criteria associated with $R=1$ are more positive than $c$ (Green & Swets, 1966).
+decision criterion $c$, whereas the confidence criteria associated with $R=1$ are more positive than $c$.
 
 ### Gaussian noise model (GN)
 According to GN, $y$ is subject to additive noise and assumed to be normally distributed
 around the decision evidence value $x$ with a standard deviation $\sigma$, 
-which is an additional free parameter (Maniscalco & Lau, 2016).
+which is an additional free parameter.
 
 ### Weighted evidence and visibility model (WEV)
 WEV assumes that the observer combines evidence about decision-relevant features 
 of the stimulus with the strength of evidence about choice-irrelevant features 
-to generate confidence (Rausch et al., 2018). Thus, the WEV model assumes that $y$ is normally 
+to generate confidence. Thus, the WEV model assumes that $y$ is normally 
 distributed with a mean of $(1-w)\times x+w \times d_k\times R$ and standard deviation $\sigma$.
 The standard deviation quantifies the amount of unsystematic variability
 contributing to confidence judgments but not to the discrimination judgments.
@@ -82,13 +81,13 @@ addition to the set of shared parameters.
 
 ### Post-decisional accumulation model (PDA)
 PDA represents the idea of on-going information accumulation after the
-discrimination choice (Rausch et al., 2018). The parameter $a$ indicates the amount of additional
+discrimination choice. The parameter $a$ indicates the amount of additional
 accumulation. The confidence variable is normally distributed with mean
 $x+S\times d_k\times a$ and variance $a$. The parameter $a$ is fitted in addition to the shared
 parameters.
 
 ### Independent Gaussian model (IG)
-According to IG, $y$ is sampled independently from $x$ (Rausch & Zehetleitner, 2017). 
+According to IG, $y$ is sampled independently from $x$. 
 The variable $y$ is normally distributed with a mean of $a\times d_k$ and variance
 of 1. The additional parameter $m$ represents the amount of information available for confidence judgment
 relative to amount of evidence available for the discrimination decision and can 
@@ -96,7 +95,7 @@ be smaller as well as greater than 1.
 
 ### Independent truncated Gaussian model: HMetad-Version (ITGc)
 According to the version of ITG consistent with the HMetad-method 
-(Fleming, 2017; see Rausch et al., 2023), $y$ is sampled independently
+(Fleming, 2017), $y$ is sampled independently
 from $x$ from a truncated Gaussian distribution with a location parameter
 of $S\times d_k \times m/2$ and a scale parameter of 1. The Gaussian distribution of $y$
 is truncated in a way that it is impossible to sample evidence that contradicts
@@ -109,7 +108,7 @@ as well as greater than 1.
 
 ### Independent truncated Gaussian model: Meta-d'-Version (ITGcm)
 According to the version of the ITG consistent with the original meta-d' 
-method (Maniscalco & Lau, 2012, 2014; see Rausch et al., 2023),
+method (Maniscalco & Lau, 2012, 2014),
 $y$ is sampled independently from $x$ from a truncated Gaussian distribution with a location parameter
 of $S\times d_k \times m/2$ and a scale parameter of 1. If $R = -1$, 
 the distribution is truncated to the right of $m\times c$. If $R = 1$, 
@@ -120,10 +119,10 @@ as well as greater than 1.
 
 ### Logistic noise model (logN)
 According to logN, the same sample of sensory evidence is used to generate response and confidence, i.e.,
-$y=x$ just as in SDT (Shekhar & Rahnev, 2021). However, according to logN, the confidence criteria
+$y=x$ just as in SDT. However, according to logN, the confidence criteria
 are not assumed to be constant, but instead they are affected by noise drawn from
 a lognormal distribution. In each trial, $\theta_{-1,i}$ is given
-by $c -  \epsilon_i$. Likewise,  $\theta_{1,i}$ is given by
+by $c -  \epsilon_i$. Likewise, $\theta_{1,i}$ is given by
 $c + \epsilon_i$. The noise $\epsilon_i$ is drawn from a lognormal distribution with
 the location parameter $\mu_{R,i} = \log(\left| \mu_{\theta_{R,i}} - c\right|)- 0.5 \times \sigma^{2}$, 
 and scale parameter $\sigma$. $\sigma$ is a free parameter designed to
@@ -136,8 +135,8 @@ as free parameters. Instead, we estimate the means of the confidence criteria, i
 as free parameters.
 
 ### Logistic weighted evidence and visibility model (logWEV)
-The logWEV model is a combination of logN and WEV proposed by Shekhar and Rahnev (2023).
-Conceptually, logWEV assumes that the observer combines evidence about decision-relevant features of the stimulus with the strength of evidence about choice-irrelevant features (Rausch et al., 2018). The model also assumes that noise affecting the confidence decision variable is lognormal in accordance with Shekhar and Rahnev (2021).
+The logWEV model is a combination of logN and WEV proposed by .
+Conceptually, logWEV assumes that the observer combines evidence about decision-relevant features of the stimulus with the strength of evidence about choice-irrelevant features. The model also assumes that noise affecting the confidence decision variable is lognormal.
 According to logWEV, the confidence decision variable is $y$ is equal to
 R &times; y'. The variable y' is sampled from a lognormal distribution with a location parameter of $(1-w)\times x\times R + w \times d_k$ and a scale parameter of $\sigma$. The parameter $\sigma$ quantifies the amount of unsystematic variability
 contributing to confidence judgments but not to the discrimination judgments.
@@ -209,7 +208,7 @@ fitted_pars <- fitConfModels(MaskOri, models=c("ITGcm", "WEV"), .parallel = TRUE
 ```
 
 The output is then a data frame with one row for each combination of 
-participant and model and separate columns for each estimated parameter as well as for different measures for goodness-of-fit (negative log-likelihood, BIC, AIC and AICc).
+participant and model and separate columns for each estimated parameter as well as for different measures for goodness-of-fit (negative log-likelihood, BIC, AIC and AICy<sub>c</sub>).
 These may be used for statistical  model comparisons.
 
 ```{r}
@@ -284,6 +283,10 @@ the data (notably, this is not the case though in the demo data set), the functi
 ```{r}        
 MetaDs <- fitMetaDprime(data = MaskOri, model="ML", .parallel = TRUE)
 ```
+
+### Documentation
+
+The documentation of each function of the currently installed version of `statConfR` can be accessed by typing ?*functionname* into the console. 
 
 ## Contributing to the package 
 The package is under active development. We are planning to implement new models of decision confidence when they are published. Please feel free to [contact us](malto::manuel.rausch@ku.de) to suggest new models to implement in in the package, or to volunteer adding additional models. 
