@@ -7,15 +7,16 @@ metacognition parameter that may serve as an alternative when the
 assumptions of meta-d′/d′ assuming the corresponding model provides a
 better fit to the data. The following models are included:
 
-- signal detection rating model,
-- Gaussian noise model,
-- weighted evidence and visibility model,
-- post-decisional accumulation model,
-- independent Gaussian model,
+- signal detection rating model (Green & Swets, 1966),
+- Gaussian noise model (Maniscalco & Lau, 2016),
+- weighted evidence and visibility model (Rausch et al., 2018),
+- post-decisional accumulation model (Rausch et al., 2018),
+- independent Gaussian model (Rausch & Zehetleitner, 2017),
 - independent truncated Gaussian model (the model underlying the
-- meta-d′/d′ method, see Rausch et al., 2023),
-- lognormal noise model, and
-- lognormal weighted evidence and visibility model.
+  meta-d′/d′ method, see Rausch et al., 2023),
+- lognormal noise model (Shekhar & Rahnev, 2021), and
+- lognormal weighted evidence and visibility model (Shekhar & Rahnev,
+  2023).
 
 ## Mathematical description of implemented models of confidence
 
@@ -54,22 +55,21 @@ According to SDT, the same sample of sensory evidence is used to
 generate response and confidence, i.e., $`y=x`$. The confidence criteria
 associated with $`R=-1`$ are more negative than the decision criterion
 $`c`$, whereas the confidence criteria associated with $`R=1`$ are more
-positive than $`c`$ (Green & Swets, 1966).
+positive than $`c`$.
 
 ### Gaussian noise model (GN)
 
 According to GN, $`y`$ is subject to additive noise and assumed to be
 normally distributed around the decision evidence value $`x`$ with a
-standard deviation $`\sigma`$, which is an additional free parameter
-(Maniscalco & Lau, 2016).
+standard deviation $`\sigma`$, which is an additional free parameter.
 
 ### Weighted evidence and visibility model (WEV)
 
 WEV assumes that the observer combines evidence about decision-relevant
 features of the stimulus with the strength of evidence about
-choice-irrelevant features to generate confidence (Rausch et al., 2018).
-Thus, the WEV model assumes that $`y`$ is normally distributed with a
-mean of $`(1-w)\times x+w \times d_k\times R`$ and standard deviation
+choice-irrelevant features to generate confidence. Thus, the WEV model
+assumes that $`y`$ is normally distributed with a mean of
+$`(1-w)\times x+w \times d_k\times R`$ and standard deviation
 $`\sigma`$. The standard deviation quantifies the amount of unsystematic
 variability contributing to confidence judgments but not to the
 discrimination judgments. The parameter $`w`$ represents the weight that
@@ -80,57 +80,56 @@ set of shared parameters.
 ### Post-decisional accumulation model (PDA)
 
 PDA represents the idea of on-going information accumulation after the
-discrimination choice (Rausch et al., 2018). The parameter $`a`$
-indicates the amount of additional accumulation. The confidence variable
-is normally distributed with mean $`x+S\times d_k\times a`$ and variance
-$`a`$. The parameter $`a`$ is fitted in addition to the shared
-parameters.
+discrimination choice. The parameter $`a`$ indicates the amount of
+additional accumulation. The confidence variable is normally distributed
+with mean $`x+S\times d_k\times a`$ and variance $`a`$. The parameter
+$`a`$ is fitted in addition to the shared parameters.
 
 ### Independent Gaussian model (IG)
 
-According to IG, $`y`$ is sampled independently from $`x`$ (Rausch &
-Zehetleitner, 2017). The variable $`y`$ is normally distributed with a
-mean of $`a\times d_k`$ and variance of 1. The additional parameter
-$`m`$ represents the amount of information available for confidence
-judgment relative to amount of evidence available for the discrimination
-decision and can be smaller as well as greater than 1.
+According to IG, $`y`$ is sampled independently from $`x`$. The variable
+$`y`$ is normally distributed with a mean of $`a\times d_k`$ and
+variance of 1. The additional parameter $`m`$ represents the amount of
+information available for confidence judgment relative to amount of
+evidence available for the discrimination decision and can be smaller as
+well as greater than 1.
 
 ### Independent truncated Gaussian model: HMetad-Version (ITGc)
 
 According to the version of ITG consistent with the HMetad-method
-(Fleming, 2017; see Rausch et al., 2023), $`y`$ is sampled independently
-from $`x`$ from a truncated Gaussian distribution with a location
-parameter of $`S\times d_k \times m/2`$ and a scale parameter of 1. The
-Gaussian distribution of $`y`$ is truncated in a way that it is
-impossible to sample evidence that contradicts the original decision: If
-$`R = -1`$, the distribution is truncated to the right of $`c`$. If
-$`R = 1`$, the distribution is truncated to the left of $`c`$. The
-additional parameter $`m`$ represents metacognitive efficiency, i.e.,
-the amount of information available for confidence judgments relative to
-amount of evidence available for discrimination decisions and can be
-smaller as well as greater than 1.
+(Fleming, 2017), $`y`$ is sampled independently from $`x`$ from a
+truncated Gaussian distribution with a location parameter of
+$`S\times d_k \times m/2`$ and a scale parameter of 1. The Gaussian
+distribution of $`y`$ is truncated in a way that it is impossible to
+sample evidence that contradicts the original decision: If $`R = -1`$,
+the distribution is truncated to the right of $`c`$. If $`R = 1`$, the
+distribution is truncated to the left of $`c`$. The additional parameter
+$`m`$ represents metacognitive efficiency, i.e., the amount of
+information available for confidence judgments relative to amount of
+evidence available for discrimination decisions and can be smaller as
+well as greater than 1.
 
 ### Independent truncated Gaussian model: Meta-d’-Version (ITGcm)
 
 According to the version of the ITG consistent with the original meta-d’
-method (Maniscalco & Lau, 2012, 2014; see Rausch et al., 2023), $`y`$ is
-sampled independently from $`x`$ from a truncated Gaussian distribution
-with a location parameter of $`S\times d_k \times m/2`$ and a scale
-parameter of 1. If $`R = -1`$, the distribution is truncated to the
-right of $`m\times c`$. If $`R = 1`$, the distribution is truncated to
-the left of $`m\times c`$. The additional parameter $`m`$ represents
-metacognitive efficiency, i.e., the amount of information available for
-confidence judgments relative to amount of evidence available for the
+method (Maniscalco & Lau, 2012, 2014), $`y`$ is sampled independently
+from $`x`$ from a truncated Gaussian distribution with a location
+parameter of $`S\times d_k \times m/2`$ and a scale parameter of 1. If
+$`R = -1`$, the distribution is truncated to the right of $`m\times c`$.
+If $`R = 1`$, the distribution is truncated to the left of
+$`m\times c`$. The additional parameter $`m`$ represents metacognitive
+efficiency, i.e., the amount of information available for confidence
+judgments relative to amount of evidence available for the
 discrimination decision and can be smaller as well as greater than 1.
 
 ### Logistic noise model (logN)
 
 According to logN, the same sample of sensory evidence is used to
-generate response and confidence, i.e., $`y=x`$ just as in SDT (Shekhar
-& Rahnev, 2021). However, according to logN, the confidence criteria are
-not assumed to be constant, but instead they are affected by noise drawn
-from a lognormal distribution. In each trial, $`\theta_{-1,i}`$ is given
-by $`c -  \epsilon_i`$. Likewise, $`\theta_{1,i}`$ is given by
+generate response and confidence, i.e., $`y=x`$ just as in SDT. However,
+according to logN, the confidence criteria are not assumed to be
+constant, but instead they are affected by noise drawn from a lognormal
+distribution. In each trial, $`\theta_{-1,i}`$ is given by
+$`c -  \epsilon_i`$. Likewise, $`\theta_{1,i}`$ is given by
 $`c + \epsilon_i`$. The noise $`\epsilon_i`$ is drawn from a lognormal
 distribution with the location parameter
 $`\mu_{R,i} = \log(\left| \mu_{\theta_{R,i}} - c\right|)- 0.5 \times \sigma^{2}`$,
@@ -147,20 +146,18 @@ as free parameters.
 
 ### Logistic weighted evidence and visibility model (logWEV)
 
-The logWEV model is a combination of logN and WEV proposed by Shekhar
-and Rahnev (2023). Conceptually, logWEV assumes that the observer
-combines evidence about decision-relevant features of the stimulus with
-the strength of evidence about choice-irrelevant features (Rausch et
-al., 2018). The model also assumes that noise affecting the confidence
-decision variable is lognormal in accordance with Shekhar and Rahnev
-(2021). According to logWEV, the confidence decision variable is $`y`$
-is equal to R × y’. The variable y’ is sampled from a lognormal
-distribution with a location parameter of
-$`(1-w)\times x\times R + w \times d_k`$ and a scale parameter of
-$`\sigma`$. The parameter $`\sigma`$ quantifies the amount of
-unsystematic variability contributing to confidence judgments but not to
-the discrimination judgments. The parameter $`w`$ represents the weight
-that is put on the choice-irrelevant features in the confidence
+The logWEV model is a combination of logN and WEV proposed by .
+Conceptually, logWEV assumes that the observer combines evidence about
+decision-relevant features of the stimulus with the strength of evidence
+about choice-irrelevant features. The model also assumes that noise
+affecting the confidence decision variable is lognormal. According to
+logWEV, the confidence decision variable is $`y`$ is equal to R × y’.
+The variable y’ is sampled from a lognormal distribution with a location
+parameter of $`(1-w)\times x\times R + w \times d_k`$ and a scale
+parameter of $`\sigma`$. The parameter $`\sigma`$ quantifies the amount
+of unsystematic variability contributing to confidence judgments but not
+to the discrimination judgments. The parameter $`w`$ represents the
+weight that is put on the choice-irrelevant features in the confidence
 judgment. The parameters $`w`$ and $`\sigma`$ are free parameters.
 
 ## Measures of metacognition
@@ -257,8 +254,8 @@ fitted_pars <- fitConfModels(MaskOri, models=c("ITGcm", "WEV"), .parallel = TRUE
 The output is then a data frame with one row for each combination of
 participant and model and separate columns for each estimated parameter
 as well as for different measures for goodness-of-fit (negative
-log-likelihood, BIC, AIC and AICc). These may be used for statistical
-model comparisons.
+log-likelihood, BIC, AIC and AICy<sub>c</sub>). These may be used for
+statistical model comparisons.
 
 ``` r
 head(fitted_pars)
@@ -314,24 +311,10 @@ is highly specific to the data set and research question, which is why
 `statConfR` does not come with its own visualization tools. This being
 said, here is an example for how a visualization could look like:
 
-<!-- Stuff where only the code should be shown and executed, but do noot show R yapping  -->
+<!-- Stuff where only the code should be shown and executed, but do not show R yapping  -->
 
 ``` r
 library(tidyverse)
-```
-
-    ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-    ## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-    ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-    ## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-    ## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
-    ## ✔ purrr     1.0.2     
-    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-    ## ✖ dplyr::filter() masks stats::filter()
-    ## ✖ dplyr::lag()    masks stats::lag()
-    ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
-
-``` r
 AggregatedData <- MaskOri %>%
   mutate(ratings = as.numeric(rating), diffCond = as.numeric(diffCond)) %>%
   group_by(participant, diffCond, correct ) %>% 
@@ -341,14 +324,6 @@ AggregatedData <- MaskOri %>%
                          idvar = "participant",
                          na.rm = TRUE, .drop = TRUE) %>% 
   mutate(diffCond = as.numeric(diffCond))
-```
-
-    ## `summarise()` has grouped output by 'participant', 'diffCond'. You can override
-    ## using the `.groups` argument.
-    ## Automatically converting the following non-factors to factors: diffCond,
-    ## correct
-
-``` r
 AggregatedPrediction <- 
   rbind(fitted_pars %>%
           filter(model=="ITGcm") %>%
@@ -368,14 +343,6 @@ AggregatedPrediction <-
                   idvar = "participant",
                   na.rm = TRUE, .drop = TRUE) %>% 
   mutate(diffCond = as.numeric(diffCond))
-```
-
-    ## `summarise()` has grouped output by 'participant', 'diffCond', 'correct'. You
-    ## can override using the `.groups` argument.
-    ## Automatically converting the following non-factors to factors: diffCond,
-    ## correct, model
-
-``` r
 PlotMeans <- 
   ggplot(AggregatedPrediction, 
          aes(x = diffCond, y = ratings, color = correct)) + facet_grid(~ model) +
@@ -388,10 +355,8 @@ PlotMeans <-
   geom_point(data = AggregatedData, aes(shape=correct), color="black") + 
   scale_shape_manual(values = c(15, 16),
                      labels = c("Error", "Correct response"), name = "observed data") 
-PlotMeans
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 <!-- Show both the code and the output Figure!  -->
 
 ``` r
@@ -421,6 +386,11 @@ by Fleming (2017)’s Hmetad method.
 MetaDs <- fitMetaDprime(data = MaskOri, model="ML", .parallel = TRUE)
 ```
 
+### Documentation
+
+The documentation of each function of the currently installed version of
+`statConfR` can be accessed by typing ?*functionname* into the console.
+
 ## Contributing to the package
 
 The package is under active development. We are planning to implement
@@ -429,8 +399,9 @@ free to [contact us](malto::manuel.rausch@ku.de) to suggest new models
 to implement in in the package, or to volunteer adding additional
 models.
 
-### Instruction for implementing custom models of decision confidence (only recommended for users with experience in cognitive modelling!)
+### Instruction for implementing custom models of decision confidence
 
+**Only recommended for users with experience in cognitive modelling!**
 For readers who want to use our open code to implement models of
 confidence themselves, the following steps need to be taken:
 
@@ -467,8 +438,9 @@ confidence themselves, the following steps need to be taken:
 ## Contact
 
 For comments, bug reports, and feature suggestions please feel free to
-write to either <manuel.rausch@ku.de> or <sebastian.hellmann@ku.de> or
-[submit an issue](https://github.com/ManuelRausch/StatConfR/issues).
+write to either <manuel.rausch@hochschule-rhein-waal.de> or
+<sebastian.hellmann@ku.de> or [submit an
+issue](https://github.com/ManuelRausch/StatConfR/issues).
 
 ## References
 

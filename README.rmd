@@ -221,9 +221,9 @@ It can be seen that the independent truncated Gaussian model is consistently out
 
 After obtaining model fits, it is strongly recommended to visualize the prediction implied by the best fitting sets of parameters and to compare the prediction with the actual data. The best way to visualize the data is highly specific to the data set and research question, which is why `statConfR` does not come with its own visualization tools. This being said, here is an example for how a visualization could look like: 
 
-<!-- Stuff where only the code should be shown and executed, but do noot show R yapping  -->
+<!-- Stuff where only the code should be shown and executed, but do not show R yapping  -->
 
-```{r, echo=TRUE, results="hide"}
+```{r, echo=TRUE, results="hide", message=FALSE, warning=FALSE}
 library(tidyverse)
 AggregatedData <- MaskOri %>%
   mutate(ratings = as.numeric(rating), diffCond = as.numeric(diffCond)) %>%
@@ -265,7 +265,6 @@ PlotMeans <-
   geom_point(data = AggregatedData, aes(shape=correct), color="black") + 
   scale_shape_manual(values = c(15, 16),
                      labels = c("Error", "Correct response"), name = "observed data") 
-PlotMeans
 ```
 <!-- Show both the code and the output Figure!  -->
 
@@ -291,7 +290,8 @@ The documentation of each function of the currently installed version of `statCo
 ## Contributing to the package 
 The package is under active development. We are planning to implement new models of decision confidence when they are published. Please feel free to [contact us](malto::manuel.rausch@ku.de) to suggest new models to implement in in the package, or to volunteer adding additional models. 
 
-### Instruction for implementing custom models of decision confidence (only recommended for users with experience in cognitive modelling!)
+### Instruction for implementing custom models of decision confidence 
+__Only recommended for users with experience in cognitive modelling!__
 For readers who want to use our open code to implement models of confidence themselves, the following steps need to be taken: 
 
 - Derive the likelihood of a binary response ($R=-1, 1$) and a specific level of confidence ($C=1,...K$) according to the custom model and a set of parameters, given the binary stimulus ($S=-1, 1$), i.e. $P(R, C | S)$. 
@@ -310,8 +310,8 @@ For readers who want to use our open code to implement models of confidence them
 ## Contact
 
 For comments, bug reports, and feature suggestions please feel free to write to either
-[manuel.rausch@ku.de](mailto:manuel.rausch@ku.de)
-or [sebastian.hellmann\@ku.de](mailto:sebastian.hellmann@ku.de){.email}
+[manuel.rausch@hochschule-rhein-waal.de](mailto:manuel.rausch@hochschule-rhein-waal.de)
+or [sebastian.hellmann\@ku.de](mailto:sebastian.hellmann@ku.de)
 or [submit an issue](https://github.com/ManuelRausch/StatConfR/issues).
 
 ## References
