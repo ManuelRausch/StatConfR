@@ -395,13 +395,13 @@ The documentation of each function of the currently installed version of
 
 The package is under active development. We are planning to implement
 new models of decision confidence when they are published. Please feel
-free to [contact us](malto::manuel.rausch@ku.de) to suggest new models
+free to [contact us](malto:manuel.rausch@ku.de) to suggest new models
 to implement in in the package, or to volunteer adding additional
 models.
 
 ### Instruction for implementing custom models of decision confidence
 
-**Only recommended for users with experience in cognitive modelling!**
+**Only recommended for users with experience in cognitive modelling!**<br>
 For readers who want to use our open code to implement models of
 confidence themselves, the following steps need to be taken:
 

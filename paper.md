@@ -47,12 +47,14 @@ to binary discrimination tasks with confidence ratings:
 - the Gaussian noise model [@Maniscalco2016], 
 - the independent Gaussian model [@Rausch2017], 
 - the weighted evidence and visibility model [@Rausch2018], 
-- the lognormal noise model [@Shekhar2020a], -
+- the lognormal noise model [@Shekhar2020a],
 - the lognormal weighted evidence and visibility model [@shekhar_how_2024], 
 - the independent truncated Gaussian model [@rausch_measures_2023] based on the model specification 
 used for the original meta-d$^\prime$/d$^\prime$ method [@Maniscalco2012; @Maniscalco2014], and 
 - the independent truncated Gaussian model based on the model specification of Hmetad [@Fleming2017a]. 
-In addition, the `statConfR` package provides functions for estimating meta-d$^\prime$/d$^\prime$, the most widely-used measure of metacognitive efficiency, allowing both @Maniscalco2012's and @Fleming2017a's model specification. 
+In addition, the `statConfR` package provides functions for estimating two different groups of measures of metacognition: 
+- meta-d$^\prime$/d$^\prime$, the most widely-used measure of metacognitive efficiency, allowing both @Maniscalco2012's and @Fleming2017a's model specification. 
+- Information-theoretic measures of metacognitve accuracy [@dayan_metacognitive_2023], 
 Finally, the `statConfR` package includes an example data set previously published in @hellmann_simultaneous_2023, with which the functions can be  tested. 
 The `statConfR` reference manual provides documentation of each function of the latest release (https://cran.r-project.org/web/packages/statConfR/statConfR.pdf). 
 
@@ -86,9 +88,10 @@ export knowledge in cognitive modelling.
 Finally, the lognormal noise model and the lognormal weighted evidence and visibility model were previously only available implemented in MATLAB, 
 so `statConfR` makes these confidence models available to researchers who do not have access to MATLAB. 
 The `statConfR` package also provides a faithful implementation of meta-d$^\prime$/d$^\prime$,
-which has been originally implemented in MATLAB [@Maniscalco2012]. 
-Fleming provides MATLAB and R code for Hmetad, a Bayesian hierarichical version of meta-d$^\prime$/d$^\prime$ [@Fleming2017a], 
-but notably the model specification used for Hmetad is not the same as in meta-d$^\prime$/d$^\prime$ [@rausch_measures_2023].  
+which has been originally implemented in MATLAB [@Maniscalco2012]. Fleming provides MATLAB and R code for Hmetad, 
+a Bayesian hierarichical version of meta-d$^\prime$/d$^\prime$ [@Fleming2017a], 
+but notably he specifies the model slightly differently as in the original meta-d$^\prime$/d$^\prime$ [@rausch_measures_2023]. 
+To our knowledge, information-theoretic
 
 An important limitation of the models implemented in `statConfR` is that the dynamics of the decision process are not taken into account.
 This is a problem because confidence judgments are related to the dynamics of decision making [@hellmann_confidence_2024; @Pleskac2010; @Rahnev2020].
