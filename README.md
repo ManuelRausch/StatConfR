@@ -8,20 +8,13 @@ assumptions of meta-d′/d′ assuming the corresponding model provides a
 better fit to the data. The following models are included:
 
 - signal detection rating model,
-
 - Gaussian noise model,
-
 - weighted evidence and visibility model,
-
 - post-decisional accumulation model,
-
 - independent Gaussian model,
-
 - independent truncated Gaussian model (the model underlying the
-  meta-d′/d′ method, see Rausch et al., 2023),
-
+- meta-d′/d′ method, see Rausch et al., 2023),
 - lognormal noise model, and
-
 - lognormal weighted evidence and visibility model.
 
 ## Mathematical description of implemented models of confidence
@@ -45,12 +38,15 @@ generate confidence, it is assumed that the confidence variable $`y`$ is
 compared to another set of criteria $`\theta_{R,i}, i=1,2,...,L-1`$,
 depending on the discrimination response $`R`$ to produce a $`L`$-step
 discrete confidence response. The different models vary in how $`y`$ is
-generated (see below). The parameters shared between all models are: -
-sensitivity parameters $`d_1, ..., d_K`$ ($`K`$: number of difficulty
-levels), - decision criterion $`c`$, - confidence criterion
-$`\theta_{-1,1}, ..., \theta_{-1,L-1},
-\theta_{1,1},  ,...,\theta_{1,L-1}`$ ($`L`$: number of confidence
-categories available for confidence ratings).
+generated (see below). The following parameters are shared between all
+models:
+
+- sensitivity parameters $`d_1, ..., d_K`$ ($`K`$: number of difficulty
+  levels),
+- decision criterion $`c`$,
+- confidence criterion $`\theta_{-1,1}, ..., \theta_{-1,L-1},
+  \theta_{1,1},  ,...,\theta_{1,L-1}`$ ($`L`$: number of confidence
+  categories available for confidence ratings).
 
 ### Signal detection rating model (SDT)
 
@@ -151,21 +147,21 @@ as free parameters.
 
 ### Logistic weighted evidence and visibility model (logWEV)
 
-The logWEV model is a combination of logN and WEV, proposed by Shekhar
+The logWEV model is a combination of logN and WEV proposed by Shekhar
 and Rahnev (2023). Conceptually, logWEV assumes that the observer
 combines evidence about decision-relevant features of the stimulus with
 the strength of evidence about choice-irrelevant features (Rausch et
 al., 2018). The model also assumes that noise affecting the confidence
 decision variable is lognormal in accordance with Shekhar and Rahnev
 (2021). According to logWEV, the confidence decision variable is $`y`$
-is equal to R × y<sup>*</sup>. y<sup>*</sup> is sampled from a lognormal
+is equal to R × y’. The variable y’ is sampled from a lognormal
 distribution with a location parameter of
 $`(1-w)\times x\times R + w \times d_k`$ and a scale parameter of
 $`\sigma`$. The parameter $`\sigma`$ quantifies the amount of
 unsystematic variability contributing to confidence judgments but not to
 the discrimination judgments. The parameter $`w`$ represents the weight
 that is put on the choice-irrelevant features in the confidence
-judgment. $`w`$ and $`\sigma`$ are free parameters.
+judgment. The parameters $`w`$ and $`\sigma`$ are free parameters.
 
 ## Measures of metacognition
 
@@ -189,10 +185,9 @@ model of confidence underlying the meta-d’/d’ method is identical to
 different versions of the independent truncated Gaussian model (Rausch
 et al., 2023), depending on whether the original model specification by
 Maniscalco and Lau (2012) or alternatively the specification by Fleming
-(2017). We strongly recommend that if metacognitive efficiency is to
-bemeasured using the meta-d′/d′ method that researchers fist determine
-whether the independent truncated Gaussian models are adequate
-descriptions of the data.
+(2017) is used. We strongly recommend to test whether the independent
+truncated Gaussian models are adequate descriptions of the data before
+quantifying metacognitive efficiency with meta-d′/d′.
 
 ## Installation
 
@@ -234,7 +229,7 @@ head(MaskOri)
 The function `fitConfModels` allows the user to fit several confidence
 models separately to the data of each participant. The data should be
 provided via the argument `.data` in the form of a data.frame object
-with the following variables in seperate columns: - stimulus (factor
+with the following variables in separate columns: - stimulus (factor
 with 2 levels): The property of the stimulus which defines which
 response is correct - diffCond (factor): The experimental manipulation
 that is expected to affect discrimination sensitivity - correct (0-1):
@@ -248,18 +243,19 @@ implemented models will be fit, although this may take a while.
 
 Setting the optional argument `.parallel=TRUE` parallizes model fitting
 over all but 1 available core. Note that the fitting procedure takes may
-take a considerable amount of time, especially, when there are multiple
+take a considerable amount of time, especially when there are multiple
 models, several difficulty conditions, and/or several confidence
-categories. Depending on the model and the number of experimental
-conditions, fitting ther WEV model to one participant may take 20-30
-minutes on a modern 2.8GHz CPU.
+categories. For example, if there are five difficulty conditions and
+five confidence levels, fitting the WEV model to one single participant
+may take 20-30 minutes on a 2.8GHz CPU. We recommend parallelization to
+keep the required time tolerable.
 
 ``` r
 fitted_pars <- fitConfModels(MaskOri, models=c("ITGcm", "WEV"), .parallel = TRUE) 
 ```
 
 The output is then a data frame with one row for each combination of
-participant and model and seperate columns for each estimated parameter
+participant and model and separate columns for each estimated parameter
 as well as for different measures for goodness-of-fit (negative
 log-likelihood, BIC, AIC and AICc). These may be used for statistical
 model comparisons.
@@ -315,10 +311,10 @@ After obtaining model fits, it is strongly recommended to visualize the
 prediction implied by the best fitting sets of parameters and to compare
 the prediction with the actual data. The best way to visualize the data
 is highly specific to the data set and research question, which is why
-`statConfR` does not come with its own visualisation tools. This being
+`statConfR` does not come with its own visualization tools. This being
 said, here is an example for how a visualization could look like:
 
-<!-- insert a visualization  -->
+<!-- Stuff where only the code should be shown and executed, but do noot show R yapping  -->
 
 ``` r
 library(tidyverse)
@@ -385,33 +381,41 @@ PlotMeans <-
          aes(x = diffCond, y = ratings, color = correct)) + facet_grid(~ model) +
    ylim(c(1,5)) + 
    geom_line() +  ylab("confidence rating") + xlab("difficulty condition") +
-   scale_color_manual(values = c("darkred", "green4"),
+   scale_color_manual(values = c("darkorange", "navy"),
                      labels = c("Error", "Correct response"), name = "model prediction") + 
   geom_errorbar(data = AggregatedData, 
                 aes(ymin = ratings-se, ymax = ratings+se), color="black") + 
   geom_point(data = AggregatedData, aes(shape=correct), color="black") + 
   scale_shape_manual(values = c(15, 16),
                      labels = c("Error", "Correct response"), name = "observed data") 
-PlotMeans 
+PlotMeans
+```
+
+![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+<!-- Show both the code and the output Figure!  -->
+
+``` r
+PlotMeans
 ```
 
 <figure>
-<img src="README_files/figure-gfm/unnamed-chunk-4-1.png"
-alt="Predicted vs observed confidence as a function of discriminability and correctness" />
-<figcaption aria-hidden="true">Predicted vs observed confidence as a
+<img src="README_files/figure-gfm/unnamed-chunk-5-1.png"
+alt="Predicted vs. observed confidence as a function of discriminability and correctness" />
+<figcaption aria-hidden="true">Predicted vs. observed confidence as a
 function of discriminability and correctness</figcaption>
 </figure>
 
 ### Measuring metacognition
 
 Assuming that the independent truncated Gaussian model provides a decent
-account of the data (which is not the case though in the demo dataset),
-the function `fitMetaDprime` can be used to estimate meta-d′/d′. The
-arguments `.data` and `.parallel=TRUE` are identical to the arguments in
-`fitConfModels`. The argument `model` offers the user the choice between
-two model specificationsEither “ML” to use the original model
-specification used by Maniscalco and Lau (2012, 2014) or “F” to use the
-model specification by Fleming (2017)’s Hmetad method.
+account of the data (notably, this is not the case though in the demo
+data set), the function `fitMetaDprime` can be used to estimate
+meta-d′/d′ independently for each subject. The arguments `.data` and
+`.parallel=TRUE` just in the same way the arguments of `fitConfModels`.
+The argument `model` offers the user the choice between two model
+specifications, either “ML” to use the original model specification used
+by Maniscalco and Lau (2012, 2014) or “F” to use the model specification
+by Fleming (2017)’s Hmetad method.
 
 ``` r
 MetaDs <- fitMetaDprime(data = MaskOri, model="ML", .parallel = TRUE)
@@ -421,10 +425,11 @@ MetaDs <- fitMetaDprime(data = MaskOri, model="ML", .parallel = TRUE)
 
 The package is under active development. We are planning to implement
 new models of decision confidence when they are published. Please feel
-free to [contact us](malto::manuel.rausch@ku.de) to suggest models to
-implement in in the package.
+free to [contact us](malto::manuel.rausch@ku.de) to suggest new models
+to implement in in the package, or to volunteer adding additional
+models.
 
-### Instruction for implementing custom models of decision confidence (only recommended for users experienced with cognitive modelling)
+### Instruction for implementing custom models of decision confidence (only recommended for users with experience in cognitive modelling!)
 
 For readers who want to use our open code to implement models of
 confidence themselves, the following steps need to be taken:
@@ -439,20 +444,22 @@ confidence themselves, the following steps need to be taken:
   that all parameters are fitted on the reals, i.e. positive parameters
   should be transformed outside the log-likelihood function (e.g. using
   the logarithm) and back-transformed within the log-likelihood function
-  (e.g. usingthe exponential).
+  (e.g. using the exponential).
 - Use one of the files ‘int_fit*model*.R’ from the package sources and
   adapt the fitting function to reflect the new model.
-- the initial grid used during the grid search should include a
-  plausible range of all parameters of your model.
-- if applicable, the parameters of the initial grid needs be transformed
-  so the parameter vector for optimization is real-valued)
-- the optimization routine should call the new log-likelihood function.
-- if applicable, the parameter vector
-  i`obtained during optimization needs to be back-transformation for the the output object`res\`
-- Name the new file according to the convention
-  ‘int_fit*yourmodelname*.R’
+  - The initial grid used during the grid search should include a
+    plausible range of all parameters of your model.
+  - If applicable, the parameters of the initial grid needs be
+    transformed so the parameter vector for optimization is
+    real-valued).
+  - The optimization routine should call the new log-likelihood
+    function.
+  - If applicable, the parameter vector i obtained during optimization
+    needs to back-transformation for the the output object `res`.
+  - Name the new file according to the convention
+    ‘int_fit*yourmodelname*.R’.
 - Add your model and fitting-functions to the high-level functions
-  `fitConf` and `fitConfModels`
+  `fitConf` and `fitConfModels`.
 - Add a simulation function in the file ‘int_simulateConf.R’ which uses
   the same structure as the other functions but adapt the likelihood of
   the responses.
