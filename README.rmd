@@ -20,9 +20,11 @@ gitbranch <- "main/"
 
 The `statConfR` package provides functions to fit static models of
 decision-making and confidence derived from signal detection theory for
-binary discrimination tasks, as well as meta-d′/d′ as measures of metacognition.
+binary discrimination tasks, meta-d′/d′, a wide-spread measure of metacognitive efficiency, 
+as well as information-theoretic measures of metacognitive accuracy. 
+
 Fitting models of confidence can be used to test the assumptions underlying
-meta-d′/d′. Several models include a metacognition parameter that may
+meta-d′/d′. Several static models of decision-making and confidence include a metacognition parameter that may
 serve as an alternative when the assumptions of meta-d′/d′ assuming the
 corresponding model provides a better fit to the data. The following models are included:
 
@@ -64,14 +66,16 @@ $y=x$. The confidence criteria associated with $R=-1$ are more negative than the
 decision criterion $c$, whereas the confidence criteria associated with $R=1$ are more positive than $c$.
 
 ### Gaussian noise model (GN)
+Conceptually, the Gaussian noise model reflects the idea that confidence is informed by the same sensory evidence
+as the task decision, but confidence is affected by additive Gaussian noise.
 According to GN, $y$ is subject to additive noise and assumed to be normally distributed
 around the decision evidence value $x$ with a standard deviation $\sigma$, 
 which is an additional free parameter.
 
 ### Weighted evidence and visibility model (WEV)
-WEV assumes that the observer combines evidence about decision-relevant features 
+Conceptually, the WEV model reflects the idea that the observer combines evidence about decision-relevant features 
 of the stimulus with the strength of evidence about choice-irrelevant features 
-to generate confidence. Thus, the WEV model assumes that $y$ is normally 
+to generate confidence. For this purpose, WEV assumes that $y$ is normally 
 distributed with a mean of $(1-w)\times x+w \times d_k\times R$ and standard deviation $\sigma$.
 The standard deviation quantifies the amount of unsystematic variability
 contributing to confidence judgments but not to the discrimination judgments.
@@ -87,13 +91,16 @@ $x+S\times d_k\times a$ and variance $a$. The parameter $a$ is fitted in additio
 parameters.
 
 ### Independent Gaussian model (IG)
-According to IG, $y$ is sampled independently from $x$. 
+According to IG, the information used for confidence judgments is generated independently from the sensory evidence used for the task decision. 
+For this purpose, it is assumed that $y$ is sampled independently from $x$. 
 The variable $y$ is normally distributed with a mean of $a\times d_k$ and variance
 of 1. The additional parameter $m$ represents the amount of information available for confidence judgment
 relative to amount of evidence available for the discrimination decision and can 
 be smaller as well as greater than 1.
 
 ### Independent truncated Gaussian model: HMetad-Version (ITGc)
+Conceptually, the two ITG models just as IG are based on the idea that the information used for confidence judgments is generated independently from the sensory evidence used for the task decision. However, in contrast to IG,  the two ITG models also reflect a form of confirmation bias in so far as 
+it is not possible to collect information that contradicts the original decision. 
 According to the version of ITG consistent with the HMetad-method 
 (Fleming, 2017), $y$ is sampled independently
 from $x$ from a truncated Gaussian distribution with a location parameter
@@ -152,6 +159,8 @@ under the assumption that participants had perfect access to the sensory evidenc
 and were perfectly consistent in placing their confidence criteria (Maniscalco & Lau, 2012, 2014). Using a signal detection model describing the primary task to quantify metacognition
 allows a direct comparison between metacognitive accuracy and discrimination performance
 because both are measured on the same scale. Meta-d′ can be compared against the estimate of the distance between the two stimulus distributions estimated from discrimination responses, which is referred to as d′: If meta-d′ equals d′, it means that metacognitive accuracy is exactly as good as expected from discrimination performance. If meta-d′ is lower than d′, it means that metacognitive accuracy is not optimal. It can be shown that the implicit model of confidence underlying the meta-d'/d' method is identical to different versions of the independent truncated Gaussian model (Rausch et al., 2023), depending on whether the original model specification by Maniscalco and Lau (2012) or alternatively the specification by Fleming (2017) is used. We strongly recommend to test whether the independent truncated Gaussian models are adequate descriptions of the data before quantifying metacognitive efficiency  with meta-d′/d′.
+
+
 
 ## Installation
 
@@ -271,7 +280,6 @@ PlotMeans <-
 ```{r, echo=TRUE, fig.cap = "Predicted vs. observed confidence as a function of discriminability and correctness"}
 PlotMeans
 ```
-
 
 
 ### Measuring metacognition

@@ -74,8 +74,7 @@
 #'
 #' @md
 #'
-#' @author Manuel Rausch, \email{manuel.rausch@@hochschule-rhein-waal.de}
-#'
+#' @author Manuel Rausch, \email{manuel.rausch@hochschule-rhein-waal.de}
 #' @name fitMetaDprime
 #'
 #' @import parallel

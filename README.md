@@ -444,6 +444,7 @@ issue](https://github.com/ManuelRausch/StatConfR/issues).
 
 ## References
 
+- Dayan, P. (2023). Metacognitive Information Theory. Open Mind, 7, 392–411. <https://doi.org/10.1162/opmi_a_00091>
 - Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of
   metacognitive efficiency from confidence ratings. Neuroscience of
   Consciousness, 1, 1–14. <https://doi.org/10.1093/nc/nix007>
