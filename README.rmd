@@ -10,11 +10,13 @@ editor_options:
     wrap: 72
 ---
 
-```{r setup, include=FALSE} # this stuff is invissible in the rendered document
+
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 gitrep <- "https://github.com/ManuelRausch/StatConfR/tree"
 gitbranch <- "main/"
 ```
+
 
 The `statConfR` package provides functions to fit static models of
 decision-making and confidence derived from signal detection theory for
@@ -237,7 +239,9 @@ After obtaining model fits, it is strongly recommended to visualize the predicti
 
 <!-- insert a visualization  -->
 
-```{r, echo=TRUE, fig.show='hold'}
+
+```{r, echo=TRUE, results="hide", fig.cap = "Predicted vs observed confidence as a function of discriminability and correctness"}
+
 library(tidyverse)
 
 AggregatedData <- MaskOri %>%
@@ -299,20 +303,17 @@ MetaDs <- fitMetaDprime(data = MaskOri, model="ML", .parallel = TRUE)
 The package is under active development. We are planning to implement new models of decision confidence when they are published. Please feel free to [contact us](malto::manuel.rausch@ku.de) to suggest models to implement in in the package. 
 
 ### Instruction for implementing custom models of decision confidence (only recommended for users experienced with cognitive modelling)
-For readers who want to use our open code to implement models of confidence themselves, 
-the following steps need to be taken: 
--Derive the likelihood of a binary response ($R=-1, 1$) and a specific level of confidence ($C=1,...K$) according to the custom model and a set of parameters, given the binary stimulus ($S=-1, 1$), i.e. $P(R, C | S)$. 
-- Use one of the files named 'int_ll*model*.R' from the package sources and adapt the likelihood function according to your model. According to our convention, name the new file a 'int_ll*yourmodelname*.R'. Note that all parameters are fitted on the reals, i.e. positive parameters 
-  should be transformed outside the log-likelihood function (e.g. using the 
-  logarithm) and back-transformed within the log-likelihood function (e.g. using
-  the exponential).
+For readers who want to use our open code to implement models of confidence themselves, the following steps need to be taken: 
+
+- Derive the likelihood of a binary response ($R=-1, 1$) and a specific level of confidence ($C=1,...K$) according to the custom model and a set of parameters, given the binary stimulus ($S=-1, 1$), i.e. $P(R, C | S)$. 
+- Use one of the files named 'int_ll*model*.R' from the package sources and adapt the likelihood function according to your model. According to our convention, name the new file a 'int_ll*yourmodelname*.R'. Note that all parameters are fitted on the reals, i.e. positive parameters should be transformed outside the log-likelihood function (e.g. using the logarithm) and back-transformed within the log-likelihood function (e.g. usingthe exponential).
 - Use one of the files 'int_fit*model*.R'  from the package sources and adapt the fitting function to reflect the new model. 
-  -   the initial grid used during the grid search should include a plausible range of all  parameters of your model. 
-  -   if applicable, the parameters of the initial grid needs be transformed so the
++ the initial grid used during the grid search should include a plausible range of all  parameters of your model. 
++ if applicable, the parameters of the initial grid needs be transformed so the
       parameter vector for optimization is real-valued)
-  -   the optimization routine should call the new log-likelihood function.
-  -   if applicable, the parameter vector i`obtained during optimization needs to be back-transformation for the the output object `res` 
-  - Name the new file according to the convention 'int_fit*yourmodelname*.R'
++  the optimization routine should call the new log-likelihood function.
++ if applicable, the parameter vector i`obtained during optimization needs to be back-transformation for the the output object `res` 
++ Name the new file according to the convention 'int_fit*yourmodelname*.R'
 - Add your model and fitting-functions to the high-level functions `fitConf` and `fitConfModels`
 - Add a simulation function in the file 'int_simulateConf.R' which uses the same 
   structure as the other functions but adapt the likelihood of the responses.
@@ -327,14 +328,14 @@ or [submit an issue](https://github.com/ManuelRausch/StatConfR/issues).
 
 ## References
 
-Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, 1, 1–14. https://doi.org/10.1093/nc/nix007
-Green, D. M., & Swets, J. A. (1966). Signal detection theory and psychophysics. Wiley.
-Hellmann, S., Zehetleitner, M., & Rausch, M. (2023). Simultaneous modeling of choice, confidence, and response time in visual perception. Psychological Review, 130(6), 1521–1543. https://doi.org/10.1037/rev0000411
-Maniscalco, B., & Lau, H. (2012). A signal detection theoretic method for estimating metacognitive sensitivity from confidence ratings. Consciousness and Cognition, 21(1), 422–430. https://doi.org/10.1016/j.concog.2011.09.021
-Maniscalco, B., & Lau, H. (2016). The signal processing architecture underlying subjective reports of sensory awareness. Neuroscience of Consciousness, 1, 1–17. https://doi.org/10.1093/nc/niw002
-Maniscalco, B., & Lau, H. C. (2014). Signal Detection Theory Analysis of Type 1 and Type 2 Data: Meta-d, Response- Specific Meta-d, and the Unequal Variance SDT Model. In S. M. Fleming & C. D. Frith (Eds.), The Cognitive Neuroscience of Metacognition (pp. 25–66). Springer. https://doi.org/10.1007/978-3-642-45190-4_3
-Rausch, M., Hellmann, S., & Zehetleitner, M. (2018). Confidence in masked orientation judgments is informed by both evidence and visibility. Attention, Perception, and Psychophysics, 80(1), 134–154. https://doi.org/10.3758/s13414-017-1431-5
-Rausch, M., & Zehetleitner, M. (2017). Should metacognition be measured by logistic regression? Consciousness and Cognition, 49, 291–312. https://doi.org/10.1016/j.concog.2017.02.007
-Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive Inefficiency in Perceptual Decision Making. Psychological Review, 128(1), 45–70. https://doi.org/10.1037/rev0000249
-Shekhar, M., & Rahnev, D. (2024). How Do Humans Give Conﬁdence? A Comprehensive Comparison of Process Models of Perceptual Metacognition. Journal of Experimental Psychology: General, 153(3), 656–688. https://doi.org/10.1037/xge0001524
+- Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, 1, 1–14. https://doi.org/10.1093/nc/nix007
+- Green, D. M., & Swets, J. A. (1966). Signal detection theory and psychophysics. Wiley.
+- Hellmann, S., Zehetleitner, M., & Rausch, M. (2023). Simultaneous modeling of choice, confidence, and response time in visual perception. Psychological Review, 130(6), 1521–1543. https://doi.org/10.1037/rev0000411
+- Maniscalco, B., & Lau, H. (2012). A signal detection theoretic method for estimating metacognitive sensitivity from confidence ratings. Consciousness and Cognition, 21(1), 422–430. https://doi.org/10.1016/j.concog.2011.09.021
+- Maniscalco, B., & Lau, H. (2016). The signal processing architecture underlying subjective reports of sensory awareness. Neuroscience of Consciousness, 1, 1–17. https://doi.org/10.1093/nc/niw002
+- Maniscalco, B., & Lau, H. C. (2014). Signal Detection Theory Analysis of Type 1 and Type 2 Data: Meta-d, Response- Specific Meta-d, and the Unequal Variance SDT Model. In S. M. Fleming & C. D. Frith (Eds.), The Cognitive Neuroscience of Metacognition (pp. 25–66). Springer. https://doi.org/10.1007/978-3-642-45190-4_3
+- Rausch, M., Hellmann, S., & Zehetleitner, M. (2018). Confidence in masked orientation judgments is informed by both evidence and visibility. Attention, Perception, and Psychophysics, 80(1), 134–154. https://doi.org/10.3758/s13414-017-1431-5
+- Rausch, M., & Zehetleitner, M. (2017). Should metacognition be measured by logistic regression? Consciousness and Cognition, 49, 291–312. https://doi.org/10.1016/j.concog.2017.02.007
+- Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive Inefficiency in Perceptual Decision Making. Psychological Review, 128(1), 45–70. https://doi.org/10.1037/rev0000249
+- Shekhar, M., & Rahnev, D. (2024). How Do Humans Give Conﬁdence? A Comprehensive Comparison of Process Models of Perceptual Metacognition. Journal of Experimental Psychology: General, 153(3), 656–688. https://doi.org/10.1037/xge0001524
 
