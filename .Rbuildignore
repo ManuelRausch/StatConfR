@@ -1,7 +1,7 @@
 TestScript.R
 TestResults.RData
 QuickTests.R
-usefulltools.R
+usefultools.R
 ^.*\.Rproj$
 ^\.Rproj\.user$
 LICENSE

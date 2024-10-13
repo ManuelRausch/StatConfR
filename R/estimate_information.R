@@ -25,14 +25,13 @@
 #'
 #' @return Transmitted information
 
-#' @export
 estimate_information <- function(x)
 {
   UseMethod("estimate_information")
 }
 
 
-#' @exportS3method
+#' @keywords internal
 estimate_information.data.frame <- function(msd)
 {
   estimated_classifier <- estimate_classifier(msd)
@@ -41,7 +40,7 @@ estimate_information.data.frame <- function(msd)
   info
 }
 
-#' @exportS3method
+#' @keywords internal
 estimate_information.matrix <- function(tab)
 {
   estimated_classifier <- tab/sum(tab)
@@ -50,7 +49,7 @@ estimate_information.matrix <- function(tab)
   info
 }
 
-#' @exportS3method
+#' @keywords internal
 estimate_information.table <- function(tab)
 {
   estimated_classifier <- tab/sum(tab)

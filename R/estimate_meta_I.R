@@ -1,13 +1,9 @@
 #' Estimate Meta-I
 #'
-#' Estimate Dayan (2023)'s information-theoretic measure of metacognitive accuracy meta-I.
-#' Meta-I is the transmitted information minus the minimal information given the accuracy of the classifier,
-#' $$meta-I = I(Y; \hat{Y}, C) - I(Y; \hat{Y})$$
+#' @description Estimate meta-I, an information-theoretic measure of metacognitive sensitivity
+#' proposed by Dayan (2023).
 #'
-#' This is equivalent to Dayan's formulation where meta-I is the information
-#' that confidences transmit about the correctness of a response,
-#' $$meta-I = I(Y = \hat{Y}; C).$$
-#'
+#' @params x
 #' Data can be input in three ways:
 #' - A data frame with variables "y" for true labels and "r" for
 #'   confidence-binned responses. "y" needs to contain values -1 and +1 while
@@ -19,9 +15,17 @@
 #' - A contingency matrix with joint relative frequencies (as before but
 #'   normalized to sum up to 1).
 #'
-#' @return Meta-I value
+#' @details
+#' Meta-I is the mutual information between the confidence and accuracy and is calculated as
+#' the transmitted information minus the minimal information given the accuracy,
+#' /deqn{meta-I = I(Y; \hat{Y}, C) - I(Y; \hat{Y})}. This is equivalent to Dayan's formulation where meta-I is the information
+#' that confidences transmit about the correctness of a response, /deqn{meta-I = I(Y = \hat{Y}; C).}
+
+#' @return Meta-I value (expressed in bits, i.e. log base is 2)
+
 #' @author Sascha Meyen
-#' @name estimate_meta_I (expressed in bits, i.e. log base is 2)
+
+#' @name estimate_meta_I
 #' @references Dayan, P. (2023). Metacognitive Information Theory. Open Mind, 7, 392–411. <https://doi.org/10.1162/opmi_a_00091>
 #' @export
 estimate_meta_I <- function(x)
@@ -29,7 +33,7 @@ estimate_meta_I <- function(x)
   UseMethod("estimate_meta_I")
 }
 
-#' @exportS3method
+#' @keywords internal
 estimate_meta_I.matrix <- function(estimated_classifier)
 {
   estimated_classifier <- estimated_classifier/sum(estimated_classifier)
@@ -44,8 +48,7 @@ estimate_meta_I.matrix <- function(estimated_classifier)
   meta_I
 }
 
-
-#' @exportS3method
+#' @keywords internal
 estimate_meta_I.data.frame <- function(msd)
 {
   estimated_classifier <- estimate_classifier(msd)
@@ -54,8 +57,7 @@ estimate_meta_I.data.frame <- function(msd)
   meta_I
 }
 
-
-#' @exportS3method
+#' @keywords internal
 estimate_meta_I.table <- function(counts_table)
 {
   estimated_classifier <- counts_table/sum(counts_table)

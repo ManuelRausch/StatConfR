@@ -291,6 +291,7 @@ the data (notably, this is not the case though in the demo data set), the functi
 MetaDs <- fitMetaDprime(data = MaskOri, model="ML", .parallel = TRUE)
 ```
 
+
 ### Documentation
 
 The documentation of each function of the currently installed version of `statConfR` can be accessed by typing ?*functionname* into the console. 

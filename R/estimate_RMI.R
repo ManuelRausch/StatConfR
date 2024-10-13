@@ -1,6 +1,6 @@
-#' Estimate Relative Meta-Information
+#' Estimate Dayan's index of relative Meta-Information
 #'
-#' Estimate relative meta-information, RMI. This is meta-I (see
+#' Estimate Dayan's index of relative meta-information, RMI. This is meta-I (see
 #' estimate_meta_I()) normalized by the possible range of meta-I values
 #' for the estimated accuracy,
 #'
@@ -30,7 +30,7 @@ estimate_RMI <- function(x)
   UseMethod("estimate_RMI")
 }
 
-#' @exportS3method
+#' @keywords internal
 estimate_RMI.data.frame <- function(msd)
 {
   estimated_classifier <- estimate_classifier(msd)
@@ -38,7 +38,7 @@ estimate_RMI.data.frame <- function(msd)
   estimated_RMI
 }
 
-#'@exportS3method
+#' @keywords internal
 estimate_RMI.matrix <- function(estimated_classifier)
 {
   estimated_classifier <- estimated_classifier/sum(estimated_classifier)
@@ -46,7 +46,7 @@ estimate_RMI.matrix <- function(estimated_classifier)
   estimated_RMI
 }
 
-#' @exportS3method
+#' @keywords internal
 estimate_RMI.table <- function(tab)
 {
   estimated_classifier <- tab/sum(tab)

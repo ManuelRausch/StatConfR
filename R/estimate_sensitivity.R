@@ -20,13 +20,13 @@
 #' @param x Data
 #'
 #' @return Sensitivity value
-#' @export
+
 estimate_sensitivity <- function(x)
 {
   UseMethod("estimate_sensitivity")
 }
 
-#' @exportS3method
+#' @keywords internal
 estimate_sensitivity.data.frame <- function(msd)
 {
   counts_table <- get_counts_table(msd)
@@ -34,7 +34,7 @@ estimate_sensitivity.data.frame <- function(msd)
   sensitivity
 }
 
-#' @exportS3method
+#' @keywords internal
 estimate_sensitivity.matrix <- function(counts_table)
 {
   # Normalize to avoid infinite values
@@ -59,7 +59,7 @@ estimate_sensitivity.matrix <- function(counts_table)
   sensitivity
 }
 
-#' @exportS3method
+#' @keywords internal
 estimate_sensitivity.table <- function(counts_table)
 {
   sensitivity <- estimate_sensitivity.matrix(counts_table)

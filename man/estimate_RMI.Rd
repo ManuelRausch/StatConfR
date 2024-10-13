@@ -2,7 +2,7 @@
 % Please edit documentation in R/estimate_RMI.R
 \name{estimate_RMI}
 \alias{estimate_RMI}
-\title{Estimate Relative Meta-Information}
+\title{Estimate Dayan's index of relative Meta-Information}
 \usage{
 estimate_RMI(x)
 }
@@ -13,7 +13,7 @@ estimate_RMI(x)
 Relative meta-information value
 }
 \description{
-Estimate relative meta-information, RMI. This is meta-I (see
+Estimate Dayan's index of relative meta-information, RMI. This is meta-I (see
 estimate_meta_I()) normalized by the possible range of meta-I values
 for the estimated accuracy,
 }

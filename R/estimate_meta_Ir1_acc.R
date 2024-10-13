@@ -30,7 +30,7 @@ estimate_meta_Ir1_acc <- function(x, ...)
   UseMethod("estimate_meta_Ir1_acc")
 }
 
-#' @exportS3method
+#' @keywords internal
 estimate_meta_Ir1_acc.matrix <- function(counts_table)
 {
   estimated_classifier <- counts_table/sum(counts_table)
@@ -52,14 +52,14 @@ estimate_meta_Ir1_acc.matrix <- function(counts_table)
   meta_I_r1
 }
 
-#' @exportS3method
+#' @keywords internal
 estimate_meta_Ir1_acc.data.frame <- function(msd)
 {
   estimated_classifier <- estimate_classifier(msd)
   meta_I <- estimate_meta_Ir1_acc.matrix(estimated_classifier)
   meta_I
 }
-#' @exportS3method
+#' @keywords internal
 estimate_meta_Ir1_acc.table <- function(counts_table)
 {
   meta_Ir1 <- estimate_meta_Ir1_acc.matrix(counts_table)

@@ -21,13 +21,12 @@
 #'
 #' @return Estimated accuracy
 
-#' @export
 estimate_accuracy <- function(x)
 {
   UseMethod("estimate_accuracy")
 }
 
-#' @exportS3method
+#' @keywords internal
 estimate_accuracy.matrix <- function(estimated_classifier)
 {
   estimated_classifier <- estimated_classifier/sum(estimated_classifier)
@@ -35,8 +34,7 @@ estimate_accuracy.matrix <- function(estimated_classifier)
   acc <- get_accuracy(estimated_classifier)
   acc
 }
-
-#' @exportS3method
+#' @keywords internal
 estimate_accuracy.data.frame <- function(msd)
 {
   estimated_classifier <- estimate_classifier(msd)
@@ -44,8 +42,7 @@ estimate_accuracy.data.frame <- function(msd)
   acc <- estimate_accuracy.matrix(estimated_classifier)
   acc
 }
-
-#' @exportS3method
+#' @keywords internal
 estimate_accuracy.table <- function(counts_table)
 {
   estimated_classifier <- counts_table/sum(counts_table)
