@@ -4,7 +4,7 @@
 #' estimate_meta_I()) normalized by the possible range of meta-I values
 #' for the estimated accuracy,
 #'
-#'   RMI = meta-I / max meta-I.
+#'   $$RMI = meta-I / max meta-I.$$
 #'
 #' Data can be input in three ways:
 
@@ -30,6 +30,7 @@ estimate_RMI <- function(x)
   UseMethod("estimate_RMI")
 }
 
+#' @exportS3method
 estimate_RMI.data.frame <- function(msd)
 {
   estimated_classifier <- estimate_classifier(msd)
@@ -37,6 +38,7 @@ estimate_RMI.data.frame <- function(msd)
   estimated_RMI
 }
 
+#'@exportS3method
 estimate_RMI.matrix <- function(estimated_classifier)
 {
   estimated_classifier <- estimated_classifier/sum(estimated_classifier)
@@ -44,6 +46,7 @@ estimate_RMI.matrix <- function(estimated_classifier)
   estimated_RMI
 }
 
+#' @exportS3method
 estimate_RMI.table <- function(tab)
 {
   estimated_classifier <- tab/sum(tab)

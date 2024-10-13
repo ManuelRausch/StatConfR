@@ -1,10 +1,10 @@
 #' Estimate Meta Sensitivity
-#' 
+#'
 #' Estimate regular sensitivity from SDT. Here, we assume that the first half
 #' of the confidence-binned responses equals to predictions for the first
 #' label (Y = +1) and the second half of the responses to predictions for the
 #' second label (Y = -1).
-#' 
+#'
 #' Data can be input in three ways:
 
 #' - A data frame with variables "y" for true labels and "r" for
@@ -16,15 +16,17 @@
 #'   labels (stimulus categories) and columns correspond to responses.
 #' - A contingency matrix with joint relative frequencies (as before but
 #'   normalized to sum up to 1).
-#' 
+#'
 #' @param x Data
-#' 
+#'
 #' @return Sensitivity value
+#' @export
 estimate_sensitivity <- function(x)
 {
   UseMethod("estimate_sensitivity")
 }
 
+#' @exportS3method
 estimate_sensitivity.data.frame <- function(msd)
 {
   counts_table <- get_counts_table(msd)
@@ -32,6 +34,7 @@ estimate_sensitivity.data.frame <- function(msd)
   sensitivity
 }
 
+#' @exportS3method
 estimate_sensitivity.matrix <- function(counts_table)
 {
   # Normalize to avoid infinite values
@@ -47,7 +50,7 @@ estimate_sensitivity.matrix <- function(counts_table)
 
   n_correctly_predict_second_row <- sum(counts_table[2, idx_predicting_second_row])
   n_predict_second_row           <- sum(counts_table[ , idx_predicting_second_row])
-  
+
   hit_rate         <- n_correctly_predict_first_row / n_predict_first_row
   false_alarm_rate <- 1 - n_correctly_predict_second_row / n_predict_second_row
 
@@ -56,8 +59,9 @@ estimate_sensitivity.matrix <- function(counts_table)
   sensitivity
 }
 
+#' @exportS3method
 estimate_sensitivity.table <- function(counts_table)
-{  
+{
   sensitivity <- estimate_sensitivity.matrix(counts_table)
   sensitivity
 }

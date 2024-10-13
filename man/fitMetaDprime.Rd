@@ -76,7 +76,6 @@ as good as expected from discrimination performance.
 Ifmeta-d′ is lower than d′, it means that metacognitive accuracy is suboptimal.
 It can be shown that the implicit model of confidence underlying the meta-d'/d'
 method is identical to the independent truncated Gaussian model.
-Our function is a translation of MATLAB code provided by Brian Maniscalco (http:// www. colum bia. edu/ ~bsm21 05/ type2 sdt, last accessed2021–09-20).
 
 The provided \code{data} argument is split into subsets according to the values of
 the \code{participant} column. Then for each subset, the parameters of the

@@ -2,11 +2,11 @@
 #'
 #' Estimate Dayan (2023)'s information-theoretic measure of metacognitive accuracy meta-I.
 #' Meta-I is the transmitted information minus the minimal information given the accuracy of the classifier,
-#' \deqn{meta-I = I(Y; \hat{Y}, C) - I(Y; \hat{Y})}
+#' $$meta-I = I(Y; \hat{Y}, C) - I(Y; \hat{Y})$$
 #'
 #' This is equivalent to Dayan's formulation where meta-I is the information
 #' that confidences transmit about the correctness of a response,
-#' \deqn{meta-I = I(Y = \hat{Y}; C).}
+#' $$meta-I = I(Y = \hat{Y}; C).$$
 #'
 #' Data can be input in three ways:
 #' - A data frame with variables "y" for true labels and "r" for
@@ -29,6 +29,7 @@ estimate_meta_I <- function(x)
   UseMethod("estimate_meta_I")
 }
 
+#' @exportS3method
 estimate_meta_I.matrix <- function(estimated_classifier)
 {
   estimated_classifier <- estimated_classifier/sum(estimated_classifier)
@@ -43,6 +44,8 @@ estimate_meta_I.matrix <- function(estimated_classifier)
   meta_I
 }
 
+
+#' @exportS3method
 estimate_meta_I.data.frame <- function(msd)
 {
   estimated_classifier <- estimate_classifier(msd)
@@ -51,6 +54,8 @@ estimate_meta_I.data.frame <- function(msd)
   meta_I
 }
 
+
+#' @exportS3method
 estimate_meta_I.table <- function(counts_table)
 {
   estimated_classifier <- counts_table/sum(counts_table)

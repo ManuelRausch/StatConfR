@@ -1,4 +1,4 @@
-#' Simulate data  according to a static model of confidence
+ #' Simulate data  according to a static model of confidence
 #'
 #' This function generates a data frame with random trials generated according to
 #' the computational model of decision confidence specified in the `model` argument

@@ -1,10 +1,10 @@
 #' Estimate Meta Ir1
 #'
 #' Estimate Dayan (2023)'s information-theoretic measure of metacognitive accuracy meta-I^r_1.
-#' This is meta-I (see \code{\link{ estimate_meta_I}})
+#' This is meta-I (see \code{\link{estimate_meta_I}})
 #' normalized by meta-I that would be expected from a signal detection rating model
 #'
-#'   meta-Ir1 = meta-I / meta-I(d').
+#'   $$meta-Ir1 = meta-I / meta-I(d').$$
 #'
 #' Data can be input in three ways:
 
@@ -28,6 +28,8 @@ estimate_meta_Ir1 <- function(x, ...)
   UseMethod("estimate_meta_Ir1")
 }
 
+
+#' @exportS3method
 estimate_meta_Ir1.matrix <- function(counts_table)
 {
   estimated_classifier <- counts_table/sum(counts_table)
@@ -49,6 +51,8 @@ estimate_meta_Ir1.matrix <- function(counts_table)
   meta_I_r1
 }
 
+
+#' @exportS3method
 estimate_meta_Ir1.data.frame <- function(msd)
 {
   counts_table <- get_counts_table(msd)
@@ -56,6 +60,8 @@ estimate_meta_Ir1.data.frame <- function(msd)
   meta_I
 }
 
+
+#' @exportS3method
 estimate_meta_Ir1.table <- function(counts_table)
 {
   meta_Ir1 <- estimate_meta_Ir1.matrix(counts_table)

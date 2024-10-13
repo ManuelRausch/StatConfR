@@ -31,6 +31,8 @@
 # 3.1) meta-d′/d′ using Maniscalco and Lau (2012)'s model specification
 # 3.2) meta-d′/d′ using Fleming (2017)'s model specification
 
+# 4. meta-I and co
+
 # 0) Preparations
 
 rm(list=ls())
@@ -350,6 +352,9 @@ Plot_recov_metaDprime_F <-
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
   theme_minimal()
 Plot_recov_metaDprime_F
+
+
+# 4. meta-I and co
 
 
 save(fitted_pars, PlotFitsBICWeights,

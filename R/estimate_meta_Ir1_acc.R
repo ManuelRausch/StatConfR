@@ -4,7 +4,7 @@
 #' This is meta-I (see estimate_meta_I()) normalized by the meta-I that would be
 #' produced by normal noise with the estimated sensitivity,
 #'
-#'   meta-Ir1 = meta-I / meta-I(d').
+#'   $$meta-Ir1 = meta-I / meta-I(d')$$.
 #'
 #' In contrast to estimate_meta_Ir1, the sensitivity is here computed by
 #' determining the accuracy and converting it to a sensitivity assuming an
@@ -23,12 +23,14 @@
 #'   normalized to sum up to 1).
 #'
 #' @return Meta-I^r_1 value
+#'
+#' @export
 estimate_meta_Ir1_acc <- function(x, ...)
 {
   UseMethod("estimate_meta_Ir1_acc")
 }
 
-
+#' @exportS3method
 estimate_meta_Ir1_acc.matrix <- function(counts_table)
 {
   estimated_classifier <- counts_table/sum(counts_table)
@@ -50,13 +52,14 @@ estimate_meta_Ir1_acc.matrix <- function(counts_table)
   meta_I_r1
 }
 
+#' @exportS3method
 estimate_meta_Ir1_acc.data.frame <- function(msd)
 {
   estimated_classifier <- estimate_classifier(msd)
   meta_I <- estimate_meta_Ir1_acc.matrix(estimated_classifier)
   meta_I
 }
-
+#' @exportS3method
 estimate_meta_Ir1_acc.table <- function(counts_table)
 {
   meta_Ir1 <- estimate_meta_Ir1_acc.matrix(counts_table)

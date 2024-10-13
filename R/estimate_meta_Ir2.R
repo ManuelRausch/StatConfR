@@ -2,9 +2,9 @@
 #'
 #' Estimate Dayan (2023)'s meta-I^r_1. This is meta-I (see
 #' estimate_meta_I()) normalized by the remaining uncertainty
-#' about whether the predictions are correct or not, H(Y = \hat{Y}),
+#' about whether the predictions are correct or not, $H(Y = \hat{Y})$,
 #'
-#'   meta-Ir2 = meta-I / H(Y = \hat{Y}).
+#' $$meta-Ir2 = meta-I / H(Y = \hat{Y}).$$
 #'
 #' Data can be input in three ways:
 
@@ -28,6 +28,8 @@ estimate_meta_Ir2 <- function(x)
   UseMethod("estimate_meta_Ir2")
 }
 
+
+#' @exportS3method
 estimate_meta_Ir2.data.frame <- function(msd)
 {
   estimated_classifier <- estimate_classifier(msd)
@@ -35,6 +37,7 @@ estimate_meta_Ir2.data.frame <- function(msd)
   meta_I
 }
 
+#' @exportS3method
 estimate_meta_Ir2.matrix <- function(estimated_classifier)
 {
   estimated_classifier <- estimated_classifier/sum(estimated_classifier)
@@ -49,6 +52,7 @@ estimate_meta_Ir2.matrix <- function(estimated_classifier)
   meta_I_r2
 }
 
+#' @exportS3method
 estimate_meta_Ir2.table <- function(counts_table)
 {
   estimated_classifier <- counts_table/sum(counts_table)

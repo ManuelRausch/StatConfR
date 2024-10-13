@@ -1,9 +1,9 @@
 #' Estimate Accuracy
-#' 
+#'
 #' Estimate the probability of correct predictions. Note that this ignores the
 #' mapping intended by the classifier and instead uses the optimal
 #' prediction-mapping for each response.
-#' 
+#'
 #' Data can be input in three ways:
 #' - A data frame with variables "y" for true labels and "r" for
 #'   confidence-binned responses. "y" needs to contain values -1 and +1 while
@@ -16,15 +16,18 @@
 #'   labels (stimulus categories) and columns correspond to responses.
 #' - A contingency matrix with joint relative frequencies (as before but
 #'   normalized to sum up to 1).
-#' 
+#'
 #' @param x Data
-#' 
+#'
 #' @return Estimated accuracy
+
+#' @export
 estimate_accuracy <- function(x)
 {
   UseMethod("estimate_accuracy")
 }
 
+#' @exportS3method
 estimate_accuracy.matrix <- function(estimated_classifier)
 {
   estimated_classifier <- estimated_classifier/sum(estimated_classifier)
@@ -33,6 +36,7 @@ estimate_accuracy.matrix <- function(estimated_classifier)
   acc
 }
 
+#' @exportS3method
 estimate_accuracy.data.frame <- function(msd)
 {
   estimated_classifier <- estimate_classifier(msd)
@@ -41,6 +45,7 @@ estimate_accuracy.data.frame <- function(msd)
   acc
 }
 
+#' @exportS3method
 estimate_accuracy.table <- function(counts_table)
 {
   estimated_classifier <- counts_table/sum(counts_table)
