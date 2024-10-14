@@ -11,6 +11,7 @@
 #' \describe{
 #' \item{participant}{integer values as unique participant identifier}
 #'   \item{stimulus}{orientation of the grating (90: vertical, 0: horizontal)}
+#'   \item{response }{ participants' orientation judgment about the grating (90: vertical, 0: horizontal)}
 #'   \item{correct}{0-1 column indicating whether the discrimination response was correct (1) or not (0)}
 #'   \item{rating}{0-4 confidence rating on a continous scale binned into five categories}
 #'   \item{diffCond}{stimulus-onset-asynchrony in ms (i.e. time between stimulus and mask onset)}

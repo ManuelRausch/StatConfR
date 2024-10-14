@@ -1,4 +1,4 @@
-#' Estimate Meta Sensitivity
+#' Estimate Sensitivity d'
 #'
 #' Estimate regular sensitivity from SDT. Here, we assume that the first half
 #' of the confidence-binned responses equals to predictions for the first
@@ -26,7 +26,7 @@ estimate_sensitivity <- function(x)
   UseMethod("estimate_sensitivity")
 }
 
-#' @keywords internal
+#' @export
 estimate_sensitivity.data.frame <- function(msd)
 {
   counts_table <- get_counts_table(msd)
@@ -34,7 +34,7 @@ estimate_sensitivity.data.frame <- function(msd)
   sensitivity
 }
 
-#' @keywords internal
+#' @export
 estimate_sensitivity.matrix <- function(counts_table)
 {
   # Normalize to avoid infinite values
@@ -59,7 +59,7 @@ estimate_sensitivity.matrix <- function(counts_table)
   sensitivity
 }
 
-#' @keywords internal
+#' @export
 estimate_sensitivity.table <- function(counts_table)
 {
   sensitivity <- estimate_sensitivity.matrix(counts_table)
