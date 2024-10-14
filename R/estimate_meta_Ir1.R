@@ -53,7 +53,7 @@ estimate_meta_Ir1.matrix <- function(x){
 
   # meta-I of a normal noise classifier
   p             <- rowSums(estimated_classifier)
-  d             <- estimate_sensitivity(counts_table)
+  d             <- estimate_sensitivity(x)
   a             <- pnorm(abs(d)/2)
   info_lower    <- get_lower_info_for_one(p, a)
   info_normal   <- get_normal_noise_information(sensitivities = d)$info
