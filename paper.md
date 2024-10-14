@@ -41,8 +41,8 @@ affiliations:
 # Summary
   
 We present the `statConfR` package for R, which allows researchers to conveniently 
-fit and compare nine different static models of decision confidence applicable
-to binary discrimination tasks with confidence ratings: 
+fit and compare nine different static models of decision confidence for 
+binary discrimination tasks with confidence ratings: 
 - the signal detection rating model [@Green1966], 
 - the Gaussian noise model [@Maniscalco2016], 
 - the independent Gaussian model [@Rausch2017], 
@@ -52,9 +52,10 @@ to binary discrimination tasks with confidence ratings:
 - the independent truncated Gaussian model [@rausch_measures_2023] based on the model specification 
 used for the original meta-d$^\prime$/d$^\prime$ method [@Maniscalco2012; @Maniscalco2014], and 
 - the independent truncated Gaussian model based on the model specification of Hmetad [@Fleming2017a]. 
-In addition, the `statConfR` package provides functions for estimating two different groups of measures of metacognition: 
-- meta-d$^\prime$/d$^\prime$, the most widely-used measure of metacognitive efficiency, allowing both @Maniscalco2012's and @Fleming2017a's model specification. 
-- Information-theoretic measures of metacognitve sensitivity and metacognitive efficiency [@dayan_metacognitive_2023]. 
+In addition, the `statConfR` package provides functions for estimating two different 
+kinds of measures of metacognition: 
+- meta-d$^\prime$/d$^\prime$, the most widely-used measure of metacognitive efficiency, allowing both @Maniscalco2012's and @Fleming2017a's model specification, 
+- Information-theoretic measures of metacognitive sensitivity and metacognitive efficiency [@dayan_metacognitive_2023]. 
 Finally, the `statConfR` package includes an example data set previously published in @hellmann_simultaneous_2023, with which the functions can be  tested. 
 The `statConfR` reference manual provides documentation of each function of the latest release (https://cran.r-project.org/web/packages/statConfR/statConfR.pdf). 
 
