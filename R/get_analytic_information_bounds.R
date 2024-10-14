@@ -1,34 +1,32 @@
-#' Get Analytic Binary Information Bounds
-#'
-#' Given the accuracies of classifiers predicting binary true labels with the
-#' given prior, compute the highest and lowest possible transmitted
-#' information of them. Information is given in bit (log base is 2).
-#'
-#' @param prior Prior probability as a vector of two values that sums to 1
-#' @param accuracies Accuracies of classifiers
+# Get Analytic Binary Information Bounds
+#
+# Given the accuracies of classifiers predicting binary true labels with the
+# given prior, compute the highest and lowest possible transmitted
+# information of them. Information is given in bit (log base is 2).
+# @param prior Prior probability as a vector of two values that sums to 1
+# @param accuracies Accuracies of classifiers
+# @return Data frame with highest and lowest possible transmitted information
 #' @importFrom utils tail
-#' @return Data frame with highest and lowest possible transmitted information
-get_analytic_binary_information_bounds <- function(prior, accuracies)
-{
+
+get_analytic_binary_information_bounds <- function(prior, accuracies){
   information_bounds <- data.frame(accuracies = accuracies                 ,
                                    highest    = H(prior) - 2*(1-accuracies),
                                    lowest     = H(prior) - H2(accuracies)  )
   information_bounds
 }
 
-#' Get Analytical Information Bounds
-#'
-#' Given the accuracies of classifiers predicting (arbitrarily many) true
-#' labels with the given prior, compute the highest and lowest possible
-#' transmitted information of them. Information is given in bit (log base is
-#' 2).
-#'
-#' @param prior Prior probability as a vector that sums to 1
-#' @param accuracies Accuracies of classifiers
-#'
-#' @return Data frame with highest and lowest possible transmitted information
-get_analytic_information_bounds = function(prior, accuracies)
-{
+# Get Analytical Information Bounds
+#
+# Given the accuracies of classifiers predicting (arbitrarily many) true
+# labels with the given prior, compute the highest and lowest possible
+# transmitted information of them. Information is given in bit (log base is
+# 2).
+#
+# @param prior Prior probability as a vector that sums to 1
+# @param accuracies Accuracies of classifiers
+#
+# @return Data frame with highest and lowest possible transmitted information
+get_analytic_information_bounds = function(prior, accuracies){
   upper <- sapply(accuracies, \(a) { get_upper_info_for_one(prior, a) })
   lower <- sapply(accuracies, \(a) { get_lower_info_for_one(prior, a) })
 
@@ -38,8 +36,7 @@ get_analytic_information_bounds = function(prior, accuracies)
   information_bounds
 }
 
-get_upper_info_for_one <- function(prior, accuracy)
-{
+get_upper_info_for_one <- function(prior, accuracy){
   m1 <- floor(1/accuracy)
   m2 <- floor(1/accuracy)+1
 
@@ -51,8 +48,7 @@ get_upper_info_for_one <- function(prior, accuracy)
   info
 }
 
-get_lower_info_for_one <- function(prior, accuracy)
-{
+get_lower_info_for_one <- function(prior, accuracy){
   a <- accuracy
   p <- sort(prior, decreasing = TRUE)
   L <- length(prior)

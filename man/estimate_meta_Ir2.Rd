@@ -2,37 +2,51 @@
 % Please edit documentation in R/estimate_meta_Ir2.R
 \name{estimate_meta_Ir2}
 \alias{estimate_meta_Ir2}
-\title{Estimate Meta Ir2}
+\title{Estimate meta-\eqn{I_{2}^{r}}}
 \usage{
 estimate_meta_Ir2(x)
 }
-\value{
-Meta-I^r_2 value
-}
-\description{
-Estimate Dayan (2023)'s meta-I^r_1. This is meta-I (see
-estimate_meta_I()) normalized by the remaining uncertainty
-about whether the predictions are correct or not, $H(Y = \hat{Y})$,
-}
-\details{
-$$meta-Ir2 = meta-I / H(Y = \hat{Y}).$$
-
-Data can be input in three ways:
+\arguments{
+\item{x}{Three different types of inputs are accepted:
 \itemize{
-\item A data frame with variables "y" for true labels and "r" for
+\item A \code{data.frame} with variables "y" for true labels and "r" for
 confidence-binned responses. "y" needs to contain values -1 and +1 while
 r needs to be a factor with ordered levels such that the first half of
-the levels correspond to predictions for y=-1 and the second half to
-predictions for y=+1.
-\item A counts table with joint absolute frequencies. Rows correspond to true
+the levels correspond to predictions for y = -1 and the second half to
+predictions for y = +1.
+\item A counts \code{table} with joint absolute frequencies. Rows correspond to true
 labels (stimulus categories) and columns correspond to responses.
-\item A contingency matrix with joint relative frequencies (as before but
+\item A contingency \code{matrix} with joint relative frequencies (as before but
 normalized to sum up to 1).
+}}
 }
+\value{
+meta-\eqn{I_{2}^{r}} value (expressed in bits, i.e. log base is 2)
+}
+\description{
+\code{estimate_meta_Ir2} estimates meta-\eqn{I_{2}^{r}}, an information-theoretic measure
+of metacognitive efficiency proposed by Dayan (2023).
+}
+\details{
+Meta-\eqn{I_{2}^{r}} is meta-I (see \code{\link{estimate_meta_I}}) normalized
+by its theoretical upper bound, which is the information entropy of accuracy,  \eqn{H(Y = \hat{Y})}:
+\deqn{meta-I_{2}^{r} = meta-I / H(Y = \hat{Y})}
+It should be noted that Dayan (2023) pointed out that a liberal or conservative use of the confidence levels
+will affected the mutual information and thus influence meta-\eqn{I_{2}^{r}}.
+}
+\examples{
+# 1. prepare counts table for one subject
+OneSbj <- subset(MaskOri, participant == 1)
+y <- ifelse(OneSbj$stimulus == 0, -1, 1)
+r <- factor(ifelse(OneSbj$response == 0, -1, 1) * as.numeric(OneSbj$rating))
+counts <- table(y, r)
+
+# 2. calculate meta-Ir2
+meta_Ir2 <- estimate_meta_Ir2(counts)
 }
 \references{
 Dayan, P. (2023). Metacognitive Information Theory. Open Mind, 7, 392–411. \url{https://doi.org/10.1162/opmi_a_00091}
 }
 \author{
-Sascha Meyen
+Sascha Meyen, \email{saschameyen@gmail.com}
 }

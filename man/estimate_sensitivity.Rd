@@ -2,7 +2,7 @@
 % Please edit documentation in R/estimate_sensitivity.R
 \name{estimate_sensitivity}
 \alias{estimate_sensitivity}
-\title{Estimate Meta Sensitivity}
+\title{Estimate Sensitivity d'}
 \usage{
 estimate_sensitivity(x)
 }

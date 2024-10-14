@@ -2,40 +2,50 @@
 % Please edit documentation in R/estimate_RMI.R
 \name{estimate_RMI}
 \alias{estimate_RMI}
-\title{Estimate Dayan's index of relative Meta-Information}
+\title{Estimate relative Meta-Information}
 \usage{
 estimate_RMI(x)
 }
 \arguments{
-\item{x}{Data}
-}
-\value{
-Relative meta-information value
-}
-\description{
-Estimate Dayan's index of relative meta-information, RMI. This is meta-I (see
-estimate_meta_I()) normalized by the possible range of meta-I values
-for the estimated accuracy,
-}
-\details{
-$$RMI = meta-I / max meta-I.$$
-
-Data can be input in three ways:
+\item{x}{Three different types of inputs are accepted:
 \itemize{
-\item A data frame with variables "y" for true labels and "r" for
+\item A \code{data.frame} with variables "y" for true labels and "r" for
 confidence-binned responses. "y" needs to contain values -1 and +1 while
 r needs to be a factor with ordered levels such that the first half of
-the levels correspond to predictions for y=-1 and the second half to
-predictions for y=+1.
-\item A counts table with joint absolute frequencies. Rows correspond to true
+the levels correspond to predictions for y = -1 and the second half to
+predictions for y = +1.
+\item A counts \code{table} with joint absolute frequencies. Rows correspond to true
 labels (stimulus categories) and columns correspond to responses.
-\item A contingency matrix with joint relative frequencies (as before but
+\item A contingency \code{matrix} with joint relative frequencies (as before but
 normalized to sum up to 1).
+}}
 }
+\value{
+Relative meta-information value, expressed in bits (i.e. log base is 2).
+}
+\description{
+\code{estimate_RMI} estimates the RMI index of relative meta-information.
+}
+\details{
+RMI is meta-I (see \code{\link{estimate_meta_I}}) normalized by the maximum
+possible range of meta-I possible for the estmiated level of accuracy:
+\deqn{RMI = meta-I / max(meta-I)}
+It should be noted that Dayan (2023) pointed out that a liberal or conservative use of the confidence levels
+will affected the mutual information and thus influence RMI.
+}
+\examples{
+1. prepare counts table for one subject
+OneSbj <- subset(MaskOri, participant == 1)
+y <- ifelse(OneSbj$stimulus == 0, -1, 1)
+r <- factor(ifelse(OneSbj$response == 0, -1, 1) * as.numeric(OneSbj$rating))
+counts <- table(y, r)
+
+# 2. calculate meta-Ir2
+RMI <- estimate_RMI(counts)
 }
 \references{
 Dayan, P. (2023). Metacognitive Information Theory. Open Mind, 7, 392–411. \url{https://doi.org/10.1162/opmi_a_00091}
 }
 \author{
-Sascha Meyen
+Sascha Meyen, \email{saschameyen@gmail.com}
 }

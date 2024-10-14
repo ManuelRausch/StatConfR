@@ -31,7 +31,7 @@ estimate_information <- function(x)
 }
 
 
-#' @keywords internal
+#'@export
 estimate_information.data.frame <- function(msd)
 {
   estimated_classifier <- estimate_classifier(msd)
@@ -40,7 +40,7 @@ estimate_information.data.frame <- function(msd)
   info
 }
 
-#' @keywords internal
+#'@export
 estimate_information.matrix <- function(tab)
 {
   estimated_classifier <- tab/sum(tab)
@@ -49,7 +49,7 @@ estimate_information.matrix <- function(tab)
   info
 }
 
-#' @keywords internal
+#'@export
 estimate_information.table <- function(tab)
 {
   estimated_classifier <- tab/sum(tab)

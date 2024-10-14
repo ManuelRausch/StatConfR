@@ -40,7 +40,7 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # if you are not usi
 
 library(tidyverse)
 library(statConfR)
-
+if (file.exists("TestResults.RData")) load("TestResults.RData")
 
 # 1) Fit all models to the dataset from Hellmann et al. (2023) Exp. 1
 
@@ -356,6 +356,19 @@ Plot_recov_metaDprime_F
 
 # 4. meta-I and co
 
+MetaInfoMeasures  <-
+  MaskOri %>%
+  mutate(y = fct_recode(stimulus, "-1" = "0", "1" = "90")) %>%
+  mutate(r = factor(ifelse(response=="0", -1, 1) * as.numeric(rating))) %>%
+  group_by(participant) %>% #group_modify(~ estimate_meta_I(.x))
+  dplyr::summarise(meta_I = estimate_meta_I(pick(y,r)),
+                   meta_Ir1 = estimate_meta_Ir1(pick(y,r)),
+                   meta_Ir1_acc = estimate_meta_Ir1_acc(pick(y,r)),
+                   meta_Ir2  = estimate_meta_Ir2(pick(y,r)),
+                   RMI = estimate_RMI(pick(y,r))
+                   )  # need dplyr::summarise because plyr::summarise is used somewhere else
+
+
 
 save(fitted_pars, PlotFitsBICWeights,
      recov_pars_SDT, Plot_recov_SDT,
@@ -370,4 +383,5 @@ save(fitted_pars, PlotFitsBICWeights,
 
      recov_metaDprime_ML, Plot_recov_metaDprime_ML,
      recov_metaDprime_F, Plot_recov_metaDprime_F,
+     MetaInfoMeasures,
      file = "TestResults.RData")

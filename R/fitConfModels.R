@@ -1,6 +1,6 @@
-#' Fit several static confidence models to multiple participants
-#'
-#' The `fitConfModels` function fits the parameters of several computational models of decision
+#' @title Fit several static confidence models to multiple participants
+
+#' @description The `fitConfModels` function fits the parameters of several computational models of decision
 #' confidence, in binary choice tasks,  specified in the `model` argument, to
 #' different subsets of one data frame, indicated by different values in the column
 #' `participant` of the `data` argument.
@@ -13,7 +13,7 @@
 #' initial grid search to find promising starting values for the optimization.
 #' In addition, several measures of model fit (negative log-likelihood, BIC, AIC, and AICc)
 #' are computed, which can be used for a quantitative model evaluation.
-#'
+
 #' @param data  a `data.frame` where each row is one trial, containing following
 #' variables:
 #' * \code{diffCond} (optional; different levels of discriminability,
@@ -41,7 +41,7 @@
 #' (default: FALSE)
 #' @param n.cores `integer`. Number of cores used for parallelization. If NULL (default), the available
 #' number of cores -1 will be used.
-#'
+
 #' @return Gives data frame with one row for each combination of model and
 #' participant. Columns include a model and participant column,
 #' one column for each estimated parameter for the different models (parameters
@@ -58,7 +58,7 @@
 #' - `wAIC`: Akaike weights based on AIC,
 #' - `wAIC`: Akaike weights based on AICc,
 #' - `wBICc`: Schwarz weights (see Burnham & Anderson, 2002)
-#'
+
 #' @details
 #' The provided `data` argument is split into subsets according to the values of
 #' the `participant` column. Then for each subset and each model in the `models`
@@ -197,31 +197,26 @@
 #' The parameter \eqn{w} represents the weight that is put on the choice-irrelevant
 #' features in the confidence judgment. \eqn{w} and \eqn{\sigma} are fitted in
 #' addition to the set of shared parameters.
-#'
-#' @md
-#'
-#' @author Sebastian Hellmann, \email{sebastian.hellmann@@tum.de}
-#' @author Manuel Rausch, \email{manuel.rausch@ku.de}
-#'
-#' @name fitConfModels
-#' @import parallel
-#' @importFrom stats dnorm pnorm qnorm optim integrate plnorm
-#'
-#' @references Akaike, H. (1974). A New Look at the Statistical Model Identification. IEEE Transactions on Automatic Control, AC-19(6), 716–723.doi: 10.1007/978-1-4612-1694-0_16
-#' @references Burnham, K. P., & Anderson, D. R. (2002). Model selection and multimodel inference: A practical information-theoretic approach. Springer.
-#' @references Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, 1, 1–14. doi: 10.1093/nc/nix007
-#' @references Green, D. M., & Swets, J. A. (1966). Signal detection theory and psychophysics. Wiley.
-#' @references Maniscalco, B., & Lau, H. (2012). A signal detection theoretic method for estimating metacognitive sensitivity from confidence ratings. Consciousness and Cognition, 21(1), 422–430.
-#' @references Maniscalco, B., & Lau, H. C. (2014). Signal Detection Theory Analysis of Type 1 and Type 2 Data: Meta-d’, Response- Specific Meta-d’, and the Unequal Variance SDT Model. In S. M. Fleming & C. D. Frith (Eds.), The Cognitive Neuroscience of Metacognition (pp. 25–66). Springer. doi: 10.1007/978-3-642-45190-4_3
-#' @references Maniscalco, B., & Lau, H. (2016). The signal processing architecture underlying subjective reports of sensory awareness. Neuroscience of Consciousness, 1, 1–17. doi: 10.1093/nc/niw002
-#' @references Rausch, M., Hellmann, S., & Zehetleitner, M. (2018). Confidence in masked orientation judgments is informed by both evidence and visibility. Attention, Perception, and Psychophysics, 80(1), 134–154. doi: 10.3758/s13414-017-1431-5
-#' @references Rausch, M., Hellmann, S., & Zehetleitner, M. (2023). Measures of metacognitive efficiency across cognitive models of decision confidence. Psychological Methods. doi: 10.31234/osf.io/kdz34
-#' @references Rausch, M., & Zehetleitner, M. (2017). Should metacognition be measured by logistic regression? Consciousness and Cognition, 49, 291–312. doi: 10.1016/j.concog.2017.02.007
-#' @references Schwarz, G. (1978). Estimating the dimension of a model. The Annals of Statistics, 6(2), 461–464. doi: 10.1214/aos/1176344136
-#' @references Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive Inefficiency in Perceptual Decision Making. Psychological Review, 128(1), 45–70. doi: 10.1037/rev0000249
-#' @references Shekhar, M., & Rahnev, D. (2023). How Do Humans Give Confidence? A Comprehensive Comparison of Process Models of Perceptual Metacognition. Journal of Experimental Psychology: General. doi:10.1037/xge0001524
 
-#'
+#' @author
+#' Sebastian Hellmann, \email{sebastian.hellmann@@tum.de}\cr
+#' Manuel Rausch, \email{manuel.rausch@ku.de}
+
+# unlike for the other tags, the references are formatted more nicely if each reference is tagged seperately
+#' @references Akaike, H. (1974). A New Look at the Statistical Model Identification. IEEE Transactions on Automatic Control, AC-19(6), 716–723.doi: 10.1007/978-1-4612-1694-0_16\cr
+#' @references Burnham, K. P., & Anderson, D. R. (2002). Model selection and multimodel inference: A practical information-theoretic approach. Springer.\cr
+#' @references Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, 1, 1–14. doi: 10.1093/nc/nix007\cr
+#' @references Green, D. M., & Swets, J. A. (1966). Signal detection theory and psychophysics. Wiley.\cr
+#' @references Maniscalco, B., & Lau, H. (2012). A signal detection theoretic method for estimating metacognitive sensitivity from confidence ratings. Consciousness and Cognition, 21(1), 422–430.\cr
+#' @references Maniscalco, B., & Lau, H. C. (2014). Signal Detection Theory Analysis of Type 1 and Type 2 Data: Meta-d’, Response- Specific Meta-d’, and the Unequal Variance SDT Model. In S. M. Fleming & C. D. Frith (Eds.), The Cognitive Neuroscience of Metacognition (pp. 25–66). Springer. doi: 10.1007/978-3-642-45190-4_3\cr
+#' @references Maniscalco, B., & Lau, H. (2016). The signal processing architecture underlying subjective reports of sensory awareness. Neuroscience of Consciousness, 1, 1–17. doi: 10.1093/nc/niw002\cr
+#' @references Rausch, M., Hellmann, S., & Zehetleitner, M. (2018). Confidence in masked orientation judgments is informed by both evidence and visibility. Attention, Perception, and Psychophysics, 80(1), 134–154. doi: 10.3758/s13414-017-1431-5\cr
+#' @references Rausch, M., Hellmann, S., & Zehetleitner, M. (2023). Measures of metacognitive efficiency across cognitive models of decision confidence. Psychological Methods. doi: 10.31234/osf.io/kdz34\cr
+#' @references Rausch, M., & Zehetleitner, M. (2017). Should metacognition be measured by logistic regression? Consciousness and Cognition, 49, 291–312. doi: 10.1016/j.concog.2017.02.007\cr
+#' @references Schwarz, G. (1978). Estimating the dimension of a model. The Annals of Statistics, 6(2), 461–464. doi: 10.1214/aos/1176344136\cr
+#' @references Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive Inefficiency in Perceptual Decision Making. Psychological Review, 128(1), 45–70. doi: 10.1037/rev0000249\cr
+#' @references Shekhar, M., & Rahnev, D. (2023). How Do Humans Give Confidence? A Comprehensive Comparison of Process Models of Perceptual Metacognition. Journal of Experimental Psychology: General. doi:10.1037/xge0001524\cr
+
 #' @examples
 #' # 1. Select two subjects from the masked orientation discrimination experiment
 #' data <- subset(MaskOri, participant %in% c(1:2))
@@ -236,6 +231,8 @@
 #'   Fits <- fitConfModels(data, models = c("SDT", "ITGc"), .parallel = FALSE)
 #' }
 
+#' @import parallel
+#' @importFrom stats dnorm pnorm qnorm optim integrate plnorm
 
 #' @export
 fitConfModels <- function(data, models="all",

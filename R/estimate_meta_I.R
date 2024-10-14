@@ -1,41 +1,53 @@
-#' Estimate Meta-I
+#' @title Estimate Meta-I
+
+#' @description `estimate_meta_I` estimates meta-I, an information-theoretic measure
+#'  of metacognitive sensitivity proposed by Dayan (2023).
+
+#' @details
+#' Meta-I is defined as the mutual information between the confidence and accuracy and is calculated as
+#' the transmitted information minus the minimal information given the accuracy,
+#' \deqn{meta-I = I(Y; \hat{Y}, C) - I(Y; \hat{Y})}.
+#' This is equivalent to Dayan's formulation where meta-I is the information
+#' that confidences transmit about the correctness of a response,
+#' \deqn{meta-I = I(Y = \hat{Y}; C).}
+#' It should be noted that Dayan (2023) pointed out that a liberal or conservative use of the confidence levels
+#' will affected th mutual information and thus influence meta-I.
 #'
-#' @description Estimate meta-I, an information-theoretic measure of metacognitive sensitivity
-#' proposed by Dayan (2023).
-#'
-#' @params x
-#' Data can be input in three ways:
-#' - A data frame with variables "y" for true labels and "r" for
+#' @param x Three different types of inputs are accepted:
+#' - A `data.frame` with variables "y" for true labels and "r" for
 #'   confidence-binned responses. "y" needs to contain values -1 and +1 while
 #'   r needs to be a factor with ordered levels such that the first half of
 #'   the levels correspond to predictions for y=-1 and the second half to
 #'   predictions for y=+1.
-#' - A counts table with joint absolute frequencies. Rows correspond to true
+#' - A counts `table` with joint absolute frequencies. Rows correspond to true
 #'   labels (stimulus categories) and columns correspond to responses.
-#' - A contingency matrix with joint relative frequencies (as before but
+#' - A contingency `matrix` with joint relative frequencies (as before but
 #'   normalized to sum up to 1).
-#'
-#' @details
-#' Meta-I is the mutual information between the confidence and accuracy and is calculated as
-#' the transmitted information minus the minimal information given the accuracy,
-#' /deqn{meta-I = I(Y; \hat{Y}, C) - I(Y; \hat{Y})}. This is equivalent to Dayan's formulation where meta-I is the information
-#' that confidences transmit about the correctness of a response, /deqn{meta-I = I(Y = \hat{Y}; C).}
 
 #' @return Meta-I value (expressed in bits, i.e. log base is 2)
 
-#' @author Sascha Meyen
+#' @examples
+#' # 1. prepare counts table for one subject
+#' OneSbj <- subset(MaskOri, participant == 1)
+#' y <- ifelse(OneSbj$stimulus == 0, -1, 1)
+#' r <- factor(ifelse(OneSbj$response == 0, -1, 1) * as.numeric(OneSbj$rating))
+#' counts <- table(y, r)
+#'
+#' # 2. calculate meta-I
+#' metaI <- estimate_meta_I(counts)
+#'
+#' @author Sascha Meyen, \email{saschameyen@gmail.com}
 
-#' @name estimate_meta_I
 #' @references Dayan, P. (2023). Metacognitive Information Theory. Open Mind, 7, 392–411. <https://doi.org/10.1162/opmi_a_00091>
+# to do: add Saschas Paper once it is available ;-)
+
 #' @export
-estimate_meta_I <- function(x)
-{
+estimate_meta_I <- function(x){
   UseMethod("estimate_meta_I")
 }
 
 #'@export
-estimate_meta_I.matrix <- function(estimated_classifier)
-{
+estimate_meta_I.matrix <- function(estimated_classifier){
   estimated_classifier <- estimated_classifier/sum(estimated_classifier)
   p                    <- rowSums(estimated_classifier) # Prior
 
@@ -49,8 +61,7 @@ estimate_meta_I.matrix <- function(estimated_classifier)
 }
 
 #' @export
-estimate_meta_I.data.frame <- function(msd)
-{
+estimate_meta_I.data.frame <- function(msd){
   estimated_classifier <- estimate_classifier(msd)
 
   meta_I <- estimate_meta_I.matrix(estimated_classifier)
@@ -58,8 +69,7 @@ estimate_meta_I.data.frame <- function(msd)
 }
 
 #' @export
-estimate_meta_I.table <- function(counts_table)
-{
+estimate_meta_I.table <- function(counts_table){
   estimated_classifier <- counts_table/sum(counts_table)
 
   meta_I <- estimate_meta_I.matrix(estimated_classifier)
