@@ -80,7 +80,6 @@ theta_minus.2 = -2, theta_minus.1 = -1, theta_plus.1 = 1, theta_plus.2 = 2,
 sigma = 1/2, w = 0.5, N = 500)
 # 2. Simulate dataset
 SimulatedData <- simConf(model = "WEV", paramDf)
-
 }
 \author{
 Manuel Rausch, \email{manuel.rausch@hochschule-rhein-waal.de}

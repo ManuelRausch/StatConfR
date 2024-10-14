@@ -34,7 +34,7 @@ It should be noted that Dayan (2023) pointed out that a liberal or conservative 
 will affected the mutual information and thus influence RMI.
 }
 \examples{
-1. prepare counts table for one subject
+# 1. prepare counts table for one subject
 OneSbj <- subset(MaskOri, participant == 1)
 y <- ifelse(OneSbj$stimulus == 0, -1, 1)
 r <- factor(ifelse(OneSbj$response == 0, -1, 1) * as.numeric(OneSbj$rating))

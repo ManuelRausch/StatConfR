@@ -54,7 +54,7 @@ used for the original meta-d$^\prime$/d$^\prime$ method [@Maniscalco2012; @Manis
 - the independent truncated Gaussian model based on the model specification of Hmetad [@Fleming2017a]. 
 In addition, the `statConfR` package provides functions for estimating two different groups of measures of metacognition: 
 - meta-d$^\prime$/d$^\prime$, the most widely-used measure of metacognitive efficiency, allowing both @Maniscalco2012's and @Fleming2017a's model specification. 
-- Information-theoretic measures of metacognitve accuracy [@dayan_metacognitive_2023], 
+- Information-theoretic measures of metacognitve sensitivity and metacognitive efficiency [@dayan_metacognitive_2023]. 
 Finally, the `statConfR` package includes an example data set previously published in @hellmann_simultaneous_2023, with which the functions can be  tested. 
 The `statConfR` reference manual provides documentation of each function of the latest release (https://cran.r-project.org/web/packages/statConfR/statConfR.pdf). 
 
@@ -89,7 +89,7 @@ Finally, the lognormal noise model and the lognormal weighted evidence and visib
 so `statConfR` makes these confidence models available to researchers who do not have access to MATLAB. 
 The `statConfR` package also provides a faithful implementation of meta-d$^\prime$/d$^\prime$,
 which has been originally implemented in MATLAB [@Maniscalco2012]. Fleming provides MATLAB and R code for Hmetad, 
-a Bayesian hierarichical version of meta-d$^\prime$/d$^\prime$ [@Fleming2017a], 
+a Bayesian hierarchical version of meta-d$^\prime$/d$^\prime$ [@Fleming2017a], 
 but notably he specifies the model slightly differently as in the original meta-d$^\prime$/d$^\prime$ [@rausch_measures_2023]. 
 To our knowledge, information-theoretic
 

@@ -1,17 +1,5 @@
-#' Get Normal Noise Information
-#' 
-#' Determine the transmitted information of a normal noise classifier. Either
-#' accuracies or sensitivities have to be specified to determine the
-#' corresponding transmitted information. If both are specified (not advised
-#' due to ambiguity), accuracies are prioritizied.
-#' 
-#' @param accuracies Vector of accuracies
-#' @param sensitivities Vector of sensitivities
-#' 
-#' @return Transmitted information of a normal noise classifier
 get_normal_noise_information <- function(accuracies    = NULL,
-                                         sensitivities = NULL)
-{
+                                         sensitivities = NULL){
   if (is.null(sensitivities) & is.null(accuracies))
     stop("Specify accuracies or sensitivities")
 

@@ -169,7 +169,7 @@
 #' features in the confidence judgment. \eqn{w} and \eqn{\sigma} are fitted in
 #' addition to the set of shared parameters.
 #'
-#' @author Sebastian Hellmann, \email{sebastian.hellmann@tum.de}\cr
+#' @author Sebastian Hellmann, \email{sebastian.hellmann@ku.de}\cr
 #' Manuel Rausch, \email{manuel.rausch@ku.de}
 
 # unlike for the other tags, the references are formatted more nicely if each reference is tagged seperately

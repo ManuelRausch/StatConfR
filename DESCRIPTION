@@ -1,12 +1,14 @@
 Package: statConfR
 Type: Package
-Title: Models of Decision Confidence and Measures of metacognition
+Title: Models of Decision Confidence and Measures of Metacognition
 Version: 0.2.0
-Date: 2024-14-10Authors@R: c(
-  person("Manuel", "Rausch", email="manuel.rausch@hochschule-rhein-waal.de", role = c("aut", "cre"),
+Date: 2024-14-10
+Authors@R: c(
+  person("Manuel", "Rausch", email="manuel.rausch@hochschule-rhein-waal.de", 
+  role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5805-5544")),
-    person("Sascha", "Meyen",email="saschameyen@gmail.com", role = c("aut"),
-    person("Sebastian", "Hellmann",email="sebastian.hellmann@tum.de", role = c("aut"),
+    person("Sascha", "Meyen",email="saschameyen@gmail.com", role = c("aut")),
+    person("Sebastian", "Hellmann",email="sebastian.hellmann@ku.de", role = c("aut"),
            comment = c(ORCID = "0000-0002-3621-6343"))
        )
 Maintainer: Manuel Rausch <manuel.rausch@hochschule-rhein-waal.de>

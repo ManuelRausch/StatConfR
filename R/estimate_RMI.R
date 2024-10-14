@@ -23,7 +23,7 @@
 #' @return Relative meta-information value, expressed in bits (i.e. log base is 2).
 #'
 #' @examples
-#' 1. prepare counts table for one subject
+#' # 1. prepare counts table for one subject
 #' OneSbj <- subset(MaskOri, participant == 1)
 #' y <- ifelse(OneSbj$stimulus == 0, -1, 1)
 #' r <- factor(ifelse(OneSbj$response == 0, -1, 1) * as.numeric(OneSbj$rating))

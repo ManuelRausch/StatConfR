@@ -1,13 +1,13 @@
- #' Simulate data  according to a static model of confidence
-#'
-#' This function generates a data frame with random trials generated according to
+#' @title Simulate data  according to a static model of confidence
+
+#' @description This function generates a data frame with random trials generated according to
 #' the computational model of decision confidence specified in the `model` argument
 #' with given parameters.
 #' Simulations can be used to visualize and test qualitative model predictions
 #' (e.g. using previously fitted parameters returned by \code{\link{fitConf}}).
 #' See \code{\link{fitConf}} for a full mathematical description of all models
 #' and their parameters.
-#'
+
 #' @param model `character` of length 1. The generative model that should be
 #'    used for simulation. Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA',
 #'    'IG', 'ITGc', 'ITGcm', 'logN', and 'logWEV'.
@@ -26,7 +26,7 @@
 #' * \code{b} (only for PDA: postdecisional accumulation parameter, bounded between 0 and Inf),
 #' * \code{M_theta_minus.1}, \code{M_theta_minus.2}, ... (only for logN: Mean confidence criteria associated with the response R = -1),
 #' * \code{M_theta_plus.1}, \code{M_theta_plus.2},... (only for logN: Mean confidence criteria associated with the response R = 1).
-#'
+
 #' @return a dataframe with about \code{nrow(paramDf)*N} rows (see Details),
 #' and the following columns:
 #' - \code{participant} giving the row ID of the simulation (see Details)
@@ -40,7 +40,7 @@
 #' categories depends on the number of confidence criteria provided in the parameters)
 #' - \code{correct} giving the accuracy of the response (0 incorrect, 1 correct)
 #' - \code{ratings} same as `rating` but as a factor
-#'
+
 #' @details
 #' The function generates about `N` trials per row with the provided parameters
 #' in the data frame. The output includes a column `participant` indicating the
@@ -58,16 +58,9 @@
 #'
 #' Simulation is performed following the generative process structure of the models.
 #' See \code{fitConf} for a detailed description of the different models.
-#'
-#' @md
-#'
-#'
+
 #' @author Manuel Rausch, \email{manuel.rausch@hochschule-rhein-waal.de}
-#' @name simConf
 
-
-#' @importFrom plyr mdply ddply
-#'
 #' @examples
 #' # 1. define some parameters
 #' paramDf <- data.frame(d_1 = 0, d_2 = 2, d_3 = 4,c = .0,
@@ -75,7 +68,9 @@
 #' sigma = 1/2, w = 0.5, N = 500)
 #' # 2. Simulate dataset
 #' SimulatedData <- simConf(model = "WEV", paramDf)
-#'
+
+#' @importFrom plyr mdply ddply
+
 #' @export
 simConf <- function(model = "SDT",  paramDf) {
   AllModels <-

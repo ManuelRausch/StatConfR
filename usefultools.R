@@ -9,7 +9,7 @@
 devtools::document()
 
 
-devtools::build_manual("statConfR")
+devtools::build_manual()
 
 ## Die Funktion läd alle Funktionen, die in deinem Paket drinne sind
 ## (so dass du schauen kannst, wie die Funktionen unter der Haube arbeiten können)

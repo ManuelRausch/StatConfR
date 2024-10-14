@@ -4,7 +4,7 @@
 \alias{estimate_meta_Ir1_acc}
 \title{Estimate Estimate meta-\eqn{I_{1}^{r}} via Accuracy}
 \usage{
-estimate_meta_Ir1_acc(x, ...)
+estimate_meta_Ir1_acc(x)
 }
 \arguments{
 \item{x}{Three different types of inputs are accepted:

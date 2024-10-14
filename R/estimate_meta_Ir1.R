@@ -40,7 +40,7 @@
 #' @references Green, D. M., & Swets, J. A. (1966). Signal detection theory and psychophysics. Wiley.\cr
 #'
 #' @export
-estimate_meta_Ir1 <- function(x, ...)
+estimate_meta_Ir1 <- function(x)
 {
   UseMethod("estimate_meta_Ir1")
 }

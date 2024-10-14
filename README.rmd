@@ -20,8 +20,7 @@ gitbranch <- "main/"
 
 The `statConfR` package provides functions to fit static models of
 decision-making and confidence derived from signal detection theory for
-binary discrimination tasks, meta-d′/d′, a wide-spread measure of metacognitive efficiency, 
-as well as information-theoretic measures of metacognitive accuracy. 
+binary discrimination tasks, meta-d′/d′, a wide-spread measure of metacognitive efficiency, as well as information-theoretic measures of metacognitive sensitivity and efficiency. 
 
 Fitting models of confidence can be used to test the assumptions underlying
 meta-d′/d′. Several static models of decision-making and confidence include a metacognition parameter that may
@@ -160,7 +159,20 @@ and were perfectly consistent in placing their confidence criteria (Maniscalco &
 allows a direct comparison between metacognitive accuracy and discrimination performance
 because both are measured on the same scale. Meta-d′ can be compared against the estimate of the distance between the two stimulus distributions estimated from discrimination responses, which is referred to as d′: If meta-d′ equals d′, it means that metacognitive accuracy is exactly as good as expected from discrimination performance. If meta-d′ is lower than d′, it means that metacognitive accuracy is not optimal. It can be shown that the implicit model of confidence underlying the meta-d'/d' method is identical to different versions of the independent truncated Gaussian model (Rausch et al., 2023), depending on whether the original model specification by Maniscalco and Lau (2012) or alternatively the specification by Fleming (2017) is used. We strongly recommend to test whether the independent truncated Gaussian models are adequate descriptions of the data before quantifying metacognitive efficiency  with meta-d′/d′.
 
+### Information-theoretic measures of metacognition
 
+Dayan (2023) proposed several measures of metacognition based on quantities of information theory. 
+* Meta-I is a measure of metacognitive sensitivity defined as the mutual information between the confidence and accuracy and is calculated as the transmitted information minus the minimal information given the accuracy,
+$$meta-I = I(Y; \hat{Y}, C) - I(Y; \hat{Y})$$. 
+This is equivalent to Dayan's formulation where meta-I is the information that confidences transmit about the correctness of a response: 
+$$meta-I = I(Y = \hat{Y}; C)$$
+* Meta-$I_{1}^{r}$ is meta-I  normalized by the value of meta-I expected assuming 
+a signal detection model (Green & Swets, 1966) with Gaussian noise, based on calculating the sensitivity index d':
+$$meta-I_{1}^{r} = meta-I / meta-I(d')$$
+ * Meta-$I_{2}^{r}$ is meta-I normalized by its theoretical upper bound, which is the information entropy of accuracy,  $H(Y = \hat{Y})$:
+$$meta-I_{2}^{r} = meta-I / H(Y = \hat{Y})$$
+
+Notably, Dayan (2023) pointed out that a liberal or conservative use of the confidence levels will affected the mutual information and thus all information-theoretic measures of metacognition. 
 
 ## Installation
 
@@ -291,6 +303,26 @@ the data (notably, this is not the case though in the demo data set), the functi
 MetaDs <- fitMetaDprime(data = MaskOri, model="ML", .parallel = TRUE)
 ```
 
+To estimate information theoretic measures of metacognition, we must bring first the data into the correct format. Specifically, three different types of inputs are accepted:
+* A `data.frame` with variables "y" for true labels and "r" for confidence-binned responses. "y" needs to contain values -1 and +1 while r needs to be a factor with ordered levels such that the first half of the levels correspond to predictions for y = -1 and the second half to predictions for y = +1.
+* A counts `table` with joint absolute frequencies. Rows correspond to true labels (stimulus categories) and columns correspond to responses.
+* A contingency `matrix` with joint relative frequencies (as before but normalized to sum up to 1).
+
+```{r}        
+OneSbj <- subset(MaskOri, participant == 1)
+y <- ifelse(OneSbj$stimulus == 0, -1, 1)
+r <- factor(ifelse(OneSbj$response == 0, -1, 1) * as.numeric(OneSbj$rating))
+counts <- table(y, r)
+```
+
+Then, the different information-theoretic measures of metacognitive sensitivity and accuracy can be computed: 
+
+```{r}        
+meta_Ir1 <- estimate_meta_Ir1(counts)
+meta_Ir1 <- estimate_meta_Ir1(counts)
+meta_Ir2 <- estimate_meta_Ir2(counts)
+RMI <- estimate_RMI(counts)
+```
 
 ### Documentation
 

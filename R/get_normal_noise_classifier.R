@@ -1,20 +1,5 @@
-#' Get Normal Noise Classifier
-#' 
-#' Define a classifier with underlying normal distributions on observations.
-#' The normal distribution is of equal variance (= 1) and the means are
-#' shifted by the sensitivity.
-#' 
-#' Either accuracy or sensitivity has to be specified to determine the
-#' classifier. If both are specified (not advised), accuracies are
-#' prioritizied.
-#' 
-#' @param sensitivity Shift of the normal distributions
-#' @param accuracy Resulting classifier accuracy
-#' 
-#' @return Normal noise classifier
 get_normal_noise_classifier = function(sensitivity = NULL,
-                                       accuracy    = NULL)
-{
+                                       accuracy    = NULL){
   if (is.null(sensitivity))
     sensitivity <- transform_normal_accuracy_to_sensitivity(accuracy)
 
@@ -34,14 +19,12 @@ get_normal_noise_classifier = function(sensitivity = NULL,
   classifier
 }
 
-transform_normal_accuracy_to_sensitivity <- function(accuracy)
-{
+transform_normal_accuracy_to_sensitivity <- function(accuracy){
   sensitivity <- 2 * qnorm(accuracy)
   sensitivity
 }
 
-transform_normal_sensitivity_to_accuracy <- function(sensitivity)
-{
+transform_normal_sensitivity_to_accuracy <- function(sensitivity){
   accuracy <- pnorm(sensitivity / 2)
   accuracy
 }

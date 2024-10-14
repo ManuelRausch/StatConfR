@@ -243,6 +243,6 @@ Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive Inefficiency in Pe
 Shekhar, M., & Rahnev, D. (2023). How Do Humans Give Confidence? A Comprehensive Comparison of Process Models of Perceptual Metacognition. Journal of Experimental Psychology: General. doi:10.1037/xge0001524\cr
 }
 \author{
-Sebastian Hellmann, \email{sebastian.hellmann@tum.de}\cr
+Sebastian Hellmann, \email{sebastian.hellmann@ku.de}\cr
 Manuel Rausch, \email{manuel.rausch@ku.de}
 }

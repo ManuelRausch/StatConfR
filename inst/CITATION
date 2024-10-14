@@ -5,7 +5,7 @@ citation(auto = meta)
 bibentry(bibtype = "unpublished",
          title = "StatConfR: An R package for static models of decision confidence and measures of metacognition",
          author = c(person("Manuel", "Rausch"),
-                    person("Sascha", "Meyen")
+                    person("Sascha", "Meyen"),
                     person("Sebastian", "Hellmann")),
          year = "2024", # publisher = "Springer", address = "New York",
          note = "PsyArXiv",

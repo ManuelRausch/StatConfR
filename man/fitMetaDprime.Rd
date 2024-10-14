@@ -2,7 +2,7 @@
 % Please edit documentation in R/fitMetaDprime.R
 \name{fitMetaDprime}
 \alias{fitMetaDprime}
-\title{Compute measures of metacognitive sensitivity (meta-d') and metacognitive efficiency(meta-d'/d') for data from one or several subjects}
+\title{title Compute measures of metacognitive sensitivity (meta-d') and metacognitive efficiency(meta-d'/d') for data from one or several subjects}
 \usage{
 fitMetaDprime(data, model = "ML", nInits = 5, nRestart = 3,
   .parallel = FALSE, n.cores = NULL)
@@ -98,7 +98,6 @@ head(data)
 
 # 2. Fit meta-d/d for each subject in data
 MetaDs <- fitMetaDprime(data, model="F", .parallel = FALSE)
-
 }
 \references{
 Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, 1, 1–14. doi: 10.1093/nc/nix007

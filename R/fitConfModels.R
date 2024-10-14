@@ -199,7 +199,7 @@
 #' addition to the set of shared parameters.
 
 #' @author
-#' Sebastian Hellmann, \email{sebastian.hellmann@@tum.de}\cr
+#' Sebastian Hellmann, \email{sebastian.hellmann@@ku.de}\cr
 #' Manuel Rausch, \email{manuel.rausch@ku.de}
 
 # unlike for the other tags, the references are formatted more nicely if each reference is tagged seperately
@@ -225,7 +225,8 @@
 #' # 2. Fit some models to each subject of the masked orientation discrimination experiment
 #' \donttest{
 #'   # Fitting several models to several subjects takes quite some time
-#'   # (about 10 minutes per model fit per participant on a 2.8GHz processor with the default values of nInits and nRestart).
+#'   # (about 10 minutes per model fit per participant on a 2.8GHz processor
+#'   # with the default values of nInits and nRestart).
 #'   # If you want to fit more than just two subjects,
 #'   # we strongly recommend setting .parallel=TRUE
 #'   Fits <- fitConfModels(data, models = c("SDT", "ITGc"), .parallel = FALSE)
