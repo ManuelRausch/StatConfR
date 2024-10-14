@@ -1,6 +1,6 @@
 ---
 title: "README"
-author: "Sebastian Hellmann and Manuel Rausch"
+author: "Manuel Rausch, >Sascha Meyen, and Sebastian Hellmann"
 date: "2024-10-13"
 output:
   md_document:
