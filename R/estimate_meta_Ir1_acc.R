@@ -43,15 +43,13 @@
 #' @references Green, D. M., & Swets, J. A. (1966). Signal detection theory and psychophysics. Wiley.\cr
 
 #' @export
-estimate_meta_Ir1_acc <- function(x)
-{
+estimate_meta_Ir1_acc <- function(x){
   UseMethod("estimate_meta_Ir1_acc")
 }
 
 #'@export
-estimate_meta_Ir1_acc.matrix <- function(counts_table)
-{
-  estimated_classifier <- counts_table/sum(counts_table)
+estimate_meta_Ir1_acc.matrix <- function(x){
+  estimated_classifier <- x/sum(x)
 
   # (Unnormalized) meta-I
   meta_I        <- estimate_meta_I(estimated_classifier)
@@ -71,15 +69,13 @@ estimate_meta_Ir1_acc.matrix <- function(counts_table)
 }
 
 #'@export
-estimate_meta_Ir1_acc.data.frame <- function(msd)
-{
-  estimated_classifier <- estimate_classifier(msd)
+estimate_meta_Ir1_acc.data.frame <- function(x){
+  estimated_classifier <- estimate_classifier(x)
   meta_I <- estimate_meta_Ir1_acc.matrix(estimated_classifier)
   meta_I
 }
 #'@export
-estimate_meta_Ir1_acc.table <- function(counts_table)
-{
-  meta_Ir1 <- estimate_meta_Ir1_acc.matrix(counts_table)
+estimate_meta_Ir1_acc.table <- function(x){
+  meta_Ir1 <- estimate_meta_Ir1_acc.matrix(x)
   meta_Ir1
 }

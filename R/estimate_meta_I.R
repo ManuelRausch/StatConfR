@@ -47,31 +47,28 @@ estimate_meta_I <- function(x){
 }
 
 #'@export
-estimate_meta_I.matrix <- function(estimated_classifier){
-  estimated_classifier <- estimated_classifier/sum(estimated_classifier)
-  p                    <- rowSums(estimated_classifier) # Prior
+estimate_meta_I.matrix <- function(x){
+  estimated_classifier <- x/sum(x)
+  p                    <- rowSums(x) # Prior
 
-  info       <- get_information(estimated_classifier)
-  a          <- get_accuracy(estimated_classifier)
+  info       <- get_information(x)
+  a          <- get_accuracy(x)
   info_lower <- get_lower_info_for_one(prior    = p,
                                        accuracy = a)
-
   meta_I <- info - info_lower
   meta_I
 }
 
 #' @export
-estimate_meta_I.data.frame <- function(msd){
-  estimated_classifier <- estimate_classifier(msd)
-
+estimate_meta_I.data.frame <- function(x){
+  estimated_classifier <- estimate_classifier(x)
   meta_I <- estimate_meta_I.matrix(estimated_classifier)
   meta_I
 }
 
 #' @export
-estimate_meta_I.table <- function(counts_table){
-  estimated_classifier <- counts_table/sum(counts_table)
-
+estimate_meta_I.table <- function(x){
+  estimated_classifier <- x/sum(x)
   meta_I <- estimate_meta_I.matrix(estimated_classifier)
   meta_I
 }

@@ -41,22 +41,22 @@ estimate_RMI <- function(x){
 }
 
 #' @export
-estimate_RMI.data.frame <- function(msd){
-  estimated_classifier <- estimate_classifier(msd)
+estimate_RMI.data.frame <- function(x){
+  estimated_classifier <- estimate_classifier(x)
   estimated_RMI <- estimate_RMI.matrix(estimated_classifier)
   estimated_RMI
 }
 
 #' @export
-estimate_RMI.matrix <- function(estimated_classifier){
-  estimated_classifier <- estimated_classifier/sum(estimated_classifier)
+estimate_RMI.matrix <- function(x){
+  estimated_classifier <- x/sum(x)
   estimated_RMI <- get_RMI(estimated_classifier)
   estimated_RMI
 }
 
 #' @export
-estimate_RMI.table <- function(tab){
-  estimated_classifier <- tab/sum(tab)
+estimate_RMI.table <- function(x){
+  estimated_classifier <- x/sum(x)
   estimated_RMI <- get_RMI(estimated_classifier)
   estimated_RMI
 }

@@ -1,18 +1,21 @@
+# R cmd check throws a warning if S3generic and S3methods do not accept identical arguments.
+# This may cause problems when submitting the package to CRAN later.
+
 estimate_sensitivity <- function(x){
   UseMethod("estimate_sensitivity")
 }
 
 #' @export
-estimate_sensitivity.data.frame <- function(msd){
-  counts_table <- get_counts_table(msd)
+estimate_sensitivity.data.frame <- function(x){
+  counts_table <- get_counts_table(x)
   sensitivity  <- estimate_sensitivity(counts_table)
   sensitivity
 }
 
 #' @export
-estimate_sensitivity.matrix <- function(counts_table){
+estimate_sensitivity.matrix <- function(x){
   # Normalize to avoid infinite values
-  counts_table <- counts_table
+  counts_table <- x
 
   # Count number of predictions and correct predictions
   n_responses <- ncol(counts_table)
@@ -34,7 +37,7 @@ estimate_sensitivity.matrix <- function(counts_table){
 }
 
 #' @export
-estimate_sensitivity.table <- function(counts_table){
-  sensitivity <- estimate_sensitivity.matrix(counts_table)
+estimate_sensitivity.table <- function(x){
+  sensitivity <- estimate_sensitivity.matrix(x)
   sensitivity
 }

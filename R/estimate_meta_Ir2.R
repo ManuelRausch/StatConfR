@@ -38,24 +38,20 @@
 #' @references Dayan, P. (2023). Metacognitive Information Theory. Open Mind, 7, 392–411. <https://doi.org/10.1162/opmi_a_00091>
 
 #' @export
-estimate_meta_Ir2 <- function(x)
-{
+estimate_meta_Ir2 <- function(x){
   UseMethod("estimate_meta_Ir2")
 }
 
-
 #' @export
-estimate_meta_Ir2.data.frame <- function(msd)
-{
-  estimated_classifier <- estimate_classifier(msd)
+estimate_meta_Ir2.data.frame <- function(x){
+  estimated_classifier <- estimate_classifier(x)
   meta_I <- estimate_meta_Ir2.matrix(estimated_classifier)
   meta_I
 }
 
 #' @export
-estimate_meta_Ir2.matrix <- function(estimated_classifier)
-{
-  estimated_classifier <- estimated_classifier/sum(estimated_classifier)
+estimate_meta_Ir2.matrix <- function(x){
+  estimated_classifier <- x/sum(x)
 
   meta_I <- estimate_meta_I(estimated_classifier)
 
@@ -68,9 +64,8 @@ estimate_meta_Ir2.matrix <- function(estimated_classifier)
 }
 
 #' @export
-estimate_meta_Ir2.table <- function(counts_table)
-{
-  estimated_classifier <- counts_table/sum(counts_table)
+estimate_meta_Ir2.table <- function(x){
+  estimated_classifier <- x/sum(x)
   meta_Ir2 <- estimate_meta_Ir2.matrix(estimated_classifier)
   meta_Ir2
 }

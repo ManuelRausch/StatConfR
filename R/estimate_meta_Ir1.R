@@ -38,16 +38,15 @@
 
 #' @references Dayan, P. (2023). Metacognitive Information Theory. Open Mind, 7, 392–411. <https://doi.org/10.1162/opmi_a_00091>
 #' @references Green, D. M., & Swets, J. A. (1966). Signal detection theory and psychophysics. Wiley.\cr
-#'
+
 #' @export
-estimate_meta_Ir1 <- function(x)
-{
+estimate_meta_Ir1 <- function(x){
   UseMethod("estimate_meta_Ir1")
 }
+
 #' @export
-estimate_meta_Ir1.matrix <- function(counts_table)
-{
-  estimated_classifier <- counts_table/sum(counts_table)
+estimate_meta_Ir1.matrix <- function(x){
+  estimated_classifier <- x/sum(x)
 
   # (Unnormalized) meta-I
   meta_I        <- estimate_meta_I(estimated_classifier)
@@ -67,16 +66,14 @@ estimate_meta_Ir1.matrix <- function(counts_table)
 }
 
 #' @export
-estimate_meta_Ir1.data.frame <- function(msd)
-{
-  counts_table <- get_counts_table(msd)
+estimate_meta_Ir1.data.frame <- function(x){
+  counts_table <- get_counts_table(x)
   meta_I <- estimate_meta_Ir1.matrix(counts_table)
   meta_I
 }
 
 #' @export
-estimate_meta_Ir1.table <- function(counts_table)
-{
-  meta_Ir1 <- estimate_meta_Ir1.matrix(counts_table)
+estimate_meta_Ir1.table <- function(x){
+  meta_Ir1 <- estimate_meta_Ir1.matrix(x)
   meta_Ir1
 }
