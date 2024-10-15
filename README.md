@@ -1,6 +1,6 @@
 The `statConfR` package provides functions to fit static models of
 decision-making and confidence derived from signal detection theory for
-binary discrimination tasks, meta-d′/d′, a wide-spread measure of
+binary discrimination tasks, meta-d′/d′, the most prominent measure of
 metacognitive efficiency, meta-I, an information-theoretic measures of
 metacognitive sensitivity, as well as $`meta-I_{1}^{r}`$ and
 $`meta-I_{2}^{r}`$, two information-theoretic measures of metacognitive
@@ -210,28 +210,31 @@ quantities of information theory.
 - Meta-I is a measure of metacognitive sensitivity defined as the mutual
   information between the confidence and accuracy and is calculated as
   the transmitted information minus the minimal information given the
-  accuracy,
-  ``` math
-  meta-I = I(Y; \hat{Y}, C) - I(Y; \hat{Y}).
-  ```
-  This is equivalent to Dayan’s formulation where meta-I is the
-  information that confidences transmit about the correctness of a
-  response:
-  ``` math
-  meta-I = I(Y = \hat{Y}; C)
-  ```
-- Meta-$`I_{1}^{r}`$ is meta-I normalized by the value of meta-I
-  expected assuming a signal detection model (Green & Swets, 1966) with
-  Gaussian noise, based on calculating the sensitivity index d’:
-  ``` math
-  meta-I_{1}^{r} = meta-I / meta-I(d')
-  ```
-- Meta-$`I_{2}^{r}`$ is meta-I normalized by its theoretical upper
-  bound, which is the information entropy of accuracy,
-  $`H(Y = \hat{Y})`$:
-  ``` math
-  meta-I_{2}^{r} = meta-I / H(Y = \hat{Y})
-  ```
+  accuracy:
+
+``` math
+meta-I = I(Y; \hat{Y}, C) - I(Y; \hat{Y})
+```
+This is equivalent to Dayan’s formulation where meta-I is the
+information that confidences transmit about the correctness of a
+response:
+
+``` math
+meta-I = I(Y = \hat{Y}; C)
+```
+ - Meta-$`I_{1}^{r}`$ is meta-I normalized by the value of meta-I
+expected assuming a signal detection model (Green & Swets, 1966) with
+Gaussian noise, based on calculating the sensitivity index d’:
+
+``` math
+meta-I_{1}^{r} = meta-I / meta-I(d')
+```
+ - Meta-$`I_{2}^{r}`$ is meta-I normalized by its theoretical upper
+bound, which is the information entropy of accuracy, $`H(Y = \hat{Y})`$:
+
+``` math
+meta-I_{2}^{r} = meta-I / H(Y = \hat{Y})
+```
 
 Notably, Dayan (2023) pointed out that a liberal or conservative use of
 the confidence levels will affected the mutual information and thus all
@@ -410,7 +413,8 @@ PlotMeans <-
                 aes(ymin = ratings-se, ymax = ratings+se), color="black") + 
   geom_point(data = AggregatedData, aes(shape=correct), color="black") + 
   scale_shape_manual(values = c(15, 16),
-                     labels = c("Error", "Correct response"), name = "observed data") 
+                     labels = c("Error", "Correct response"), name = "observed data") + 
+  theme_bw()
 ```
 
 <!-- Show both the code and the output Figure!  -->
@@ -463,12 +467,13 @@ r <- factor(ifelse(OneSbj$response == 0, -1, 1) * as.numeric(OneSbj$rating))
 counts <- table(y, r)
 ```
 
-Then, the different information-theoretic measures of metacognitive
-sensitivity and accuracy can be computed:
+Then, the different information-theoretic measures of metacognition can
+be computed:
 
 ``` r
+meta_I <- estimate_meta_I(counts)
 meta_Ir1 <- estimate_meta_Ir1(counts)
-meta_Ir1 <- estimate_meta_Ir1(counts)
+meta_Ir1_acc <- estimate_meta_Ir1_acc(counts)
 meta_Ir2 <- estimate_meta_Ir2(counts)
 RMI <- estimate_RMI(counts)
 ```
@@ -476,7 +481,7 @@ RMI <- estimate_RMI(counts)
 ### Documentation
 
 The documentation of each function of the currently installed version of
-`statConfR` can be accessed by typing ?*functionname* into the console.
+`statConfR` can be accessed by typing *?functionname* into the console.
 
 ## Contributing to the package
 
@@ -531,6 +536,8 @@ issue](https://github.com/ManuelRausch/StatConfR/issues).
 
 ## References
 
+- Dayan, P. (2023). Metacognitive Information Theory. Open Mind, 7,
+  392–411. <https://doi.org/10.1162/opmi_a_00091>
 - Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of
   metacognitive efficiency from confidence ratings. Neuroscience of
   Consciousness, 1, 1–14. <https://doi.org/10.1093/nc/nix007>
