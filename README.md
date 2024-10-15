@@ -1,8 +1,10 @@
 The `statConfR` package provides functions to fit static models of
 decision-making and confidence derived from signal detection theory for
 binary discrimination tasks, meta-d′/d′, a wide-spread measure of
-metacognitive efficiency, as well as information-theoretic measures of
-metacognitive sensitivity and efficiency.
+metacognitive efficiency, meta-I, an information-theoretic measures of
+metacognitive sensitivity, as well as $`meta-I_{1}^{r}`$ and
+$`meta-I_{2}^{r}`$, two information-theoretic measures of metacognitive
+efficiency.
 
 Fitting models of confidence can be used to test the assumptions
 underlying meta-d′/d′. Several static models of decision-making and
@@ -203,30 +205,33 @@ quantifying metacognitive efficiency with meta-d′/d′.
 ### Information-theoretic measures of metacognition
 
 Dayan (2023) proposed several measures of metacognition based on
-quantities of information theory. \* Meta-I is a measure of
-metacognitive sensitivity defined as the mutual information between the
-confidence and accuracy and is calculated as the transmitted information
-minus the minimal information given the accuracy,
-``` math
-meta-I = I(Y; \hat{Y}, C) - I(Y; \hat{Y})
-```
-. This is equivalent to Dayan’s formulation where meta-I is the
-information that confidences transmit about the correctness of a
-response:
-``` math
-meta-I = I(Y = \hat{Y}; C)
-```
-\* Meta-$`I_{1}^{r}`$ is meta-I normalized by the value of meta-I
-expected assuming a signal detection model (Green & Swets, 1966) with
-Gaussian noise, based on calculating the sensitivity index d’:
-``` math
-meta-I_{1}^{r} = meta-I / meta-I(d')
-```
-\* Meta-$`I_{2}^{r}`$ is meta-I normalized by its theoretical upper
-bound, which is the information entropy of accuracy, $`H(Y = \hat{Y})`$:
-``` math
-meta-I_{2}^{r} = meta-I / H(Y = \hat{Y})
-```
+quantities of information theory.
+
+- Meta-I is a measure of metacognitive sensitivity defined as the mutual
+  information between the confidence and accuracy and is calculated as
+  the transmitted information minus the minimal information given the
+  accuracy,
+  ``` math
+  meta-I = I(Y; \hat{Y}, C) - I(Y; \hat{Y}).
+  ```
+  This is equivalent to Dayan’s formulation where meta-I is the
+  information that confidences transmit about the correctness of a
+  response:
+  ``` math
+  meta-I = I(Y = \hat{Y}; C)
+  ```
+- Meta-$`I_{1}^{r}`$ is meta-I normalized by the value of meta-I
+  expected assuming a signal detection model (Green & Swets, 1966) with
+  Gaussian noise, based on calculating the sensitivity index d’:
+  ``` math
+  meta-I_{1}^{r} = meta-I / meta-I(d')
+  ```
+- Meta-$`I_{2}^{r}`$ is meta-I normalized by its theoretical upper
+  bound, which is the information entropy of accuracy,
+  $`H(Y = \hat{Y})`$:
+  ``` math
+  meta-I_{2}^{r} = meta-I / H(Y = \hat{Y})
+  ```
 
 Notably, Dayan (2023) pointed out that a liberal or conservative use of
 the confidence levels will affected the mutual information and thus all
@@ -272,17 +277,21 @@ head(MaskOri)
 The function `fitConfModels` allows the user to fit several confidence
 models separately to the data of each participant. The data should be
 provided via the argument `.data` in the form of a data.frame object
-with the following variables in separate columns: - stimulus (factor
-with 2 levels): The property of the stimulus which defines which
-response is correct - diffCond (factor): The experimental manipulation
-that is expected to affect discrimination sensitivity - correct (0-1):
-Indicating whether the choice was correct (1) or incorrect(0). - rating
-(factor): A discrete variable encoding the decision confidence (high:
-very confident; low: less confident) - participant (integer): giving the
-subject ID. The argument `model` is used to specify which model should
-be fitted, with ‘WEV’, ‘SDT’, ‘GN’, ‘PDA’, ‘IG’, ‘ITGc’, ‘ITGcm’,
-‘logN’, and ‘logWEV’ as available options. If model=“all” (default), all
-implemented models will be fit, although this may take a while.
+with the following variables in separate columns:
+
+- stimulus (factor with 2 levels): The property of the stimulus which
+  defines which response is correct
+- diffCond (factor): The experimental manipulation that is expected to
+  affect discrimination sensitivity
+- correct (0-1): Indicating whether the choice was correct (1) or
+  incorrect(0).
+- rating (factor): A discrete variable encoding the decision confidence
+  (high: very confident; low: less confident)
+- participant (integer): giving the subject ID. The argument `model` is
+  used to specify which model should be fitted, with ‘WEV’, ‘SDT’, ‘GN’,
+  ‘PDA’, ‘IG’, ‘ITGc’, ‘ITGcm’, ‘logN’, and ‘logWEV’ as available
+  options. If model=“all” (default), all implemented models will be fit,
+  although this may take a while.
 
 Setting the optional argument `.parallel=TRUE` parallizes model fitting
 over all but 1 available core. Note that the fitting procedure takes may
@@ -352,10 +361,11 @@ task.
 
 After obtaining model fits, it is strongly recommended to visualize the
 prediction implied by the best fitting sets of parameters and to compare
-the prediction with the actual data. The best way to visualize the data
-is highly specific to the data set and research question, which is why
-`statConfR` does not come with its own visualization tools. This being
-said, here is an example for how a visualization could look like:
+the prediction with the actual data (Palminteri et al., 2017). The best
+way to visualize the data is highly specific to the data set and
+research question, which is why `statConfR` does not come with its own
+visualization tools. This being said, here is an example for how a
+visualization of model fit could look like:
 
 <!-- Stuff where only the code should be shown and executed, but do not show R yapping  -->
 
@@ -434,15 +444,17 @@ MetaDs <- fitMetaDprime(data = MaskOri, model="ML", .parallel = TRUE)
 
 To estimate information theoretic measures of metacognition, we must
 bring first the data into the correct format. Specifically, three
-different types of inputs are accepted: \* A `data.frame` with variables
-“y” for true labels and “r” for confidence-binned responses. “y” needs
-to contain values -1 and +1 while r needs to be a factor with ordered
-levels such that the first half of the levels correspond to predictions
-for y = -1 and the second half to predictions for y = +1. \* A counts
-`table` with joint absolute frequencies. Rows correspond to true labels
-(stimulus categories) and columns correspond to responses. \* A
-contingency `matrix` with joint relative frequencies (as before but
-normalized to sum up to 1).
+different types of inputs are accepted:
+
+- A `data.frame` with variables “y” for true labels and “r” for
+  confidence-binned responses. “y” needs to contain values -1 and +1
+  while r needs to be a factor with ordered levels such that the first
+  half of the levels correspond to predictions for y = -1 and the second
+  half to predictions for y = +1.
+- A counts `table` with joint absolute frequencies. Rows correspond to
+  true labels (stimulus categories) and columns correspond to responses.
+- A contingency `matrix` with joint relative frequencies (as before but
+  normalized to sum up to 1).
 
 ``` r
 OneSbj <- subset(MaskOri, participant == 1)
@@ -540,6 +552,9 @@ issue](https://github.com/ManuelRausch/StatConfR/issues).
   Unequal Variance SDT Model. In S. M. Fleming & C. D. Frith (Eds.), The
   Cognitive Neuroscience of Metacognition (pp. 25–66). Springer.
   <https://doi.org/10.1007/978-3-642-45190-4_3>
+- Palminteri, S., Wyart, V., & Koechlin, E. (2017). The importance of
+  falsification in computational cognitive modeling. Trends in Cognitive
+  Sciences, 21(6), 425–433. <https://doi.org/10.1016/j.tics.2017.03.011>
 - Rausch, M., Hellmann, S., & Zehetleitner, M. (2018). Confidence in
   masked orientation judgments is informed by both evidence and
   visibility. Attention, Perception, and Psychophysics, 80(1), 134–154.
