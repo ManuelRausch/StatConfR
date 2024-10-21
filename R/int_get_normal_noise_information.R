@@ -1,5 +1,5 @@
 get_normal_noise_information <- function(accuracies    = NULL,
-                                         sensitivities = NULL){
+                                         sensitivities = NULL) {
   if (is.null(sensitivities) & is.null(accuracies))
     stop("Specify accuracies or sensitivities")
 

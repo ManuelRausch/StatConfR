@@ -1,12 +1,5 @@
 #' @importFrom utils tail
-get_analytic_binary_information_bounds <- function(prior, accuracies){
-  information_bounds <- data.frame(accuracies = accuracies                 ,
-                                   highest    = H(prior) - 2*(1-accuracies),
-                                   lowest     = H(prior) - H2(accuracies)  )
-  information_bounds
-}
-
-get_analytic_information_bounds = function(prior, accuracies){
+get_analytic_information_bounds <- function(prior, accuracies){
   upper <- sapply(accuracies, \(a) { get_upper_info_for_one(prior, a) })
   lower <- sapply(accuracies, \(a) { get_lower_info_for_one(prior, a) })
 
@@ -16,7 +9,7 @@ get_analytic_information_bounds = function(prior, accuracies){
   information_bounds
 }
 
-get_upper_info_for_one <- function(prior, accuracy){
+get_upper_info_for_one <- function(prior, accuracy) {
   m1 <- floor(1/accuracy)
   m2 <- floor(1/accuracy)+1
 
@@ -28,7 +21,7 @@ get_upper_info_for_one <- function(prior, accuracy){
   info
 }
 
-get_lower_info_for_one <- function(prior, accuracy){
+get_lower_info_for_one <- function(prior, accuracy) {
   a <- accuracy
   p <- sort(prior, decreasing = TRUE)
   L <- length(prior)
@@ -63,4 +56,3 @@ get_lower_info_for_one <- function(prior, accuracy){
   names(info) <- NULL # Remove name inherited from m3
   info
 }
-

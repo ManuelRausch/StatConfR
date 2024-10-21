@@ -1,5 +1,8 @@
-normalize_information <- function(prior, accuracy, information)
-{
+estimate_RMI <- function(estimated_classifier) {
+  prior       <- rowSums(estimated_classifier)         # Prior
+  accuracy    <- get_accuracy(estimated_classifier)    # Accuracy
+  information <- get_information(estimated_classifier) # Information
+
   information_bounds <- get_analytic_information_bounds(prior, accuracy)
   lower_bound <- information_bounds$lowest
   upper_bound <- information_bounds$highest
@@ -12,3 +15,5 @@ normalize_information <- function(prior, accuracy, information)
 
   RMI
 }
+
+  

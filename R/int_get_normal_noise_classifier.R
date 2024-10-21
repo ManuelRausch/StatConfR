@@ -1,4 +1,4 @@
-get_normal_noise_classifier = function(sensitivity = NULL,
+get_normal_noise_classifier <- function(sensitivity = NULL,
                                        accuracy    = NULL){
   if (is.null(sensitivity))
     sensitivity <- transform_normal_accuracy_to_sensitivity(accuracy)
