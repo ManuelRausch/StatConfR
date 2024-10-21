@@ -179,7 +179,21 @@ $$meta-I_{1}^{r} = meta-I / meta-I(d')$$
 
 $$meta-I_{2}^{r} = meta-I / H(Y = \hat{Y})$$
 
-Notably, Dayan (2023) pointed out that a liberal or conservative use of the confidence levels will affected the mutual information and thus all information-theoretic measures of metacognition. 
+Notably, Dayan (2023) pointed out that a liberal or conservative use of the confidence levels will affected the mutual information and thus all information-theoretic measures of metacognition.
+
+In addition to Dayan's measures, Meyen et al. (submitted) suggested an
+additional measure that normalizes the Meta-I by the range of possible values
+it can take. This required deriving lower and upper bounds of the transmitted
+information given a participant's accuracy.
+
+$$RMI = \frac{meta-I}{\max_{\text{accuracy}}\{meta-I\}}$$
+
+As these measures are prone to estimation bias, the package offers a simple
+bias reduction mechanism in which the observed frequencies of
+stimulus-response combinations are taken as the underyling probability
+distribution. From this, Monte-Carlo simulations are conducted to estimate
+and subtract the bias in these measures. Note that there provably is no way
+to completely remove this bias.
 
 ## Installation
 
