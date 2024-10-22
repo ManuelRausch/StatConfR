@@ -7,16 +7,17 @@
 #' - meta-\eqn{I_{1}^{r}} normalizes by the meta-\eqn{I} that would be
 #'   expected from an underlying normal distribution with the same
 #'   sensitivity.
+#' - meta-\eqn{I_{1}^{r\prime}} is a variant not discussed by Dayan
+#'   (2023) which normalizes by the meta-\eqn{I} that would be expected from
+#'   an underlying normal distribution with the same accuracy.(This is
+#'   similar to the sensitivity approach but without considering variable
+#'   thresholds.)
 #' - meta-\eqn{I_{2}^{r}} normalizes by the maximum amount of meta-\eqn{I}
 #'   which would be reached if all uncertainty about the stimulus was removed.
-#'  Additionally, two more measures that were not discussed by Dayan(2023) are
-#'  estimated.
-#' - \eqn{RMI} normalizes meta-\eqn{I} by the range of its possible values and
-#'    therefore scales between 0 and 1.
-#' - meta-\eqn{I_{1}^{r\prime}} normalizes by the meta-\eqn{I} that would be
-#'   expected from an underlying normal distribution with the same accuracy.
-#'   (This is similar to the sensitivity approach but without considering
-#'   variable thresholds.)
+#'  Additionally, one more measure that was not discussed by Dayan (2023) is
+#'  provided.
+#' - \eqn{RMI} normalizes meta-\eqn{I} by the range of its possible
+#'    values and therefore scales between 0 and 1.
 #'  All measures are also calculated with a bias-reduced variant for which the
 #'  observed frequencies are taken as underlying probability distribution to
 #'  estimate the sampling bias. The estimated bias is then subtraced from the
@@ -26,14 +27,15 @@
 #'  inherent in these measures.
 
 #' @details
-#' Meta-I is defined as the mutual information between the confidence and
+#' Meta-\deqn{I} is defined as the mutual information between the confidence and
 #' accuracy and is calculated as the transmitted information minus the
 #' minimal information given the accuracy,
-#' \deqn{meta-I = I(Y; \hat{Y}, C) - I(Y; \hat{Y})}.
+#' meta-\deqn{I = I(Y; \hat{Y}, C) - I(Y; \hat{Y})}.
 #' This is equivalent to Dayan's formulation where meta-I is the information
 #' that confidences transmit about the correctness of a response,
-#' \deqn{meta-I = I(Y = \hat{Y}; C).}
-#' It should be noted that Dayan (2023) pointed out that a liberal or
+#' meta-\deqn{I = I(Y = \hat{Y}; C).}
+#' The other measures here are different normalizations of this Meta-\deqn
+#' {I}. It should be noted that Dayan (2023) pointed out that a liberal or
 #' conservative use of the confidence levels will affected th mutual
 #' information and thus influence meta-I.
 #'
