@@ -1,8 +1,8 @@
-#' @title Estimate Metacognitive-Information-Theory Measures
+#' @title Estimate Metacognitive Information Theory Measures
 
 #' @description `estimateMetaI` estimates meta-\eqn{I}, an information-theoretic
 #'  measure of metacognitive sensitivity proposed by Dayan (2023), as well as
-#'  derived measures like it including meta-\eqn{I_{1}^{r}} and Meta-\eqn{I_{2}^{r}}. 
+#'  derived measures like it including meta-\eqn{I_{1}^{r}} and Meta-\eqn{I_{2}^{r}}.
 #'  These are different normalizations of meta-\eqn{I}:
 #' - meta-\eqn{I_{1}^{r}} normalizes by the meta-\eqn{I} that would be
 #'   expected from an underlying normal distribution with the same
@@ -13,7 +13,7 @@
 #'  estimated.
 #' - \eqn{RMI} normalizes meta-\eqn{I} by the range of its possible values and
 #'    therefore scales between 0 and 1.
-#' - meta-\eqn{I_{1}^{r}'} normalizes by the meta-\eqn{I} that would be
+#' - meta-\eqn{I_{1}^{r\prime}} normalizes by the meta-\eqn{I} that would be
 #'   expected from an underlying normal distribution with the same accuracy.
 #'   (This is similar to the sensitivity approach but without considering
 #'   variable thresholds.)
@@ -62,22 +62,25 @@
 #' data <- subset(MaskOri, participant %in% c(1:2))
 #' head(data)
 #'
-#' # 2. Calculate meta-I measures with bias reduction (can take long)
+#' # 2. Calculate meta-I measures with bias reduction (this may take 10 s per subject)
+#' \donttest{
 #' metaIMeasures <- estimateMetaI(data)
 #' metaIMeasures
-#' 
-#' # 3. Calculate meta-I measures for all participants without bias reduction
+#' }
+#'
+#' # 3. Calculate meta-I measures for all participants without bias reduction (much faster)
 #' metaIMeasures <- estimateMetaI(MaskOri, bias_reduction = FALSE)
 #' metaIMeasures
 
 #' @author Sascha Meyen, \email{saschameyen@gmail.com}
 
-#' @references Dayan, P. (2023). Metacognitive Information Theory. 
+#' @references Dayan, P. (2023). Metacognitive Information Theory.
 #'  Open Mind, 7, 392–411. <https://doi.org/10.1162/opmi_a_00091>
 # to do: add Saschas Paper once it is available ;-)
 
+#' @export
 estimateMetaI <- function(data, bias_reduction = TRUE) {
-  
+
   # Enforce relevant data variables to be factors
   no_participants_variable <- FALSE
   if (is.null(data$participant)) {
@@ -126,20 +129,20 @@ estimateMetaI <- function(data, bias_reduction = TRUE) {
                      RMI                   = estimate_RMI(estimated_classifier)         )
     if (bias_reduction)
     {
-      rb <- data.frame(meta_I_debiased       = get_bias_reduced_meta_measure(estimated_classifier,  
-                                                                             number_of_stimuli   , 
+      rb <- data.frame(meta_I_debiased       = get_bias_reduced_meta_measure(estimated_classifier,
+                                                                             number_of_stimuli   ,
                                                                              estimate_meta_I     ) ,
-                       meta_Ir1_debiased     = get_bias_reduced_meta_measure(estimated_classifier,  
-                                                                             number_of_stimuli   , 
+                       meta_Ir1_debiased     = get_bias_reduced_meta_measure(estimated_classifier,
+                                                                             number_of_stimuli   ,
                                                                              estimate_meta_Ir1   ) ,
-                       meta_Ir1_acc_debiased = get_bias_reduced_meta_measure(estimated_classifier , 
+                       meta_Ir1_acc_debiased = get_bias_reduced_meta_measure(estimated_classifier ,
                                                                              number_of_stimuli    ,
                                                                              estimate_meta_Ir1_acc),
-                       meta_Ir2_debiased     = get_bias_reduced_meta_measure(estimated_classifier,  
-                                                                             number_of_stimuli   , 
+                       meta_Ir2_debiased     = get_bias_reduced_meta_measure(estimated_classifier,
+                                                                             number_of_stimuli   ,
                                                                              estimate_meta_Ir2   ) ,
-                       RMI_debiased          = get_bias_reduced_meta_measure(estimated_classifier,  
-                                                                             number_of_stimuli   , 
+                       RMI_debiased          = get_bias_reduced_meta_measure(estimated_classifier,
+                                                                             number_of_stimuli   ,
                                                                              estimate_RMI        ) )
       re <- cbind(re, rb)
     }

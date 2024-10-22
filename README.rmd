@@ -326,32 +326,23 @@ the data (notably, this is not the case though in the demo data set), the functi
 MetaDs <- fitMetaDprime(data = MaskOri, model="ML", .parallel = TRUE)
 ```
 
-To estimate information theoretic measures of metacognition, we must bring first the data into the correct format. Specifically, three different types of inputs are accepted:
-
-* A `data.frame` with variables "y" for true labels and "r" for confidence-binned responses. "y" needs to contain values -1 and +1 while r needs to be a factor with ordered levels such that the first half of the levels correspond to predictions for y = -1 and the second half to predictions for y = +1.
-* A counts `table` with joint absolute frequencies. Rows correspond to true labels (stimulus categories) and columns correspond to responses.
-* A contingency `matrix` with joint relative frequencies (as before but normalized to sum up to 1).
+Information theoretic measures of metacognition can be obtained by the function `estimateMetaI`. It expects the same kind of data.frame as `fitMetaDprime` 
+and returns separate estimates of meta-I, Meta-$I_{1}^{r}$, and Meta-$I_{2}^{r}$ for each subject. 
+The preferred way to estimate these measures is with bias reduction, but this may take ~ 6 s for each subject. 
 
 ```{r}        
-OneSbj <- subset(MaskOri, participant == 1)
-y <- ifelse(OneSbj$stimulus == 0, -1, 1)
-r <- factor(ifelse(OneSbj$response == 0, -1, 1) * as.numeric(OneSbj$rating))
-counts <- table(y, r)
+metaIMeasures <- estimateMetaI(data, bias_reduction = TRUE)
 ```
 
-Then, the different information-theoretic measures of metacognition can be computed: 
+For the impatient and for testing purposes, bias_reduction can be turned off to increase computation speed: 
 
 ```{r}        
-meta_I <- estimate_meta_I(counts)
-meta_Ir1 <- estimate_meta_Ir1(counts)
-meta_Ir1_acc <- estimate_meta_Ir1_acc(counts)
-meta_Ir2 <- estimate_meta_Ir2(counts)
-RMI <- estimate_RMI(counts)
+metaIMeasures <- estimateMetaI(data, bias_reduction = FALSE)
 ```
 
 ### Documentation
 
-The documentation of each function of the currently installed version of `statConfR` can be accessed by typing *?functionname* into the console. 
+After installation, the documentation of each function of of `statConfR` can be accessed by typing *?functionname* into the console. 
 
 ## Contributing to the package 
 The package is under active development. We are planning to implement new models of decision confidence when they are published. Please feel free to [contact us](malto::manuel.rausch@ku.de) to suggest new models to implement in in the package, or to volunteer adding additional models. 
