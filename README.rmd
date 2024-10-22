@@ -331,13 +331,14 @@ and returns separate estimates of meta-I, Meta-$I_{1}^{r}$, and Meta-$I_{2}^{r}$
 The preferred way to estimate these measures is with bias reduction, but this may take ~ 6 s for each subject. 
 
 ```{r}        
-metaIMeasures <- estimateMetaI(data, bias_reduction = TRUE)
+metaIMeasures <- estimateMetaI(data = MaskOri, bias_reduction = TRUE)
+metaIMeasures 
 ```
 
 For the impatient and for testing purposes, bias_reduction can be turned off to increase computation speed: 
 
-```{r}        
-metaIMeasures <- estimateMetaI(data, bias_reduction = FALSE)
+```        
+metaIMeasures <- estimateMetaI(data = MaskOri, bias_reduction = FALSE)
 ```
 
 ### Documentation

@@ -2,7 +2,7 @@
 % Please edit documentation in R/estimateMetaI.R
 \name{estimateMetaI}
 \alias{estimateMetaI}
-\title{Estimate Metacognitive Information Theory Measures}
+\title{Estimate Measures of Metacognition from Information Theory}
 \usage{
 estimateMetaI(data, bias_reduction = TRUE)
 }
@@ -24,52 +24,56 @@ incorrect responses and 1 for correct responses)
 }}
 
 \item{bias_reduction}{\code{logical}. Whether to apply the bias reduction or
-not. If runtime is to long, consider setting this to FALSE
+not. If runtime is too long, consider setting this to FALSE
 (default: TRUE).}
 }
 \value{
-Estimated Meta-\eqn{I} value (expressed in bits, i.e. log base is
-2, or unitless for the normalized measures)
+a \code{data.frame} with one row for each subject and the following
+columns: \code{participant} is the participant ID, \code{meta_I} is the estimated
+meta-\eqn{I} value (expressed in bits, i.e. log base is
+2), \code{meta_Ir1} is meta-\eqn{I_{1}^{r}}, \code{meta_Ir1_acc} is meta-\eqn{I_{1}^{r\prime}},
+\code{meta_Ir2} is meta-\eqn{I_{2}^{r}}, and RMI is RMI.
+with , or unitless for the normalized measures)
 }
 \description{
 \code{estimateMetaI} estimates meta-\eqn{I}, an information-theoretic
 measure of metacognitive sensitivity proposed by Dayan (2023), as well as
-derived measures like it including meta-\eqn{I_{1}^{r}} and Meta-\eqn{I_{2}^{r}}.
+similar derived measures, including meta-\eqn{I_{1}^{r}} and Meta-\eqn{I_{2}^{r}}.
 These are different normalizations of meta-\eqn{I}:
 \itemize{
-\item meta-\eqn{I_{1}^{r}} normalizes by the meta-\eqn{I} that would be
+\item Meta-\eqn{I_{1}^{r}} normalizes by the meta-\eqn{I} that would be
 expected from an underlying normal distribution with the same
 sensitivity.
-\item meta-\eqn{I_{1}^{r\prime}} is a variant not discussed by Dayan
+\item Meta-\eqn{I_{1}^{r\prime}} is a variant of meta-\eqn{I_{1}^{r}} not discussed by Dayan
 (2023) which normalizes by the meta-\eqn{I} that would be expected from
-an underlying normal distribution with the same accuracy.(This is
+an underlying normal distribution with the same accuracy (this is
 similar to the sensitivity approach but without considering variable
-thresholds.)
-\item meta-\eqn{I_{2}^{r}} normalizes by the maximum amount of meta-\eqn{I}
+thresholds).
+\item Meta-\eqn{I_{2}^{r}} normalizes by the maximum amount of meta-\eqn{I}
 which would be reached if all uncertainty about the stimulus was removed.
-Additionally, one more measure that was not discussed by Dayan (2023) is
-provided.
 \item \eqn{RMI} normalizes meta-\eqn{I} by the range of its possible
-values and therefore scales between 0 and 1.
-All measures are also calculated with a bias-reduced variant for which the
+values and therefore scales between 0 and 1. RMI is a novel measure not discussed by Dayan (2023).
+}
+
+All measures can be calculated with a bias-reduced variant for which the
 observed frequencies are taken as underlying probability distribution to
-estimate the sampling bias. The estimated bias is then subtraced from the
+estimate the sampling bias. The estimated bias is then subtracted from the
 initial measures. This approach uses Monte-Carlo simulations and is
 therefore not deterministic (values can vary from one evaluation of the
-function to the next). However, it is a simple way to reduce the bias
+function to the next). However, this is a simple way to reduce the bias
 inherent in these measures.
 }
-}
 \details{
-Meta-\deqn{I} is defined as the mutual information between the confidence and
+Meta-\eqn{I} is defined as the mutual information between the confidence and
 accuracy and is calculated as the transmitted information minus the
 minimal information given the accuracy,
-meta-\deqn{I = I(Y; \hat{Y}, C) - I(Y; \hat{Y})}.
+\deqn{meta-I = I(Y; \hat{Y}, C) - I(Y; \hat{Y}).}
 This is equivalent to Dayan's formulation where meta-I is the information
-that confidences transmit about the correctness of a response,
-meta-\deqn{I = I(Y = \hat{Y}; C).}
-The other measures here are different normalizations of this Meta-\deqn
-{I}. It should be noted that Dayan (2023) pointed out that a liberal or
+that confidence transmits about the correctness of a response,
+\deqn{meta-I = I(Y = \hat{Y}; C).}
+Meta-\eqn{I} is expressed in bits, i.e. the log base is 2).
+The other measures are different normalizations of meta-\eqn{I} and are unitless.
+It should be noted that Dayan (2023) pointed out that a liberal or
 conservative use of the confidence levels will affected th mutual
 information and thus influence meta-I.
 }
@@ -81,7 +85,6 @@ head(data)
 # 2. Calculate meta-I measures with bias reduction (this may take 10 s per subject)
 \donttest{
 metaIMeasures <- estimateMetaI(data)
-metaIMeasures
 }
 
 # 3. Calculate meta-I measures for all participants without bias reduction (much faster)
