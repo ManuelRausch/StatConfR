@@ -62,7 +62,7 @@ kinds of measures of metacognition:
   - RMI, a novel measure of metacognitive accuracy. 
 Finally, the `statConfR` package includes an example data set previously published in @hellmann_simultaneous_2023, with which the functions can be  tested. 
 The `statConfR` reference manual provides documentation of each function of the latest release (https://cran.r-project.org/web/packages/statConfR/statConfR.pdf). 
-A seperate mannual is avialble for the development version (https://cran.r-project.org/web/packages/statConfR/statConfR.pdf). 
+A separate manual is available for the development version (https://github.com/ManuelRausch/StatConfR/blob/main/StatConfR.pdf). 
 
 # Statement of need
 
