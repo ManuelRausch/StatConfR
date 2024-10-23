@@ -29,3 +29,6 @@ rhub::check....
 # NOTES und ERRORs aus.
 cran_checks <- rhub::check_for_cran()
 cran_checks$cran_summary()
+
+
+system("R CMD Rd2pdf C:/Users/PPA714/KU2/Projekte/StatConfR")

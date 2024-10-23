@@ -58,9 +58,11 @@ kinds of measures of metacognition:
 - meta-d$^\prime$/d$^\prime$, the most widely-used measure of metacognitive efficiency, allowing both @Maniscalco2012's and @Fleming2017a's model specification, 
 - Information-theoretic measures [@dayan_metacognitive_2023], including
   - meta-I, an information-theoretic measures of metacognitive sensitivity, 
-  - $meta-I_{1}^{r}$ and $meta-I_{2}^{r}$, two measures of metacognitive efficiency. 
+  - $meta-I_{1}^{r}$ and $meta-I_{2}^{r}$, two measures of metacognitive efficiency proposed by @dayan_metacognitive_2023, 
+  - RMI, a novel measure of metacognitive accuracy. 
 Finally, the `statConfR` package includes an example data set previously published in @hellmann_simultaneous_2023, with which the functions can be  tested. 
 The `statConfR` reference manual provides documentation of each function of the latest release (https://cran.r-project.org/web/packages/statConfR/statConfR.pdf). 
+A seperate mannual is avialble for the development version (https://cran.r-project.org/web/packages/statConfR/statConfR.pdf). 
 
 # Statement of need
 

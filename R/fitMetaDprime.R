@@ -43,18 +43,18 @@
 #' hypothetical signal detection model assumed by Maniscalco and Lau (2012, 2014)
 #' or the one assumed by Fleming (2014).
 #'
-#' The conceptual idea of meta-d′ is to quantify metacognition in terms of sensitivity
+#' The conceptual idea of meta-d' is to quantify metacognition in terms of sensitivity
 #' in a hypothetical signal detection rating model describing the primary task,
 #' under the assumption that participants had perfect access to the sensory evidence
 #' and were perfectly consistent in placing their confidence criteria (Maniscalco & Lau, 2012, 2014).
 #' Using a signal detection model describing the primary task to quantify metacognition allows
 #'  a direct comparison between metacognitive accuracy and discrimination performance
-#'  because both are measured on the same scale. Meta-d′ can be compared against
+#'  because both are measured on the same scale. Meta-d' can be compared against
 #'   the estimate of the distance between the two stimulus distributions
-#'    estimated from discrimination responses, which is referred to as d′:
-#'    If meta-d′ equals d′, it means that metacognitive accuracy is exactly
+#'    estimated from discrimination responses, which is referred to as d':
+#'    If meta-d' equals d', it means that metacognitive accuracy is exactly
 #'     as good as expected from discrimination performance.
-#'     Ifmeta-d′ is lower than d′, it means that metacognitive accuracy is suboptimal.
+#'     Ifmeta-d' is lower than d', it means that metacognitive accuracy is suboptimal.
 #'     It can be shown that the implicit model of confidence underlying the meta-d'/d'
 #'      method is identical to the independent truncated Gaussian model.
 #'
