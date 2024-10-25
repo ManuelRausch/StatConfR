@@ -13,6 +13,17 @@ estimate_sensitivity <- function(estimated_classifier){
   n_correctly_predict_second_row <- sum(estimated_classifier[2, idx_predicting_second_row])
   n_predict_second_row           <- sum(estimated_classifier[ , idx_predicting_second_row])
 
+  # Avoid infinite values by using Miller's (1996) 0.5-convention
+  # (originally suggested by Murdock and Ogilvie, 1968).
+  if (n_correctly_predict_first_row == n_predict_first_row)
+    n_correctly_predict_first_row <- n_correctly_predict_first_row - 0.5
+  if (n_correctly_predict_first_row == 0)
+    n_correctly_predict_first_row <- 0.5
+  if (n_correctly_predict_second_row == n_predict_second_row)
+    n_correctly_predict_second_row <- n_correctly_predict_second_row - 0.5
+  if (n_correctly_predict_second_row == 0)
+    n_correctly_predict_second_row <- 0.5
+
   # Calculcate sensitivity
   hit_rate         <- n_correctly_predict_first_row / n_predict_first_row
   false_alarm_rate <- 1 - ( n_correctly_predict_second_row / n_predict_second_row )

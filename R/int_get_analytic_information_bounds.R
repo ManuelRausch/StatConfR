@@ -45,6 +45,7 @@ get_lower_info_for_one <- function(prior, accuracy) {
   # Determine which labels Y occur frequently enough (1:m3)
   s  <- p >= (cumsum(p) - a)/(1:L - 1)
   m3 <- tail(which(s), 1)
+  if (length(m3) == 0) return(NaN)
   q <- sum(p[1:m3])
   pl <- p[1:m3]
 

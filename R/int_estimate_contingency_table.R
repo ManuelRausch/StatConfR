@@ -2,15 +2,15 @@
 # rating) combinations in a contingency matrix with one row per stimulus and
 # one column per response. Columnwise responses are sorted from "certaintly
 # the first stimulus" (left) to "certainly the second stimulus" (right).
-estimate_classifier <- function(data)
+estimate_contingency_table <- function(data)
 {
   number_of_confidence_steps <- length(levels(data$rating))
   confidence_steps           <- seq_len(number_of_confidence_steps)
   response_steps             <- c(-rev(confidence_steps), confidence_steps)
 
-  estimated_classifier <- matrix(0, nrow = 2, ncol = 2*length(confidence_steps))
-  rownames(estimated_classifier) <- paste0("Stimulus = ", c("-1", "+1"))
-  colnames(estimated_classifier) <- paste0("Response = ", response_steps)
+  estimated_table <- matrix(0, nrow = 2, ncol = 2*length(confidence_steps))
+  rownames(estimated_table) <- paste0("Stimulus = ", c("-1", "+1"))
+  colnames(estimated_table) <- paste0("Response = ", response_steps)
   
   tab <- table(data$stimulus, data$rating, data$correct)
 
@@ -30,10 +30,10 @@ estimate_classifier <- function(data)
 
         which_response <- which(response == response_steps)
 
-        estimated_classifier[which_stimulus, which_response] <- mean(s)
+        estimated_table[which_stimulus, which_response] <- sum(s)
       }
     }
   }
 
-  estimated_classifier
+  estimated_table
 }

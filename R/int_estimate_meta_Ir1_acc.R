@@ -1,4 +1,8 @@
-estimate_meta_Ir1_acc <- function(estimated_classifier) {
+estimate_meta_Ir1_acc <- function(estimated_table) {
+  
+  # Normalize
+  estimated_classifier <- estimated_table/sum(estimated_table)
+
   p <- rowSums(estimated_classifier)      # Prior
   a <- get_accuracy(estimated_classifier) # Sensitivity
   d <- 2*qnorm(a)                         # Accuracy

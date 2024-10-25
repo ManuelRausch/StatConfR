@@ -1,4 +1,7 @@
-estimate_meta_Ir2 <- function(estimated_classifier){
+estimate_meta_Ir2 <- function(estimated_table) {
+
+  # Normalize
+  estimated_classifier <- estimated_table/sum(estimated_table)
 
   meta_I <- estimate_meta_I(estimated_classifier) # Meta-I
 

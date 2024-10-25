@@ -123,34 +123,19 @@ estimateMetaI <- function(data, bias_reduction = TRUE) {
     s <- participant == data$participant
     part_data <- data[s, ]
 
-    estimated_classifier <- estimate_classifier(part_data)
-    number_of_stimuli    <- table(part_data$stimulus)
+    estimated_table <- estimate_contingency_table(part_data)
 
-    re <- data.frame(participant           = participant                                ,
-                     meta_I                = estimate_meta_I(estimated_classifier)      ,
-                     meta_Ir1              = estimate_meta_Ir1(estimated_classifier)    ,
-                     meta_Ir1_acc          = estimate_meta_Ir1_acc(estimated_classifier),
-                     meta_Ir2              = estimate_meta_Ir2(estimated_classifier)    ,
-                     RMI                   = estimate_RMI(estimated_classifier)         )
+    re <- data.frame(participant = participant,
+                     get_meta_I_measures(estimated_table))
+
     if (bias_reduction)
     {
-      rb <- data.frame(meta_I_debiased       = get_bias_reduced_meta_measure(estimated_classifier,
-                                                                             number_of_stimuli   ,
-                                                                             estimate_meta_I     ) ,
-                       meta_Ir1_debiased     = get_bias_reduced_meta_measure(estimated_classifier,
-                                                                             number_of_stimuli   ,
-                                                                             estimate_meta_Ir1   ) ,
-                       meta_Ir1_acc_debiased = get_bias_reduced_meta_measure(estimated_classifier ,
-                                                                             number_of_stimuli    ,
-                                                                             estimate_meta_Ir1_acc),
-                       meta_Ir2_debiased     = get_bias_reduced_meta_measure(estimated_classifier,
-                                                                             number_of_stimuli   ,
-                                                                             estimate_meta_Ir2   ) ,
-                       RMI_debiased          = get_bias_reduced_meta_measure(estimated_classifier,
-                                                                             number_of_stimuli   ,
-                                                                             estimate_RMI        ) )
-      re <- cbind(re, rb)
+      cat("Bias reduction for participant ", participant, " (speed up with 'bias_reduction = FALSE')\n")
+      re <- data.frame(participant = participant,
+                       get_meta_I_measures(estimated_table),
+                       debiased = get_bias_reduced_meta_I_measures(estimated_table))
     }
+
     res <- rbind(res, re)
   }
 
@@ -158,4 +143,13 @@ estimateMetaI <- function(data, bias_reduction = TRUE) {
   if (no_participants_variable) res$participant <- NULL
 
   res
+}
+
+get_meta_I_measures <- function(estimated_table) {
+  meta_I_measures <- data.frame(meta_I       = estimate_meta_I(estimated_table)      ,
+                                meta_Ir1     = estimate_meta_Ir1(estimated_table)    ,
+                                meta_Ir1_acc = estimate_meta_Ir1_acc(estimated_table),
+                                meta_Ir2     = estimate_meta_Ir2(estimated_table)    ,
+                                RMI          = estimate_RMI(estimated_table)         )
+  meta_I_measures
 }

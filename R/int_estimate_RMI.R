@@ -1,4 +1,8 @@
-estimate_RMI <- function(estimated_classifier) {
+estimate_RMI <- function(estimated_table) {
+
+  # Normalize
+  estimated_classifier <- estimated_table/sum(estimated_table)
+  
   prior       <- rowSums(estimated_classifier)         # Prior
   accuracy    <- get_accuracy(estimated_classifier)    # Accuracy
   information <- get_information(estimated_classifier) # Information

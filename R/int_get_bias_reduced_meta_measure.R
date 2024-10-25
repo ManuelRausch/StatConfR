@@ -1,41 +1,42 @@
 # Because Meta-I measures are inherently biased, simulate data to estimate and
 # then subtract this bias.
-get_bias_reduced_meta_measure <- function(estimated_classifier, ns, get_meta_measure)
+get_bias_reduced_meta_I_measures <- function(estimated_table)
 {
-  meta_I_measure <- get_meta_measure(estimated_classifier) # Baseline estimate
+  meta_I_measures <- get_meta_I_measures(estimated_table) # Baseline estimate
 
   # Simulations based on the observed frequencies
   nsim                    <- 1000
-  simulated_meta_measures <- c()
+  simulated_meta_measures <- data.frame()
   for (i in 1:nsim)
   {
     # Simulate one data row-wise
-    counts <- estimated_classifier*0
-    for (j in 1:nrow(estimated_classifier)) 
+    simulated_table <- estimated_table*0
+    for (j in 1:nrow(estimated_table)) 
     {
-      counts[j, ] <- rmultinom(1, ns[j], estimated_classifier[j, ])
+      n <- sum(estimated_table[j, ])
+      simulated_table[j, ] <- rmultinom(1, n, estimated_table[j, ]/n)
     }
-    simulated_classifier <- counts/sum(counts)
 
     # Skip a simulation if accuracy is 50% or 100%
-    a <- get_accuracy(simulated_classifier)
+    estimated_classifier <- simulated_table/sum(simulated_table)
+    a <- get_accuracy(estimated_classifier)
     if (round(a - 1, 6) == 0) next;
     if (round(a - 0, 6) == 0) next;
 
-    simulated_meta_measures[i] <- get_meta_measure(simulated_classifier)
+    simulated_meta_measures <- rbind(simulated_meta_measures, 
+                                     get_meta_I_measures(simulated_table))
+
+    # Loading bar
+    cat(sprintf('|%s%s|\r', 
+      paste0(rep('=', round(i/nsim*20)), collapse = ''),
+      paste0(rep(' ', 20-round(i/nsim*20)), collapse = '')))
+    if (i == nsim) cat("\n")
   }
 
-  # If simulations did not work, return the baseline estimate
-  if (length(simulated_meta_measures) < 1)
-  {
-    simulated_meta_measures <- na.omit(simulated_meta_measures)
-    simulated_meta_measures <- get_meta_measure(estimated_classifier)
-  }
-  
   # Reduce bias
-  expected_meta_measure       <- mean(simulated_meta_measures, na.rm = TRUE)
-  estimated_bias              <- meta_I_measure - expected_meta_measure
-  bias_reduced_meta_I_measure <- meta_I_measure - estimated_bias
+  expected_meta_I_measures     <- colMeans(simulated_meta_measures, na.rm = TRUE)
+  estimated_bias               <- meta_I_measures - expected_meta_I_measures
+  bias_reduced_meta_I_measures <- meta_I_measures - estimated_bias
 
-  bias_reduced_meta_I_measure
+  bias_reduced_meta_I_measures
 }
