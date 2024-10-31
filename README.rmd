@@ -1,6 +1,6 @@
 ---
 title: "README"
-author: "Manuel Rausch, >Sascha Meyen, and Sebastian Hellmann"
+author: "Manuel Rausch, Sascha Meyen, and Sebastian Hellmann"
 date: "2024-10-13"
 output:
   md_document:
@@ -190,10 +190,10 @@ $$RMI = \frac{meta-I}{\max_{\text{accuracy}}\{meta-I\}}$$
 
 As these measures are prone to estimation bias, the package offers a simple
 bias reduction mechanism in which the observed frequencies of
-stimulus-response combinations are taken as the underyling probability
+stimulus-response combinations are taken as the underlying probability
 distribution. From this, Monte-Carlo simulations are conducted to estimate
-and subtract the bias in these measures. Note that there provably is no way
-to completely remove this bias.
+and subtract the bias from these measures. Note that there is probably no way
+to remove this bias completely.
 
 ## Installation
 
@@ -324,6 +324,7 @@ the data (notably, this is not the case though in the demo data set), the functi
 
 ```{r}        
 MetaDs <- fitMetaDprime(data = MaskOri, model="ML", .parallel = TRUE)
+head(MetaDs)
 ```
 
 Information theoretic measures of metacognition can be obtained by the function `estimateMetaI`. It expects the same kind of data.frame as `fitMetaDprime` 
@@ -332,7 +333,7 @@ The preferred way to estimate these measures is with bias reduction, but this ma
 
 ```{r}        
 metaIMeasures <- estimateMetaI(data = MaskOri, bias_reduction = TRUE)
-metaIMeasures 
+head(metaIMeasures)
 ```
 
 For the impatient and for testing purposes, bias_reduction can be turned off to increase computation speed: 

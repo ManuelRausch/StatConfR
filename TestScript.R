@@ -356,18 +356,28 @@ Plot_recov_metaDprime_F
 
 # 4. meta-I and co
 
-MetaInfoMeasures  <-
-  MaskOri %>%
-  mutate(y = fct_recode(stimulus, "-1" = "0", "1" = "90")) %>%
-  mutate(r = factor(ifelse(response=="0", -1, 1) * as.numeric(rating))) %>%
-  group_by(participant) %>% #group_modify(~ estimate_meta_I(.x))
-  dplyr::summarise(meta_I = estimate_meta_I(pick(y,r)),
-                   meta_Ir1 = estimate_meta_Ir1(pick(y,r)),
-                   meta_Ir1_acc = estimate_meta_Ir1_acc(pick(y,r)),
-                   meta_Ir2  = estimate_meta_Ir2(pick(y,r)),
-                   RMI = estimate_RMI(pick(y,r))
-                   )  # need dplyr::summarise because plyr::summarise is used somewhere else
+MetaDs <- fitMetaDprime(data = MaskOri, model="ML", .parallel = TRUE)
+MetaInfoMeasures  <- estimateMetaI(data = MaskOri, bias_reduction = F)
 
+
+merge(MetaDs %>% select(participant, Ratio),
+      MetaInfoMeasures %>%  select(participant, meta_Ir1)) %>%
+  ggplot(aes(x=Ratio, y=meta_Ir1)) +
+  geom_point() + geom_smooth(method="lm", se=F)+
+  theme_minimal()
+
+
+# 5) Plotting fits
+
+PlotFitSDT <- plotConfModelFit(MaskOri, fitted_pars, model="SDT")
+PlotFitGN <- plotConfModelFit(MaskOri, fitted_pars, model="GN")
+PlotFitLogN <- plotConfModelFit(MaskOri, fitted_pars, model="logN")
+PlotFitWEV <- plotConfModelFit(MaskOri, fitted_pars, model="WEV")
+PlotFitLogWEV <- plotConfModelFit(MaskOri, fitted_pars, model="logWEV")
+PlotFitITGcm <- plotConfModelFit(MaskOri, fitted_pars, model="ITGcm")
+PlotFitITGc <- plotConfModelFit(MaskOri, fitted_pars, model="ITGc")
+PlotFitIG <- plotConfModelFit(MaskOri, fitted_pars, model="IG")
+PlotFitPDA <- plotConfModelFit(MaskOri, fitted_pars, model="PDA")
 
 
 save(fitted_pars, PlotFitsBICWeights,
@@ -385,3 +395,4 @@ save(fitted_pars, PlotFitsBICWeights,
      recov_metaDprime_F, Plot_recov_metaDprime_F,
      MetaInfoMeasures,
      file = "TestResults.RData")
+PlotFitSDT <- plotConfModelFit(MaskOri, fitatted_pars, model="SDT")

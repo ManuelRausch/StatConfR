@@ -42,11 +42,10 @@
 #' @param n.cores `integer`. Number of cores used for parallelization. If NULL (default), the available
 #' number of cores -1 will be used.
 
-#' @return Gives data frame with one row for each combination of model and
-#' participant. Columns include a model and participant column,
-#' one column for each estimated parameter for the different models (parameters
-#' that are not present in a specific model (row) but in other models are
-#' filled with NAs.
+#' @return Gives `data.frame` with one row for each combination of model and
+#' participant. There are different columns for the model, the participant ID, and one
+#' one column for each estimated model parameter (parameters
+#' not present in a specific model are filled with NAs).
 #' Additional information  about the fit is provided in additional columns:
 #' - `negLogLik` (negative log-likelihood of the best-fitting set of parameters),
 #' - `k` (number of parameters),
