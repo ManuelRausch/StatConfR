@@ -8,7 +8,8 @@ tags:
 - decision confidence
 - metacognition
 - "meta-d′/d′"
-date: "12 October 2024"
+- metacognitive information thery
+date: "31 October 2024"
 output:
   pdf_document: default
   word_document: default
@@ -59,10 +60,9 @@ kinds of measures of metacognition:
 - Information-theoretic measures [@dayan_metacognitive_2023], including
   - meta-I, an information-theoretic measures of metacognitive sensitivity, 
   - $meta-I_{1}^{r}$ and $meta-I_{2}^{r}$, two measures of metacognitive efficiency proposed by @dayan_metacognitive_2023, 
-  - RMI, a novel measure of metacognitive accuracy. 
+  - RMI, a novel measure of metacognitive accuracy, also derived from information theory.  
 Finally, the `statConfR` package includes an example data set previously published in @hellmann_simultaneous_2023, with which the functions can be  tested. 
 The `statConfR` reference manual provides documentation of each function of the latest release (https://cran.r-project.org/web/packages/statConfR/statConfR.pdf). 
-A separate manual is available for the development version (https://github.com/ManuelRausch/StatConfR/blob/main/StatConfR.pdf). 
 
 # Statement of need
 
@@ -97,7 +97,7 @@ The `statConfR` package also provides a faithful implementation of meta-d$^\prim
 which has been originally implemented in MATLAB [@Maniscalco2012]. Fleming provides MATLAB and R code for Hmetad, 
 a Bayesian hierarchical version of meta-d$^\prime$/d$^\prime$ [@Fleming2017a], 
 but notably he specifies the model slightly differently as in the original meta-d$^\prime$/d$^\prime$ [@rausch_measures_2023]. 
-To our knowledge, there has been no open software available to estimate information-theoretic measures of metacognition up to now. 
+To the best of our knowledge, there has been no open software available to estimate information-theoretic measures of metacognition up to now. 
 
 An important limitation of the models implemented in `statConfR` is that the dynamics of the decision process are not taken into account.
 This is a problem because confidence judgments are related to the dynamics of decision making [@hellmann_confidence_2024; @Pleskac2010; @Rahnev2020].
