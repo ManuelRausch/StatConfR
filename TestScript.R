@@ -33,6 +33,8 @@
 
 # 4. meta-I and co
 
+# 5. Visualize Model fit
+
 # 0) Preparations
 
 rm(list=ls())
@@ -394,5 +396,16 @@ save(fitted_pars, PlotFitsBICWeights,
      recov_metaDprime_ML, Plot_recov_metaDprime_ML,
      recov_metaDprime_F, Plot_recov_metaDprime_F,
      MetaInfoMeasures,
+
+     PlotFitSDT,
+     PlotFitGN ,
+     PlotFitLogN ,
+     PlotFitWEV,
+     PlotFitLogWEV ,
+     PlotFitITGcm,
+     PlotFitITGc,
+     PlotFitIG,
+     PlotFitPDA ,
+
      file = "TestResults.RData")
-PlotFitSDT <- plotConfModelFit(MaskOri, fitatted_pars, model="SDT")
+
