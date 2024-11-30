@@ -371,7 +371,8 @@ merge(MetaDs %>% select(participant, Ratio),
 
 # 5) Plotting fits
 
-PlotFitSDT <- plotConfModelFit(MaskOri, fitted_pars, model="SDT")
+PlotFitSDT <- plotConfModelFit(data=MaskOri, fitted_pars=fitted_pars, model="SDT")
+
 PlotFitGN <- plotConfModelFit(MaskOri, fitted_pars, model="GN")
 PlotFitLogN <- plotConfModelFit(MaskOri, fitted_pars, model="logN")
 PlotFitWEV <- plotConfModelFit(MaskOri, fitted_pars, model="WEV")
@@ -381,6 +382,8 @@ PlotFitITGc <- plotConfModelFit(MaskOri, fitted_pars, model="ITGc")
 PlotFitIG <- plotConfModelFit(MaskOri, fitted_pars, model="IG")
 PlotFitPDA <- plotConfModelFit(MaskOri, fitted_pars, model="PDA")
 
+test <- group_BMS_fits(fitted_pars)
+group_BMS(fitted_pars)
 
 save(fitted_pars, PlotFitsBICWeights,
      recov_pars_SDT, Plot_recov_SDT,

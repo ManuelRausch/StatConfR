@@ -32,7 +32,7 @@
 #' one column for each estimated model parameter (parameters
 #' not present in a specific model are filled with NAs)
 #'
-#' #' @examples
+#' @examples
 #' # 1. Select two subjects from the masked orientation discrimination experiment
 #' data <- subset(MaskOri, participant %in% c(1:2))
 #' head(data)
@@ -58,7 +58,7 @@
 #'   myPlottedFit
 #' }
 #' @import ggplot2
-#' @importFrom plyr ddply transform summarise
+#' @importFrom plyr ddply summarise
 #' @importFrom Rmisc summarySEwithin
 #'
 #' @export
@@ -90,17 +90,29 @@ plotConfModelFit <- function(data, fitted_pars, model = NULL){
   }
   if(!all(data$correct %in% c(0,1))) stop("correct should be 1 or 0")
 
-  myColor <- switch(model, 'GN' = 1, 'IG' = 2, 'ITGc'  = 3, 'ITGcm' = 4, 'logN' = 5,
-                    'logWEV' = 6,'PDA' = 7,  'WEV' = 8, 'SDT' = 9) # models are color coded
+  PlotName <-
+    switch(model,
+           'GN' = "Gaussian noise model",
+           'IG' = "Independent Gaussian model",
+           'ITGc'  = "Independent truncated Gaussian model: HMetad-Version",
+           'ITGcm' = "Independent truncated Gaussian model: Meta-d'-Version",
+           'logN' = "Logistic noise model",
+           'logWEV' = "Logistic weighted evidence and visibility model",
+           'PDA' = "Post-decisional accumulation model",
+           'WEV' = "Weighted evidence and visibility model",
+           'SDT' = "Signal detection rating model") # models are color coded
 
   # 1. First aggregate on the level of subjects
 
   AggDist <-
     plyr::ddply(data,
-                ~  diffCond * rating * stimulus * correct * participant, #,
-                plyr::summarise, p = length(rating),  .drop=FALSE)
+                ~  diffCond * rating *
+                  stimulus * correct * participant, #,
+                plyr::summarise,
+                p = length(rating),  .drop=FALSE)
 
-  AggDist <- plyr::ddply(AggDist, ~ diffCond * stimulus,
+  AggDist <- plyr::ddply(AggDist, ~
+                           diffCond * stimulus * participant,
                          transform, N = sum(p))
   AggDist$p <- AggDist$p / AggDist$N
 
@@ -119,8 +131,10 @@ plotConfModelFit <- function(data, fitted_pars, model = NULL){
                            na.rm = TRUE, .drop = TRUE)
   AggDist$rating <- as.numeric(AggDist$rating)
   levels(AggDist$stimulus) <- c("S = -1", "S = 1")
-  AggDist$diffCond <- factor(as.numeric(AggDist$diffCond)) # diffCond should code the order of difficulty levels
-  levels(AggDist$diffCond) <- paste("K =", as.numeric(levels(AggDist$diffCond)))
+  AggDist$diffCond <-
+    factor(as.numeric(AggDist$diffCond)) # diffCond should code the order of difficulty levels
+  levels(AggDist$diffCond) <-
+    paste("K =", as.numeric(levels(AggDist$diffCond)))
 
   # 4) create the prediction from model fit
 
@@ -160,6 +174,7 @@ plotConfModelFit <- function(data, fitted_pars, model = NULL){
     xlab("Confidence rating") +
     ylab("probability") +
     ylim(c(0,1))+
+    ggtitle(PlotName) +
     theme(strip.text.y = element_text(angle=0)) +
     theme_minimal()
 

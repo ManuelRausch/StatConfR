@@ -157,9 +157,7 @@ features in the confidence judgment. The parameters $w$ and $\sigma$ are free pa
 The conceptual idea of meta-d′ is to quantify metacognition in terms of sensitivity
 in a hypothetical signal detection rating model describing the primary task, 
 under the assumption that participants had perfect access to the sensory evidence
-and were perfectly consistent in placing their confidence criteria (Maniscalco & Lau, 2012, 2014). Using a signal detection model describing the primary task to quantify metacognition
-allows a direct comparison between metacognitive accuracy and discrimination performance
-because both are measured on the same scale. Meta-d′ can be compared against the estimate of the distance between the two stimulus distributions estimated from discrimination responses, which is referred to as d′: If meta-d′ equals d′, it means that metacognitive accuracy is exactly as good as expected from discrimination performance. If meta-d′ is lower than d′, it means that metacognitive accuracy is not optimal. It can be shown that the implicit model of confidence underlying the meta-d'/d' method is identical to different versions of the independent truncated Gaussian model (Rausch et al., 2023), depending on whether the original model specification by Maniscalco and Lau (2012) or alternatively the specification by Fleming (2017) is used. We strongly recommend to test whether the independent truncated Gaussian models are adequate descriptions of the data before quantifying metacognitive efficiency  with meta-d′/d′.
+and were perfectly consistent in placing their confidence criteria (Maniscalco & Lau, 2012, 2014). Using a signal detection model describing the primary task to quantify metacognition, it allows a direct comparison between metacognitive accuracy and discrimination performancembecause both are measured on the same scale. Meta-d′ can be compared against the estimate of the distance between the two stimulus distributions estimated from discrimination responses, which is referred to as d′: If meta-d′ equals d′, it means that metacognitive accuracy is exactly as good as expected from discrimination performance. If meta-d′ is lower than d′, it means that metacognitive accuracy is not optimal. It can be shown that the implicit model of confidence underlying the meta-d'/d' method is identical to different versions of the independent truncated Gaussian model (Rausch et al., 2023), depending on whether the original model specification by Maniscalco and Lau (2012) or alternatively the specification by Fleming (2017) is used. We strongly recommend to test whether the independent truncated Gaussian models are adequate descriptions of the data before quantifying metacognitive efficiency  with meta-d′/d′.
 
 ### Information-theoretic measures of metacognition
 
@@ -182,9 +180,7 @@ $$meta-I_{2}^{r} = meta-I / H(Y = \hat{Y})$$
 Notably, Dayan (2023) pointed out that a liberal or conservative use of the confidence levels will affected the mutual information and thus all information-theoretic measures of metacognition.
 
 In addition to Dayan's measures, Meyen et al. (submitted) suggested an
-additional measure that normalizes the Meta-I by the range of possible values
-it can take. This required deriving lower and upper bounds of the transmitted
-information given a participant's accuracy.
+additional measure that normalizes the Meta-I by the range of possible values it can take. This required deriving lower and upper bounds of the transmitted information given a participant's accuracy.
 
 $$RMI = \frac{meta-I}{\max_{\text{accuracy}}\{meta-I\}}$$
 
@@ -192,8 +188,7 @@ As these measures are prone to estimation bias, the package offers a simple
 bias reduction mechanism in which the observed frequencies of
 stimulus-response combinations are taken as the underlying probability
 distribution. From this, Monte-Carlo simulations are conducted to estimate
-and subtract the bias from these measures. Note that there is probably no way
-to remove this bias completely.
+and subtract the bias from these measures. Note that there is probably no way to remove this bias completely.
 
 ## Installation
 
@@ -262,60 +257,23 @@ It can be seen that the independent truncated Gaussian model is consistently out
 
 ### Visualization 
 
-After obtaining model fits, it is strongly recommended to visualize the prediction implied by the best fitting sets of parameters and to compare the prediction with the actual data (Palminteri et al., 2017). The best way to visualize the data is highly specific to the data set and research question, which is why `statConfR` does not come with its own visualization tools. This being said, here is an example for how a visualization of model fit could look like: 
+After obtaining the model fit, it is strongly recommended to visualise the predictions implied by the best-fitting set of parameters and to compare the predictions with the actual data (Palminteri et al., 2017). The `statConfR' package provides the function `plotConfModelFit', which plots the empirically observed distribution of responses and confidence ratings (on the x-axis) as a function of discriminability (in the rows) and stimulus (in the columns) as bars. Superimposed on the empirical data, the plot also shows the prediction of a selected model as dots. The parameters of the model are passed to `plotConfModelFit' by the argument `fitted_pars'
 
 <!-- Stuff where only the code should be shown and executed, but do not show R yapping  -->
 
 ```{r, echo=TRUE, results="hide", message=FALSE, warning=FALSE}
-library(tidyverse)
-AggregatedData <- MaskOri %>%
-  mutate(ratings = as.numeric(rating), diffCond = as.numeric(diffCond)) %>%
-  group_by(participant, diffCond, correct ) %>% 
-  dplyr::summarise(ratings=mean(ratings,na.rm=T)) %>%
-  Rmisc::summarySEwithin(measurevar = "ratings",
-                         withinvars = c("diffCond", "correct"), 
-                         idvar = "participant",
-                         na.rm = TRUE, .drop = TRUE) %>% 
-  mutate(diffCond = as.numeric(diffCond))
-AggregatedPrediction <- 
-  rbind(fitted_pars %>%
-          filter(model=="ITGcm") %>%
-          group_by(participant) %>%
-          simConf(model="ITGcm") %>% 
-          mutate(model="ITGcm"), 
-        fitted_pars %>%
-          filter(model=="WEV") %>%
-          group_by(participant) %>%
-          simConf(model="WEV") %>% 
-          mutate(model="WEV")) %>%
-  mutate(ratings = as.numeric(rating) ) %>%
-  group_by(participant, diffCond, correct, model ) %>% 
-  dplyr::summarise(ratings=mean(ratings,na.rm=T)) %>%
-  Rmisc::summarySEwithin(measurevar = "ratings",
-                  withinvars = c("diffCond", "correct", "model"), 
-                  idvar = "participant",
-                  na.rm = TRUE, .drop = TRUE) %>% 
-  mutate(diffCond = as.numeric(diffCond))
-PlotMeans <- 
-  ggplot(AggregatedPrediction, 
-         aes(x = diffCond, y = ratings, color = correct)) + facet_grid(~ model) +
-   ylim(c(1,5)) + 
-   geom_line() +  ylab("confidence rating") + xlab("difficulty condition") +
-   scale_color_manual(values = c("darkorange", "navy"),
-                     labels = c("Error", "Correct response"), name = "model prediction") + 
-  geom_errorbar(data = AggregatedData, 
-                aes(ymin = ratings-se, ymax = ratings+se), color="black") + 
-  geom_point(data = AggregatedData, aes(shape=correct), color="black") + 
-  scale_shape_manual(values = c(15, 16),
-                     labels = c("Error", "Correct response"), name = "observed data") + 
-  theme_bw()
+PlotFitWEV <- plotConfModelFit(MaskOri, fitted_pars, model="WEV")
+PlotFitITGcm <- plotConfModelFit(MaskOri, fitted_pars, model="ITGcm")
 ```
 <!-- Show both the code and the output Figure!  -->
 
-```{r, echo=TRUE, fig.cap = "Predicted vs. observed confidence as a function of discriminability and correctness"}
-PlotMeans
+```{r, echo=TRUE, fig.cap = "Observed distribution of accuracy and responses as a function of discriminability and stimulus vs. prediction by the weighted evidence and visibility model"}
+PlotFitWEV
 ```
 
+```{r, echo=TRUE, fig.cap = "Observed distribution of accuracy and responses as a function of discriminability and stimulus vs. prediction by the Independent truncated Gaussian model: HMetad-Version (ITGc)"}
+PlotFitITGcm
+```
 
 ### Measuring metacognition
 

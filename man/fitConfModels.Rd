@@ -44,11 +44,10 @@ Defaults to 4.}
 number of cores -1 will be used.}
 }
 \value{
-Gives data frame with one row for each combination of model and
-participant. Columns include a model and participant column,
-one column for each estimated parameter for the different models (parameters
-that are not present in a specific model (row) but in other models are
-filled with NAs.
+Gives \code{data.frame} with one row for each combination of model and
+participant. There are different columns for the model, the participant ID, and one
+one column for each estimated model parameter (parameters
+not present in a specific model are filled with NAs).
 Additional information  about the fit is provided in additional columns:
 \itemize{
 \item \code{negLogLik} (negative log-likelihood of the best-fitting set of parameters),
