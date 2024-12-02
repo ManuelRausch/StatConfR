@@ -54,6 +54,11 @@ binary discrimination tasks with confidence ratings:
 - the independent truncated Gaussian model [@rausch_measures_2023] based on the model specification 
 used for the original meta-d$^\prime$/d$^\prime$ method [@Maniscalco2012; @Maniscalco2014], and 
 - the independent truncated Gaussian model based on the model specification of Hmetad [@Fleming2017a]. 
+Bayesian model selection on the group level is performed using a fixed effects model 
+(i.e. assuming that data from each subject was caused by the same generative model) and a 
+and a Dirichelet random-effects model (which assumes that different generative models may cause the data from different subjects), 
+as proposed by @Rigoux2014 and @daunizeau_vba_2014. 
+
 In addition, the `statConfR` package provides functions for estimating different 
 kinds of measures of metacognition: 
 - meta-d$^\prime$/d$^\prime$, the most widely-used measure of metacognitive efficiency, allowing both @Maniscalco2012's and @Fleming2017a's model specification, 
@@ -83,7 +88,7 @@ underlying the data is not the independent truncated Gaussian model [@rausch_mea
 Likewise, receiver operating characteristics in rating experiments are only appropriate measures of discrimination sensitivity
 if the assumptions of the signal detection rating model are correct [@Green1966; @hautus_detection_2021].
 At the time of writing, `statConfR` is the only available package for an open software that allows
-researchers to fit a set of static models of decision confidence. 
+researchers to fit a comprehensive set of static models of decision confidence. 
 The ReMeta toolbox provides Python code to fit a variety of different confidence models [@guggenmos_reverse_2022], too, 
 but some important models such as the independent truncated Gaussian model are missing. 
 Previous studies modelling confidence have made their analysis scripts freely available on the OSF website 

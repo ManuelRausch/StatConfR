@@ -20,14 +20,7 @@ gitbranch <- "main/"
 
 The `statConfR` package provides functions to fit static models of
 decision-making and confidence derived from signal detection theory for
-binary discrimination tasks, meta-d′/d′, the most prominent measure of metacognitive efficiency, 
-meta-I, an information-theoretic measures of metacognitive sensitivity, 
-as well as $meta-I_{1}^{r}$ and $meta-I_{2}^{r}$, two information-theoretic measures of metacognitive efficiency. 
-
-Fitting models of confidence can be used to test the assumptions underlying
-meta-d′/d′. Several static models of decision-making and confidence include a metacognition parameter that may
-serve as an alternative when the assumptions of meta-d′/d′ assuming the
-corresponding model provides a better fit to the data. The following models are included:
+binary discrimination tasks. Up to now, the following models have been included:
 
 - signal detection rating model (Green & Swets, 1966),
 - Gaussian noise model (Maniscalco & Lau, 2016),
@@ -37,6 +30,18 @@ corresponding model provides a better fit to the data. The following models are 
 - independent truncated Gaussian model (the model underlying the meta-d′/d′ method, see Rausch et al., 2023),
 - lognormal noise model (Shekhar & Rahnev, 2021), and
 - lognormal weighted evidence and visibility model (Shekhar & Rahnev, 2023).
+
+Bayesian model selection on the group level is performed using a fixed effects model (i.e. assuming that data from each subject was caused by the same generative model) and a and a Dirichelet random-effects model (which assumes that different generative models may cause the data from different subjects), as proposed by Rigoux et al. (2014) and Daunizeau et al. (2014). 
+
+In addition, the `statConfR` package provides functions for estimating different 
+kinds of measures of metacognition: 
+- meta-d$^\prime$/d$^\prime$, the most widely-used measure of metacognitive efficiency, allowing both Maniscalco and Lau (2012)'s and Fleming (2017)'s model specification. Fitting models of confidence is a way to test the assumptions underlying meta-d′/d′. 
+- Information-theoretic measures of metacognition (Dayan, 2023), including
+  - meta-I, an information-theoretic measures of metacognitive sensitivity, 
+  - $meta-I_{1}^{r}$ and $meta-I_{2}^{r}$, two measures of metacognitive efficiency proposed by Dayan (2023), 
+  - RMI, a novel measure of metacognitive accuracy, also derived from information theory.  
+  
+
 
 ## Mathematical description of implemented models of confidence
 The models included in the statConfR package are all based on signal detection theory (Green & Swets, 1966). 
@@ -332,6 +337,7 @@ or [sebastian.hellmann\@ku.de](mailto:sebastian.hellmann@ku.de)
 or [submit an issue](https://github.com/ManuelRausch/StatConfR/issues).
 
 ## References
+- Daunizeau, J., Adam, V., & Rigoux, L. (2014). Vba: A probabilistic treatment of nonlinear models for neurobiological and behavioural data. \emph{PLOS Computational Biology}, 10(1), e1003441. https://doi.org/10.1371/journal.pcbi.1003441
 - Dayan, P. (2023). Metacognitive Information Theory. Open Mind, 7, 392–411. https://doi.org/10.1162/opmi_a_00091
 - Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, 1, 1–14. https://doi.org/10.1093/nc/nix007
 - Green, D. M., & Swets, J. A. (1966). Signal detection theory and psychophysics. Wiley.
@@ -342,6 +348,7 @@ or [submit an issue](https://github.com/ManuelRausch/StatConfR/issues).
 - Palminteri, S., Wyart, V., & Koechlin, E. (2017). The importance of falsification in computational cognitive modeling. Trends in Cognitive Sciences, 21(6), 425–433. https://doi.org/10.1016/j.tics.2017.03.011
 - Rausch, M., Hellmann, S., & Zehetleitner, M. (2018). Confidence in masked orientation judgments is informed by both evidence and visibility. Attention, Perception, and Psychophysics, 80(1), 134–154. https://doi.org/10.3758/s13414-017-1431-5
 - Rausch, M., & Zehetleitner, M. (2017). Should metacognition be measured by logistic regression? Consciousness and Cognition, 49, 291–312. https://doi.org/10.1016/j.concog.2017.02.007
+- Rigoux, L., Stephan, K. E., Friston, K. J., & Daunizeau, J. (2014). Bayesian model selection for group studies - revisited. \emph{NeuroImage}, 84, 971–985. https://doi.org/10.1016/j.neuroimage.2013.08.065
 - Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive Inefficiency in Perceptual Decision Making. Psychological Review, 128(1), 45–70. https://doi.org/10.1037/rev0000249
 - Shekhar, M., & Rahnev, D. (2024). How Do Humans Give Conﬁdence? A Comprehensive Comparison of Process Models of Perceptual Metacognition. Journal of Experimental Psychology: General, 153(3), 656–688. https://doi.org/10.1037/xge0001524
 
