@@ -54,9 +54,6 @@
 #' - `BIC` (Bayes information criterion; Schwarz, 1978),
 #' - `AICc` (AIC corrected for small samples; Burnham & Anderson, 2002)
 #' If length(models) > 1 or models == "all", there will be three additional columns:
-#' - `wAIC`: Akaike weights based on AIC,
-#' - `wAIC`: Akaike weights based on AICc,
-#' - `wBICc`: Schwarz weights (see Burnham & Anderson, 2002)
 
 #' @details
 #' The provided `data` argument is split into subsets according to the values of

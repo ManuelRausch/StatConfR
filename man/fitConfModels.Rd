@@ -57,9 +57,6 @@ Additional information  about the fit is provided in additional columns:
 \item \code{BIC} (Bayes information criterion; Schwarz, 1978),
 \item \code{AICc} (AIC corrected for small samples; Burnham & Anderson, 2002)
 If length(models) > 1 or models == "all", there will be three additional columns:
-\item \code{wAIC}: Akaike weights based on AIC,
-\item \code{wAIC}: Akaike weights based on AICc,
-\item \code{wBICc}: Schwarz weights (see Burnham & Anderson, 2002)
 }
 }
 \description{

@@ -29,11 +29,15 @@ not. If runtime is too long, consider setting this to FALSE
 }
 \value{
 a \code{data.frame} with one row for each subject and the following
-columns: \code{participant} is the participant ID, \code{meta_I} is the estimated
-meta-\eqn{I} value (expressed in bits, i.e. log base is
-2), \code{meta_Ir1} is meta-\eqn{I_{1}^{r}}, \code{meta_Ir1_acc} is meta-\eqn{I_{1}^{r\prime}},
-\code{meta_Ir2} is meta-\eqn{I_{2}^{r}}, and RMI is RMI.
-with , or unitless for the normalized measures)
+columns:
+\itemize{
+\item \code{participant} is the participant ID,
+\item \code{meta_I} is the estimated meta-\eqn{I} value (expressed in bits, i.e. log base is 2),
+\item \code{meta_Ir1} is meta-\eqn{I_{1}^{r}},
+\item \code{meta_Ir1_acc} is meta-\eqn{I_{1}^{r\prime}},
+\item \code{meta_Ir2} is meta-\eqn{I_{2}^{r}}, and
+\item \code{RMI} is RMI.
+}
 }
 \description{
 \code{estimateMetaI} estimates meta-\eqn{I}, an information-theoretic
@@ -64,17 +68,18 @@ function to the next). However, this is a simple way to reduce the bias
 inherent in these measures.
 }
 \details{
+It is assumed that a classifier (possibly a human being performing a discrimination task) or an algorithmic classifier in a classification application, makes a binary prediction $R$ about a true state of the world $S$ and gives a confidence rating $C$.
 Meta-\eqn{I} is defined as the mutual information between the confidence and
 accuracy and is calculated as the transmitted information minus the
 minimal information given the accuracy,
-\deqn{meta-I = I(Y; \hat{Y}, C) - I(Y; \hat{Y}).}
+\deqn{meta-I = I(S; R, C) - I(S; R).}
 This is equivalent to Dayan's formulation where meta-I is the information
 that confidence transmits about the correctness of a response,
-\deqn{meta-I = I(Y = \hat{Y}; C).}
+\deqn{meta-I = I(S = R; C).}
 Meta-\eqn{I} is expressed in bits, i.e. the log base is 2).
 The other measures are different normalizations of meta-\eqn{I} and are unitless.
 It should be noted that Dayan (2023) pointed out that a liberal or
-conservative use of the confidence levels will affected th mutual
+conservative use of the confidence levels will affected the mutual
 information and thus influence meta-I.
 }
 \examples{

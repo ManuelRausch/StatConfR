@@ -26,13 +26,14 @@
 #'  inherent in these measures.
 
 #' @details
+#' It is assumed that a classifier (possibly a human being performing a discrimination task) or an algorithmic classifier in a classification application, makes a binary prediction $R$ about a true state of the world $S$ and gives a confidence rating $C$.
 #' Meta-\eqn{I} is defined as the mutual information between the confidence and
 #' accuracy and is calculated as the transmitted information minus the
 #' minimal information given the accuracy,
-#' \deqn{meta-I = I(Y; \hat{Y}, C) - I(Y; \hat{Y}).}
+#' \deqn{meta-I = I(S; R, C) - I(S; R).}
 #' This is equivalent to Dayan's formulation where meta-I is the information
 #' that confidence transmits about the correctness of a response,
-#' \deqn{meta-I = I(Y = \hat{Y}; C).}
+#' \deqn{meta-I = I(S = R; C).}
 #'  Meta-\eqn{I} is expressed in bits, i.e. the log base is 2).
 #' The other measures are different normalizations of meta-\eqn{I} and are unitless.
 #' It should be noted that Dayan (2023) pointed out that a liberal or
