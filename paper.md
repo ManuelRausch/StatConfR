@@ -42,7 +42,7 @@ affiliations:
 # Summary
   
 We present the `statConfR` package for R, which allows researchers to model binary
-discrimination responses and confidence ratings. For this purpose, includes functions to conveniently 
+discrimination responses and confidence ratings. For this purpose, the package provides functions to conveniently 
 fit nine different static models of decision confidence:
 
 - the signal detection rating model [@Green1966], 
@@ -56,8 +56,8 @@ used for the original meta-d$^\prime$/d$^\prime$ method [@Maniscalco2012; @Manis
 - the independent truncated Gaussian model based on the model specification of Hmetad [@Fleming2017a]. 
 
 In addition, the `statConfR` package provides functions for estimating different
-measures of metacognitive sensitivity (i.e. the degree to which humans are able to
-differentiate between correct and incorrect trials) and metacognitive efficiency (i.e. metacognitive sensitivity in 
+measures of metacognitive sensitivity (i.e., the degree to which humans are able to
+differentiate between correct and incorrect trials) and metacognitive efficiency (i.e., metacognitive sensitivity in 
 relation to the ability to perform the task): 
 
 - meta-d$^\prime$/d$^\prime$, the most widely-used measure of metacognitive efficiency, allowing both @Maniscalco2012's and @Fleming2017a's model specification, 
