@@ -36,7 +36,7 @@ In addition, the `statConfR` package provides functions for estimating different
 kinds of measures of metacognition: 
 
 - meta-d$^\prime$/d$^\prime$, the most widely-used measure of metacognitive efficiency, allowing both Maniscalco and Lau (2012)'s and Fleming (2017)'s model specification. Fitting models of confidence is a way to test the assumptions underlying meta-d$^\prime$/d$^\prime$. 
-- Information-theoretic measures of metacognition (Dayan, 2023), including
+- information-theoretic measures of metacognition (Dayan, 2023), including
 
   - meta-I, an information-theoretic measures of metacognitive sensitivity, 
   - $meta-I_{1}^{r}$ and $meta-I_{2}^{r}$, two measures of metacognitive efficiency proposed by Dayan (2023), 
@@ -158,7 +158,7 @@ features in the confidence judgment. The parameters $w$ and $\sigma$ are free pa
 
 # Measures of metacognition
 
-## meta-d$^\prime$/d$^\prime$
+## Meta-d$^\prime$/d$^\prime$
 The conceptual idea of meta-d$^\prime$ is to quantify metacognition in terms of sensitivity in a hypothetical signal detection rating model describing the primary task, under the assumption that participants had perfect access to the sensory evidence and were perfectly consistent in placing their confidence criteria (Maniscalco & Lau, 2012, 2014). Using a signal detection model describing the primary task to quantify metacognition, it allows a direct comparison between metacognitive accuracy and discrimination performance because both are measured on the same scale.  Meta-d$^\prime$ can be compared against the estimate of the distance between the two stimulus distributions estimated from discrimination responses, which is referred to as d$^\prime$: If meta-$^\prime$ equals d$^\prime$, it means that metacognitive accuracy is exactly as good as expected from discrimination performance. If meta-d$^\prime$ is lower than d$^\prime$, it means that metacognitive accuracy is not optimal. It can be shown that the implicit model of confidence underlying the meta-d$^\prime$/d$^\prime$ method is identical to different versions of the independent truncated Gaussian model (Rausch et al., 2023), depending on whether the original model specification by Maniscalco and Lau (2012) or alternatively the specification by Fleming (2017) is used. We strongly recommend to test whether the independent truncated Gaussian models are adequate descriptions of the data before quantifying metacognitive efficiency with meta-d$^\prime$/d$^\prime$ (see Rausch et al., 2023). 
 
 ## Information-theoretic measures of metacognition
