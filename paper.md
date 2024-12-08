@@ -65,7 +65,8 @@ relation to the ability to perform the task):
 
   - meta-I, an information-theoretic measures of metacognitive sensitivity, 
   - $meta-I_{1}^{r}$ and $meta-I_{2}^{r}$, two measures of metacognitive efficiency proposed by @dayan_metacognitive_2023, 
-  - RMI, a novel measure of metacognitive accuracy, also derived from information theory.  
+  - RMI, a novel measure of metacognitive accuracy, also derived from information theory.
+  
 Finally, the `statConfR` package includes an example data set previously published in @hellmann_simultaneous_2023, with which the functions can be  tested. 
 
 # Statement of need
