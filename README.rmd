@@ -5,6 +5,7 @@ date: "2024-10-13"
 output:
   md_document:
     variant: gfm
+    number_sections: true
 editor_options: 
   markdown: 
     wrap: 72
@@ -16,34 +17,33 @@ knitr::opts_chunk$set(echo = TRUE)
 gitrep <- "https://github.com/ManuelRausch/StatConfR/tree"
 gitbranch <- "main/"
 ```
-
+# The `statConfR` package for R
 
 The `statConfR` package provides functions to fit static models of
 decision-making and confidence derived from signal detection theory for
-binary discrimination tasks. Up to now, the following models have been included:
+binary discrimination tasks with confidence ratings on the data from individual subjects. Up to now, the following models have been included:
 
 - signal detection rating model (Green & Swets, 1966),
 - Gaussian noise model (Maniscalco & Lau, 2016),
 - weighted evidence and visibility model (Rausch et al., 2018),
 - post-decisional accumulation model (Rausch et al., 2018),
 - independent Gaussian model (Rausch & Zehetleitner, 2017),
-- independent truncated Gaussian model (the model underlying the meta-d′/d′ method, see Rausch et al., 2023),
+- independent truncated Gaussian model (the model underlying the  meta-d$^\prime$/d$^\prime$ method, see Rausch et al., 2023),
 - lognormal noise model (Shekhar & Rahnev, 2021), and
 - lognormal weighted evidence and visibility model (Shekhar & Rahnev, 2023).
 
-Bayesian model selection on the group level is performed using a fixed effects model (i.e. assuming that data from each subject was caused by the same generative model) and a and a Dirichelet random-effects model (which assumes that different generative models may cause the data from different subjects), as proposed by Rigoux et al. (2014) and Daunizeau et al. (2014). 
-
 In addition, the `statConfR` package provides functions for estimating different 
 kinds of measures of metacognition: 
-- meta-d$^\prime$/d$^\prime$, the most widely-used measure of metacognitive efficiency, allowing both Maniscalco and Lau (2012)'s and Fleming (2017)'s model specification. Fitting models of confidence is a way to test the assumptions underlying meta-d′/d′. 
+
+- meta-d$^\prime$/d$^\prime$, the most widely-used measure of metacognitive efficiency, allowing both Maniscalco and Lau (2012)'s and Fleming (2017)'s model specification. Fitting models of confidence is a way to test the assumptions underlying meta-d$^\prime$/d$^\prime$. 
 - Information-theoretic measures of metacognition (Dayan, 2023), including
+
   - meta-I, an information-theoretic measures of metacognitive sensitivity, 
   - $meta-I_{1}^{r}$ and $meta-I_{2}^{r}$, two measures of metacognitive efficiency proposed by Dayan (2023), 
+  - meta-$I_{1}^{r\prime}$, a novel variant of $meta-I_{1}^{r}$,
   - RMI, a novel measure of metacognitive accuracy, also derived from information theory.  
   
-
-
-## Mathematical description of implemented models of confidence
+## Mathematical description of implemented generative models of confidence
 The models included in the statConfR package are all based on signal detection theory (Green & Swets, 1966). 
 It is assumed that participants select a binary discrimination response $R$ about a stimulus $S$.
 Both $S$ and $R$ can be either -1 or 1. $R$ is considered correct if $S=R$.
@@ -158,34 +158,34 @@ features in the confidence judgment. The parameters $w$ and $\sigma$ are free pa
 
 ## Measures of metacognition
 
-### Meta-d'/d'
-The conceptual idea of meta-d′ is to quantify metacognition in terms of sensitivity
-in a hypothetical signal detection rating model describing the primary task, 
-under the assumption that participants had perfect access to the sensory evidence
-and were perfectly consistent in placing their confidence criteria (Maniscalco & Lau, 2012, 2014). Using a signal detection model describing the primary task to quantify metacognition, it allows a direct comparison between metacognitive accuracy and discrimination performancembecause both are measured on the same scale. Meta-d′ can be compared against the estimate of the distance between the two stimulus distributions estimated from discrimination responses, which is referred to as d′: If meta-d′ equals d′, it means that metacognitive accuracy is exactly as good as expected from discrimination performance. If meta-d′ is lower than d′, it means that metacognitive accuracy is not optimal. It can be shown that the implicit model of confidence underlying the meta-d'/d' method is identical to different versions of the independent truncated Gaussian model (Rausch et al., 2023), depending on whether the original model specification by Maniscalco and Lau (2012) or alternatively the specification by Fleming (2017) is used. We strongly recommend to test whether the independent truncated Gaussian models are adequate descriptions of the data before quantifying metacognitive efficiency  with meta-d′/d′.
+### meta-d$^\prime$/d$^\prime$
+The conceptual idea of meta-d$^\prime$ is to quantify metacognition in terms of sensitivity in a hypothetical signal detection rating model describing the primary task, under the assumption that participants had perfect access to the sensory evidence and were perfectly consistent in placing their confidence criteria (Maniscalco & Lau, 2012, 2014). Using a signal detection model describing the primary task to quantify metacognition, it allows a direct comparison between metacognitive accuracy and discrimination performance because both are measured on the same scale.  Meta-d$^\prime$ can be compared against the estimate of the distance between the two stimulus distributions estimated from discrimination responses, which is referred to as d$^\prime$: If meta-$^\prime$ equals d$^\prime$, it means that metacognitive accuracy is exactly as good as expected from discrimination performance. If meta-d$^\prime$ is lower than d$^\prime$, it means that metacognitive accuracy is not optimal. It can be shown that the implicit model of confidence underlying the meta-d$^\prime$/d$^\prime$ method is identical to different versions of the independent truncated Gaussian model (Rausch et al., 2023), depending on whether the original model specification by Maniscalco and Lau (2012) or alternatively the specification by Fleming (2017) is used. We strongly recommend to test whether the independent truncated Gaussian models are adequate descriptions of the data before quantifying metacognitive efficiency with meta-d$^\prime$/d$^\prime$ (see Rausch et al., 2023). 
 
 ### Information-theoretic measures of metacognition
 
-Dayan (2023) proposed several measures of metacognition based on quantities of information theory. 
+It is assumed that a classifier (possibly a human being performing a discrimination task) or an algorithmic classifier in a classification application, makes a binary prediction $R$ about a true state of the world $S$. 
+Dayan (2023) proposed several measures of metacognition based on quantities of information theory (for an introduction into information theory, see MacKay, 2003; Cover & Thomas, 2006). 
 
-- Meta-I is a measure of metacognitive sensitivity defined as the mutual information between the confidence and accuracy and is calculated as the transmitted information minus the minimal information given the accuracy:
+- Meta-I is a measure of metacognitive sensitivity defined as the mutual information between the confidence and accuracy and is calculated as the transmitted information minus the minimal information given the accuracy of the classification response:
 
-$$meta-I = I(Y; \hat{Y}, C) - I(Y; \hat{Y})$$ 
-This is equivalent to Dayan's formulation where meta-I is the information that confidences transmit about the correctness of a response: 
+$$meta-I = I(S; R, C) - I(S; R)$$ 
+It can be shown that this is equivalent to Dayan's formulation of meta-I as the information that confidence transmits about the correctness of a response: 
 
-$$meta-I = I(Y = \hat{Y}; C)$$
+$$meta-I = I(S = R; C)$$
 - Meta-$I_{1}^{r}$ is meta-I  normalized by the value of meta-I expected assuming 
 a signal detection model (Green & Swets, 1966) with Gaussian noise, based on calculating the sensitivity index d':
 
 $$meta-I_{1}^{r} = meta-I / meta-I(d')$$
-- Meta-$I_{2}^{r}$ is meta-I normalized by its theoretical upper bound, which is the information entropy of accuracy,  $H(Y = \hat{Y})$:
+- Meta-$I_{1}^{r\prime}$ is a variant of meta-$I_{1}^{r}$, which normalizes by the meta-I that would be expected from an underlying normal distribution with the same accuracy (this is similar to the sensitivity approach but without considering variable thresholds).
 
-$$meta-I_{2}^{r} = meta-I / H(Y = \hat{Y})$$
+- Meta-$I_{2}^{r}$ is meta-I normalized by its theoretical upper bound, which is the information entropy of accuracy,  $H(S = R)$:
+
+$$meta-I_{2}^{r} = meta-I / H(S = R)$$
 
 Notably, Dayan (2023) pointed out that a liberal or conservative use of the confidence levels will affected the mutual information and thus all information-theoretic measures of metacognition.
 
 In addition to Dayan's measures, Meyen et al. (submitted) suggested an
-additional measure that normalizes the Meta-I by the range of possible values it can take. This required deriving lower and upper bounds of the transmitted information given a participant's accuracy.
+additional measure that normalizes meta-I by the range of possible values it can take. Normalizing meta-I by the range of possible values requires deriving lower and upper bounds of the transmitted information given a participant's accuracy.
 
 $$RMI = \frac{meta-I}{\max_{\text{accuracy}}\{meta-I\}}$$
 
@@ -193,11 +193,13 @@ As these measures are prone to estimation bias, the package offers a simple
 bias reduction mechanism in which the observed frequencies of
 stimulus-response combinations are taken as the underlying probability
 distribution. From this, Monte-Carlo simulations are conducted to estimate
-and subtract the bias from these measures. Note that there is probably no way to remove this bias completely.
+and subtract the bias from these measures. Note that the bias is only reduced but not removed completely.
 
 ## Installation
 
 The latest released version of the package is available on CRAN via
+
+<!-- without any dots, the code chunk will be shown, but not executed -->
 
 ```         
 install.packages("statConfR")
@@ -209,9 +211,8 @@ and install from GitHub:
 ```         
 devtools::install_github("ManuelRausch/StatConfR")
 ```
-<!-- without any dots, the code chunk will be shown, but not executed -->
 
-## Usage
+## Usage 
 
 ### Example data set
 
@@ -225,12 +226,11 @@ data("MaskOri")
 head(MaskOri)
 ```
 
-### Fitting
+### Fitting models of confidence and decision making to individual subjects
 
 The function `fitConfModels` allows the user to fit several confidence
-models separately to the data of each participant. 
-The data should be provided via the argument `.data` in the form of a data.frame 
-object with the following variables in separate columns:
+models separately to the data of each participant using maximum likelihood estimation. 
+The data should be provided via the argument `.data` in the form of a data.frame object with the following variables in separate columns:
 
 -   stimulus (factor with 2 levels): The property of the stimulus which
     defines which response is correct
@@ -243,28 +243,25 @@ object with the following variables in separate columns:
 -   participant (integer): giving the subject ID.
 The argument `model` is used to specify which model should be fitted, with 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'ITGcm', 'logN', and 'logWEV' as available options. If model="all" (default), all implemented models will be fit, although this may take a while. 
 
-Setting the optional argument `.parallel=TRUE` parallizes model fitting over all but 1 available core. Note that the fitting procedure takes may take a considerable amount of time, 
-especially when there are multiple models, several difficulty conditions, and/or  several confidence categories.  For example, if there are five difficulty conditions and five confidence levels, fitting the WEV model to one single participant may take 20-30 minutes on a 2.8GHz CPU. We recommend parallelization to keep the required time tolerable. 
+Setting the optional argument `.parallel=TRUE` parallizes model fitting over all but 1 available core. Note that the fitting procedure takes may take a considerable amount of time, especially when there are multiple models, several difficulty conditions, and/or multiple confidence categories.  For example, if there are five difficulty conditions and five confidence levels, fitting the WEV model to one single participant may take 20-30 minutes on a 2.8GHz CPU. We recommend parallelization to keep the required time tolerable. 
 
 ```{r}     
 fitted_pars <- fitConfModels(MaskOri, models=c("ITGcm", "WEV"), .parallel = TRUE) 
 ```
 
 The output is then a data frame with one row for each combination of 
-participant and model and separate columns for each estimated parameter as well as for different measures for goodness-of-fit (negative log-likelihood, BIC, AIC and AICy<sub>c</sub>).
-These may be used for statistical  model comparisons.
+participant and model and separate columns for each estimated parameter (d_1, d_2, d_3, d_4, c, theta_minus.4 theta_minus.3, theta_minus.2, theta_minus.1, theta_plus.1, theta_plus.2, theta_plus.3, theta_plus.4 for both models, w and sigma for WEV, and m only for ITGcm) as well as for different measures for goodness-of-fit (negative log-likelihood, BIC, AIC and AICc).
 
 ```{r}
 head(fitted_pars)
 ```
 
-It can be seen that the independent truncated Gaussian model is consistently outperformed by the weighted evidence and visibility model, which is why we would not recommend using meta-d′/d′ for this specific task. 
 
-### Visualization 
+### Visualization of model fits
 
-After obtaining the model fit, it is strongly recommended to visualise the predictions implied by the best-fitting set of parameters and to compare the predictions with the actual data (Palminteri et al., 2017). The `statConfR' package provides the function `plotConfModelFit', which plots the empirically observed distribution of responses and confidence ratings (on the x-axis) as a function of discriminability (in the rows) and stimulus (in the columns) as bars. Superimposed on the empirical data, the plot also shows the prediction of a selected model as dots. The parameters of the model are passed to `plotConfModelFit' by the argument `fitted_pars'
+After obtaining the model fit, it is strongly recommended to visualise the predictions implied by the best-fitting set of parameters and compare these predictions with the actual data (Palminteri et al., 2017). The `statConfR` package provides the function `plotConfModelFit`, which creates a `ggplot` object with empirically observed distribution of responses and confidence ratings as bars on the x-axis as a function of discriminability (in the rows) and stimulus (in the columns). Superimposed on the empirical data, the plot also shows the prediction of one selected model as dots. The parameters of the model are passed to `plotConfModelFit' by the argument `fitted_pars`. 
 
-<!-- Stuff where only the code should be shown and executed, but do not show R yapping  -->
+<!-- Show and execute the code, but stop R from yapping!  -->
 
 ```{r, echo=TRUE, results="hide", message=FALSE, warning=FALSE}
 PlotFitWEV <- plotConfModelFit(MaskOri, fitted_pars, model="WEV")
@@ -280,37 +277,46 @@ PlotFitWEV
 PlotFitITGcm
 ```
 
-### Measuring metacognition
 
-Assuming that the independent truncated Gaussian model provides a decent account of
-the data (notably, this is not the case though in the demo data set), the function `fitMetaDprime` can be used to estimate meta-d′/d′ independently for each subject. The arguments `.data` and `.parallel=TRUE` just in the same way the arguments of `fitConfModels`. The argument `model` offers the user the choice between two model specifications, either "ML" to use the original model specification used by Maniscalco and Lau (2012, 2014) or "F" to use the model specification by Fleming (2017)'s Hmetad method.
+### Estimating measures of metacognition
+
+Assuming that the independent truncated Gaussian model provides a decent account of the data (notably, this is not the case in the demo data set), the function `fitMetaDprime` can be used to estimate meta-d$^\prime$/d$^\prime$ independently for each subject. The arguments `.data` and `.parallel=TRUE` work just in the same way the arguments of `fitConfModels`. The argument `model` offers the user the choice between two model specifications, either "ML" to use the original model specification used by Maniscalco and Lau (2012, 2014) or "F" to use the model specification by Fleming (2017)'s Hmetad method. The function `fitMetaDprime` produces a dataframe with one row for each participant and the following columns: 
+
+- participant: the participant id, 
+- model: indicating which model specification has been used, 
+- dprime: the sensitivity index d′ from signal detection theory, a measure of discrimination performance, 
+- c: the bias index c from signal detection theory, a measure of discrimination bias, 
+- Ratio: The meta-d′/d′ index, the most common measure of metacognitive efficiency. 
 
 ```{r}        
 MetaDs <- fitMetaDprime(data = MaskOri, model="ML", .parallel = TRUE)
 head(MetaDs)
 ```
 
-Information theoretic measures of metacognition can be obtained by the function `estimateMetaI`. It expects the same kind of data.frame as `fitMetaDprime` 
-and returns separate estimates of meta-I, Meta-$I_{1}^{r}$, and Meta-$I_{2}^{r}$ for each subject. 
-The preferred way to estimate these measures is with bias reduction, but this may take ~ 6 s for each subject. 
+Information-theoretic measures of metacognition can be obtained by the function `estimateMetaI`. It expects the same kind of data.frame as `fitMetaDprime` and `fitConfModels`, returning a dataframe with one row for each participant and the following columns: 
 
-```{r}        
-metaIMeasures <- estimateMetaI(data = MaskOri, bias_reduction = TRUE)
+- `participant`: the participant id, 
+- `meta_I` is the estimated meta-I value (expressed in bits, i.e. log base is 2), - `meta_Ir1` is meta-$I_{1}^{r}$, 
+- `meta_Ir1_acc` is meta-$I_{1}^{r\prime}$,
+- `meta_Ir2` is meta-$I_{2}^{r}$, and 
+- `RMI` is RMI.
+
+```{r,  message=FALSE, warning=FALSE}        
+metaIMeasures <- estimateMetaI(data = MaskOri, bias_reduction = FALSE)
 head(metaIMeasures)
 ```
 
-For the impatient and for testing purposes, bias_reduction can be turned off to increase computation speed: 
-
+All information-theoretic measures can be calculated with a bias-reduced variant for which the observed frequencies are taken as underlying probability distribution to estimate the sampling bias. The estimated bias is then subtracted from the initial measures. This approach uses Monte-Carlo simulations and is therefore not deterministic. This is the preferred way to estimate the information-theoretic measures, but it may take ~ 6 s for each subject. To invoke bias reduction, the argument `bias_reduction` needs to be set to TRUE: 
 ```        
-metaIMeasures <- estimateMetaI(data = MaskOri, bias_reduction = FALSE)
+metaIMeasures <- estimateMetaI(data = MaskOri, bias_reduction = TRUE)
 ```
 
 ### Documentation
 
-After installation, the documentation of each function of of `statConfR` can be accessed by typing *?functionname* into the console. 
+After installation, the documentation of each function of `statConfR` can be accessed by typing *?functionname* into the console. 
 
 ## Contributing to the package 
-The package is under active development. We are planning to implement new models of decision confidence when they are published. Please feel free to [contact us](malto::manuel.rausch@ku.de) to suggest new models to implement in in the package, or to volunteer adding additional models. 
+The package is under active development. We are planning to implement new models of decision confidence when they are published. Please feel free to [contac us](malto::manuel.rausch@hochschule-rhein-waal.de) to suggest new models to implement in the package, or to volunteer adding additional models. 
 
 ### Instruction for implementing custom models of decision confidence 
 __Only recommended for users with experience in cognitive modelling!__
@@ -325,8 +331,7 @@ For readers who want to use our open code to implement models of confidence them
   - If applicable, the parameter vector i obtained during optimization needs to back-transformation for the the output object `res`. 
   - Name the new file according to the convention 'int_fit*yourmodelname*.R'.
 - Add your model and fitting-functions to the high-level functions `fitConf` and `fitConfModels`. 
-- Add a simulation function in the file 'int_simulateConf.R' which uses the same 
-  structure as the other functions but adapt the likelihood of the responses.
+- Add a simulation function in the file 'int_simulateConf.R' which uses the same structure as the other functions but adapt the likelihood of the responses.
   
 
 ## Contact
@@ -337,18 +342,18 @@ or [sebastian.hellmann\@ku.de](mailto:sebastian.hellmann@ku.de)
 or [submit an issue](https://github.com/ManuelRausch/StatConfR/issues).
 
 ## References
-- Daunizeau, J., Adam, V., & Rigoux, L. (2014). Vba: A probabilistic treatment of nonlinear models for neurobiological and behavioural data. \emph{PLOS Computational Biology}, 10(1), e1003441. https://doi.org/10.1371/journal.pcbi.1003441
+- Cover, T. M., & Thomas, J. A. (2006). Elements of information theory. 2nd edition. Wiley.
 - Dayan, P. (2023). Metacognitive Information Theory. Open Mind, 7, 392–411. https://doi.org/10.1162/opmi_a_00091
 - Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, 1, 1–14. https://doi.org/10.1093/nc/nix007
 - Green, D. M., & Swets, J. A. (1966). Signal detection theory and psychophysics. Wiley.
 - Hellmann, S., Zehetleitner, M., & Rausch, M. (2023). Simultaneous modeling of choice, confidence, and response time in visual perception. Psychological Review, 130(6), 1521–1543. https://doi.org/10.1037/rev0000411
 - Maniscalco, B., & Lau, H. (2012). A signal detection theoretic method for estimating metacognitive sensitivity from confidence ratings. Consciousness and Cognition, 21(1), 422–430. https://doi.org/10.1016/j.concog.2011.09.021
+- MacKay, D. J. (2003). Information theory, inference and learning algorithms. Cambridge University Press.
 - Maniscalco, B., & Lau, H. (2016). The signal processing architecture underlying subjective reports of sensory awareness. Neuroscience of Consciousness, 1, 1–17. https://doi.org/10.1093/nc/niw002
 - Maniscalco, B., & Lau, H. C. (2014). Signal Detection Theory Analysis of Type 1 and Type 2 Data: Meta-d, Response- Specific Meta-d, and the Unequal Variance SDT Model. In S. M. Fleming & C. D. Frith (Eds.), The Cognitive Neuroscience of Metacognition (pp. 25–66). Springer. https://doi.org/10.1007/978-3-642-45190-4_3
 - Palminteri, S., Wyart, V., & Koechlin, E. (2017). The importance of falsification in computational cognitive modeling. Trends in Cognitive Sciences, 21(6), 425–433. https://doi.org/10.1016/j.tics.2017.03.011
 - Rausch, M., Hellmann, S., & Zehetleitner, M. (2018). Confidence in masked orientation judgments is informed by both evidence and visibility. Attention, Perception, and Psychophysics, 80(1), 134–154. https://doi.org/10.3758/s13414-017-1431-5
 - Rausch, M., & Zehetleitner, M. (2017). Should metacognition be measured by logistic regression? Consciousness and Cognition, 49, 291–312. https://doi.org/10.1016/j.concog.2017.02.007
-- Rigoux, L., Stephan, K. E., Friston, K. J., & Daunizeau, J. (2014). Bayesian model selection for group studies - revisited. \emph{NeuroImage}, 84, 971–985. https://doi.org/10.1016/j.neuroimage.2013.08.065
 - Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive Inefficiency in Perceptual Decision Making. Psychological Review, 128(1), 45–70. https://doi.org/10.1037/rev0000249
 - Shekhar, M., & Rahnev, D. (2024). How Do Humans Give Conﬁdence? A Comprehensive Comparison of Process Models of Perceptual Metacognition. Journal of Experimental Psychology: General, 153(3), 656–688. https://doi.org/10.1037/xge0001524
 

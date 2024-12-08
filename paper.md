@@ -1,6 +1,5 @@
 ---
-title: 'statConfR: An R Package for Static Models of Decision Confidence and Measures
-  of Metacognition'
+title: 'statConfR: An R Package for Static Models of Decision Confidence and Metacognition'
 tags:
 - Cognitive modelling
 - R code
@@ -42,9 +41,10 @@ affiliations:
   
 # Summary
   
-We present the `statConfR` package for R, which allows researchers to conveniently 
-fit and compare nine different static models of decision confidence for 
-binary discrimination tasks with confidence ratings: 
+We present the `statConfR` package for R, which allows researchers to model binary
+discrimination responses and confidence ratings. For this purpose, includes functions to conveniently 
+fit nine different static models of decision confidence:
+
 - the signal detection rating model [@Green1966], 
 - the Gaussian noise model [@Maniscalco2016], 
 - the independent Gaussian model [@Rausch2017], 
@@ -54,20 +54,19 @@ binary discrimination tasks with confidence ratings:
 - the independent truncated Gaussian model [@rausch_measures_2023] based on the model specification 
 used for the original meta-d$^\prime$/d$^\prime$ method [@Maniscalco2012; @Maniscalco2014], and 
 - the independent truncated Gaussian model based on the model specification of Hmetad [@Fleming2017a]. 
-Bayesian model selection on the group level is performed using a fixed effects model 
-(i.e. assuming that data from each subject was caused by the same generative model) and a 
-and a Dirichelet random-effects model (which assumes that different generative models may cause the data from different subjects), 
-as proposed by @Rigoux2014 and @daunizeau_vba_2014. 
 
-In addition, the `statConfR` package provides functions for estimating different 
-kinds of measures of metacognition: 
+In addition, the `statConfR` package provides functions for estimating different
+measures of metacognitive sensitivity (i.e. the degree to which humans are able to
+differentiate between correct and incorrect trials) and metacognitive efficiency (i.e. metacognitive sensitivity in 
+relation to the ability to perform the task): 
+
 - meta-d$^\prime$/d$^\prime$, the most widely-used measure of metacognitive efficiency, allowing both @Maniscalco2012's and @Fleming2017a's model specification, 
 - Information-theoretic measures [@dayan_metacognitive_2023], including
+
   - meta-I, an information-theoretic measures of metacognitive sensitivity, 
   - $meta-I_{1}^{r}$ and $meta-I_{2}^{r}$, two measures of metacognitive efficiency proposed by @dayan_metacognitive_2023, 
   - RMI, a novel measure of metacognitive accuracy, also derived from information theory.  
 Finally, the `statConfR` package includes an example data set previously published in @hellmann_simultaneous_2023, with which the functions can be  tested. 
-The `statConfR` reference manual provides documentation of each function of the latest release (https://cran.r-project.org/web/packages/statConfR/statConfR.pdf). 
 
 # Statement of need
 

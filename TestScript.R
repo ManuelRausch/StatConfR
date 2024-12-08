@@ -35,6 +35,8 @@
 
 # 5. Visualize Model fit
 
+# 6) Bayesian model selection
+
 # 0) Preparations
 
 rm(list=ls())
@@ -382,8 +384,8 @@ PlotFitITGc <- plotConfModelFit(MaskOri, fitted_pars, model="ITGc")
 PlotFitIG <- plotConfModelFit(MaskOri, fitted_pars, model="IG")
 PlotFitPDA <- plotConfModelFit(MaskOri, fitted_pars, model="PDA")
 
-test <- group_BMS_fits(fitted_pars)
-group_BMS(fitted_pars)
+# 6) Bayesian model selection
+
 
 save(fitted_pars, PlotFitsBICWeights,
      recov_pars_SDT, Plot_recov_SDT,
@@ -409,6 +411,7 @@ save(fitted_pars, PlotFitsBICWeights,
      PlotFitITGc,
      PlotFitIG,
      PlotFitPDA ,
+
 
      file = "TestResults.RData")
 

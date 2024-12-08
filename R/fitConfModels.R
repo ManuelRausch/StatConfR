@@ -328,21 +328,6 @@ fitConfModels <- function(data, models="all",
   # bind list-outout together into data.frame
   res <- do.call(rbind, res)
 
-  if ("all" %in% models | length(models) > 1){
-    res$wAIC <- NA
-    res$wAICc <- NA
-    res$wBIC <- NA
-    for (sbj in subjects){
-      Ls <- exp(-0.5 * (res$AIC[res$participant==sbj]  - min(res$AIC[res$participant==sbj])))
-      res$wAIC[res$participant==sbj] <- Ls / sum(Ls)
-      Ls <- exp(-0.5 * (res$AICc[res$participant==sbj]  - min(res$AICc[res$participant==sbj])))
-      res$wAICc[res$participant==sbj] <- Ls / sum(Ls)
-      Ls <- exp(-0.5 * (res$BIC[res$participant==sbj]  - min(res$BIC[res$participant==sbj])))
-      res$wBIC[res$participant==sbj] <- Ls / sum(Ls)
-    }
-  }
-
-
   # finally, drop columns with unnecessary parameters
   res <- res[,apply(res, 2, function(X) any(!is.na(X)))]
   if (no_sbj_column) res$participant <- NULL

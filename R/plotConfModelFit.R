@@ -1,4 +1,4 @@
-#' @title Plot the prediction of fitted parameters of one model of confidence over the corresponding real data
+#' @title Plot the prediction of fitted parameters of one model of confidence over the corresponding  data
 #'
 #' @description The `plotConfModelFit` function plots the predicted distribution of discrimination responses
 #' and confidence ratings created from a `data.frame` of parameters obtaind from \code{\link{fitConfModels}}
@@ -25,38 +25,25 @@
 #' If there is no model column in data or if there are multiple models in fitted_pars,
 #' it is necessary to specify the model argument.
 #'
-#' @param model `character`. See \code{\link{fitConf}} for all available models
+#' @param model `character`. See \code{\link{fitConfModels}} for all available models
 #'
-#' @return a `data.frame` with one row for each combination of model and
-#' participant. There are different columns for the model, the participant ID, and one
-#' one column for each estimated model parameter (parameters
-#' not present in a specific model are filled with NAs)
+#' @return a `ggplot` object with empirically observed distribution of responses and confidence ratings
+#'  as bars on the x-axis as a function of discriminability (in the rows) and stimulus
+#'  (in the columns). Superimposed on the empirical data,
+#'  the plot also shows the prediction of one selected model as dots.
 #'
 #' @examples
-#' # 1. Select two subjects from the masked orientation discrimination experiment
-#' data <- subset(MaskOri, participant %in% c(1:2))
-#' head(data)
+#' # 1. Fit some models to each subject of the masked orientation discrimination experiment
+#'   # Normally, the fits should be created using the function fitConfModels
+#'   # Fits <- fitConfModels(data, models = "WEV", .parallel = TRUE)
+#'   # Here, we create a dummy dataframe because fitting models takes about 10 minutes per model fit per participant on a 2.8GHz processor
 #'
-#' # 2. Fit some models to each subject of the masked orientation discrimination experiment
-#' \donttest{
-#'   # Fitting several models to several subjects takes quite some time
-#'   # (about 10 minutes per model fit per participant on a 2.8GHz processor
-#'   # with the default values of nInits and nRestart).
-#'   # If you want to fit more than just two subjects,
-#'   # we strongly recommend setting .parallel=TRUE
-#'   Fits <- fitConfModels(data, models = "ITGc", .parallel = FALSE)
-#' }
-#' # 3. Plot the predicted probabilies based on model and fitted parameter over the observed relative frequencies.
 #'
-#' \donttest{
-#'   # Fitting several models to several subjects takes quite some time
-#'   # (about 10 minutes per model fit per participant on a 2.8GHz processor
-#'   # with the default values of nInits and nRestart).
-#'   # If you want to fit more than just two subjects,
-#'   # we strongly recommend setting .parallel=TRUE
-#'   myPlottedFit <- plotConfModelFit(data, Fits)
-#'   myPlottedFit
-#' }
+#' # 2. Plot the predicted probabilies based on model and fitted parameter over the observed relative frequencies.
+#'
+#'   PlotFitWEV <- plotConfModelFit(MaskOri, fitted_pars, model="WEV")
+#'   PlotFitWEV
+#'
 #' @import ggplot2
 #' @importFrom plyr ddply summarise
 #' @importFrom Rmisc summarySEwithin

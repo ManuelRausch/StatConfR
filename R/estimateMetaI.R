@@ -36,7 +36,7 @@
 #'  Meta-\eqn{I} is expressed in bits, i.e. the log base is 2).
 #' The other measures are different normalizations of meta-\eqn{I} and are unitless.
 #' It should be noted that Dayan (2023) pointed out that a liberal or
-#' conservative use of the confidence levels will affected th mutual
+#' conservative use of the confidence levels will affected the mutual
 #' information and thus influence meta-I.
 #'
 #' @param data  a `data.frame` where each row is one trial, containing following
@@ -57,11 +57,13 @@
 #'  (default: TRUE).
 
 #' @return a `data.frame` with one row for each subject and the following
-#' columns: `participant` is the participant ID, `meta_I` is the estimated
-#' meta-\eqn{I} value (expressed in bits, i.e. log base is
-#'  2), `meta_Ir1` is meta-\eqn{I_{1}^{r}}, `meta_Ir1_acc` is meta-\eqn{I_{1}^{r\prime}},
-#'  `meta_Ir2` is meta-\eqn{I_{2}^{r}}, and RMI is RMI.
-#' with , or unitless for the normalized measures)
+#' columns:
+#' * `participant` is the participant ID,
+#' * `meta_I` is the estimated meta-\eqn{I} value (expressed in bits, i.e. log base is 2),
+#' * `meta_Ir1` is meta-\eqn{I_{1}^{r}},
+#' * `meta_Ir1_acc` is meta-\eqn{I_{1}^{r\prime}},
+#' * `meta_Ir2` is meta-\eqn{I_{2}^{r}}, and
+#' * `RMI` is RMI.
 
 #' @examples
 #' # 1. Select two subjects from the masked orientation discrimination experiment
