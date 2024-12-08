@@ -43,7 +43,7 @@ kinds of measures of metacognition:
   - meta-$I_{1}^{r\prime}$, a novel variant of $meta-I_{1}^{r}$,
   - RMI, a novel measure of metacognitive accuracy, also derived from information theory.  
   
-## Mathematical description of implemented generative models of confidence
+# Mathematical description of implemented generative models of confidence
 The models included in the statConfR package are all based on signal detection theory (Green & Swets, 1966). 
 It is assumed that participants select a binary discrimination response $R$ about a stimulus $S$.
 Both $S$ and $R$ can be either -1 or 1. $R$ is considered correct if $S=R$.
@@ -66,19 +66,19 @@ The following parameters are shared between all models:
 - confidence criterion $\theta_{-1,1}, ..., \theta_{-1,L-1}, 
 \theta_{1,1},  ,...,\theta_{1,L-1}$ ($L$: number of confidence categories available for confidence ratings).
 
-### Signal detection rating model (SDT)
+## Signal detection rating model (SDT)
 According to SDT, the same sample of sensory evidence is used to generate response and confidence, i.e.,
 $y=x$. The confidence criteria associated with $R=-1$ are more negative than the 
 decision criterion $c$, whereas the confidence criteria associated with $R=1$ are more positive than $c$.
 
-### Gaussian noise model (GN)
+## Gaussian noise model (GN)
 Conceptually, the Gaussian noise model reflects the idea that confidence is informed by the same sensory evidence
 as the task decision, but confidence is affected by additive Gaussian noise.
 According to GN, $y$ is subject to additive noise and assumed to be normally distributed
 around the decision evidence value $x$ with a standard deviation $\sigma$, 
 which is an additional free parameter.
 
-### Weighted evidence and visibility model (WEV)
+## Weighted evidence and visibility model (WEV)
 Conceptually, the WEV model reflects the idea that the observer combines evidence about decision-relevant features 
 of the stimulus with the strength of evidence about choice-irrelevant features 
 to generate confidence. For this purpose, WEV assumes that $y$ is normally 
@@ -89,14 +89,14 @@ The parameter $w$ represents the weight that is put on the choice-irrelevant
 features in the confidence judgment. The parameters $w$ and $\sigma$ are free parameters in
 addition to the set of shared parameters.
 
-### Post-decisional accumulation model (PDA)
+## Post-decisional accumulation model (PDA)
 PDA represents the idea of on-going information accumulation after the
 discrimination choice. The parameter $a$ indicates the amount of additional
 accumulation. The confidence variable is normally distributed with mean
 $x+S\times d_k\times a$ and variance $a$. The parameter $a$ is fitted in addition to the shared
 parameters.
 
-### Independent Gaussian model (IG)
+## Independent Gaussian model (IG)
 According to IG, the information used for confidence judgments is generated independently from the sensory evidence used for the task decision. 
 For this purpose, it is assumed that $y$ is sampled independently from $x$. 
 The variable $y$ is normally distributed with a mean of $a\times d_k$ and variance
@@ -104,7 +104,7 @@ of 1. The additional parameter $m$ represents the amount of information availabl
 relative to amount of evidence available for the discrimination decision and can 
 be smaller as well as greater than 1.
 
-### Independent truncated Gaussian model: HMetad-Version (ITGc)
+## Independent truncated Gaussian model: HMetad-Version (ITGc)
 Conceptually, the two ITG models just as IG are based on the idea that the information used for confidence judgments is generated independently from the sensory evidence used for the task decision. However, in contrast to IG,  the two ITG models also reflect a form of confirmation bias in so far as 
 it is not possible to collect information that contradicts the original decision. 
 According to the version of ITG consistent with the HMetad-method 
@@ -119,7 +119,7 @@ i.e., the amount of information available for confidence judgments relative to
 amount of evidence available for discrimination decisions and  can be smaller
 as well as greater than 1.
 
-### Independent truncated Gaussian model: Meta-d'-Version (ITGcm)
+## Independent truncated Gaussian model: Meta-d'-Version (ITGcm)
 According to the version of the ITG consistent with the original meta-d' 
 method (Maniscalco & Lau, 2012, 2014),
 $y$ is sampled independently from $x$ from a truncated Gaussian distribution with a location parameter
@@ -130,7 +130,7 @@ represents metacognitive efficiency, i.e., the amount of information available f
 amount of evidence available for the discrimination decision and  can be smaller
 as well as greater than 1.
 
-### Logistic noise model (logN)
+## Logistic noise model (logN)
 According to logN, the same sample of sensory evidence is used to generate response and confidence, i.e.,
 $y=x$ just as in SDT. However, according to logN, the confidence criteria
 are not assumed to be constant, but instead they are affected by noise drawn from
@@ -147,7 +147,7 @@ as free parameters. Instead, we estimate the means of the confidence criteria, i
 \mu_{\theta_{-1,L-1}}, \mu_{\theta_{1,1}}, ...  \mu_{\theta_{1,L-1}}$,
 as free parameters.
 
-### Logistic weighted evidence and visibility model (logWEV)
+## Logistic weighted evidence and visibility model (logWEV)
 The logWEV model is a combination of logN and WEV proposed by .
 Conceptually, logWEV assumes that the observer combines evidence about decision-relevant features of the stimulus with the strength of evidence about choice-irrelevant features. The model also assumes that noise affecting the confidence decision variable is lognormal.
 According to logWEV, the confidence decision variable is $y$ is equal to
@@ -156,12 +156,12 @@ contributing to confidence judgments but not to the discrimination judgments.
 The parameter $w$ represents the weight that is put on the choice-irrelevant
 features in the confidence judgment. The parameters $w$ and $\sigma$ are free parameters. 
 
-## Measures of metacognition
+# Measures of metacognition
 
-### meta-d$^\prime$/d$^\prime$
+## meta-d$^\prime$/d$^\prime$
 The conceptual idea of meta-d$^\prime$ is to quantify metacognition in terms of sensitivity in a hypothetical signal detection rating model describing the primary task, under the assumption that participants had perfect access to the sensory evidence and were perfectly consistent in placing their confidence criteria (Maniscalco & Lau, 2012, 2014). Using a signal detection model describing the primary task to quantify metacognition, it allows a direct comparison between metacognitive accuracy and discrimination performance because both are measured on the same scale.  Meta-d$^\prime$ can be compared against the estimate of the distance between the two stimulus distributions estimated from discrimination responses, which is referred to as d$^\prime$: If meta-$^\prime$ equals d$^\prime$, it means that metacognitive accuracy is exactly as good as expected from discrimination performance. If meta-d$^\prime$ is lower than d$^\prime$, it means that metacognitive accuracy is not optimal. It can be shown that the implicit model of confidence underlying the meta-d$^\prime$/d$^\prime$ method is identical to different versions of the independent truncated Gaussian model (Rausch et al., 2023), depending on whether the original model specification by Maniscalco and Lau (2012) or alternatively the specification by Fleming (2017) is used. We strongly recommend to test whether the independent truncated Gaussian models are adequate descriptions of the data before quantifying metacognitive efficiency with meta-d$^\prime$/d$^\prime$ (see Rausch et al., 2023). 
 
-### Information-theoretic measures of metacognition
+## Information-theoretic measures of metacognition
 
 It is assumed that a classifier (possibly a human being performing a discrimination task) or an algorithmic classifier in a classification application, makes a binary prediction $R$ about a true state of the world $S$. 
 Dayan (2023) proposed several measures of metacognition based on quantities of information theory (for an introduction into information theory, see MacKay, 2003; Cover & Thomas, 2006). 
@@ -195,7 +195,7 @@ stimulus-response combinations are taken as the underlying probability
 distribution. From this, Monte-Carlo simulations are conducted to estimate
 and subtract the bias from these measures. Note that the bias is only reduced but not removed completely.
 
-## Installation
+# Installation
 
 The latest released version of the package is available on CRAN via
 
@@ -212,9 +212,9 @@ and install from GitHub:
 devtools::install_github("ManuelRausch/StatConfR")
 ```
 
-## Usage 
+# Usage 
 
-### Example data set
+## Example data set
 
 The package includes a demo data set from a masked orientation
 discrimination task with confidence judgments (Hellmann et al., 2023,
@@ -226,7 +226,7 @@ data("MaskOri")
 head(MaskOri)
 ```
 
-### Fitting models of confidence and decision making to individual subjects
+## Fitting models of confidence and decision making to individual subjects
 
 The function `fitConfModels` allows the user to fit several confidence
 models separately to the data of each participant using maximum likelihood estimation. 
@@ -243,7 +243,9 @@ The data should be provided via the argument `.data` in the form of a data.frame
 -   participant (integer): giving the subject ID.
 The argument `model` is used to specify which model should be fitted, with 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'ITGcm', 'logN', and 'logWEV' as available options. If model="all" (default), all implemented models will be fit, although this may take a while. 
 
-Setting the optional argument `.parallel=TRUE` parallizes model fitting over all but 1 available core. Note that the fitting procedure takes may take a considerable amount of time, especially when there are multiple models, several difficulty conditions, and/or multiple confidence categories.  For example, if there are five difficulty conditions and five confidence levels, fitting the WEV model to one single participant may take 20-30 minutes on a 2.8GHz CPU. We recommend parallelization to keep the required time tolerable. 
+Setting the optional argument `.parallel=TRUE` parallizes model fitting over all but 1 available core. __Note that the fitting procedure takes may take a considerable amount of time__, especially when there are multiple models, several difficulty conditions, and/or multiple confidence categories.  For example, if there are five difficulty conditions and five confidence levels, fitting the WEV model to one single participant may take 20-30 minutes on a 2.8GHz CPU. We recommend parallelization to keep the required time tolerable. 
+
+The fitting routine first performs a coarse grid search to find promising starting values for the maximum likelihood optimization procedure. Then the best `nInits` parameter sets found by the grid search are used as the initial values for separate runs of the Nelder-Mead algorithm implemented in optim (default: 5). Each run is restarted `nRestart` times (default: 4). 
 
 ```{r}     
 fitted_pars <- fitConfModels(MaskOri, models=c("ITGcm", "WEV"), .parallel = TRUE) 
@@ -257,9 +259,9 @@ head(fitted_pars)
 ```
 
 
-### Visualization of model fits
+## Visualization of model fits
 
-After obtaining the model fit, it is strongly recommended to visualise the predictions implied by the best-fitting set of parameters and compare these predictions with the actual data (Palminteri et al., 2017). The `statConfR` package provides the function `plotConfModelFit`, which creates a `ggplot` object with empirically observed distribution of responses and confidence ratings as bars on the x-axis as a function of discriminability (in the rows) and stimulus (in the columns). Superimposed on the empirical data, the plot also shows the prediction of one selected model as dots. The parameters of the model are passed to `plotConfModelFit' by the argument `fitted_pars`. 
+After obtaining the model fit, it is strongly recommended to visualise the predictions implied by the best-fitting set of parameters and compare these predictions with the actual data (Palminteri et al., 2017). The `statConfR` package provides the function `plotConfModelFit`, which creates a `ggplot` object with empirically observed distribution of responses and confidence ratings as bars on the x-axis as a function of discriminability (in the rows) and stimulus (in the columns). Superimposed on the empirical data, the plot also shows the prediction of one selected model as dots. The parameters of the model are passed to `plotConfModelFit` by the argument `fitted_pars`. 
 
 <!-- Show and execute the code, but stop R from yapping!  -->
 
@@ -278,7 +280,7 @@ PlotFitITGcm
 ```
 
 
-### Estimating measures of metacognition
+## Estimating measures of metacognition
 
 Assuming that the independent truncated Gaussian model provides a decent account of the data (notably, this is not the case in the demo data set), the function `fitMetaDprime` can be used to estimate meta-d$^\prime$/d$^\prime$ independently for each subject. The arguments `.data` and `.parallel=TRUE` work just in the same way the arguments of `fitConfModels`. The argument `model` offers the user the choice between two model specifications, either "ML" to use the original model specification used by Maniscalco and Lau (2012, 2014) or "F" to use the model specification by Fleming (2017)'s Hmetad method. The function `fitMetaDprime` produces a dataframe with one row for each participant and the following columns: 
 
@@ -296,7 +298,8 @@ head(MetaDs)
 Information-theoretic measures of metacognition can be obtained by the function `estimateMetaI`. It expects the same kind of data.frame as `fitMetaDprime` and `fitConfModels`, returning a dataframe with one row for each participant and the following columns: 
 
 - `participant`: the participant id, 
-- `meta_I` is the estimated meta-I value (expressed in bits, i.e. log base is 2), - `meta_Ir1` is meta-$I_{1}^{r}$, 
+- `meta_I` is the estimated meta-I value (expressed in bits, i.e. log base is 2), 
+- `meta_Ir1` is meta-$I_{1}^{r}$, 
 - `meta_Ir1_acc` is meta-$I_{1}^{r\prime}$,
 - `meta_Ir2` is meta-$I_{2}^{r}$, and 
 - `RMI` is RMI.
@@ -311,15 +314,14 @@ All information-theoretic measures can be calculated with a bias-reduced variant
 metaIMeasures <- estimateMetaI(data = MaskOri, bias_reduction = TRUE)
 ```
 
-### Documentation
+# Documentation
 
 After installation, the documentation of each function of `statConfR` can be accessed by typing *?functionname* into the console. 
 
-## Contributing to the package 
-The package is under active development. We are planning to implement new models of decision confidence when they are published. Please feel free to [contac us](malto::manuel.rausch@hochschule-rhein-waal.de) to suggest new models to implement in the package, or to volunteer adding additional models. 
-
-### Instruction for implementing custom models of decision confidence 
-__Only recommended for users with experience in cognitive modelling!__
+# Contributing to the package 
+The package is under active development. We are planning to implement new models of decision confidence when they are published. Please feel free to [contact us](mailto:manuel.rausch@hochschule-rhein-waal.de) to suggest new models to implement in the package, or to volunteer adding additional models. 
+ 
+__Implementing custom models of decision confidence is only recommended for users with experience in cognitive modelling!__
 For readers who want to use our open code to implement models of confidence themselves, the following steps need to be taken: 
 
 - Derive the likelihood of a binary response ($R=-1, 1$) and a specific level of confidence ($C=1,...K$) according to the custom model and a set of parameters, given the binary stimulus ($S=-1, 1$), i.e. $P(R, C | S)$. 
@@ -333,15 +335,14 @@ For readers who want to use our open code to implement models of confidence them
 - Add your model and fitting-functions to the high-level functions `fitConf` and `fitConfModels`. 
 - Add a simulation function in the file 'int_simulateConf.R' which uses the same structure as the other functions but adapt the likelihood of the responses.
   
-
-## Contact
+# Contact
 
 For comments, bug reports, and feature suggestions please feel free to write to either
 [manuel.rausch@hochschule-rhein-waal.de](mailto:manuel.rausch@hochschule-rhein-waal.de)
 or [sebastian.hellmann\@ku.de](mailto:sebastian.hellmann@ku.de)
 or [submit an issue](https://github.com/ManuelRausch/StatConfR/issues).
 
-## References
+# References
 - Cover, T. M., & Thomas, J. A. (2006). Elements of information theory. 2nd edition. Wiley.
 - Dayan, P. (2023). Metacognitive Information Theory. Open Mind, 7, 392–411. https://doi.org/10.1162/opmi_a_00091
 - Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, 1, 1–14. https://doi.org/10.1093/nc/nix007
