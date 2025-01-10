@@ -122,7 +122,7 @@ or [submit an issue](https://github.com/ManuelRausch/StatConfR/issues).
 
 # Acknowledgements
     
-This research was in part supported by grants RA2988/3-1, RA2988/4-1, and CRC 1233 (project 276693517) by the Deutsche Forschungsgemeinschaft. The funders had no role in software design, decision to publish, or preparation of the manuscript. Author contributions: Manuel Rausch: Conceptualization, Data curation, Funding acquisition, Software, Validation, Writing - original draft. Sascha Meyen: Software. Sebastian Hellmann: Conceptualization, Software, Writing - review and editing.
+This research was in part supported by grants RA2988/3-1, RA2988/4-1, and SFB 1233, Robust Vision: Inference Principles and Neural Mechanisms (TP C1, project number: 276693517) by the Deutsche Forschungsgemeinschaft. The funders had no role in software design, decision to publish, or preparation of the manuscript. Author contributions: Manuel Rausch: Conceptualization, Data curation, Funding acquisition, Software, Validation, Writing - original draft. Sascha Meyen: Software. Sebastian Hellmann: Conceptualization, Software, Writing - review and editing.
 All participants who contributed to the data set provided written consent for participating in the experiment and for publishing their anonymized data in scientific repositories. The prodecure was approved by the Ethics Committee of the Katholische Universität Eichstätt-Ingolstadt. 
 
 # References
