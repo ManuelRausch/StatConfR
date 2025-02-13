@@ -294,10 +294,7 @@ Bias reduction for participant  2  (speed up with 'bias_reduction = FALSE')
 > 
 >   PlotFitWEV <- plotConfModelFit(MaskOri, pars, model="WEV")
 Automatically converting the following non-factors to factors: rating
-Warning in qt(conf.interval/2 + 0.5, datac$N - 1) : NaNs produced
 >   PlotFitWEV
-Warning: Removed 100 rows containing missing values or values outside the scale range
-(`geom_bar()`).
 > 
 > 
 > 
@@ -333,7 +330,7 @@ Warning: Removed 100 rows containing missing values or values outside the scale 
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  651.43 4.98 657.85 NA NA 
+Time elapsed:  637.85 16.91 656.86 NA NA 
 > grDevices::dev.off()
 null device 
           1 

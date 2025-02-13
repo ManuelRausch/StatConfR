@@ -25,11 +25,11 @@ Date/Publication: 2023-09-12
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
-Packaged: 2025-02-12 22:03:04 UTC; PPA714
+Packaged: 2025-02-13 10:34:06 UTC; PPA714
 Repository: CRAN
 Roxygen: list(old_usage = TRUE, markdown=TRUE)
 RoxygenNote: 7.3.2
 Author: Manuel Rausch [aut, cre] (<https://orcid.org/0000-0002-5805-5544>),
   Sascha Meyen [aut] (<https://orcid.org/0000-0001-6928-4126>),
   Sebastian Hellmann [aut] (<https://orcid.org/0000-0002-3621-6343>)
-Built: R 4.4.2; ; 2025-02-12 22:26:28 UTC; windows
+Built: R 4.4.2; ; 2025-02-13 10:36:49 UTC; windows

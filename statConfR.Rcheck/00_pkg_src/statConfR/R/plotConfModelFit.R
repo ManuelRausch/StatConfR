@@ -128,16 +128,30 @@ plotConfModelFit <- function(data, fitted_pars, model = NULL){
 
   # 1. First aggregate on the level of subjects
 
-  AggDist <-
-    plyr::ddply(data,
-                ~  diffCond * rating *
-                  stimulus * correct * participant, #,
-                plyr::summarise,
-                p = length(.data$rating),  .drop=FALSE)
+  # AggDist <-
+  #   plyr::ddply(data,
+  #               ~  diffCond * rating *
+  #                 stimulus * correct * participant, #,
+  #               plyr::summarise,
+  #               p = length(rating),  .drop=FALSE)
 
-  AggDist <- plyr::ddply(AggDist, ~
-                           diffCond * stimulus * participant,
-                         transform, N = sum(.data$p))
+  AggDist <- plyr::ddply(data,
+                         ~  diffCond * rating * stimulus * correct * participant,
+                         function(df) {
+                           data.frame(p = length(df$rating))
+                         },
+                         .drop = FALSE)
+
+  # AggDist <- plyr::ddply(AggDist, ~
+  #                          diffCond * stimulus * participant,
+  #                        transform, N = sum(.data$p))
+  #
+  AggDist <- plyr::ddply(AggDist,
+                         ~ diffCond * stimulus * participant,
+                         function(df) {
+                           df$N <- sum(df$p)    # equivalent to transform without needingto scop
+                           df
+                         })
   AggDist$p <- AggDist$p / AggDist$N
 
 

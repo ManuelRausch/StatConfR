@@ -75,7 +75,7 @@
 #' # 2. Plot the predicted probabilities based on model and fitted parameters
 #'   # against the observed relative frequencies.
 #'
-#'   - pa
+#'   PlotFitWEV <- plotConfModelFit(MaskOri, pars, model="WEV")
 #'   PlotFitWEV
 #'
 #' @import ggplot2

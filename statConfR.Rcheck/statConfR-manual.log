@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2025.2.11)  12 FEB 2025 23:38
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2025.2.11)  13 FEB 2025 11:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**C:/Users/PPA714/AppData/Local/Temp/RtmpGOUvdE/Rd2pdf3d506a176709/Rd2.tex
-(C:/Users/PPA714/AppData/Local/Temp/RtmpGOUvdE/Rd2pdf3d506a176709/Rd2.tex
+**C:/Users/PPA714/AppData/Local/Temp/RtmpGspVHI/Rd2pdf47105b81f70/Rd2.tex
+(C:/Users/PPA714/AppData/Local/Temp/RtmpGspVHI/Rd2pdf47105b81f70/Rd2.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 
@@ -670,12 +670,12 @@ Package rerunfilecheck Info: File `Rd2.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  10738 strings out of 473530
- 163961 string characters out of 5714310
+ 163950 string characters out of 5714310
  564161 words of memory out of 5000000
  33697 multiletter control sequences out of 15000+600000
  592704 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 92i,6n,95p,415b,733s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 92i,6n,95p,414b,733s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 pdfTeX warning (dest): name{Rfn.optim} has been referenced but does not exist, 
 replaced by a fixed one
@@ -693,7 +693,7 @@ Users/PPA714/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:
 :/Users/PPA714/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><
 C:/Users/PPA714/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb
 >
-Output written on Rd2.pdf (19 pages, 228361 bytes).
+Output written on Rd2.pdf (19 pages, 228360 bytes).
 PDF statistics:
  292 PDF objects out of 1000 (max. 8388607)
  88 named destinations out of 1000 (max. 500000)

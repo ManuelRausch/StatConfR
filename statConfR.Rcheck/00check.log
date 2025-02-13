@@ -11,7 +11,7 @@
 * checking extension type ... Package
 * this is package 'statConfR' version '0.2.0'
 * package encoding: UTF-8
-* checking CRAN incoming feasibility ... [25s] Note_to_CRAN_maintainers
+* checking CRAN incoming feasibility ... Note_to_CRAN_maintainers
 Maintainer: 'Manuel Rausch <manuel.rausch@hochschule-rhein-waal.de>'
 * checking package namespace information ... OK
 * checking package dependencies ... OK
@@ -26,7 +26,9 @@ Maintainer: 'Manuel Rausch <manuel.rausch@hochschule-rhein-waal.de>'
 * checking for future file timestamps ... NOTE
 unable to verify current time
 * checking DESCRIPTION meta-information ... OK
-* checking top-level files ... OK
+* checking top-level files ... NOTE
+Non-standard file/directory found at top level:
+  'StatConfR.pdf'
 * checking for left-over files ... OK
 * checking index information ... OK
 * checking package subdirectories ... OK
@@ -43,7 +45,7 @@ unable to verify current time
 * checking S3 generic/method consistency ... OK
 * checking replacement functions ... OK
 * checking foreign function calls ... OK
-* checking R code for possible problems ... [11s] OK
+* checking R code for possible problems ... [10s] OK
 * checking Rd files ... OK
 * checking Rd metadata ... OK
 * checking Rd line widths ... OK
@@ -64,4 +66,4 @@ unable to verify current time
 * checking for non-standard things in the check directory ... OK
 * checking for detritus in the temp directory ... OK
 * DONE
-Status: 1 NOTE
+Status: 2 NOTEs

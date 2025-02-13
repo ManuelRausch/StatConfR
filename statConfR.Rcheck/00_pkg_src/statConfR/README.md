@@ -424,9 +424,6 @@ PlotFitITGcm <- plotConfModelFit(MaskOri, fitted_pars, model="ITGcm")
 PlotFitWEV
 ```
 
-    ## Warning: Removed 100 rows containing missing values or values outside the scale range
-    ## (`geom_bar()`).
-
 <figure>
 <img src="README_files/figure-gfm/unnamed-chunk-5-1.png"
 alt="Observed distribution of accuracy and responses as a function of discriminability and stimulus vs. prediction by the weighted evidence and visibility model" />
@@ -438,9 +435,6 @@ by the weighted evidence and visibility model</figcaption>
 ``` r
 PlotFitITGcm
 ```
-
-    ## Warning: Removed 100 rows containing missing values or values outside the scale range
-    ## (`geom_bar()`).
 
 <figure>
 <img src="README_files/figure-gfm/unnamed-chunk-6-1.png"
