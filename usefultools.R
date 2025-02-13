@@ -19,3 +19,6 @@ system("R CMD Rd2pdf C:/Users/PPA714/KU2/Projekte/StatConfR/StatConfR")
 # it is much more critical than regular check!
 system("R CMD check --as-cran ../statConfR_0.2.0.tar.gz")
 
+# check on Rhub
+rhub::rhub_setup()
+rhub::rhub_doctor()
