@@ -19,17 +19,17 @@ Description: Provides fitting functions and other tools for decision confidence
 License: GPL(>=3)
 URL: https://github.com/ManuelRausch/StatConfR
 BugReports: https://github.com/ManuelRausch/StatConfR/issues
-Depends: R (>= 4.0)
+Depends: R (>= 4.1.0)
 Imports: parallel, plyr, stats, utils, ggplot2, Rmisc
 Date/Publication: 2023-09-12
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
-Packaged: 2025-02-13 13:05:16 UTC; PPA714
+Packaged: 2025-02-13 13:50:54 UTC; PPA714
 Repository: CRAN
 Roxygen: list(old_usage = TRUE, markdown=TRUE)
 RoxygenNote: 7.3.2
 Author: Manuel Rausch [aut, cre] (<https://orcid.org/0000-0002-5805-5544>),
   Sascha Meyen [aut] (<https://orcid.org/0000-0001-6928-4126>),
   Sebastian Hellmann [aut] (<https://orcid.org/0000-0002-3621-6343>)
-Built: R 4.4.2; ; 2025-02-13 13:05:36 UTC; windows
+Built: R 4.4.2; ; 2025-02-13 13:53:12 UTC; windows
