@@ -8,7 +8,7 @@ tags:
 - metacognition
 - "meta-d′/d′"
 - metacognitive information thery
-date: "31 October 2024"
+date: "12 February 2025"
 output:
   pdf_document: default
   word_document: default
@@ -117,7 +117,7 @@ Thus, the static confidence models included in `statConfR` may still be useful f
 ## Contact
 
 For comments, bug reports, and feature suggestions please contact 
-<manuel.rausch@hochschule-rhein-waal.de> or <sebastian.hellmann@ku.de>
+<manuel.rausch@hochschule-rhein-waal.de> or <sebastian.hellmann@tum.de>
 or [submit an issue](https://github.com/ManuelRausch/StatConfR/issues).
 
 # Acknowledgements

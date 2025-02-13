@@ -2,33 +2,20 @@
 # auflisten, die beim Zusammenpacken und Installieren des Paketes nicht
 # beachtet werden sollen
 
-## Folgendes erzeugt aus den Rogyxen-Kommentaren in den Funktionen automatisch
+## devtools::document() erzeugt aus den Rogyxen-Kommentaren in den Funktionen automatisch
 ## die Hilfeseiten (im Ornder "man") und aktualisiert idR auch die NAMESPACE-Datei
 ## (die angibt, welche Funktionen innerhalb deines Paketes z.B. von anderen
 ## Paketen geladen werden und welche exportiert werden sollen)
 devtools::document()
 
-
+#
 devtools::build_manual()
 
-## Die Funktion läd alle Funktionen, die in deinem Paket drinne sind
-## (so dass du schauen kannst, wie die Funktionen unter der Haube arbeiten können)
-## (ruft glaube ich automatisch ein document() auf)
-devtools::load_all()
+urlchecker::url_check()
 
-#  Rhub hat viele Möglichkeiten das Paket zu testen. Das ist glaube ich aber
-#  nur wichtig, wenn man Source-Code verwendet, also C++ oder so
-rhub::check....
+system("R CMD Rd2pdf C:/Users/PPA714/KU2/Projekte/StatConfR/StatConfR")
 
-### Wichtige RStudio-Funktionen im "Build"-Panel
-# Install: Guess what, installiert das Paket wie jedes andere
-# Test: Ist was für später
-# Check: Schaut ob das Paket in Ordnung ist, d.h. ob alle Funktionen und Variablen,
-# die du innerhalb des Pakets verwendest auch definiert sind, ob du alle Argumente
-# und deren Verwendung dokumentiert hast usw. gibt dir dann übersichtlich
-# NOTES und ERRORs aus.
-cran_checks <- rhub::check_for_cran()
-cran_checks$cran_summary()
+# this is the most important check! If you get errors here, it won't work with cran!
+# it is much more critical than regular check!
+system("R CMD check --as-cran ../statConfR_0.2.0.tar.gz")
 
-
-system("R CMD Rd2pdf C:/Users/PPA714/KU2/Projekte/StatConfR")

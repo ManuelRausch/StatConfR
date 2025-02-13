@@ -1,7 +1,7 @@
 ---
 title: "README"
 author: "Manuel Rausch, Sascha Meyen, and Sebastian Hellmann"
-date: "2024-10-13"
+date: "2025-02-25"
 output:
   md_document:
     variant: gfm
@@ -339,22 +339,22 @@ For readers who want to use our open code to implement models of confidence them
 
 For comments, bug reports, and feature suggestions please feel free to write to either
 [manuel.rausch@hochschule-rhein-waal.de](mailto:manuel.rausch@hochschule-rhein-waal.de)
-or [sebastian.hellmann\@ku.de](mailto:sebastian.hellmann@ku.de)
+or [sebastian.hellmann\@tum.de](mailto:sebastian.hellmann@tum.de)
 or [submit an issue](https://github.com/ManuelRausch/StatConfR/issues).
 
 # References
 - Cover, T. M., & Thomas, J. A. (2006). Elements of information theory. 2nd edition. Wiley.
-- Dayan, P. (2023). Metacognitive Information Theory. Open Mind, 7, 392–411. https://doi.org/10.1162/opmi_a_00091
-- Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, 1, 1–14. https://doi.org/10.1093/nc/nix007
+- Dayan, P. (2023). Metacognitive Information Theory. Open Mind, 7, 392–411. doi:10.1162/opmi_a_00091
+- Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, 1, 1–14. doi:10.1093/nc/nix007
 - Green, D. M., & Swets, J. A. (1966). Signal detection theory and psychophysics. Wiley.
-- Hellmann, S., Zehetleitner, M., & Rausch, M. (2023). Simultaneous modeling of choice, confidence, and response time in visual perception. Psychological Review, 130(6), 1521–1543. https://doi.org/10.1037/rev0000411
-- Maniscalco, B., & Lau, H. (2012). A signal detection theoretic method for estimating metacognitive sensitivity from confidence ratings. Consciousness and Cognition, 21(1), 422–430. https://doi.org/10.1016/j.concog.2011.09.021
+- Hellmann, S., Zehetleitner, M., & Rausch, M. (2023). Simultaneous modeling of choice, confidence, and response time in visual perception. Psychological Review, 130(6), 1521–1543. doi:10.1037/rev0000411
+- Maniscalco, B., & Lau, H. (2012). A signal detection theoretic method for estimating metacognitive sensitivity from confidence ratings. Consciousness and Cognition, 21(1), 422–430. doi:10.1016/j.concog.2011.09.021
 - MacKay, D. J. (2003). Information theory, inference and learning algorithms. Cambridge University Press.
-- Maniscalco, B., & Lau, H. (2016). The signal processing architecture underlying subjective reports of sensory awareness. Neuroscience of Consciousness, 1, 1–17. https://doi.org/10.1093/nc/niw002
-- Maniscalco, B., & Lau, H. C. (2014). Signal Detection Theory Analysis of Type 1 and Type 2 Data: Meta-d, Response- Specific Meta-d, and the Unequal Variance SDT Model. In S. M. Fleming & C. D. Frith (Eds.), The Cognitive Neuroscience of Metacognition (pp. 25–66). Springer. https://doi.org/10.1007/978-3-642-45190-4_3
-- Palminteri, S., Wyart, V., & Koechlin, E. (2017). The importance of falsification in computational cognitive modeling. Trends in Cognitive Sciences, 21(6), 425–433. https://doi.org/10.1016/j.tics.2017.03.011
-- Rausch, M., Hellmann, S., & Zehetleitner, M. (2018). Confidence in masked orientation judgments is informed by both evidence and visibility. Attention, Perception, and Psychophysics, 80(1), 134–154. https://doi.org/10.3758/s13414-017-1431-5
-- Rausch, M., & Zehetleitner, M. (2017). Should metacognition be measured by logistic regression? Consciousness and Cognition, 49, 291–312. https://doi.org/10.1016/j.concog.2017.02.007
-- Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive Inefficiency in Perceptual Decision Making. Psychological Review, 128(1), 45–70. https://doi.org/10.1037/rev0000249
-- Shekhar, M., & Rahnev, D. (2024). How Do Humans Give Conﬁdence? A Comprehensive Comparison of Process Models of Perceptual Metacognition. Journal of Experimental Psychology: General, 153(3), 656–688. https://doi.org/10.1037/xge0001524
+- Maniscalco, B., & Lau, H. (2016). The signal processing architecture underlying subjective reports of sensory awareness. Neuroscience of Consciousness, 1, 1–17. doi:10.1093/nc/niw002
+- Maniscalco, B., & Lau, H. C. (2014). Signal Detection Theory Analysis of Type 1 and Type 2 Data: Meta-d, Response- Specific Meta-d, and the Unequal Variance SDT Model. In S. M. Fleming & C. D. Frith (Eds.), The Cognitive Neuroscience of Metacognition (pp. 25–66). Springer. doi:10.1007/978-3-642-45190-4_3
+- Palminteri, S., Wyart, V., & Koechlin, E. (2017). The importance of falsification in computational cognitive modeling. Trends in Cognitive Sciences, 21(6), 425–433. doi:10.1016/j.tics.2017.03.011
+- Rausch, M., Hellmann, S., & Zehetleitner, M. (2018). Confidence in masked orientation judgments is informed by both evidence and visibility. Attention, Perception, and Psychophysics, 80(1), 134–154. doi:10.3758/s13414-017-1431-5
+- Rausch, M., & Zehetleitner, M. (2017). Should metacognition be measured by logistic regression? Consciousness and Cognition, 49, 291–312. doi:10.1016/j.concog.2017.02.007
+- Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive Inefficiency in Perceptual Decision Making. Psychological Review, 128(1), 45–70. doi:10.1037/rev0000249
+- Shekhar, M., & Rahnev, D. (2024). How Do Humans Give Conﬁdence? A Comprehensive Comparison of Process Models of Perceptual Metacognition. Journal of Experimental Psychology: General, 153(3), 656–688. doi:10.1037/xge0001524
 

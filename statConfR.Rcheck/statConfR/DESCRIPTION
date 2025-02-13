@@ -1,0 +1,35 @@
+Package: statConfR
+Type: Package
+Title: Models of Decision Confidence and Measures of Metacognition
+Version: 0.2.0
+Date: 2025-02-11
+Authors@R: c(
+  person("Manuel", "Rausch", email = "manuel.rausch@hochschule-rhein-waal.de", 
+  role = c("aut", "cre"), comment = c(ORCID = "0000-0002-5805-5544")),
+    person("Sascha", "Meyen", email = "saschameyen@gmail.com", 
+    role = c("aut"), comment = c(ORCID = "0000-0001-6928-4126")),
+    person("Sebastian", "Hellmann", email = "sebastian.hellmann@tum.de", 
+    role = c("aut"), comment = c(ORCID = "0000-0002-3621-6343"))
+       )
+Maintainer: Manuel Rausch <manuel.rausch@hochschule-rhein-waal.de>
+Description: Provides fitting functions and other tools for decision confidence 
+    and metacognition researchers, including meta-d'/d', often considered to be 
+    the gold standard to measure metacognitive efficiency, and information-theoretic measures of metacognition. 
+    Also allows to fit several static models of decision making and confidence.
+License: GPL(>=3)
+URL: https://github.com/ManuelRausch/StatConfR
+BugReports: https://github.com/ManuelRausch/StatConfR/issues
+Depends: R (>= 4.0)
+Imports: parallel, plyr, stats, utils, ggplot2, Rmisc
+Date/Publication: 2023-09-12
+Encoding: UTF-8
+LazyData: true
+NeedsCompilation: no
+Packaged: 2025-02-12 22:03:04 UTC; PPA714
+Repository: CRAN
+Roxygen: list(old_usage = TRUE, markdown=TRUE)
+RoxygenNote: 7.3.2
+Author: Manuel Rausch [aut, cre] (<https://orcid.org/0000-0002-5805-5544>),
+  Sascha Meyen [aut] (<https://orcid.org/0000-0001-6928-4126>),
+  Sebastian Hellmann [aut] (<https://orcid.org/0000-0002-3621-6343>)
+Built: R 4.4.2; ; 2025-02-12 22:26:28 UTC; windows
