@@ -355,7 +355,7 @@ or [submit an issue](https://github.com/ManuelRausch/StatConfR/issues).
 - Palminteri, S., Wyart, V., & Koechlin, E. (2017). The importance of falsification in computational cognitive modeling. Trends in Cognitive Sciences, 21(6), 425–433. doi:10.1016/j.tics.2017.03.011
 - Rausch, M., Hellmann, S., & Zehetleitner, M. (2018). Confidence in masked orientation judgments is informed by both evidence and visibility. Attention, Perception, and Psychophysics, 80(1), 134–154. doi:10.3758/s13414-017-1431-5
 - Rausch, M., & Zehetleitner, M. (2017). Should metacognition be measured by logistic regression? Consciousness and Cognition, 49, 291–312. doi:10.1016/j.concog.2017.02.007
-- Rausch, M., Meyen, S. & Hellmann, S. (2025). statConfR: An R Package for Static Models of Decision Confidence and Metacognition. Journal of Open Source Software, 10(106), 6966. https://doi.org/10.21105/joss.06966
+- Rausch, M., Meyen, S. & Hellmann, S. (2025). statConfR: An R Package for Static Models of Decision Confidence and Metacognition. Journal of Open Source Software, 10(106), 6966. doi:10.21105/joss.06966
 - Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive Inefficiency in Perceptual Decision Making. Psychological Review, 128(1), 45–70. doi:10.1037/rev0000249
 - Shekhar, M., & Rahnev, D. (2024). How Do Humans Give Conﬁdence? A Comprehensive Comparison of Process Models of Perceptual Metacognition. Journal of Experimental Psychology: General, 153(3), 656–688. doi:10.1037/xge0001524
 
