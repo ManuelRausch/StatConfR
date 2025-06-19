@@ -30,6 +30,7 @@
 # 3) meta-d′/d′
 # 3.1) meta-d′/d′ using Maniscalco and Lau (2012)'s model specification
 # 3.2) meta-d′/d′ using Fleming (2017)'s model specification
+# 3.3) Compare meta-d′/d′ with the metaSDT package
 
 # 4. meta-I and co
 
@@ -357,6 +358,64 @@ Plot_recov_metaDprime_F <-
   theme_minimal()
 Plot_recov_metaDprime_F
 
+# 3.3) Compare meta-d′/d′ with the metaSDT package
+
+fitMetaDprimeMetaSDT <- function(data){
+  data$Y = data$response * data$rating
+  f <- function(data){
+  nR_S1 <- table(data$Y[data$stimulus==-1])
+  nR_S2 <- table(data$Y[data$stimulus==1])
+  fit_MLE <- try(metaSDT::fit_meta_d_MLE(nR_S1,nR_S2))
+  res <-  data.frame(model="ML", dprime = NA,   metaD = NA,  Ratio = NA)
+  if(class( fit_MLE) != "try-error"){
+    res$dprime = unique(fit_MLE$da)
+    res$metaD = unique(fit_MLE$meta_da)
+    res$Ratio =  unique(fit_MLE$M_ratio)
+  }
+  res
+  }
+  myRes <- plyr::ddply(data, ~ participant, f)
+  myRes
+}
+
+recov_metaDprime_MetaSDT <-
+  fitted_pars %>%
+  filter(model=="ITGcm") %>%
+  filter(participant!=11) %>%  # subject 11 performed very low.
+  select(participant, d_3, c:theta_plus.4, m) %>%
+  dplyr::rename(d_1 = d_3) %>%
+  mutate(N = 10000) %>% #
+  group_by(participant) %>%
+  simConf(model="ITGcm") %>%
+  fitMetaDprimeMetaSDT()
+
+recov_metaDprime_MetaSDT_vs_statConfR <-
+  (rbind(merge(recov_metaDprime_MetaSDT %>%
+          select(participant, Ratio),
+        fitted_pars %>%
+          filter(model=="ITGcm" ) %>%
+          select(participant, m)) %>%
+          mutate(Package = "metaSDT"),
+        merge(recov_metaDprime_ML %>%
+                select(participant, Ratio),
+              fitted_pars %>%
+                filter(model=="ITGcm" ) %>%
+                select(participant, m)) %>%
+          mutate(Package = "statConfR")))
+
+
+Plot_recov_MetaSDT_vs_statConfR <-
+  recov_metaDprime_MetaSDT_vs_statConfR %>%
+  ggplot(aes(x=m, y=Ratio)) + #scale_x_log10() + scale_y_log10() +
+  facet_grid(~ Package) +
+  xlab("true m-parameter") + ylab("meta-d′/d′") +
+  geom_point(color="purple") +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
+  ggpubr::stat_cor(color="black", cor.coef.name = "r") +
+  geom_smooth(method = "lm", color = "black", linetype=2, se=F) +
+  theme_minimal() + theme_bw()
+Plot_recov_MetaSDT_vs_statConfR
+
 
 # 4. meta-I and co
 
@@ -384,7 +443,7 @@ PlotFitITGc <- plotConfModelFit(MaskOri, fitted_pars, model="ITGc")
 PlotFitIG <- plotConfModelFit(MaskOri, fitted_pars, model="IG")
 PlotFitPDA <- plotConfModelFit(MaskOri, fitted_pars, model="PDA")
 
-# 6) Bayesian model selection
+
 
 
 save(fitted_pars, PlotFitsBICWeights,
@@ -412,6 +471,8 @@ save(fitted_pars, PlotFitsBICWeights,
      PlotFitIG,
      PlotFitPDA ,
 
-
+     recov_metaDprime_MetaSDT_vs_statConfR,
+     Plot_recov_MetaSDT_vs_statConfR,
+     recov_metaDprime_MetaSDT_vs_statConfR,
      file = "TestResults.RData")
 
