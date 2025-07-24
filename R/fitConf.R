@@ -266,7 +266,7 @@ fitConf <- function(data, model = "SDT",
     fitting_fct <- fitLogWEV
   } else if (model == "RCE"){
     fitting_fct <- fitRCE
-  } else stop(paste0("Model: ", model, " not implemented!\nChoose one of: 'WEV', 'SDT', 'IG', 'ITGc', 'ITGcm, 'GN', 'logN', 'logWEV', or 'PDA'"))
+  } else stop(paste0("Model: ", model, " not implemented!\nChoose one of: 'WEV', 'SDT', 'IG', 'ITGc', 'ITGcm, 'GN', 'logN', 'logWEV', 'RCE', or 'PDA'"))
 
   fit <- fitting_fct(N_SA_RA = N_SA_RA,N_SA_RB = N_SA_RB,
                      N_SB_RA = N_SB_RA,N_SB_RB = N_SB_RB,

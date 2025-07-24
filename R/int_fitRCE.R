@@ -3,16 +3,16 @@
 ### the original model is extended to include a choice bias parameter so the
 ### the cognitive architecture underlying the decision is equivalent to SDT.
 
-fitHeuris <-
+fitRCE <-
   function(N_SA_RA, N_SA_RB, N_SB_RA, N_SB_RB,
            nInits, nRestart, nRatings, nCond, nTrials){
 
-     # coarse grid search to find promising initial values
+    # coarse grid search to find promising initial values
 
     temp <- expand.grid(maxD =  seq(1, 5, 1),
                         theta = seq(-1/2,1/2, 1/2),
                         tauMin =  c(.1, .3, 1),  # position of the most conservative confidence criteria with respect to theta
-                        tauRange = seq(1, 5, 1))  #  position of the most liberal confidence criterion with respect to theta
+                        tauRange = c(0.5, 1, 1.5, 2.5, 3.5))  #  position of the most liberal confidence criterion with respect to theta
 
     # number of parameters:
     # nCond sensitivity parameters
@@ -55,7 +55,7 @@ fitHeuris <-
     noFitYet <- TRUE
     for (i in 1:nInits){
       m <- try(optim(par =  inits[i,],
-                     fn = ll_Noisy, gr = NULL,
+                     fn = ll_RCE, gr = NULL,
                      N_SA_RA = N_SA_RA,N_SA_RB = N_SA_RB,
                      N_SB_RA = N_SB_RA,N_SB_RB = N_SB_RB, nRatings = nRatings, nCond = nCond,
                      control = list(maxit = 10^4, reltol = 10^-4)))
@@ -63,7 +63,7 @@ fitHeuris <-
       if (!inherits(m, "try-error")){
         for(j in 2:nRestart){
           try(m <- optim(par = m$par,
-                         fn = ll_Noisy, gr = NULL,
+                         fn = ll_RCE, gr = NULL,
                          N_SA_RA = N_SA_RA,N_SA_RB = N_SA_RB,
                          N_SB_RA = N_SB_RA,N_SB_RB = N_SB_RB, nRatings = nRatings, nCond = nCond,
                          control = list(maxit = 10^6, reltol = 10^-8)))
@@ -101,7 +101,7 @@ fitHeuris <-
     res
   }
 
-llRCE <-
+ll_RCE <-
   function(p, N_SA_RA,N_SA_RB, N_SB_RA, N_SB_RB, nRatings, nCond){
     p <- c(t(p))
     ds <- cumsum(exp(p[1:(nCond)])) # enforce that sensitivity is ordered
@@ -133,7 +133,7 @@ llRCE <-
                 rel.tol = 10^-8)$value
     })
 
-    P_SBRA <-  Vectorize(function(,i){
+    P_SBRA <-  Vectorize(function(j,i){
       integrate(function(x) dnorm(x, mean= 0, sigma) * pnorm(x+theta, mean=ds[j]/2, sigma) , # dnorm(x, mean=ds[j]+b) * (1 - pnorm(x, mean=-b))
                 lower = -c_RA[i+1], # braucht es hier einen Vorzeichenwechsel?
                 upper = -c_RA[i],
