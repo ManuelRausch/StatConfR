@@ -170,7 +170,7 @@
 #' addition to the set of shared parameters.
 
 #' @author Sebastian Hellmann, \email{sebastian.hellmann@tum.de}\cr
-#' Manuel Rausch, \email{manuel.rausch@hochschule-rhein-waal.de}
+#' Manuel Rausch, \email{manuel.rausch@ku.de}
 
 # unlike for the other tags, the references are formatted more nicely if each reference is tagged seperately
 #' @references Akaike, H. (1974). A New Look at the Statistical Model Identification. IEEE Transactions on Automatic Control, AC-19(6), 716–723.doi: 10.1007/978-1-4612-1694-0_16\cr

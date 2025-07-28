@@ -30,7 +30,7 @@
 #'    the models given in the second argument are fitted to each subset of `data`
 #'    determined by the different values of this column)
 #' @param models `character`. The different computational models that should be
-#'    fitted. Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc',
+#'    fitted. Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'RCE',
 #'    'ITGcm', 'logN', and 'logWEV'. Alternatively, if `model="all"` (default),
 #'    all implemented models will be fit.
 #' @param nInits `integer`. Number of initial values used for maximum likelihood optimization.
@@ -196,7 +196,7 @@
 
 #' @author
 #' Sebastian Hellmann, \email{sebastian.hellmann@tum.de}\cr
-#' Manuel Rausch, \email{manuel.rausch@hochschule-rhein-waal.de}
+#' Manuel Rausch, \email{manuel.rausch@ku.de}
 
 # unlike for the other tags, the references are formatted more nicely if each reference is tagged seperately
 #' @references Akaike, H. (1974). A New Look at the Statistical Model Identification. IEEE Transactions on Automatic Control, AC-19(6), 716–723.doi: 10.1007/978-1-4612-1694-0_16\cr

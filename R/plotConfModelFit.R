@@ -83,7 +83,7 @@
 #' @importFrom Rmisc summarySEwithin
 #' @importFrom stats aggregate
 
-#' @author Manuel Rausch, \email{manuel.rausch@hochschule-rhein-waal.de}
+#' @author Manuel Rausch, \email{manuel.rausch@ku.de}
 
 #' @export
 plotConfModelFit <- function(data, fitted_pars, model = NULL){

@@ -4,7 +4,7 @@ Title: Models of Decision Confidence and Measures of Metacognition
 Version: 0.2.1
 Date: 2025-02-22
 Authors@R: c(
-  person("Manuel", "Rausch", email = "manuel.rausch@hochschule-rhein-waal.de", 
+  person("Manuel", "Rausch", email = "manuel.rausch@ku.de", 
   role = c("aut", "cre"), comment = c(ORCID = "0000-0002-5805-5544")),
     person("Sascha", "Meyen", email = "saschameyen@gmail.com", 
     role = c("aut"), comment = c(ORCID = "0000-0001-6928-4126")),
@@ -15,7 +15,7 @@ Maintainer: Manuel Rausch <manuel.rausch@hochschule-rhein-waal.de>
 Description: Provides fitting functions and other tools for decision confidence 
     and metacognition researchers, including meta-d'/d', often considered to be 
     the gold standard to measure metacognitive efficiency, and information-theoretic measures of metacognition. 
-    Also allows to fit several static models of decision making and confidence.
+    Also allows to fit and compare several static models of decision making and confidence.
 License: GPL(>=3)
 URL: https://github.com/ManuelRausch/StatConfR
 BugReports: https://github.com/ManuelRausch/StatConfR/issues
