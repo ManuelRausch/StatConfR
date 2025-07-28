@@ -1,5 +1,6 @@
 ###   Functions to fit the WEV model
 ### Model version described by (Rausch et al., 2023)
+
 fitCEV <-
   function(N_SA_RA, N_SA_RB, N_SB_RA, N_SB_RB,
            nInits, nRestart, nRatings, nCond, nTrials){

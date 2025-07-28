@@ -17,7 +17,7 @@ system("R CMD Rd2pdf C:/Users/PPA714/KU2/Projekte/StatConfR/StatConfR")
 
 # this is the most important check! If you get errors here, it won't work with cran!
 # it is much more critical than regular check!
-system("R CMD check --as-cran ../statConfR_0.2.0.tar.gz")
+system("R CMD check --as-cran ../statConfR_0.2.1.tar.gz")
 
 # check on Rhub
 rhub::rhub_setup()

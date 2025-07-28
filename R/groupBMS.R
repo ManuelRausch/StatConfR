@@ -48,7 +48,7 @@
 #' It therefore aggregates the available subject-level model evidences
 #' according to a random effects model, which assumes that model probabilities
 #' are distributed in the population according to a Dirichlet distribution.
-#' The parameters of the Dirichelet distribution are determined using a variational Bayes algorithm.
+#' The parameters of the Dirichlet distribution are determined using a variational Bayes algorithm.
 #' `groupBMS` provides three statistics associated with the random effects model:
 #' * estimated model frequencies in the population,
 #' * The exceedance probability  represents the probability that a specific
@@ -64,7 +64,7 @@
 #' @references Stephan, K. E., Penny, W. D., Daunizeau, J., Moran, R. J., & Friston, K. J. (2009). Bayesian model selection for group studies. Neuroimage, 46(4), 1004-1017.
 
 #' @author
-#' Sebastian Hellmann, \email{sebastian.hellmann@@ku.de}\cr
+#' Sebastian Hellmann, \email{sebastian.hellmann@tum.de}\cr
 #' Manuel Rausch, \email{manuel.rausch@ku.de}
 #'
 #' @examples
@@ -83,7 +83,7 @@
 #'
 #' @importFrom stats rgamma
 #' @export
-groupBMS <- function(fits, measure = "BIC", opts=list()) {
+groupBMS <- function(fits, measure = "AICc", opts=list()) {
   if (!measure %in% c("BIC", "AIC", "AICc"))
     stop(paste0("measure=", measure, " should be BIC, AIC, or AICc"))
   models <- sort(unique(fits$model))

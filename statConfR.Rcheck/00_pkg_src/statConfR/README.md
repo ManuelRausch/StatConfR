@@ -3,7 +3,8 @@
 The `statConfR` package provides functions to fit static models of
 decision-making and confidence derived from signal detection theory for
 binary discrimination tasks with confidence ratings on the data from
-individual subjects. Up to now, the following models have been included:
+individual subjects (Rausch et al., 2025). Up to now, the following
+models have been included:
 
 - signal detection rating model (Green & Swets, 1966),
 - Gaussian noise model (Maniscalco & Lau, 2016),
@@ -612,6 +613,10 @@ issue](https://github.com/ManuelRausch/StatConfR/issues).
 - Rausch, M., & Zehetleitner, M. (2017). Should metacognition be
   measured by logistic regression? Consciousness and Cognition, 49,
   291–312. <doi:10.1016/j.concog.2017.02.007>
+- Rausch, M., Meyen, S. & Hellmann, S. (2025). statConfR: An R Package
+  for Static Models of Decision Confidence and Metacognition. Journal of
+  Open Source Software, 10(106), 6966.
+  <https://doi.org/10.21105/joss.06966>
 - Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive
   Inefficiency in Perceptual Decision Making. Psychological Review,
   128(1), 45–70. <doi:10.1037/rev0000249>

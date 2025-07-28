@@ -30,7 +30,7 @@
 #'    the models given in the second argument are fitted to each subset of `data`
 #'    determined by the different values of this column)
 #' @param models `character`. The different computational models that should be
-#'    fitted. Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc',
+#'    fitted. Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'RCE',
 #'    'ITGcm', 'logN', and 'logWEV'. Alternatively, if `model="all"` (default),
 #'    all implemented models will be fit.
 #' @param nInits `integer`. Number of initial values used for maximum likelihood optimization.
@@ -193,10 +193,25 @@
 #' The parameter \eqn{w} represents the weight that is put on the choice-irrelevant
 #' features in the confidence judgment. \eqn{w} and \eqn{\sigma} are fitted in
 #' addition to the set of shared parameters.
+#'
+#' ### \strong{Response-congruent evidence model (RCE)}
+#' The response-congruent evidence model represents the idea that observers use
+#' all available sensory information to make the discrimination decision, but for confidence judgements,
+#' they only consider evidence consistent with the selected decision and ignore evidence against the decision (Peters et al., 2017).
+#' The model assumes two separate samples of sensory evidence collected in each trial,
+#' each belonging to one possible identity of the stimulus.
+#' Both samples of sensory evidence \eqn{x_{-1}} and
+#' \eqn{x_1} are sampled from Gaussian distributions with a standard deviations of \eqn{\sqrt{1/2}}.
+#' The mean of \eqn{x_{-1}} is given by \eqn{(1 − S) \times 0.25 \times d}; the mean
+#' of \eqn{x_1} is given by \eqn{(1 + S) \times 0.25 \times d}. The sensory evidence
+#' used for the discrimination choice is \eqn{x = x_2 - x_1},
+#' which implies that the discrimination decision is equivalent to standard SDT.
+#' The confidence decision variable y is \eqn{y = - x_1} if the response R is -1 and \eqn{y = x_2} otherwise.
+
 
 #' @author
 #' Sebastian Hellmann, \email{sebastian.hellmann@tum.de}\cr
-#' Manuel Rausch, \email{manuel.rausch@hochschule-rhein-waal.de}
+#' Manuel Rausch, \email{manuel.rausch@ku.de}
 
 # unlike for the other tags, the references are formatted more nicely if each reference is tagged seperately
 #' @references Akaike, H. (1974). A New Look at the Statistical Model Identification. IEEE Transactions on Automatic Control, AC-19(6), 716–723.doi: 10.1007/978-1-4612-1694-0_16\cr
@@ -212,6 +227,8 @@
 #' @references Schwarz, G. (1978). Estimating the dimension of a model. The Annals of Statistics, 6(2), 461–464. doi: 10.1214/aos/1176344136\cr
 #' @references Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive Inefficiency in Perceptual Decision Making. Psychological Review, 128(1), 45–70. doi: 10.1037/rev0000249\cr
 #' @references Shekhar, M., & Rahnev, D. (2023). How Do Humans Give Confidence? A Comprehensive Comparison of Process Models of Perceptual Metacognition. Journal of Experimental Psychology: General. doi:10.1037/xge0001524\cr
+#' @references Peters, M. A. K., Thesen, T., Ko, Y. D., Maniscalco, B., Carlson, C., Davidson, M., Doyle, W., Kuzniecky, R., Devinsky, O., Halgren, E., & Lau, H. (2017). Perceptual confidence neglects decision-incongruent evidence in the brain. Nature Human Behaviour, 1(0139), 1–21. doi:10.1038/s41562-017-0139
+
 
 #' @examples
 #' # 1. Select two subjects from the masked orientation discrimination experiment
@@ -237,7 +254,7 @@ fitConfModels <- function(data, models="all",
                           nInits = 5, nRestart = 4,
                           .parallel=FALSE, n.cores=NULL) {
   AllModels <- c('WEV', 'SDT', 'IG', 'ITGc',
-                 'ITGcm', 'GN', 'PDA', 'logN', 'logWEV') # if you implement additional models, add them here!
+                 'ITGcm', 'GN', 'PDA', 'logN', 'logWEV', 'RCE') # if you implement additional models, add them here!
   if (identical(models,"all")) models <- AllModels
   if (!all(models %in% AllModels)) {
     stop(paste(paste(setdiff(models, AllModels),collapse = " and "), " not implemented!"))

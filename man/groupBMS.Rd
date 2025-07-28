@@ -4,7 +4,7 @@
 \alias{groupBMS}
 \title{Group-level Bayesian Model Comparison}
 \usage{
-groupBMS(fits, measure = "BIC", opts = list())
+groupBMS(fits, measure = "AICc", opts = list())
 }
 \arguments{
 \item{fits}{a data frame as returned by \code{\link{fitConfModels}}.
@@ -68,7 +68,7 @@ the group level following the approach of Rigoux et al. (2014).
 It therefore aggregates the available subject-level model evidences
 according to a random effects model, which assumes that model probabilities
 are distributed in the population according to a Dirichlet distribution.
-The parameters of the Dirichelet distribution are determined using a variational Bayes algorithm.
+The parameters of the Dirichlet distribution are determined using a variational Bayes algorithm.
 \code{groupBMS} provides three statistics associated with the random effects model:
 \itemize{
 \item estimated model frequencies in the population,
@@ -104,6 +104,6 @@ Daunizeau, J., Adam, V., & Rigoux, L. (2014). Vba: A probabilistic treatment of 
 Stephan, K. E., Penny, W. D., Daunizeau, J., Moran, R. J., & Friston, K. J. (2009). Bayesian model selection for group studies. Neuroimage, 46(4), 1004-1017.
 }
 \author{
-Sebastian Hellmann, \email{sebastian.hellmann@ku.de}\cr
+Sebastian Hellmann, \email{sebastian.hellmann@tum.de}\cr
 Manuel Rausch, \email{manuel.rausch@ku.de}
 }

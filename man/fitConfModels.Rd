@@ -240,7 +240,7 @@ The model assumes two separate samples of sensory evidence collected in each tri
 each belonging to one possible identity of the stimulus.
 Both samples of sensory evidence \eqn{x_{-1}} and
 \eqn{x_1} are sampled from Gaussian distributions with a standard deviations of \eqn{\sqrt{1/2}}.
-The mean of \eqn{x_{-1}} is given by \eqn{(1 − S) \times 0.25 \times d}; the mean
+The mean of \eqn{x_{-1}} is given by \eqn{(1 - S) \times 0.25 \times d}; the mean
 of \eqn{x_1} is given by \eqn{(1 + S) \times 0.25 \times d}. The sensory evidence
 used for the discrimination choice is \eqn{x = x_2 - x_1},
 which implies that the discrimination decision is equivalent to standard SDT.

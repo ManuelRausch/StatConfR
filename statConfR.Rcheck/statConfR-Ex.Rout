@@ -237,6 +237,48 @@ Bias reduction for participant  2  (speed up with 'bias_reduction = FALSE')
 > base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
 > base::cat("fitMetaDprime", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > cleanEx()
+> nameEx("groupBMS")
+> ### * groupBMS
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: groupBMS
+> ### Title: Group-level Bayesian Model Comparison
+> ### Aliases: groupBMS
+> 
+> ### ** Examples
+> 
+> # Define a data frame with information criteria from model fits
+> # this is a sub-data.frame from an output of fitConfModels with
+> # 5 subjects, two models and rounded information criteria)
+> fitted_par <- data.frame(
++   participant = rep(1:5, each=2),
++   model = rep(c("WEV", "ITGcm"), 5),
++   BIC = c(5360, 5550, 3773, 3963, 3441, 3503, 2613, 2706, 3566, 3695),
++   AIC = c(5274, 5469, 3686, 3883, 3355, 3422, 2527, 2625, 3479, 3614),
++   AICc = c(5275, 5469, 3687, 3883, 3356, 3422, 2527, 2625, 3480, 3614))
+> # Conduct group-level Bayesian model selection based on BIC
+> ModelComp <- groupBMS(fitted_par, measure="BIC")
+> ModelComp
+$model_weights
+      alpha         r     ep    pep       fx_prop
+ITGcm     1 0.1428571 0.0152 0.0152 6.519766e-145
+WEV       6 0.8571429 0.9848 0.9848  1.000000e+00
+
+$summary_stats
+   bor_re_null bor_fixed_null   bor_re_fixed          FE_re        FE_null 
+  0.000000e+00   5.882353e-02   0.000000e+00   3.424582e+02  -9.379966e+03 
+      FE_fixed 
+ -9.377193e+03 
+
+> 
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("groupBMS", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
 > nameEx("plotConfModelFit")
 > ### * plotConfModelFit
 > 
@@ -330,7 +372,7 @@ Automatically converting the following non-factors to factors: rating
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  644.16 19.12 665.3 NA NA 
+Time elapsed:  1026.76 13.83 1045.8 NA NA 
 > grDevices::dev.off()
 null device 
           1 
