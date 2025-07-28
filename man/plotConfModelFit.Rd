@@ -91,5 +91,5 @@ and overlays the predicted distribution over the data to which the model paramet
 
 }
 \author{
-Manuel Rausch, \email{manuel.rausch@hochschule-rhein-waal.de}
+Manuel Rausch, \email{manuel.rausch@ku.de}
 }

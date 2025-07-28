@@ -47,7 +47,7 @@ fitRCE <-
 
 
     logL <- apply(inits, MARGIN = 1,
-                  function(p) try(ll_llRCE(p, N_SA_RA, N_SA_RB, N_SB_RA,N_SB_RB, nRatings, nCond), silent = TRUE))
+                  function(p) try(ll_RCE(p, N_SA_RA, N_SA_RB, N_SB_RA,N_SB_RB, nRatings, nCond), silent = TRUE))
     logL <- as.numeric(logL)
     inits <- inits[order(logL),]
     inits <- inits[1:nInits,]

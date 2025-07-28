@@ -80,6 +80,8 @@
 #' # Conduct group-level Bayesian model selection based on BIC
 #' ModelComp <- groupBMS(fitted_par, measure="BIC")
 #' ModelComp
+#'
+#' @importFrom stats rgamma
 #' @export
 groupBMS <- function(fits, measure = "BIC", opts=list()) {
   if (!measure %in% c("BIC", "AIC", "AICc"))
@@ -114,7 +116,7 @@ groupBMS <- function(fits, measure = "BIC", opts=list()) {
     res <- sum(g*(x - log(g+opts$eps) - log(K)))
     return(res)
   }
-  
+
   FreeEnergyNull <- sum(apply(mlp, 2, modelprobs_Null))
 
   # derive probabilities and free energy of the 'fixed-effect' analysis

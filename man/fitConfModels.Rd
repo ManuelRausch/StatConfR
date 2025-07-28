@@ -27,7 +27,7 @@ determined by the different values of this column)
 }}
 
 \item{models}{\code{character}. The different computational models that should be
-fitted. Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc',
+fitted. Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'RCE',
 'ITGcm', 'logN', and 'logWEV'. Alternatively, if \code{model="all"} (default),
 all implemented models will be fit.}
 
@@ -231,6 +231,22 @@ features in the confidence judgment. \eqn{w} and \eqn{\sigma} are fitted in
 addition to the set of shared parameters.
 }
 
+\subsection{\strong{Response-congruent evidence model (RCE)}}{
+
+The response-congruent evidence model represents the idea that observers use
+all available sensory information to make the discrimination decision, but for confidence judgements,
+they only consider evidence consistent with the selected decision and ignore evidence against the decision (Peters et al., 2017).
+The model assumes two separate samples of sensory evidence collected in each trial,
+each belonging to one possible identity of the stimulus.
+Both samples of sensory evidence \eqn{x_{-1}} and
+\eqn{x_1} are sampled from Gaussian distributions with a standard deviations of \eqn{\sqrt{1/2}}.
+The mean of \eqn{x_{-1}} is given by \eqn{(1 − S) \times 0.25 \times d}; the mean
+of \eqn{x_1} is given by \eqn{(1 + S) \times 0.25 \times d}. The sensory evidence
+used for the discrimination choice is \eqn{x = x_2 - x_1},
+which implies that the discrimination decision is equivalent to standard SDT.
+The confidence decision variable y is \eqn{y = - x_1} if the response R is -1 and \eqn{y = x_2} otherwise.
+}
+
 }
 }
 \examples{
@@ -274,8 +290,10 @@ Schwarz, G. (1978). Estimating the dimension of a model. The Annals of Statistic
 Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive Inefficiency in Perceptual Decision Making. Psychological Review, 128(1), 45–70. doi: 10.1037/rev0000249\cr
 
 Shekhar, M., & Rahnev, D. (2023). How Do Humans Give Confidence? A Comprehensive Comparison of Process Models of Perceptual Metacognition. Journal of Experimental Psychology: General. doi:10.1037/xge0001524\cr
+
+Peters, M. A. K., Thesen, T., Ko, Y. D., Maniscalco, B., Carlson, C., Davidson, M., Doyle, W., Kuzniecky, R., Devinsky, O., Halgren, E., & Lau, H. (2017). Perceptual confidence neglects decision-incongruent evidence in the brain. Nature Human Behaviour, 1(0139), 1–21. doi:10.1038/s41562-017-0139
 }
 \author{
 Sebastian Hellmann, \email{sebastian.hellmann@tum.de}\cr
-Manuel Rausch, \email{manuel.rausch@hochschule-rhein-waal.de}
+Manuel Rausch, \email{manuel.rausch@ku.de}
 }

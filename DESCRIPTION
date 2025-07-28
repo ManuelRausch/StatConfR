@@ -11,7 +11,7 @@ Authors@R: c(
     person("Sebastian", "Hellmann", email = "sebastian.hellmann@tum.de", 
     role = c("aut"), comment = c(ORCID = "0000-0002-3621-6343"))
        )
-Maintainer: Manuel Rausch <manuel.rausch@hochschule-rhein-waal.de>
+Maintainer: Manuel Rausch <manuel.rausch@ku.de>
 Description: Provides fitting functions and other tools for decision confidence 
     and metacognition researchers, including meta-d'/d', often considered to be 
     the gold standard to measure metacognitive efficiency, and information-theoretic measures of metacognition. 
