@@ -124,7 +124,9 @@ plotConfModelFit <- function(data, fitted_pars, model = NULL){
            'logWEV' = "Logistic weighted evidence and visibility model",
            'PDA' = "Post-decisional accumulation model",
            'WEV' = "Weighted evidence and visibility model",
-           'SDT' = "Signal detection rating model") # models are color coded
+           'SDT' = "Signal detection rating model",
+           'CAS' = "CASANDRE",
+           'RCE' = "Response congruent evidence model") # models are color coded
 
   # 1. First aggregate on the level of subjects
 
@@ -185,7 +187,8 @@ plotConfModelFit <- function(data, fitted_pars, model = NULL){
                            'ITGcm' = predictDataIndTruncML,
                            'GN' = predictDataNoisy,
                            'PDA' = predictDataISDT,
-                           'logN' = predictDataLognorm)
+                           'logN' = predictDataLognorm,
+                           'CAS' = predictDataCAS)
 
   if("model" %in% colnames(fitted_pars)){
     if(length(unique(fitted_pars$model))>1){
@@ -771,3 +774,10 @@ predictDataLogWEV <- function(paramDf){
   res$p[is.na(res$p) | is.nan(res$p)] <- 0
   res
 }
+
+# (X) CASANDRE
+
+# (xi) response.congruent evidence model
+
+
+

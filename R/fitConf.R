@@ -168,7 +168,10 @@
 #' The parameter \eqn{w} represents the weight that is put on the choice-irrelevant
 #' features in the confidence judgment. \eqn{w} and \eqn{\sigma} are fitted in
 #' addition to the set of shared parameters.
-
+#'
+#' ### \strong{CASANDRE (CAS)}
+#' To-do: doc
+#'
 #' @author Sebastian Hellmann, \email{sebastian.hellmann@tum.de}\cr
 #' Manuel Rausch, \email{manuel.rausch@ku.de}
 
@@ -187,6 +190,7 @@
 #' @references Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive Inefficiency in Perceptual Decision Making. Psychological Review, 128(1), 45–70. doi: 10.1037/rev0000249\cr
 #' @references Shekhar, M., & Rahnev, D. (2023). How Do Humans Give Confidence? A Comprehensive Comparison of Process Models of Perceptual Metacognition. Journal of Experimental Psychology: General. doi:10.1037/xge0001524\cr
 #' @references Peters, M. A. K., Thesen, T., Ko, Y. D., Maniscalco, B., Carlson, C., Davidson, M., Doyle, W., Kuzniecky, R., Devinsky, O., Halgren, E., & Lau, H. (2017). Perceptual confidence neglects decision-incongruent evidence in the brain. Nature Human Behaviour, 1(0139), 1–21. doi:10.1038/s41562-017-0139
+#' @references Boundy-Singer, Z. M., Ziemba, C. M., & Goris, R. L. T. (2022). Confidence reflects a noisy decision reliability estimate. Nature Human Behaviour, 7(1), 142–154. doi:10.1038/s41562-022-01464-x
 
 #' @examples
 #' # 1. Select one subject from the masked orientation discrimination experiment
@@ -267,7 +271,9 @@ fitConf <- function(data, model = "SDT",
     fitting_fct <- fitLogWEV
   } else if (model == "RCE"){
     fitting_fct <- fitRCE
-  } else stop(paste0("Model: ", model, " not implemented!\nChoose one of: 'WEV', 'SDT', 'IG', 'ITGc', 'ITGcm, 'GN', 'logN', 'logWEV', 'RCE', or 'PDA'"))
+  } else if (model == "CAS"){
+    fitting_fct <- fitCAS
+  } else stop(paste0("Model: ", model, " not implemented!\nChoose one of: 'WEV', 'SDT', 'IG', 'ITGc', 'ITGcm, 'GN', 'CAS', 'logN', 'logWEV', 'RCE', or 'PDA'"))
 
   fit <- fitting_fct(N_SA_RA = N_SA_RA,N_SA_RB = N_SA_RB,
                      N_SB_RA = N_SB_RA,N_SB_RB = N_SB_RB,

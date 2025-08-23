@@ -247,6 +247,11 @@ which implies that the discrimination decision is equivalent to standard SDT.
 The confidence decision variable y is \eqn{y = - x_1} if the response R is -1 and \eqn{y = x_2} otherwise.
 }
 
+\subsection{\strong{CASANDRE (CAS)}}{
+
+To-do: doc
+}
+
 }
 }
 \examples{
@@ -291,7 +296,9 @@ Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive Inefficiency in Pe
 
 Shekhar, M., & Rahnev, D. (2023). How Do Humans Give Confidence? A Comprehensive Comparison of Process Models of Perceptual Metacognition. Journal of Experimental Psychology: General. doi:10.1037/xge0001524\cr
 
-Peters, M. A. K., Thesen, T., Ko, Y. D., Maniscalco, B., Carlson, C., Davidson, M., Doyle, W., Kuzniecky, R., Devinsky, O., Halgren, E., & Lau, H. (2017). Perceptual confidence neglects decision-incongruent evidence in the brain. Nature Human Behaviour, 1(0139), 1–21. doi:10.1038/s41562-017-0139
+Peters, M. A. K., Thesen, T., Ko, Y. D., Maniscalco, B., Carlson, C., Davidson, M., Doyle, W., Kuzniecky, R., Devinsky, O., Halgren, E., & Lau, H. (2017). Perceptual confidence neglects decision-incongruent evidence in the brain. Nature Human Behaviour, 1(0139), 1–21. doi:10.1038/s41562-017-0139\cr
+
+Boundy-Singer, Z. M., Ziemba, C. M., & Goris, R. L. T. (2022). Confidence reflects a noisy decision reliability estimate. Nature Human Behaviour, 7(1), 142–154. doi:10.1038/s41562-022-01464-x
 }
 \author{
 Sebastian Hellmann, \email{sebastian.hellmann@tum.de}\cr

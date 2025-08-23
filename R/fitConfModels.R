@@ -207,7 +207,9 @@
 #' used for the discrimination choice is \eqn{x = x_2 - x_1},
 #' which implies that the discrimination decision is equivalent to standard SDT.
 #' The confidence decision variable y is \eqn{y = - x_1} if the response R is -1 and \eqn{y = x_2} otherwise.
-
+#'
+#' ### \strong{CASANDRE (CAS)}
+#' To-do: doc
 
 #' @author
 #' Sebastian Hellmann, \email{sebastian.hellmann@tum.de}\cr
@@ -227,8 +229,8 @@
 #' @references Schwarz, G. (1978). Estimating the dimension of a model. The Annals of Statistics, 6(2), 461–464. doi: 10.1214/aos/1176344136\cr
 #' @references Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive Inefficiency in Perceptual Decision Making. Psychological Review, 128(1), 45–70. doi: 10.1037/rev0000249\cr
 #' @references Shekhar, M., & Rahnev, D. (2023). How Do Humans Give Confidence? A Comprehensive Comparison of Process Models of Perceptual Metacognition. Journal of Experimental Psychology: General. doi:10.1037/xge0001524\cr
-#' @references Peters, M. A. K., Thesen, T., Ko, Y. D., Maniscalco, B., Carlson, C., Davidson, M., Doyle, W., Kuzniecky, R., Devinsky, O., Halgren, E., & Lau, H. (2017). Perceptual confidence neglects decision-incongruent evidence in the brain. Nature Human Behaviour, 1(0139), 1–21. doi:10.1038/s41562-017-0139
-
+#' @references Peters, M. A. K., Thesen, T., Ko, Y. D., Maniscalco, B., Carlson, C., Davidson, M., Doyle, W., Kuzniecky, R., Devinsky, O., Halgren, E., & Lau, H. (2017). Perceptual confidence neglects decision-incongruent evidence in the brain. Nature Human Behaviour, 1(0139), 1–21. doi:10.1038/s41562-017-0139\cr
+#' @references Boundy-Singer, Z. M., Ziemba, C. M., & Goris, R. L. T. (2022). Confidence reflects a noisy decision reliability estimate. Nature Human Behaviour, 7(1), 142–154. doi:10.1038/s41562-022-01464-x
 
 #' @examples
 #' # 1. Select two subjects from the masked orientation discrimination experiment
@@ -254,7 +256,7 @@ fitConfModels <- function(data, models="all",
                           nInits = 5, nRestart = 4,
                           .parallel=FALSE, n.cores=NULL) {
   AllModels <- c('WEV', 'SDT', 'IG', 'ITGc',
-                 'ITGcm', 'GN', 'PDA', 'logN', 'logWEV', 'RCE') # if you implement additional models, add them here!
+                 'ITGcm', 'GN', 'PDA', 'logN', 'logWEV', 'RCE', 'CAS') # if you implement additional models, add them here!
   if (identical(models,"all")) models <- AllModels
   if (!all(models %in% AllModels)) {
     stop(paste(paste(setdiff(models, AllModels),collapse = " and "), " not implemented!"))
