@@ -1,7 +1,7 @@
-###   Functions to fit the CASANDRE model
-### Model version described by Boundy-Singer et al. (2022)
+###   Functions to fit the lognormal model
+### Model version described by Shekhar and Rahnev (2020)
 
-fitCASANDRE <-
+fitLognorm <-
   function(N_SA_RA, N_SA_RB, N_SB_RA, N_SB_RB,
            nInits, nRestart, nRatings, nCond, nTrials){
 
@@ -13,7 +13,7 @@ fitCASANDRE <-
                         # average position of mean conservative confidence criteria with respect to theta
                         tauRange = seq(1, 5, 1),
                         # average position of the most liberal confidence criterion with respect to theta
-                        sigma = c(.01, .1, .3, 1, 3)) # confidence criterion noise
+                        sigma = c(.1, .3, 1, 3)) # confidence criterion noise
 
     inits <- data.frame(matrix(data=NA, nrow= nrow(temp), ncol = nCond + nRatings*2))
     if(nCond==1)  {
@@ -43,7 +43,7 @@ fitCASANDRE <-
     inits[,(nCond + nRatings*2)] <- log(temp$sigma)
 
     logL <- apply(inits, MARGIN = 1,
-                  function(p) try(ll_CASANRDRE(p, N_SA_RA, N_SA_RB, N_SB_RA,N_SB_RB, nRatings, nCond), silent = TRUE))
+                  function(p) try(ll_lognorm(p, N_SA_RA, N_SA_RB, N_SB_RA,N_SB_RB, nRatings, nCond), silent = TRUE))
     logL <- as.numeric(logL)
     inits <- inits[order(logL),]
     inits <- inits[1:nInits,] #
@@ -52,7 +52,7 @@ fitCASANDRE <-
     noFitYet <- TRUE
     for (i in 1:nInits){
       m <- try(optim(par =  inits[i,],
-                     fn = ll_CASANDRE, gr = NULL,
+                     fn = ll_lognorm, gr = NULL,
                      N_SA_RA = N_SA_RA,N_SA_RB = N_SA_RB,
                      N_SB_RA = N_SB_RA,N_SB_RB = N_SB_RB, nRatings = nRatings, nCond = nCond,
                      control = list(maxit = 10^4, reltol = 10^-4)))
@@ -60,7 +60,7 @@ fitCASANDRE <-
       if (!inherits(m, "try-error")){
         for(j in 2:nRestart){
           try(m <- optim(par = m$par,
-                         fn = ll_CASANDRE, gr = NULL,
+                         fn = ll_lognorm, gr = NULL,
                          N_SA_RA = N_SA_RA,N_SA_RB = N_SA_RB,
                          N_SB_RA = N_SB_RA,N_SB_RB = N_SB_RB, nRatings = nRatings, nCond = nCond,
                          control = list(maxit = 10^6, reltol = 10^-8)))
