@@ -116,7 +116,7 @@ groupBMS <- function(fits, measure = "AICc", opts=list()) {
     res <- sum(g*(x - log(g+opts$eps) - log(K)))
     return(res)
   }
-
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   FreeEnergyNull <- sum(apply(mlp, 2, modelprobs_Null))
 
   # derive probabilities and free energy of the 'fixed-effect' analysis

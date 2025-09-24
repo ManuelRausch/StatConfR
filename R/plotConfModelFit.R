@@ -188,7 +188,8 @@ plotConfModelFit <- function(data, fitted_pars, model = NULL){
                            'GN' = predictDataNoisy,
                            'PDA' = predictDataISDT,
                            'logN' = predictDataLognorm,
-                           'CAS' = predictDataCAS)
+                           'CAS' = predictDataCAS,
+                           'RCE' = predictDataRCE)
 
   if("model" %in% colnames(fitted_pars)){
     if(length(unique(fitted_pars$model))>1){
@@ -777,7 +778,126 @@ predictDataLogWEV <- function(paramDf){
 
 # (X) CASANDRE
 
+predictDataCAS <- function(paramDf){
+  nCond <- sum(is.finite(c(t(paramDf[,grep(pattern = "d_", names(paramDf), value=T)]))))
+  nRatings <- sum(is.finite(c(t(paramDf[,grep(pattern = "^theta_minus.", names(paramDf), value=T)]))))+1
+  ds <- c(t(paramDf[,paste("d_", 1:nCond, sep="")]))
+  locA <- -ds/2
+  locB <- ds/2
+  theta <- paramDf$c
+  c_RA <- c(-Inf,c(t(paramDf[,paste("theta_minus.", (nRatings-1):1, sep="")])), 0)
+  c_RB <- c(0,c(t(paramDf[,paste("theta_plus.", 1:(nRatings-1), sep="")])), Inf)
+  sigma <- paramDf$sigma
+  meanlog <- log(1 / sqrt(1+sigma^2))  # sigma is not the amount of
+  sdlog <- sqrt(log(1+sigma^2))
+
+
+  p_SA_RA <- expand.grid(j = 1:nCond, i = 1:nRatings)
+  p_SA_RB <- expand.grid(j = 1:nCond, i = 1:nRatings)
+  p_SB_RA <- expand.grid(j = 1:nCond, i = 1:nRatings)
+  p_SB_RB <- expand.grid(j = 1:nCond, i = 1:nRatings)
+
+  P_SBRB <-  Vectorize(function(j,i){
+    integrate(function(x) dnorm(x, locB[j]) *
+                (plnorm((x-theta)/c_RB[i], meanlog, sdlog) - plnorm((x-theta)/c_RB[i+1], meanlog, sdlog)),
+              lower = theta, upper = Inf, rel.tol = 10^-8)$value
+  })
+  P_SBRA <-  Vectorize(function(j,i){
+    integrate(function(x) dnorm(x, locB[j]) *
+                (plnorm(abs((x-theta)/c_RA[i+1]), meanlog, sdlog) - plnorm((x-theta)/c_RA[i], meanlog, sdlog)),
+              lower = -Inf, upper = theta, rel.tol = 10^-8)$value
+  })
+  P_SARA <- Vectorize(function(j,i){
+    integrate(function(x) dnorm(x, locA[j]) *
+                (plnorm(abs((x-theta)/c_RA[i+1]), meanlog, sdlog) - plnorm((x-theta)/c_RA[i], meanlog, sdlog)),
+              lower = -Inf, upper = theta, rel.tol = 10^-8)$value
+  })
+  P_SARB <- Vectorize(function(j,i){
+    integrate(function(x) dnorm(x, locA[j]) *
+                (plnorm((x-theta)/c_RB[i], meanlog, sdlog) - plnorm((x-theta)/c_RB[i+1], meanlog, sdlog)),
+              lower = theta, upper = Inf, rel.tol = 10^-8)$value
+  })
+
+
+  p_SB_RB <- cbind(stimulus = 1, response = 1,
+                   plyr::mdply(.data=p_SB_RB, .fun= P_SBRB))
+  p_SB_RA <- cbind(stimulus = 1, response = -1,
+                   plyr::mdply(.data=p_SB_RA, .fun= P_SBRA))
+  p_SB_RA$i <- nRatings + 1 - p_SB_RA$i
+  p_SA_RA <- cbind(stimulus = -1, response = -1,
+                   plyr::mdply(.data=p_SA_RA, .fun= P_SARA))
+  p_SA_RA$i <-  nRatings + 1 - p_SA_RA$i
+  p_SA_RB <- cbind(stimulus = -1, response = 1,
+                   plyr::mdply(.data=p_SA_RB, .fun= P_SARB))
+
+  res <- rbind(p_SB_RB, p_SB_RA,  p_SA_RA, p_SA_RB)
+  colnames(res) <- c("stimulus", "response", "diffCond",
+                     "rating", "p")
+  res$p[is.na(res$p) | is.nan(res$p)] <- 0
+  res
+}
+
 # (xi) response.congruent evidence model
 
+predictDataRCE <- function(paramDf){
+
+  nCond <- sum(is.finite(c(t(paramDf[,grep(pattern = "d_", names(paramDf), value=T)]))))
+  nRatings <- sum(is.finite(c(t(paramDf[,grep(pattern = "^theta_minus.", names(paramDf), value=T)]))))+1
+  ds <- c(t(paramDf[,paste("d_", 1:nCond, sep="")]))
+  locA <- -ds/2
+  locB <- ds/2
+  theta <- paramDf$c
+  c_RA <- c(-Inf,c(t(paramDf[,paste("theta_minus.", (nRatings-1):1, sep="")])), theta)
+  c_RB <- c(theta,c(t(paramDf[,paste("theta_plus.", 1:(nRatings-1), sep="")])), Inf)
+  sigma <- sqrt(1/2)
+
+  p_SA_RA <- expand.grid(j = 1:nCond, i = 1:nRatings)
+  p_SA_RB <- expand.grid(j = 1:nCond, i = 1:nRatings)
+  p_SB_RA <- expand.grid(j = 1:nCond, i = 1:nRatings)
+  p_SB_RB <- expand.grid(j = 1:nCond, i = 1:nRatings)
+  P_SBRB <-  Vectorize(function(j, i){
+    integrate(function(x) dnorm(x, mean=ds[j]/2, sigma) * pnorm(x-theta, mean=0, sigma),
+              lower = c_RB[i],
+              upper = c_RB[i+1],
+              rel.tol = 10^-8)$value
+  })
+  P_SARB <- Vectorize(function(j,i){
+    integrate(function(x) dnorm(x, mean = 0, sigma) * pnorm(x-theta, mean=ds[j]/2, sigma), # dnorm(x, mean=) * (1-pnorm(x, mean=b))
+              lower = c_RB[i],
+              upper = c_RB[i+1],
+              rel.tol = 10^-8)$value
+  })
+
+  P_SBRA <-  Vectorize(function(j,i){
+    integrate(function(x) dnorm(x, mean= 0, sigma) * pnorm(x+theta, mean=ds[j]/2, sigma) , # dnorm(x, mean=ds[j]+b) * (1 - pnorm(x, mean=-b))
+              lower = -c_RA[i+1], # braucht es hier einen Vorzeichenwechsel?
+              upper = -c_RA[i],
+              rel.tol = 10^-8)$value
+  })
+  P_SARA <- Vectorize(function(j,i){
+    integrate(function(x) dnorm(x, mean = ds[j]/2, sigma) * pnorm(x+theta, mean=0, sigma),
+              lower = -c_RA[i+1],
+              upper = -c_RA[i],
+              rel.tol = 10^-8)$value
+  })
+
+
+  p_SB_RB <- cbind(stimulus = 1, response = 1,
+                   plyr::mdply(.data=p_SB_RB, .fun= P_SBRB))
+  p_SB_RA <- cbind(stimulus = 1, response = -1,
+                   plyr::mdply(.data=p_SB_RA, .fun= P_SBRA))
+  p_SB_RA$i <- nRatings + 1 - p_SB_RA$i
+  p_SA_RA <- cbind(stimulus = -1, response = -1,
+                   plyr::mdply(.data=p_SA_RA, .fun= P_SARA))
+  p_SA_RA$i <-  nRatings + 1 - p_SA_RA$i
+  p_SA_RB <- cbind(stimulus = -1, response = 1,
+                   plyr::mdply(.data=p_SA_RB, .fun= P_SARB))
+
+  res <- rbind(p_SB_RB, p_SB_RA,  p_SA_RA, p_SA_RB)
+  colnames(res) <- c("stimulus", "response", "diffCond",
+                     "rating", "p")
+  res$p[is.na(res$p) | is.nan(res$p)] <- 0
+  res
+}
 
 

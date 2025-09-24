@@ -169,8 +169,29 @@
 #' features in the confidence judgment. \eqn{w} and \eqn{\sigma} are fitted in
 #' addition to the set of shared parameters.
 #'
+#' ### \strong{Response-congruent evidence model (RCE)}
+#' The response-congruent evidence model represents the idea that observers use
+#' all available sensory information to make the discrimination decision, but for confidence judgements,
+#' they only consider evidence consistent with the selected decision and ignore evidence against the decision (Peters et al., 2017).
+#' The model assumes two separate samples of sensory evidence collected in each trial,
+#' each belonging to one possible identity of the stimulus.
+#' Both samples of sensory evidence \eqn{x_{-1}} and
+#' \eqn{x_1} are sampled from Gaussian distributions with a standard deviations of \eqn{\sqrt{1/2}}.
+#' The mean of \eqn{x_{-1}} is given by \eqn{(1 - S) \times 0.25 \times d}; the mean
+#' of \eqn{x_1} is given by \eqn{(1 + S) \times 0.25 \times d}. The sensory evidence
+#' used for the discrimination choice is \eqn{x = x_2 - x_1},
+#' which implies that the discrimination decision is equivalent to standard SDT.
+#' The confidence decision variable y is \eqn{y = - x_1} if the response R is -1 and \eqn{y = x_2} otherwise.
+#'
 #' ### \strong{CASANDRE (CAS)}
-#' To-do: doc
+#' Generation of the primary choice in the CASANDRE model follows standard SDT assumptions.
+#' For confidence, the CASANDRE model assumes an additional stage of processing based on the observer’s estimate of the
+#' perceived reliability of their choices (Boundy-Singer et al., 2023).
+#' The confidence variable \eqn(y) is equal to  \eqn{x / \hat{sigma}}. \eqn{\hat{sigma}}
+#' represents a noisy internal estimate of the sensory noise.
+#' It is assumed that \eqn{\hat{sigma}} is sampled from a lognormal distribution with a mean fixed to 1
+#' and a free noise parameter sigma. Conceptually, sigma represents the uncertainty
+#' in an individual's estimate of their own sensory uncertainty.
 #'
 #' @author Sebastian Hellmann, \email{sebastian.hellmann@tum.de}\cr
 #' Manuel Rausch, \email{manuel.rausch@ku.de}

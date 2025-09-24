@@ -13,9 +13,11 @@ models have been included:
 - independent Gaussian model (Rausch & Zehetleitner, 2017),
 - independent truncated Gaussian model (the model underlying the
   meta-d$`^\prime`$/d$`^\prime`$ method, see Rausch et al., 2023),
-- lognormal noise model (Shekhar & Rahnev, 2021), and
+- lognormal noise model (Shekhar & Rahnev, 2021),
 - lognormal weighted evidence and visibility model (Shekhar & Rahnev,
-  2023).
+  2023),
+- the response-congruent-evidence model (Peters et al., 2017), and
+- the CASANDRE model (Boundy-Singer et al., 2022).
 
 In addition, the `statConfR` package provides functions for estimating
 different kinds of measures of metacognition:
@@ -570,12 +572,14 @@ following steps need to be taken:
 # 8 Contact
 
 For comments, bug reports, and feature suggestions please feel free to
-write to either <manuel.rausch@hochschule-rhein-waal.de> or
-<sebastian.hellmann@tum.de> or [submit an
-issue](https://github.com/ManuelRausch/StatConfR/issues).
+write to either <manuel.rausch@ku.de> or <sebastian.hellmann@tum.de> or
+[submit an issue](https://github.com/ManuelRausch/StatConfR/issues).
 
 # 9 References
 
+- Boundy-Singer, Z. M., Ziemba, C. M., & Goris, R. L. T. (2022).
+  Confidence reflects a noisy decision reliability estimate. Nature
+  Human Behaviour, 7(1), 142–154. <doi:10.1038/s41562-022-01464-x>
 - Cover, T. M., & Thomas, J. A. (2006). Elements of information theory.
   2nd edition. Wiley.
 - Dayan, P. (2023). Metacognitive Information Theory. Open Mind, 7,
@@ -606,6 +610,11 @@ issue](https://github.com/ManuelRausch/StatConfR/issues).
 - Palminteri, S., Wyart, V., & Koechlin, E. (2017). The importance of
   falsification in computational cognitive modeling. Trends in Cognitive
   Sciences, 21(6), 425–433. <doi:10.1016/j.tics.2017.03.011>
+- Peters, M. A. K., Thesen, T., Ko, Y. D., Maniscalco, B., Carlson, C.,
+  Davidson, M., Doyle, W., Kuzniecky, R., Devinsky, O., Halgren, E., &
+  Lau, H. (2017). Perceptual confidence neglects decision-incongruent
+  evidence in the brain. Nature Human Behaviour, 1(0139), 1–21.
+  <doi:10.1038/s41562-017-0139>
 - Rausch, M., Hellmann, S., & Zehetleitner, M. (2018). Confidence in
   masked orientation judgments is informed by both evidence and
   visibility. Attention, Perception, and Psychophysics, 80(1), 134–154.
@@ -615,8 +624,7 @@ issue](https://github.com/ManuelRausch/StatConfR/issues).
   291–312. <doi:10.1016/j.concog.2017.02.007>
 - Rausch, M., Meyen, S. & Hellmann, S. (2025). statConfR: An R Package
   for Static Models of Decision Confidence and Metacognition. Journal of
-  Open Source Software, 10(106), 6966.
-  <https://doi.org/10.21105/joss.06966>
+  Open Source Software, 10(106), 6966. <doi:10.21105/joss.06966>
 - Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive
   Inefficiency in Perceptual Decision Making. Psychological Review,
   128(1), 45–70. <doi:10.1037/rev0000249>

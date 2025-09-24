@@ -1,7 +1,7 @@
 ---
 title: "README"
 author: "Manuel Rausch, Sascha Meyen, and Sebastian Hellmann"
-date: "2025-02-25"
+date: "2025-09-24"
 output:
   md_document:
     variant: gfm
@@ -29,8 +29,10 @@ binary discrimination tasks with confidence ratings on the data from individual 
 - post-decisional accumulation model (Rausch et al., 2018),
 - independent Gaussian model (Rausch & Zehetleitner, 2017),
 - independent truncated Gaussian model (the model underlying the  meta-d$^\prime$/d$^\prime$ method, see Rausch et al., 2023),
-- lognormal noise model (Shekhar & Rahnev, 2021), and
-- lognormal weighted evidence and visibility model (Shekhar & Rahnev, 2023).
+- lognormal noise model (Shekhar & Rahnev, 2021), 
+- lognormal weighted evidence and visibility model (Shekhar & Rahnev, 2023), 
+- the response-congruent-evidence model (Peters et al., 2017), and 
+- the CASANDRE model (Boundy-Singer et al., 2022). 
 
 In addition, the `statConfR` package provides functions for estimating different 
 kinds of measures of metacognition: 
@@ -338,11 +340,12 @@ For readers who want to use our open code to implement models of confidence them
 # Contact
 
 For comments, bug reports, and feature suggestions please feel free to write to either
-[manuel.rausch@hochschule-rhein-waal.de](mailto:manuel.rausch@hochschule-rhein-waal.de)
+[manuel.rausch@ku.de](mailto:manuel.rausch@ku.de)
 or [sebastian.hellmann\@tum.de](mailto:sebastian.hellmann@tum.de)
 or [submit an issue](https://github.com/ManuelRausch/StatConfR/issues).
 
 # References
+- Boundy-Singer, Z. M., Ziemba, C. M., & Goris, R. L. T. (2022). Confidence reflects a noisy decision reliability estimate. Nature Human Behaviour, 7(1), 142–154. doi:10.1038/s41562-022-01464-x
 - Cover, T. M., & Thomas, J. A. (2006). Elements of information theory. 2nd edition. Wiley.
 - Dayan, P. (2023). Metacognitive Information Theory. Open Mind, 7, 392–411. doi:10.1162/opmi_a_00091
 - Fleming, S. M. (2017). HMeta-d: Hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, 1, 1–14. doi:10.1093/nc/nix007
@@ -353,6 +356,7 @@ or [submit an issue](https://github.com/ManuelRausch/StatConfR/issues).
 - Maniscalco, B., & Lau, H. (2016). The signal processing architecture underlying subjective reports of sensory awareness. Neuroscience of Consciousness, 1, 1–17. doi:10.1093/nc/niw002
 - Maniscalco, B., & Lau, H. C. (2014). Signal Detection Theory Analysis of Type 1 and Type 2 Data: Meta-d, Response- Specific Meta-d, and the Unequal Variance SDT Model. In S. M. Fleming & C. D. Frith (Eds.), The Cognitive Neuroscience of Metacognition (pp. 25–66). Springer. doi:10.1007/978-3-642-45190-4_3
 - Palminteri, S., Wyart, V., & Koechlin, E. (2017). The importance of falsification in computational cognitive modeling. Trends in Cognitive Sciences, 21(6), 425–433. doi:10.1016/j.tics.2017.03.011
+- Peters, M. A. K., Thesen, T., Ko, Y. D., Maniscalco, B., Carlson, C., Davidson, M., Doyle, W., Kuzniecky, R., Devinsky, O., Halgren, E., & Lau, H. (2017). Perceptual confidence neglects decision-incongruent evidence in the brain. Nature Human Behaviour, 1(0139), 1–21. doi:10.1038/s41562-017-0139
 - Rausch, M., Hellmann, S., & Zehetleitner, M. (2018). Confidence in masked orientation judgments is informed by both evidence and visibility. Attention, Perception, and Psychophysics, 80(1), 134–154. doi:10.3758/s13414-017-1431-5
 - Rausch, M., & Zehetleitner, M. (2017). Should metacognition be measured by logistic regression? Consciousness and Cognition, 49, 291–312. doi:10.1016/j.concog.2017.02.007
 - Rausch, M., Meyen, S. & Hellmann, S. (2025). statConfR: An R Package for Static Models of Decision Confidence and Metacognition. Journal of Open Source Software, 10(106), 6966. doi:10.21105/joss.06966

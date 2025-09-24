@@ -221,7 +221,7 @@ Conceptually, logWEV assumes that the observer combines evidence about decision-
 of the stimulus with the strength of evidence about choice-irrelevant features (Rausch et al., 2018).
 The model also assumes that noise affecting the confidence decision variable is lognormal
 in accordance with Shekhar and Rahnev (2021).
-According to logWEV, the confidence decision variable is \eqn{y} is equal to
+According to logWEV, the confidence decision variable \eqn{y} is equal to
 \eqn{y^*\times R}. \eqn{y^*} is sampled from a lognormal distribution with a location parameter
 of \eqn{(1-w)\times x\times R + w \times d_k} and a scale parameter of \eqn{\sigma}.
 The parameter \eqn{\sigma} quantifies the amount of unsystematic variability
@@ -249,7 +249,12 @@ The confidence decision variable y is \eqn{y = - x_1} if the response R is -1 an
 
 \subsection{\strong{CASANDRE (CAS)}}{
 
-To-do: doc
+Generation of the primary choice in the CASANDRE model follows standard SDT assumptions. For confidence,
+the CASANDRE model assumes an additional stage of processing based on the observer’s estimate of the
+reliability of their choices (Boundy-Singer et al., 2023).
+The confidence variable \eqn(y) is equal to  \eqn(x/sigma_hat). sigma hat represents a noisy internal estimate of the sensory noise.
+It is assumed that sigma hat is sampled from a lognormal distribution with a mean fixed to 1 and a free noise parameter sigma.
+Conceptually, sigma represents the uncertainty in an individual's estimate of their own sensory uncertainty.
 }
 
 }
