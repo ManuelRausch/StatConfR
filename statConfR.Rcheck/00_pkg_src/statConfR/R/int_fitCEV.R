@@ -16,8 +16,8 @@ fitCEV <-
 
     inits <- data.frame(matrix(data=NA, nrow= nrow(temp), ncol = nCond + nRatings*2 + 1))
     if(nCond==1)  {
-      inits[,1] <-  log(temp$maxD)  }
-    else{
+      inits[,1] <-  log(temp$maxD)
+    }else{
       inits[,1:(nCond)] <-  log(t(mapply(function(maxD) diff(seq(0, maxD, length.out = nCond+1)), temp$maxD)))
     }
     if (nRatings > 3){

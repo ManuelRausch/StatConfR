@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2025.2.11)  28 JUL 2025 10:10
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2025.2.11)  26 SEP 2025 12:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**C:/Users/PPA714/AppData/Local/Temp/RtmpmioJau/Rd2pdf5bdc786a5fa2/Rd2.tex
-(C:/Users/PPA714/AppData/Local/Temp/RtmpmioJau/Rd2pdf5bdc786a5fa2/Rd2.tex
+**C:/Users/PPA714/AppData/Local/Temp/RtmpQpfntj/Rd2pdf28083c19149a/Rd2.tex
+(C:/Users/PPA714/AppData/Local/Temp/RtmpQpfntj/Rd2pdf28083c19149a/Rd2.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 
@@ -433,18 +433,18 @@ LaTeX Font Info:    Trying to load font information for U+rsfs on input line 28
 (C:\Users\PPA714\AppData\Local\Programs\MiKTeX\tex/latex/jknappen\ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
-(Rd2.toc)
-\tf@toc=\write5
-\openout5 = `Rd2.toc'.
-
-
+(Rd2.toc
 
 [1
 
 
 {C:/Users/PPA714/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/PPA
 714/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}{C:/Users/PPA714/
-AppData/Local/Programs/MiKTeX/fonts/enc/dvips/inconsolata/i4-t1-0.enc}]
+AppData/Local/Programs/MiKTeX/fonts/enc/dvips/inconsolata/i4-t1-0.enc}])
+\tf@toc=\write5
+\openout5 = `Rd2.toc'.
+
+
 Overfull \hbox (0.19783pt too wide) in paragraph at lines 96--99
 \T1/ptm/m/n/10 dered from low-est con-fi-dence to high-est con-fi-dence; oth-er
 -wise will be trans-
@@ -473,230 +473,210 @@ Overfull \hbox (0.19783pt too wide) in paragraph at lines 197--199
 [4]
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 414--415
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 416--417
-
- []
-
-
 
 [6]
-Underfull \hbox (badness 10000) in paragraph at lines 418--419
+Underfull \hbox (badness 10000) in paragraph at lines 446--447
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 420--421
+Underfull \hbox (badness 10000) in paragraph at lines 448--449
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 422--423
+Underfull \hbox (badness 10000) in paragraph at lines 450--451
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 424--425
+Underfull \hbox (badness 10000) in paragraph at lines 452--453
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 426--427
+Underfull \hbox (badness 10000) in paragraph at lines 454--455
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 428--429
+Underfull \hbox (badness 10000) in paragraph at lines 456--457
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--431
+Underfull \hbox (badness 10000) in paragraph at lines 458--459
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 432--433
+Underfull \hbox (badness 10000) in paragraph at lines 460--461
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 434--435
+Underfull \hbox (badness 10000) in paragraph at lines 462--463
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 436--437
+Underfull \hbox (badness 10000) in paragraph at lines 464--465
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 438--439
+Underfull \hbox (badness 10000) in paragraph at lines 466--467
 
- []
-
-
-Overfull \hbox (28.7181pt too wide) in paragraph at lines 440--441
-\T1/ptm/m/n/10 decision-incongruent ev-i-dence in the brain. Na-ture Hu-man Be-
-haviour, 1(0139), 1^^U21. doi:10.1038/s41562-
  []
 
 
 
 [7]
-Overfull \hbox (13.19849pt too wide) in paragraph at lines 459--472
+Underfull \hbox (badness 10000) in paragraph at lines 468--469
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 470--471
+
+ []
+
+
+Overfull \hbox (28.7181pt too wide) in paragraph at lines 472--473
+\T1/ptm/m/n/10 decision-incongruent ev-i-dence in the brain. Na-ture Hu-man Be-
+haviour, 1(0139), 1^^U21. doi:10.1038/s41562-
+ []
+
+
+Overfull \hbox (13.19849pt too wide) in paragraph at lines 493--506
 \T1/ptm/m/n/10 frame, in-di-cated by dif-fer-ent val-ues in the col-umn []\T1/z
 i4/m/n/10 participant []\T1/ptm/m/n/10 of the []\T1/zi4/m/n/10 data []\T1/ptm/m
 /n/10 ar-gu-ment. []\T1/zi4/m/n/10 fitConfModels
  []
 
 
-Overfull \hbox (0.19783pt too wide) in paragraph at lines 489--492
+
+[8]
+Overfull \hbox (0.19783pt too wide) in paragraph at lines 523--526
 \T1/ptm/m/n/10 dered from low-est con-fi-dence to high-est con-fi-dence; oth-er
 -wise will be trans-
  []
 
 
-
-[8]
 
 [9]
 
 [10]
 
-! LaTeX Error: Unicode character − (U+2212)
-               not set up for use with LaTeX.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.712 ...by \eqn{(1 − S) \times 0.25 \times d}{}
-                                                  ; the mean
-You may provide a definition with
-\DeclareUnicodeCharacter 
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 750--751
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 752--753
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 754--755
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 756--757
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 758--759
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 760--761
-
- []
-
-
-
 [11]
-Underfull \hbox (badness 10000) in paragraph at lines 762--763
+Underfull \hbox (badness 10000) in paragraph at lines 798--799
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 764--765
+Underfull \hbox (badness 10000) in paragraph at lines 800--801
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 766--767
+Underfull \hbox (badness 10000) in paragraph at lines 802--803
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 768--769
+Underfull \hbox (badness 10000) in paragraph at lines 804--805
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 770--771
+Underfull \hbox (badness 10000) in paragraph at lines 806--807
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 772--773
+Underfull \hbox (badness 10000) in paragraph at lines 808--809
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 774--775
+Underfull \hbox (badness 10000) in paragraph at lines 810--811
 
  []
 
 
-Overfull \hbox (28.7181pt too wide) in paragraph at lines 776--777
-\T1/ptm/m/n/10 decision-incongruent ev-i-dence in the brain. Na-ture Hu-man Be-
-haviour, 1(0139), 1^^U21. doi:10.1038/s41562-
+Underfull \hbox (badness 10000) in paragraph at lines 812--813
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 814--815
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 816--817
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 818--819
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 820--821
+
  []
 
 
 
 [12]
+Underfull \hbox (badness 10000) in paragraph at lines 822--823
 
-[13]
+ []
 
-[14]
-Overfull \hbox (24.73865pt too wide) in paragraph at lines 952--958
-[]\T1/ptm/m/n/10 a data frame as re-turned by [][][]\T1/zi4/m/n/10 fitConfModel
-s[][][][]\T1/ptm/m/n/10 . Should con-tain a col-umn []\T1/zi4/m/n/10 model[]\T1
-/ptm/m/n/10 indicating
+
+Overfull \hbox (28.7181pt too wide) in paragraph at lines 824--825
+\T1/ptm/m/n/10 decision-incongruent ev-i-dence in the brain. Na-ture Hu-man Be-
+haviour, 1(0139), 1^^U21. doi:10.1038/s41562-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 824--825
+
  []
 
 
 
-[15]
+[13]
 
-[16]
-Overfull \hbox (61.35771pt too wide) in paragraph at lines 1094--1095
+[14]
+
+[15]
+Overfull \hbox (61.35771pt too wide) in paragraph at lines 1007--1008
 \T1/ptm/m/n/10 dence, and re-sponse time in vi-sual per-cep-tion. Psy-cho-log-i
 -cal Re-view. 130(6), 1521^^U1543. doi:10.1037/rev0000411 
  []
 
 
-
-[17]
-Overfull \hbox (0.19783pt too wide) in paragraph at lines 1125--1128
+Overfull \hbox (0.19783pt too wide) in paragraph at lines 1038--1041
 \T1/ptm/m/n/10 dered from low-est con-fi-dence to high-est con-fi-dence; oth-er
 -wise will be trans-
  []
 
 
 
-[18]
+[16]
+
+[17]
+
+[18] (Rd2.ind
 
 [19]
 
-[20] (Rd2.ind
-
-[21]
 
 
-
-[22
+[20
 
 
 ]) (Rd2.aux)
@@ -704,21 +684,14 @@ Overfull \hbox (0.19783pt too wide) in paragraph at lines 1125--1128
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
-
-
-Package rerunfilecheck Warning: File `Rd2.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `Rd2.out':
-(rerunfilecheck)             Before: C117C8A031B0C26E750227EC50D5E597;824
-(rerunfilecheck)             After:  0BEE2B3A3A472B8AD9528DCBA88B7AB9;890.
+Package rerunfilecheck Info: File `Rd2.out' has not changed.
+(rerunfilecheck)             Checksum: BFC909A3F8C01DF08F4D32BF9D77672B;802.
  ) 
 Here is how much of TeX's memory you used:
- 10752 strings out of 473530
- 164109 string characters out of 5714310
- 565167 words of memory out of 5000000
- 33698 multiletter control sequences out of 15000+600000
+ 10739 strings out of 473530
+ 163968 string characters out of 5714310
+ 564161 words of memory out of 5000000
+ 33697 multiletter control sequences out of 15000+600000
  592704 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  92i,6n,95p,415b,733s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -740,9 +713,9 @@ ata/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/PPA
 r8a.pfb><C:/Users/PPA714/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/ut
 mr8a.pfb><C:/Users/PPA714/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/u
 tmri8a.pfb>
-Output written on Rd2.pdf (22 pages, 248325 bytes).
+Output written on Rd2.pdf (20 pages, 242269 bytes).
 PDF statistics:
- 324 PDF objects out of 1000 (max. 8388607)
- 101 named destinations out of 1000 (max. 500000)
+ 301 PDF objects out of 1000 (max. 8388607)
+ 89 named destinations out of 1000 (max. 500000)
  65 words of extra memory for PDF output out of 10000 (max. 10000000)
 

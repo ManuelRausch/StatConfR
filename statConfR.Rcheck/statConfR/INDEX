@@ -10,7 +10,6 @@ fitMetaDprime           title Compute measures of metacognitive
                         sensitivity (meta-d') and metacognitive
                         efficiency(meta-d'/d') for data from one or
                         several subjects
-groupBMS                Group-level Bayesian Model Comparison
 plotConfModelFit        Plot the prediction of fitted parameters of one
                         model of confidence over the corresponding data
 simConf                 Simulate data according to a static model of

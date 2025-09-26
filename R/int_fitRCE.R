@@ -106,7 +106,6 @@ ll_RCE <-
     p <- c(t(p))
     ds <- cumsum(exp(p[1:(nCond)])) # enforce that sensitivity is ordered
 
-    b <- p[nCond+nRatings]
     theta <- p[nCond+nRatings]
     c_RA <- c(-Inf, p[nCond+nRatings-1] -
                 rev(cumsum(c(exp(p[(nCond+1):(nCond+nRatings-2)])))),
@@ -148,8 +147,9 @@ ll_RCE <-
 
     p_SB_RB <- outer(1:nCond, 1:nRatings, P_SBRB)
     p_SB_RA <- outer(1:nCond, 1:nRatings, P_SBRA)
-    p_SA_RA <- outer(1:nCond, 1:nRatings, P_SARA)
-    p_SA_RB <- outer(1:nCond, 1:nRatings, P_SARB)
+    p_SA_RA <- outer(1:nCond, 1:nRatings, P_SARA)  # rowSums(p_SB_RA) + rowSums(p_SB_RB)
+    p_SA_RB <- outer(1:nCond, 1:nRatings, P_SARB) # rowSums(p_SA_RA) + rowSums(p_SA_RB)
+
 
     p_SB_RB[(is.na(p_SB_RB))| is.nan(p_SB_RB)| p_SB_RB < 10^-64] <- 10^-64
     p_SB_RA[(is.na(p_SB_RA))| is.nan(p_SB_RA)| p_SB_RA < 10^-64] <- 10^-64

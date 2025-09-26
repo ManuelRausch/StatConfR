@@ -20,7 +20,7 @@
 #'    a factor with a warning),
 #' * \code{correct} (encoding whether the response was correct; should  be 0 for incorrect responses and 1 for correct responses)
 #' @param model `character` of length 1. The generative model that should be
-#'    fitted. Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG',
+#'    fitted. Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'RCE', 'CAS',
 #'    'ITGc', 'ITGcm', 'logN', and 'logWEV'.
 #' @param nInits `integer`. Number of starting values used for maximum likelihood optimization.
 #' Defaults to 5.
@@ -135,7 +135,7 @@
 #' amount of evidence available for the discrimination decision and  can be smaller
 #' as well as greater than 1.
 #'
-#' ### \strong{Logistic noise model (logN)}
+#' ### \strong{Lognormal noise model (logN)}
 #' According to logN, the same sample
 #' of sensory evidence is used to generate response and confidence, i.e.,
 #' \eqn{y=x} just as in SDT (Shekhar & Rahnev, 2021). However, according to logN, the confidence criteria
@@ -154,7 +154,7 @@
 #' \overline{\theta}_{-1,L-1}, \overline{\theta}_{1,1}, ...  \overline{\theta}_{1,L-1}},
 #' as free parameters.
 #'
-#' ### \strong{Logistic weighted evidence and visibility model (logWEV)}
+#' ### \strong{Lognormal weighted evidence and visibility model (logWEV)}
 #' logWEV is a combination of logN and WEV proposed by Shekhar and Rahnev (2023).
 #' Conceptually, logWEV assumes that the observer combines evidence about decision-relevant features
 #' of the stimulus with the strength of evidence about choice-irrelevant features (Rausch et al., 2018).
@@ -180,18 +180,19 @@
 #' The mean of \eqn{x_{-1}} is given by \eqn{(1 - S) \times 0.25 \times d}; the mean
 #' of \eqn{x_1} is given by \eqn{(1 + S) \times 0.25 \times d}. The sensory evidence
 #' used for the discrimination choice is \eqn{x = x_2 - x_1},
-#' which implies that the discrimination decision is equivalent to standard SDT.
+#' which implies that the process underlying the discrimination decision is equivalent to standard SDT.
 #' The confidence decision variable y is \eqn{y = - x_1} if the response R is -1 and \eqn{y = x_2} otherwise.
 #'
 #' ### \strong{CASANDRE (CAS)}
 #' Generation of the primary choice in the CASANDRE model follows standard SDT assumptions.
 #' For confidence, the CASANDRE model assumes an additional stage of processing based on the observer’s estimate of the
 #' perceived reliability of their choices (Boundy-Singer et al., 2023).
-#' The confidence variable \eqn(y) is equal to  \eqn{x / \hat{sigma}}. \eqn{\hat{sigma}}
-#' represents a noisy internal estimate of the sensory noise.
-#' It is assumed that \eqn{\hat{sigma}} is sampled from a lognormal distribution with a mean fixed to 1
-#' and a free noise parameter sigma. Conceptually, sigma represents the uncertainty
-#' in an individual's estimate of their own sensory uncertainty.
+#' The confidence decision variable y is given by \eqn{y = \frac{x}{\hat{\sigma}}}.
+#' \eqn{\hat{\sigma}} represents a noisy internal estimate of the sensory noise.
+#' It is assumed that \eqn{\hat{\sigma}} is sampled from a lognormal distribution with a mean fixed to 1
+#' and a free noise parameter \eqn{\sigma}.
+#' Conceptually, \eqn{\sigma} represents the uncertainty in an individual's estimate of their own sensory uncertainty.
+#'
 #'
 #' @author Sebastian Hellmann, \email{sebastian.hellmann@tum.de}\cr
 #' Manuel Rausch, \email{manuel.rausch@ku.de}

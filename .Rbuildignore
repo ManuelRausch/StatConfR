@@ -4,7 +4,6 @@ QuickTests.R
 usefultools.R
 ^.*\.Rproj$
 ^\.Rproj\.user$
-LICENSE
 README.rmd
 README_files
 paper.bib
@@ -17,3 +16,5 @@ StatConfR.pdf
 .github
 .Rd2pdf14268
 statConfR.Rcheck
+^dev$
+LICENSE

@@ -30,7 +30,7 @@
 #'    the models given in the second argument are fitted to each subset of `data`
 #'    determined by the different values of this column)
 #' @param models `character`. The different computational models that should be
-#'    fitted. Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'RCE',
+#'    fitted. Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'ITGc', 'RCE', 'CAS',
 #'    'ITGcm', 'logN', and 'logWEV'. Alternatively, if `model="all"` (default),
 #'    all implemented models will be fit.
 #' @param nInits `integer`. Number of initial values used for maximum likelihood optimization.
@@ -160,7 +160,7 @@
 #' amount of evidence available for the discrimination decision and  can be smaller
 #' as well as greater than 1.
 #'
-#' ### \strong{Logistic noise model (logN)}
+#' ### \strong{Lognormal noise model (logN)}
 #' According to logN, the same sample
 #' of sensory evidence is used to generate response and confidence, i.e.,
 #' \eqn{y=x} just as in SDT (Shekhar & Rahnev, 2021). However, according to logN, the confidence criteria
@@ -179,13 +179,13 @@
 #' \overline{\theta}_{-1,L-1}, \overline{\theta}_{1,1}, ...  \overline{\theta}_{1,L-1}},
 #' as free parameters.
 #'
-#' ### \strong{Logistic weighted evidence and visibility model (logWEV)}
+#' ### \strong{Lognormal weighted evidence and visibility model (logWEV)}
 #' logWEV is a combination of logN and WEV proposed by Shekhar and Rahnev (2023).
 #' Conceptually, logWEV assumes that the observer combines evidence about decision-relevant features
 #' of the stimulus with the strength of evidence about choice-irrelevant features (Rausch et al., 2018).
 #' The model also assumes that noise affecting the confidence decision variable is lognormal
 #'  in accordance with Shekhar and Rahnev (2021).
-#' According to logWEV, the confidence decision variable is \eqn{y} is equal to
+#' According to logWEV, the confidence decision variable \eqn{y} is equal to
 #' \eqn{y^*\times R}. \eqn{y^*} is sampled from a lognormal distribution with a location parameter
 #'  of \eqn{(1-w)\times x\times R + w \times d_k} and a scale parameter of \eqn{\sigma}.
 #'  The parameter \eqn{\sigma} quantifies the amount of unsystematic variability
@@ -202,13 +202,22 @@
 #' each belonging to one possible identity of the stimulus.
 #' Both samples of sensory evidence \eqn{x_{-1}} and
 #' \eqn{x_1} are sampled from Gaussian distributions with a standard deviations of \eqn{\sqrt{1/2}}.
-#' The mean of \eqn{x_{-1}} is given by \eqn{(1 − S) \times 0.25 \times d}; the mean
+#' The mean of \eqn{x_{-1}} is given by \eqn{(1 - S) \times 0.25 \times d}; the mean
 #' of \eqn{x_1} is given by \eqn{(1 + S) \times 0.25 \times d}. The sensory evidence
 #' used for the discrimination choice is \eqn{x = x_2 - x_1},
-#' which implies that the discrimination decision is equivalent to standard SDT.
+#' which implies that the process underlying the discrimination decision is equivalent to standard SDT.
 #' The confidence decision variable y is \eqn{y = - x_1} if the response R is -1 and \eqn{y = x_2} otherwise.
-
-
+#'
+#' ### \strong{CASANDRE (CAS)}
+#' Generation of the primary choice in the CASANDRE model follows standard SDT assumptions.
+#' For confidence, the CASANDRE model assumes an additional stage of processing based on the observer’s estimate of the
+#' perceived reliability of their choices (Boundy-Singer et al., 2023).
+#' The confidence decision variable y is given by \eqn{y = \frac{x}{\hat{\sigma}}}.
+#' \eqn{\hat{\sigma}} represents a noisy internal estimate of the sensory noise.
+#' It is assumed that \eqn{\hat{\sigma}} is sampled from a lognormal distribution with a mean fixed to 1
+#' and a free noise parameter \eqn{\sigma}.
+#' Conceptually, \eqn{\sigma} represents the uncertainty in an individual's estimate of their own sensory uncertainty.
+#'
 #' @author
 #' Sebastian Hellmann, \email{sebastian.hellmann@tum.de}\cr
 #' Manuel Rausch, \email{manuel.rausch@ku.de}
@@ -227,8 +236,8 @@
 #' @references Schwarz, G. (1978). Estimating the dimension of a model. The Annals of Statistics, 6(2), 461–464. doi: 10.1214/aos/1176344136\cr
 #' @references Shekhar, M., & Rahnev, D. (2021). The Nature of Metacognitive Inefficiency in Perceptual Decision Making. Psychological Review, 128(1), 45–70. doi: 10.1037/rev0000249\cr
 #' @references Shekhar, M., & Rahnev, D. (2023). How Do Humans Give Confidence? A Comprehensive Comparison of Process Models of Perceptual Metacognition. Journal of Experimental Psychology: General. doi:10.1037/xge0001524\cr
-#' @references Peters, M. A. K., Thesen, T., Ko, Y. D., Maniscalco, B., Carlson, C., Davidson, M., Doyle, W., Kuzniecky, R., Devinsky, O., Halgren, E., & Lau, H. (2017). Perceptual confidence neglects decision-incongruent evidence in the brain. Nature Human Behaviour, 1(0139), 1–21. doi:10.1038/s41562-017-0139
-
+#' @references Peters, M. A. K., Thesen, T., Ko, Y. D., Maniscalco, B., Carlson, C., Davidson, M., Doyle, W., Kuzniecky, R., Devinsky, O., Halgren, E., & Lau, H. (2017). Perceptual confidence neglects decision-incongruent evidence in the brain. Nature Human Behaviour, 1(0139), 1–21. doi:10.1038/s41562-017-0139\cr
+#' @references Boundy-Singer, Z. M., Ziemba, C. M., & Goris, R. L. T. (2022). Confidence reflects a noisy decision reliability estimate. Nature Human Behaviour, 7(1), 142–154. doi:10.1038/s41562-022-01464-x
 
 #' @examples
 #' # 1. Select two subjects from the masked orientation discrimination experiment
@@ -254,7 +263,7 @@ fitConfModels <- function(data, models="all",
                           nInits = 5, nRestart = 4,
                           .parallel=FALSE, n.cores=NULL) {
   AllModels <- c('WEV', 'SDT', 'IG', 'ITGc',
-                 'ITGcm', 'GN', 'PDA', 'logN', 'logWEV', 'RCE') # if you implement additional models, add them here!
+                 'ITGcm', 'GN', 'PDA', 'logN', 'logWEV', 'RCE', 'CAS') # if you implement additional models, add them here!
   if (identical(models,"all")) models <- AllModels
   if (!all(models %in% AllModels)) {
     stop(paste(paste(setdiff(models, AllModels),collapse = " and "), " not implemented!"))

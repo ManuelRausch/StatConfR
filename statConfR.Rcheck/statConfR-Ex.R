@@ -155,37 +155,6 @@ MetaDs <- fitMetaDprime(data, model="F", .parallel = FALSE)
 base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
 base::cat("fitMetaDprime", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
-nameEx("groupBMS")
-### * groupBMS
-
-flush(stderr()); flush(stdout())
-
-base::assign(".ptime", proc.time(), pos = "CheckExEnv")
-### Name: groupBMS
-### Title: Group-level Bayesian Model Comparison
-### Aliases: groupBMS
-
-### ** Examples
-
-# Define a data frame with information criteria from model fits
-# this is a sub-data.frame from an output of fitConfModels with
-# 5 subjects, two models and rounded information criteria)
-fitted_par <- data.frame(
-  participant = rep(1:5, each=2),
-  model = rep(c("WEV", "ITGcm"), 5),
-  BIC = c(5360, 5550, 3773, 3963, 3441, 3503, 2613, 2706, 3566, 3695),
-  AIC = c(5274, 5469, 3686, 3883, 3355, 3422, 2527, 2625, 3479, 3614),
-  AICc = c(5275, 5469, 3687, 3883, 3356, 3422, 2527, 2625, 3480, 3614))
-# Conduct group-level Bayesian model selection based on BIC
-ModelComp <- groupBMS(fitted_par, measure="BIC")
-ModelComp
-
-
-
-
-base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-base::cat("groupBMS", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
-cleanEx()
 nameEx("plotConfModelFit")
 ### * plotConfModelFit
 
