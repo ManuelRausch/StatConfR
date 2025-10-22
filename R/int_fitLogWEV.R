@@ -92,8 +92,9 @@ fitLogWEV <-
       res$N <- nTrials
       res$k <- k
       res$BIC <-  2 * fit$value + k * log(nTrials)
-      res$AICc <- 2 * fit$value + k * 2 + 2*k*(k-1)/(nTrials-k-1)
-      res$AIC <- 2 * fit$value + k * 2
+      res$AIC <- 2 * fit$value + 2 * k
+      denom <- nTrials - k - 1
+      res$AICc <- if (denom > 0) res$AIC + (2 * k * (k + 1)) / denom else NA
     }
     res
   }
