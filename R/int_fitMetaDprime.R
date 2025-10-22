@@ -154,13 +154,13 @@ negLoglMetaD <- function(parameters, nC_rS1,nI_rS1, nC_rS2,nI_rS2,nRatings, cpri
                 (1- pnorm(t2_rS2[2:(nRatings+1)],S1mu))) /
     (1 - pnorm(meta_c, S1mu))
 
-  logL <-  -sum(nC_rS1*log(prC_rS1),nI_rS1*log(prI_rS1),
-                nC_rS2*log(prC_rS2),nI_rS2*log(prI_rS2))
-  prC_rS1[is.na( prC_rS1) | is.nan(prC_rS1) | prC_rS1 < 10^-10] <- 10^-10
-  prI_rS1[is.na(prI_rS1) | is.nan(prI_rS1) | prI_rS1 < 10^-10] <- 10^-10
-  prC_rS2[is.na( prC_rS2) | is.nan( prC_rS2) |  prC_rS2 < 10^-10] <- 10^-10
-  prI_rS2[is.na(prI_rS2) | is.nan(prI_rS2) | prI_rS2 < 10^-10] <- 10^-10
-  logL
+  prC_rS1[!is.finite(prC_rS1) | prC_rS1 < 10^-10] <- 10^-10
+  prI_rS1[!is.finite(prI_rS1) | prI_rS1 < 10^-10] <- 10^-10
+  prC_rS2[!is.finite(prC_rS2) | prC_rS2 < 10^-10] <- 10^-10
+  prI_rS2[!is.finite(prI_rS2) | prI_rS2 < 10^-10] <- 10^-10
+
+  -sum(nC_rS1*log(prC_rS1),nI_rS1*log(prI_rS1),
+       nC_rS2*log(prC_rS2),nI_rS2*log(prI_rS2))
 }
 
 negLoglFleming <- function(parameters, nC_rS1,nI_rS1, nC_rS2,nI_rS2,nRatings, type1_c){
@@ -181,11 +181,11 @@ negLoglFleming <- function(parameters, nC_rS1,nI_rS1, nC_rS2,nI_rS2,nRatings, ty
                 (1- pnorm(t2_rS2[2:(nRatings+1)],S1mu))) /
     (1 - pnorm(type1_c, S1mu))
 
-  logL <-  -sum(nC_rS1*log(prC_rS1),nI_rS1*log(prI_rS1),
-                nC_rS2*log(prC_rS2),nI_rS2*log(prI_rS2))
-  prC_rS1[is.na( prC_rS1) | is.nan(prC_rS1) | prC_rS1 < 10^-10] <- 10^-10
-  prI_rS1[is.na(prI_rS1) | is.nan(prI_rS1) | prI_rS1 < 10^-10] <- 10^-10
-  prC_rS2[is.na( prC_rS2) | is.nan( prC_rS2) |  prC_rS2 < 10^-10] <- 10^-10
-  prI_rS2[is.na(prI_rS2) | is.nan(prI_rS2) | prI_rS2 < 10^-10] <- 10^-10
-  logL
+  prC_rS1[!is.finite(prC_rS1) | prC_rS1 < 10^-10] <- 10^-10
+  prI_rS1[!is.finite(prI_rS1) | prI_rS1 < 10^-10] <- 10^-10
+  prC_rS2[!is.finite(prC_rS2) | prC_rS2 < 10^-10] <- 10^-10
+  prI_rS2[!is.finite(prI_rS2) | prI_rS2 < 10^-10] <- 10^-10
+
+  -sum(nC_rS1*log(prC_rS1),nI_rS1*log(prI_rS1),
+       nC_rS2*log(prC_rS2),nI_rS2*log(prI_rS2))
 }
