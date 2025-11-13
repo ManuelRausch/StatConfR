@@ -23,6 +23,8 @@ Depends:
     R (>= 4.1.0)
 Imports:
     parallel, plyr, stats, utils, ggplot2, Rmisc
+Suggests:
+    testthat (>= 3.0.0)
 Date/Publication: 2023-09-12
 Encoding: UTF-8
 LazyData: true
@@ -31,3 +33,4 @@ Packaged: 2023-09-10
 Repository: CRAN
 Roxygen: list(old_usage = TRUE, markdown=TRUE)
 RoxygenNote: 7.3.2
+Config/testthat/edition: 3
