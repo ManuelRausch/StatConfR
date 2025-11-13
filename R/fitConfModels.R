@@ -308,9 +308,10 @@ fitConfModels <- function(data, models="all",
                 "b", "m", "sigma", "w"
   )
   # This function will be called for every combination of participant and model
-  call_fitfct <- function(X) {
-    cur_model <- models[X[1]]
-    cur_sbj <- X[2]
+  call_fitfct <- function(model_idx, participant_id) {
+    cur_model <- models[as.integer(model_idx)]
+    if (is.na(cur_model)) stop("Internal error: model index could not be resolved.")
+    cur_sbj <- participant_id
     participant <- NULL # to omit a note in R checks because of an unbound variable
     data_part <- subset(data, participant==cur_sbj)
     res <- fitConf(data_part, model = cur_model,  nInits = nInits, nRestart = nRestart)
@@ -328,13 +329,11 @@ fitConfModels <- function(data, models="all",
     no_sbj_column <- TRUE
   }
   subjects <- unique(data$participant)
-  nJobs <- length(models)*length(subjects)
-  jobs <- expand.grid(model=1:length(models), sbj=subjects)
+  if (is.factor(subjects)) subjects <- as.character(subjects)
+  jobs <- expand.grid(model = seq_along(models), sbj = subjects, stringsAsFactors = FALSE)
+  nJobs <- nrow(jobs)
   if (.parallel) {
-    listjobs <- list()
-    for (i in 1:nrow(jobs)) {
-      listjobs[[i]] <- c(model = jobs[["model"]][i], sbj = jobs[["sbj"]][i])
-    }
+    listjobs <- split(jobs, seq_len(nJobs))
     if (is.null(n.cores)) n.cores <- min(nJobs, detectCores()-1)
 
     cl <- makeCluster(type="SOCK", n.cores)
@@ -343,10 +342,12 @@ fitConfModels <- function(data, models="all",
     # Following line ensures that the cluster is stopped even in cases of user
     # interrupt or errors
     on.exit(try(stopCluster(cl), silent = TRUE))
-    res <- clusterApplyLB(cl, listjobs, fun=call_fitfct)
+    res <- clusterApplyLB(cl, listjobs,
+                          fun=function(job) call_fitfct(job[["model"]], job[["sbj"]]))
     stopCluster(cl)
   } else {
-    res <- apply(X=jobs, 1, FUN=call_fitfct)
+    res <- lapply(seq_len(nJobs),
+                  function(i) call_fitfct(jobs$model[i], jobs$sbj[i]))
   }
   # bind list-outout together into data.frame
   res <- do.call(rbind, res)
