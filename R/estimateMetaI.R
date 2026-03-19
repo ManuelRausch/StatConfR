@@ -15,7 +15,7 @@
 #' - Meta-\eqn{I_{2}^{r}} normalizes by the maximum amount of meta-\eqn{I}
 #'   which would be reached if all uncertainty about the stimulus was removed.
 #' - \eqn{RMI} normalizes meta-\eqn{I} by the range of its possible
-#'    values and therefore scales between 0 and 1. RMI is a novel measure not discussed by Dayan (2023).
+#'    values and therefore scales between 0 and 1. RMI is a  measure proposed by Meyen et al. (2025).
 #'
 #'  All measures can be calculated with a bias-reduced variant for which the
 #'  observed frequencies are taken as underlying probability distribution to
@@ -86,8 +86,10 @@
 
 #' @references Dayan, P. (2023). Metacognitive Information Theory.
 #'  Open Mind, 7, 392–411. doi:10.1162/opmi_a_00091
+#' @references Meyen, S., Göppert, F., Schrenk, C., von Luxburg, U., & Franz,V. H. (2025).
+#' Information-Theoretic Measures of Metacognition: Bounds and Relation to Group Performance.
+#' Open Mind: Discoveries in Cognitive Science, 9, 1728–1762. doi:10.1162/OPMI.a.40
 # CRAN wants references in the format "doi:...", not "https://doi.org..."!
-# to do: add Saschas Paper once it is available ;-)
 
 #' @export
 estimateMetaI <- function(data, bias_reduction = TRUE) {

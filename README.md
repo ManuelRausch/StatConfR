@@ -266,7 +266,7 @@ Notably, Dayan (2023) pointed out that a liberal or conservative use of
 the confidence levels will affected the mutual information and thus all
 information-theoretic measures of metacognition.
 
-In addition to Dayan’s measures, Meyen et al. (submitted) suggested an
+In addition to Dayan’s measures, Meyen et al. (2025) suggested an
 additional measure that normalizes meta-I by the range of possible
 values it can take. Normalizing meta-I by the range of possible values
 requires deriving lower and upper bounds of the transmitted information
@@ -373,12 +373,12 @@ head(fitted_pars)
 ```
 
     ##   model participant negLogLik    N  k      BIC     AICc      AIC        d_1
-    ## 1 ITGcm           1  2719.492 1620 15 5549.837 5469.247 5468.985 0.02791587
-    ## 2   WEV           1  2621.110 1620 16 5360.464 5274.520 5274.221 0.20268438
-    ## 3 ITGcm           2  1926.296 1620 15 3963.445 3882.854 3882.592 0.01889636
-    ## 4   WEV           2  1827.221 1620 16 3772.684 3686.741 3686.441 0.05119639
-    ## 5 ITGcm           3  1695.957 1620 15 3502.766 3422.176 3421.914 0.32340627
-    ## 6   WEV           3  1661.617 1620 16 3441.476 3355.533 3355.233 0.41460563
+    ## 1 ITGcm           1  2719.492 1620 15 5549.837 5469.284 5468.985 0.02791587
+    ## 2   WEV           1  2621.110 1620 16 5360.464 5274.560 5274.221 0.20268438
+    ## 3 ITGcm           2  1926.296 1620 15 3963.445 3882.891 3882.592 0.01889636
+    ## 4   WEV           2  1827.221 1620 16 3772.684 3686.781 3686.441 0.05119639
+    ## 5 ITGcm           3  1695.957 1620 15 3502.766 3422.213 3421.914 0.32340627
+    ## 6   WEV           3  1661.617 1620 16 3441.476 3355.573 3355.233 0.41460563
     ##          d_2       d_3      d_4      d_5          c theta_minus.4 theta_minus.3
     ## 1 0.43212223 1.0210704 3.472310 4.395496 -0.2499098     -1.584000     -1.055322
     ## 2 0.61422596 1.0796567 3.474608 4.079890 -0.2957338     -2.066516     -1.248524
@@ -607,6 +607,10 @@ write to either <manuel.rausch@ku.de> or <sebastian.hellmann@tum.de> or
   Unequal Variance SDT Model. In S. M. Fleming & C. D. Frith (Eds.), The
   Cognitive Neuroscience of Metacognition (pp. 25–66). Springer.
   <doi:10.1007/978-3-642-45190-4_3>
+- Meyen, S., Göppert, F., Schrenk, C., von Luxburg, U., & Franz,V. H.
+  (2025). Information-Theoretic Measures of Metacognition: Bounds and
+  Relation to Group Performance. Open Mind: Discoveries in Cognitive
+  Science, 9, 1728–1762. <doi:10.1162/OPMI.a.40>
 - Palminteri, S., Wyart, V., & Koechlin, E. (2017). The importance of
   falsification in computational cognitive modeling. Trends in Cognitive
   Sciences, 21(6), 425–433. <doi:10.1016/j.tics.2017.03.011>

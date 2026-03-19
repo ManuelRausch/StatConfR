@@ -1,7 +1,7 @@
 ---
 title: "README"
 author: "Manuel Rausch, Sascha Meyen, and Sebastian Hellmann"
-date: "2025-09-24"
+date: "`r format(Sys.Date(), '%d.%m.%Y')`"
 output:
   md_document:
     variant: gfm
@@ -186,7 +186,7 @@ $$meta-I_{2}^{r} = meta-I / H(S = R)$$
 
 Notably, Dayan (2023) pointed out that a liberal or conservative use of the confidence levels will affected the mutual information and thus all information-theoretic measures of metacognition.
 
-In addition to Dayan's measures, Meyen et al. (submitted) suggested an
+In addition to Dayan's measures, Meyen et al. (2025) suggested an
 additional measure that normalizes meta-I by the range of possible values it can take. Normalizing meta-I by the range of possible values requires deriving lower and upper bounds of the transmitted information given a participant's accuracy.
 
 $$RMI = \frac{meta-I}{\max_{\text{accuracy}}\{meta-I\}}$$
@@ -355,6 +355,7 @@ or [submit an issue](https://github.com/ManuelRausch/StatConfR/issues).
 - MacKay, D. J. (2003). Information theory, inference and learning algorithms. Cambridge University Press.
 - Maniscalco, B., & Lau, H. (2016). The signal processing architecture underlying subjective reports of sensory awareness. Neuroscience of Consciousness, 1, 1–17. doi:10.1093/nc/niw002
 - Maniscalco, B., & Lau, H. C. (2014). Signal Detection Theory Analysis of Type 1 and Type 2 Data: Meta-d, Response- Specific Meta-d, and the Unequal Variance SDT Model. In S. M. Fleming & C. D. Frith (Eds.), The Cognitive Neuroscience of Metacognition (pp. 25–66). Springer. doi:10.1007/978-3-642-45190-4_3
+- Meyen, S., Göppert, F., Schrenk, C., von Luxburg, U., & Franz,V. H. (2025). Information-Theoretic Measures of Metacognition: Bounds and Relation to Group Performance. Open Mind: Discoveries in Cognitive Science, 9, 1728–1762. doi:10.1162/OPMI.a.40
 - Palminteri, S., Wyart, V., & Koechlin, E. (2017). The importance of falsification in computational cognitive modeling. Trends in Cognitive Sciences, 21(6), 425–433. doi:10.1016/j.tics.2017.03.011
 - Peters, M. A. K., Thesen, T., Ko, Y. D., Maniscalco, B., Carlson, C., Davidson, M., Doyle, W., Kuzniecky, R., Devinsky, O., Halgren, E., & Lau, H. (2017). Perceptual confidence neglects decision-incongruent evidence in the brain. Nature Human Behaviour, 1(0139), 1–21. doi:10.1038/s41562-017-0139
 - Rausch, M., Hellmann, S., & Zehetleitner, M. (2018). Confidence in masked orientation judgments is informed by both evidence and visibility. Attention, Perception, and Psychophysics, 80(1), 134–154. doi:10.3758/s13414-017-1431-5
