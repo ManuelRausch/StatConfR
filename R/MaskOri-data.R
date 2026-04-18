@@ -21,7 +21,7 @@
 #' @keywords datasets
 #'
 #' @references Hellmann, S., Zehetleitner, M., & Rausch, M. (2023). Simultaneous modeling of choice, confidence, and response time in visual perception. Psychological Review. 130(6), 1521–1543. doi:10.1037/rev0000411
-# @source https://github.com/SeHellmann/SeqSamplingConfidenceModels
+#' @source https://github.com/SeHellmann/SeqSamplingConfidenceModels
 
 #' @examples
 #' data(MaskOri)

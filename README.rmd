@@ -321,7 +321,7 @@ metaIMeasures <- estimateMetaI(data = MaskOri, bias_reduction = TRUE)
 After installation, the documentation of each function of `statConfR` can be accessed by typing *?functionname* into the console. 
 
 # Contributing to the package 
-The package is under active development. We are planning to implement new models of decision confidence when they are published. Please feel free to [contact us](mailto:manuel.rausch@hochschule-rhein-waal.de) to suggest new models to implement in the package, or to volunteer adding additional models. 
+The package is under active development. We are planning to implement new models of decision confidence when they are published. Please feel free to [contact us](mailto:manuel.rausch@ku.de) to suggest new models to implement in the package, or to volunteer adding additional models. 
  
 __Implementing custom models of decision confidence is only recommended for users with experience in cognitive modelling!__
 For readers who want to use our open code to implement models of confidence themselves, the following steps need to be taken: 

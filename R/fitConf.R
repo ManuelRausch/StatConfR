@@ -9,16 +9,19 @@
 #' In addition, several measures of model fit (negative log-likelihood, BIC, AIC, and AICc)
 #' are computed, which can be used for a quantitative model evaluation.
 
+
 #' @param data  a `data.frame` where each row is one trial, containing following
 #' variables:
 #' * \code{diffCond} (optional; different levels of discriminability,
 #'    should be a factor with levels ordered from hardest to easiest),
-#' * \code{rating} (discrete confidence judgments, should be a factor with levels ordered from lowest confidence to highest confidence;
+#' * \code{rating} (discrete confidence judgments, should be a factor with levels
+#'    ordered from lowest confidence to highest confidence;
 #'    otherwise will be transformed to factor with a warning),
 #' * \code{stimulus} (stimulus category in a binary choice task,
 #'    should be a factor with two levels, otherwise it will be transformed to
 #'    a factor with a warning),
-#' * \code{correct} (encoding whether the response was correct; should  be 0 for incorrect responses and 1 for correct responses)
+#' * \code{correct} (encoding whether the response was correct; should  be 0 for
+#'    incorrect responses and 1 for correct responses)
 #' @param model `character` of length 1. The generative model that should be
 #'    fitted. Models implemented so far: 'WEV', 'SDT', 'GN', 'PDA', 'IG', 'RCE', 'CAS',
 #'    'ITGc', 'ITGcm', 'logN', and 'logWEV'.
