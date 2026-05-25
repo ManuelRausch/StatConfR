@@ -89,7 +89,7 @@ Plot_recov_SDT <-
                        values_to = "true")) %>%
   ggplot(aes(x=true, y=value)) +
   facet_wrap(~ name, nrow=4, scales="free") + xlab("true parameter") + ylab("estimated parameter") +
-  geom_point(color="purple") +
+  geom_point(color="skyblue2") +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
   theme_minimal()
 Plot_recov_SDT
@@ -116,7 +116,7 @@ Plot_recov_GN <-
                        values_to = "true")) %>%
   ggplot(aes(x=true, y=value)) +
   facet_wrap(~ name, nrow=4, scales="free") + xlab("true parameter") + ylab("estimated parameter") +
-  geom_point(color="purple") +
+  geom_point(color="skyblue2") +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
   theme_minimal()
 Plot_recov_GN
@@ -143,7 +143,7 @@ Plot_recov_PDA <-
                        values_to = "true")) %>%
   ggplot(aes(x=true, y=value)) +
   facet_wrap(~ name, nrow=4, scales="free") + xlab("true parameter") + ylab("estimated parameter") +
-  geom_point(color="purple") +
+  geom_point(color="skyblue2") +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
   theme_minimal()
 Plot_recov_PDA
@@ -170,7 +170,7 @@ Plot_recov_IG <-
                        values_to = "true")) %>%
   ggplot(aes(x=true, y=value)) +
   facet_wrap(~ name, nrow=4, scales="free") + xlab("true parameter") + ylab("estimated parameter") +
-  geom_point(color="purple") +
+  geom_point(color="skyblue2") +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
   theme_minimal()
 Plot_recov_IG
@@ -196,10 +196,40 @@ Plot_recov_WEV <-
                        values_to = "true")) %>%
   ggplot(aes(x=true, y=value)) +
   facet_wrap(~ name, nrow=4, scales="free") + xlab("true parameter") + ylab("estimated parameter") +
-  geom_point(color="purple") +
+  geom_point(color="skyblue2") +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
   theme_minimal()
 Plot_recov_WEV
+
+recov_pars_WEV_small_sample_size <-
+  fitted_pars %>%
+  filter(model=="WEV") %>%
+  mutate(N = 200) |>
+  group_by(participant) %>%
+  simConf(model="WEV") %>%
+  fitConfModels(models = "WEV",
+                .parallel = TRUE)
+
+Plot_recov_WEV_small_N <-
+  merge(recov_pars_WEV_small_sample_size %>%
+          select(-model, -c(negLogLik:AIC)) %>%
+          pivot_longer(cols = d_1:w),
+        fitted_pars %>%
+          filter(model=="WEV") %>%
+          select(participant, d_1:w) %>%
+          pivot_longer(cols = d_1:w,
+                       values_to = "true")) %>%
+  ggplot(aes(x=true, y=value)) +
+  facet_wrap(~ name, nrow=4, scales="free") +
+  xlab("true parameter") +
+  ylab("estimated parameter") +
+  geom_point(color="skyblue2") +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
+  theme_minimal() +  ggpmisc::stat_correlation(
+    ggpmisc::use_label("R", "R.CI"),
+    small.r=TRUE)
+Plot_recov_WEV_small_N
+
 
 # (vi) ITGc
 
@@ -218,14 +248,18 @@ Plot_recov_ITGc <-
           filter(model=="ITGc") %>%
           select(participant, d_1:m) %>%
           pivot_longer(cols = d_1:m,
-                       values_to = "true")) %>%
+                       values_to = "true")) %>% #filter(name=="m")
   ggplot(aes(x=true, y=value)) +
   facet_wrap(~ name, nrow=4, scales="free") + xlab("true parameter") + ylab("estimated parameter") +
-  geom_point(color="purple") +
+  geom_point(color="skyblue2") +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
   theme_minimal()
 Plot_recov_ITGc
 
+Corr_estimatedMVsTrueM_ITCc <-
+  cor.test(
+    recov_pars_ITGc$m,
+    fitted_pars$m[fitted_pars$model=="ITGc"])
 
 # (vii) ITGcm
 
@@ -247,7 +281,7 @@ Plot_recov_ITGcm <-
                        values_to = "true")) %>%
   ggplot(aes(x=true, y=value)) +
   facet_wrap(~ name, nrow=4, scales="free") + xlab("true parameter") + ylab("estimated parameter") +
-  geom_point(color="purple") +
+  geom_point(color="skyblue2") +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
   theme_minimal()
 Plot_recov_ITGcm
@@ -273,7 +307,7 @@ Plot_recov_logN <-
                        values_to = "true")) %>%
   ggplot(aes(x=true, y=value)) +
   facet_wrap(~ name, nrow=4, scales="free") + xlab("true parameter") + ylab("estimated parameter") +
-  geom_point(color="purple") +
+  geom_point(color="skyblue2") +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
   theme_minimal()
 Plot_recov_logN
@@ -299,7 +333,7 @@ Plot_recov_logWEV <-
                        values_to = "true")) %>%
   ggplot(aes(x=true, y=value)) +
   facet_wrap(~ name, nrow=4, scales="free") + xlab("true parameter") + ylab("estimated parameter") +
-  geom_point(color="purple") +
+  geom_point(color="skyblue2") +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
   theme_minimal()
 Plot_recov_logWEV
@@ -326,7 +360,7 @@ Plot_recov_metaDprime_ML <-
           select(participant, m)) %>%
   ggplot(aes(x=m, y=Ratio)) +  #scale_x_log10() + scale_y_log10() +
   xlab("m-parameter") + ylab("meta-d′/d′") +
-  geom_point(color="purple") +
+  geom_point(color="skyblue2") +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
   theme_minimal()
 Plot_recov_metaDprime_ML
@@ -353,10 +387,19 @@ Plot_recov_metaDprime_F <-
           select(participant, m)) %>%
   ggplot(aes(x=m, y=Ratio)) + #scale_x_log10() + scale_y_log10() +
   xlab("m-parameter") + ylab("meta-d′/d′") +
-  geom_point(color="purple") +
+  geom_point(color="skyblue2") +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
   theme_minimal()
 Plot_recov_metaDprime_F
+
+Corr_estimatedMVsTrueM_MetaD <-
+  merge(recov_metaDprime_F %>%
+          select(participant, Ratio),
+        fitted_pars %>%
+          filter(model=="ITGc" ) %>%
+          select(participant, m)) %>%
+  cor.test(~ Ratio + m, .)
+
 
 # 3.3) Compare meta-d′/d′ with the metaSDT package
 
@@ -409,7 +452,7 @@ Plot_recov_MetaSDT_vs_statConfR <-
   ggplot(aes(x=m, y=Ratio)) + #scale_x_log10() + scale_y_log10() +
   facet_grid(~ Package) +
   xlab("true m-parameter") + ylab("meta-d′/d′") +
-  geom_point(color="purple") +
+  geom_point(color="skyblue2") +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
   ggpubr::stat_cor(color="black", cor.coef.name = "r") +
   geom_smooth(method = "lm", color = "black", linetype=2, se=F) +
@@ -474,5 +517,10 @@ save(fitted_pars, PlotFitsBICWeights,
      recov_metaDprime_MetaSDT_vs_statConfR,
      Plot_recov_MetaSDT_vs_statConfR,
      recov_metaDprime_MetaSDT_vs_statConfR,
+
+
+     recov_pars_WEV_small_sample_size,
+     Plot_recov_WEV_small_N,
+
      file = "TestResults.RData")
 
