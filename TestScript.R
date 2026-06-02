@@ -230,6 +230,37 @@ Plot_recov_WEV_small_N <-
     small.r=TRUE)
 Plot_recov_WEV_small_N
 
+recov_pars_WEV_1d <-
+  fitted_pars %>%
+  filter(model=="WEV") %>%
+  select(-c(d_1, d_2, d_4, d_5)) %>%
+  rename(d_1 = d_3) %>%
+  group_by(participant) %>%
+  simConf(model="WEV") %>%
+  fitConfModels(models = "WEV",
+                .parallel = TRUE)
+
+Plot_recov_WEV_d1 <-
+  merge(recov_pars_WEV_1d %>%
+          select(-model, -c(negLogLik:AIC)) %>%
+          pivot_longer(cols = d_1:w),
+        fitted_pars %>%
+          filter(model=="WEV") %>%
+          select(-c(d_1, d_2, d_4, d_5)) %>%
+          rename(d_1 = d_3) %>%
+          select(participant, d_1:w) %>%
+          pivot_longer(cols = d_1:w,
+                       values_to = "true")) %>%
+  ggplot(aes(x=true, y=value)) +
+  facet_wrap(~ name, nrow=4, scales="free") + xlab("true parameter") + ylab("estimated parameter") +
+  geom_point(color="skyblue2") +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
+  theme_minimal() +
+  ggpmisc::stat_correlation(
+    ggpmisc::use_label("R", "R.CI"),
+    small.r=TRUE)
+Plot_recov_WEV_d1
+
 
 # (vi) ITGc
 
@@ -521,6 +552,9 @@ save(fitted_pars, PlotFitsBICWeights,
 
      recov_pars_WEV_small_sample_size,
      Plot_recov_WEV_small_N,
+
+     recov_pars_WEV_1d ,
+     Plot_recov_WEV_d1,
 
      file = "TestResults.RData")
 
